@@ -7,7 +7,7 @@
     "lint": "eslint --ext .js,.vue src",
     "type-check": "tsc",
     "gen-api": "node ./scripts/generate-apis.js",
-    "clean": "rimraf ./scripts/bin"
+    "clean": "rimraf ./src/lib/apis/generated"
   },
   "dependencies": {
     "axios": "^0.19.2",
