@@ -8,7 +8,7 @@ module.exports = {
   },
   proxy: {
     '/api': {
-      target: 'https://example.com',
+      target: 'https://booq-dev.trapti.tech',
       changeOrigin: true
     }
   }
