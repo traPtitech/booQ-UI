@@ -1,17 +1,17 @@
 <template>
-  <routes />
-  <div>Index Page</div>
+  <div>DashBoard Page</div>
   <img alt="Vue logo" src="/@/assets/logo.png" />
+  <HelloWorld msg="Hello Vue 3.0 + Vite" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Routes from '/@/components/Routes.vue'
+import HelloWorld from '/@/components/HelloWorld.vue'
 
 export default defineComponent({
-  name: 'Index',
+  name: 'DashBoard',
   components: {
-    Routes
+    HelloWorld
   }
 })
 </script>

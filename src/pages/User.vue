@@ -1,16 +1,11 @@
 <template>
-  <routes />
-  <router-view />
+  <div>User Page</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Routes from '/@/components/Routes.vue'
 
 export default defineComponent({
-  name: 'App',
-  components: {
-    Routes
-  }
+  name: 'User'
 })
 </script>

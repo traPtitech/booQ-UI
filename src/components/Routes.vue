@@ -1,8 +1,12 @@
 <template>
   <div>
-    <router-link :to="{ name: 'index' }">Index</router-link>
-    <span>|</span>
-    <router-link :to="{ name: 'hello' }">Hello</router-link>
+    <router-link :to="pages[0].path">{{ pages[0].name }}</router-link>
+    <template v-for="page in pages.slice(1)">
+      <span :key="`${page.path}span`">|</span>
+      <router-link :key="`${page.path}link`" :to="page.path">
+        {{ page.name }}
+      </router-link>
+    </template>
   </div>
 </template>
 
@@ -12,7 +16,20 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'Routes',
   setup() {
-    return {}
+    const pages = [
+      { path: '/', name: 'Dashboard' },
+      { path: '/users', name: 'All Users' },
+      { path: '/users/sienka', name: 'User Page' },
+      { path: '/items', name: 'All Items' },
+      { path: '/items/new', name: 'Register Item' },
+      { path: '/items/equipment', name: 'Equipments' },
+      { path: '/items/property', name: 'Personal Property Items' },
+      { path: '/items/1', name: 'Item' },
+      { path: '/admin', name: 'Admin Page' },
+      { path: '/about', name: 'About' }
+    ]
+
+    return { pages }
   }
 })
 </script>
