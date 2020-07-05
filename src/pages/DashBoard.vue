@@ -1,6 +1,6 @@
 <template>
   <div>DashBoard Page</div>
-  <img alt="Vue logo" src="/@/assets/logo.png" />
+  <img src="/@/assets/img/logo-main.svg" />
   <HelloWorld msg="Hello Vue 3.0 + Vite" />
 </template>
 
