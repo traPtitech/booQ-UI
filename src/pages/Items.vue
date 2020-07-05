@@ -6,12 +6,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref, computed } from 'vue'
 import apis, { ItemSummary } from '/@/lib/apis'
+import useTitle from './use/title'
 
 export default defineComponent({
   name: 'Items',
   setup() {
+    useTitle(computed(() => '物品一覧'))
+
     const items = ref<ItemSummary[]>([])
     onMounted(async () => {
       const { data } = await apis.getItems()

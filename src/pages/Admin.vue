@@ -8,12 +8,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref, computed } from 'vue'
 import apis, { User } from '/@/lib/apis'
+import useTitle from './use/title'
 
 export default defineComponent({
   name: 'Admin',
   setup() {
+    useTitle(computed(() => '管理画面'))
+
     const users = ref<User[]>([])
     onMounted(async () => {
       const { data } = await apis.getUsers()

@@ -8,6 +8,7 @@ import { defineComponent, reactive, computed, watchEffect, toRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
 import apis, { ItemDetail } from '/@/lib/apis'
+import useTitle from './use/title'
 
 export default defineComponent({
   name: 'Item',
@@ -22,6 +23,8 @@ export default defineComponent({
       const { data } = await apis.getItem(state.id)
       state.item = data
     })
+
+    useTitle(computed(() => (state.item ? `${state.item?.name}` : '物品')))
 
     return { item: toRef(state, 'item') }
   }

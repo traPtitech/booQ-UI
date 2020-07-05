@@ -10,6 +10,7 @@ import { defineComponent, reactive, computed, watchEffect, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
 import apis, { ItemSummary } from '/@/lib/apis'
+import useTitle from './use/title'
 
 export default defineComponent({
   name: 'User',
@@ -24,6 +25,8 @@ export default defineComponent({
       const { data } = await apis.getItems(state.username)
       state.items = data
     })
+
+    useTitle(computed(() => state.username))
 
     return { ...toRefs(state) }
   }
