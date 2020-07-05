@@ -1,5 +1,5 @@
 <template>
-  <div>Item Page: {{ item?.name }}</div>
+  <div>Item Page: {{ item ? item.name : '' }}</div>
   <div>{{ JSON.stringify(item) }}</div>
 </template>
 
