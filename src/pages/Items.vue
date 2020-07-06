@@ -6,14 +6,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, computed } from 'vue'
+import { defineComponent, onMounted, ref, computed, PropType } from 'vue'
 import apis, { ItemSummary } from '/@/lib/apis'
 import useTitle from './use/title'
 
+type ItemsPageType = 'all' | 'equipment' | 'property'
+
 export default defineComponent({
   name: 'Items',
-  setup() {
-    useTitle(computed(() => '物品一覧'))
+  props: {
+    type: {
+      type: String as PropType<ItemsPageType>,
+      required: true
+    }
+  },
+  setup(props) {
+    const title = computed(() => {
+      if (props.type === 'equipment') return '備品一覧'
+      if (props.type === 'property') return '物品一覧'
+      return '物品・備品一覧'
+    })
+    useTitle(title)
 
     const items = ref<ItemSummary[]>([])
     onMounted(async () => {

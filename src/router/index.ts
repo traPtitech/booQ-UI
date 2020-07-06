@@ -24,7 +24,8 @@ const routes: RouteRecordRaw[] = [
     path: '/items',
     name: 'All Items',
     component: () =>
-      import(/* webpackChunkname: "Items" */ '/@/pages/Items.vue')
+      import(/* webpackChunkname: "Items" */ '/@/pages/Items.vue'),
+    props: { type: 'all' }
   },
   {
     path: '/items/new',
@@ -35,12 +36,16 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/items/equipment',
     name: 'Equipments',
-    component: () => import(/* webpackChunkname: "Item" */ '/@/pages/Items.vue')
+    component: () =>
+      import(/* webpackChunkname: "Item" */ '/@/pages/Items.vue'),
+    props: { type: 'equipment' }
   },
   {
     path: '/items/property',
     name: 'Personal Property Items',
-    component: () => import(/* webpackChunkname: "Item" */ '/@/pages/Items.vue')
+    component: () =>
+      import(/* webpackChunkname: "Item" */ '/@/pages/Items.vue'),
+    props: { type: 'property' }
   },
   {
     path: '/items/:id',
