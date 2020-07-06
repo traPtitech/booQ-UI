@@ -2,12 +2,7 @@
   <nav :class="$style.nav">
     <logo-and-title />
     <div>search</div>
-    <ul :class="$style.list">
-      <li><icon name="view-dashboard" />Dashboard</li>
-      <li>Equipment List</li>
-      <li>Personal Property List</li>
-      <li>Register Item</li>
-    </ul>
+    <list :class="$style.list" />
     <div>
       <span>booQ Project {version}</span>
       <div>about</div>
@@ -18,13 +13,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import LogoAndTitle from './LogoAndTitle.vue'
-import Icon from '/@/components/UI/Icon.vue'
+import List from './List.vue'
 
 export default defineComponent({
   name: 'Navigation',
   components: {
     LogoAndTitle,
-    Icon
+    List
   },
   setup() {
     return {}
@@ -38,6 +33,15 @@ export default defineComponent({
   flex-direction: column;
   padding: 1rem;
   background-color: gray;
+  > * {
+    margin: 1rem 0;
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 .list {
   flex: 1;

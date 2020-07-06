@@ -9,10 +9,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'LogoAndTitle',
-  setup() {
-    return {}
-  }
+  name: 'LogoAndTitle'
 })
 </script>
 
@@ -21,9 +18,11 @@ export default defineComponent({
   display: flex;
   align-items: center;
   font-size: 1.5rem;
+  font-weight: bold;
 }
 .logo {
   max-height: 1.5em;
   max-width: 1.5em;
+  margin-right: 1em;
 }
 </style>
