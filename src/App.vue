@@ -25,9 +25,13 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   display: grid;
+  height: 100%;
+  width: 100%;
   grid-template-areas:
     'nav title'
     'nav content';
+  grid-template-rows: min-content 1fr;
+  grid-template-columns: 260px 1fr;
 }
 .navigation {
   grid-area: nav;
@@ -37,5 +41,9 @@ export default defineComponent({
 }
 .content {
   grid-area: content;
+  overflow: {
+    x: hidden;
+    y: scroll;
+  }
 }
 </style>

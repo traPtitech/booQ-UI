@@ -1,8 +1,8 @@
 <template>
-  <nav>
+  <nav :class="$style.nav">
     <logo-and-title />
     <div>search</div>
-    <ul>
+    <ul :class="$style.list">
       <li>Dashboard</li>
       <li>Equipment List</li>
       <li>Personal Property List</li>
@@ -29,3 +29,15 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" module>
+.nav {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: gray;
+}
+.list {
+  flex: 1;
+}
+</style>

@@ -9,9 +9,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref, computed } from 'vue'
 import HelloWorld from '/@/components/HelloWorld.vue'
 import apis, { ItemSummary } from '/@/lib/apis'
+import useTitle from './use/title'
 
 export default defineComponent({
   name: 'DashBoard',
@@ -19,6 +20,8 @@ export default defineComponent({
     HelloWorld
   },
   setup() {
+    useTitle(computed(() => 'ダッシュボード'))
+
     const items = ref<ItemSummary[]>([])
     onMounted(async () => {
       const { data: me } = await apis.getMe()

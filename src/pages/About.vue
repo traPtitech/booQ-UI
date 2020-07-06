@@ -3,9 +3,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import useTitle from './use/title'
 
 export default defineComponent({
-  name: 'About'
+  name: 'About',
+  setup() {
+    useTitle(computed(() => 'booQについて'))
+    return {}
+  }
 })
 </script>
