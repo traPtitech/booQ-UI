@@ -10,6 +10,7 @@
     "clean": "rimraf ./src/lib/apis/generated"
   },
   "dependencies": {
+    "@mdi/js": "^5.3.45",
     "axios": "^0.19.2",
     "direct-vuex": "^0.11.1",
     "vue": "^3.0.0-beta.18",
@@ -26,6 +27,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^7.0.0-alpha.9",
+    "postcss-normalize": "^9.0.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "sass": "^1.26.10",
