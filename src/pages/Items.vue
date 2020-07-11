@@ -1,7 +1,9 @@
 <template>
   <div>Items Page</div>
   <ul>
-    <li v-for="item in items" :key="item.id">{{ item.name }}</li>
+    <li v-for="item in items" :key="item.id">
+      <item :item="item" />
+    </li>
   </ul>
 </template>
 
@@ -9,11 +11,15 @@
 import { defineComponent, onMounted, ref, computed, PropType } from 'vue'
 import apis, { ItemSummary } from '/@/lib/apis'
 import useTitle from './use/title'
+import Item from '/@/components/Item/Item.vue'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
 
 export default defineComponent({
   name: 'Items',
+  components: {
+    Item
+  },
   props: {
     type: {
       type: String as PropType<ItemsPageType>,
