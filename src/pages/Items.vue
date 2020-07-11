@@ -1,5 +1,6 @@
 <template>
   <div>Items Page</div>
+  <input v-model="searchQuery" placeholder="検索" />
   <ul>
     <li v-for="item in filteredItems" :key="item.id">
       <item :item="item" />
@@ -8,10 +9,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, computed, PropType } from 'vue'
+import {
+  defineComponent,
+  onMounted,
+  ref,
+  computed,
+  PropType,
+  watchEffect
+} from 'vue'
 import apis, { ItemSummary, ItemType } from '/@/lib/apis'
 import useTitle from './use/title'
 import Item from '/@/components/Item/Item.vue'
+import useDebouncedRef from '/@/use/debouncedRef'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
 
@@ -39,6 +48,18 @@ export default defineComponent({
       const { data } = await apis.getItems()
       items.value = data
     })
+
+    const searchQuery = useDebouncedRef('')
+    watchEffect(async () => {
+      if (searchQuery.value === '') {
+        const { data } = await apis.getItems()
+        items.value = data
+        return
+      }
+      const { data } = await apis.getItems(undefined, searchQuery.value)
+      items.value = data
+    })
+
     const filteredItems = computed(() => {
       if (props.type === 'equipment') {
         return items.value.filter(item => item.type === ItemType.equipment)
@@ -49,7 +70,7 @@ export default defineComponent({
       return items.value
     })
 
-    return { filteredItems }
+    return { searchQuery, filteredItems }
   }
 })
 </script>
