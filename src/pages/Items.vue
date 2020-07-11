@@ -1,7 +1,7 @@
 <template>
   <div>Items Page</div>
   <ul>
-    <li v-for="item in items" :key="item.id">
+    <li v-for="item in filteredItems" :key="item.id">
       <item :item="item" />
     </li>
   </ul>
@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, computed, PropType } from 'vue'
-import apis, { ItemSummary } from '/@/lib/apis'
+import apis, { ItemSummary, ItemType } from '/@/lib/apis'
 import useTitle from './use/title'
 import Item from '/@/components/Item/Item.vue'
 
@@ -39,8 +39,17 @@ export default defineComponent({
       const { data } = await apis.getItems()
       items.value = data
     })
+    const filteredItems = computed(() => {
+      if (props.type === 'equipment') {
+        return items.value.filter(item => item.type === ItemType.equipment)
+      }
+      if (props.type === 'property') {
+        return items.value.filter(item => item.type === ItemType.individual)
+      }
+      return items.value
+    })
 
-    return { items }
+    return { filteredItems }
   }
 })
 </script>
