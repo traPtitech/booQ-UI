@@ -32,7 +32,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  background-color: gray;
+  background-color: $background-secondary;
   > * {
     margin: 1rem 0;
     &:first-child {

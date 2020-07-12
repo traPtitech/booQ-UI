@@ -11,7 +11,12 @@ const config: UserConfig = {
       target: 'https://booq-dev.trapti.tech',
       changeOrigin: true
     }
+  },
+  cssPreprocessOptions: {
+    prependData: `@import "${path
+      .resolve(__dirname, 'src')
+      .replace(/\\/g, '/')}/styles/common.scss";`
   }
 }
 
-module.exports = config
+export default config
