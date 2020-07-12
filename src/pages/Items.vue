@@ -1,19 +1,34 @@
 <template>
   <div>Items Page</div>
+  <input v-model="searchQuery" placeholder="検索" />
   <ul>
-    <li v-for="item in items" :key="item.id">{{ item.name }}</li>
+    <li v-for="item in filteredItems" :key="item.id">
+      <item :item="item" />
+    </li>
   </ul>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, computed, PropType } from 'vue'
-import apis, { ItemSummary } from '/@/lib/apis'
+import {
+  defineComponent,
+  onMounted,
+  ref,
+  computed,
+  PropType,
+  watchEffect
+} from 'vue'
+import apis, { ItemSummary, ItemType } from '/@/lib/apis'
 import useTitle from './use/title'
+import Item from '/@/components/Item/Item.vue'
+import useDebouncedRef from '/@/use/debouncedRef'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
 
 export default defineComponent({
   name: 'Items',
+  components: {
+    Item
+  },
   props: {
     type: {
       type: String as PropType<ItemsPageType>,
@@ -34,7 +49,28 @@ export default defineComponent({
       items.value = data
     })
 
-    return { items }
+    const searchQuery = useDebouncedRef('')
+    watchEffect(async () => {
+      if (searchQuery.value === '') {
+        const { data } = await apis.getItems()
+        items.value = data
+        return
+      }
+      const { data } = await apis.getItems(undefined, searchQuery.value)
+      items.value = data
+    })
+
+    const filteredItems = computed(() => {
+      if (props.type === 'equipment') {
+        return items.value.filter(item => item.type === ItemType.equipment)
+      }
+      if (props.type === 'property') {
+        return items.value.filter(item => item.type === ItemType.individual)
+      }
+      return items.value
+    })
+
+    return { searchQuery, filteredItems }
   }
 })
 </script>
