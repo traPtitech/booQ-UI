@@ -7,7 +7,8 @@
     "lint": "eslint --ext .js,.vue src",
     "type-check": "tsc",
     "gen-api": "node ./scripts/generate-apis.js",
-    "clean": "rimraf ./src/lib/apis/generated"
+    "clean": "rimraf ./src/lib/apis/generated",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@mdi/js": "^5.3.45",
@@ -27,6 +28,7 @@
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue": "^7.0.0-alpha.9",
+    "patch-package": "^6.2.2",
     "postcss-normalize": "^9.0.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",

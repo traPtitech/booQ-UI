@@ -1,0 +1,13 @@
+diff --git a/node_modules/vite/dist/node/utils/cssUtils.js b/node_modules/vite/dist/node/utils/cssUtils.js
+index 9c57feb..bae3b15 100644
+--- a/node_modules/vite/dist/node/utils/cssUtils.js
++++ b/node_modules/vite/dist/node/utils/cssUtils.js
+@@ -54,7 +54,7 @@ async function compileCss(root, publicPath, { source, filename, scoped, modules,
+     }
+     const { options: postcssOptions, plugins: postcssPlugins } = await resolvePostcssOptions(root, isBuild);
+     const res = await compileStyleAsync({
+-        source,
++        source: preprocessOptions.prependData ? `${preprocessOptions.prependData}\n${source}` : source,
+         filename,
+         id: `data-v-${id}`,
+         scoped,

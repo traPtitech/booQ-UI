@@ -16,7 +16,7 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: node_modules
-          key: node_modules-v1-${{ hashFiles('**/package-lock.json') }}
+          key: node_modules-v3-${{ hashFiles('**/package-lock.json') }}
       - run: npm ci
   genApi:
     name: Generate APIs
@@ -31,9 +31,9 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: node_modules
-          key: node_modules-v1-${{ hashFiles('**/package-lock.json') }}
+          key: node_modules-v3-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            node_modules-
+            node_modules-v3-
       - run: npm run gen-api
       - uses: actions/upload-artifact@v1
         with:
@@ -54,9 +54,9 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: node_modules
-          key: node_modules-v1-${{ hashFiles('**/package-lock.json') }}
+          key: node_modules-v3-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            node_modules-
+            node_modules-v3-
       - uses: actions/download-artifact@v1
         with:
           name: apis
@@ -77,9 +77,9 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: node_modules
-          key: node_modules-v1-${{ hashFiles('**/package-lock.json') }}
+          key: node_modules-v3-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            node_modules-
+            node_modules-v3-
       - uses: actions/download-artifact@v1
         with:
           name: apis
@@ -100,9 +100,9 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: node_modules
-          key: node_modules-v1-${{ hashFiles('**/package-lock.json') }}
+          key: node_modules-v3-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            node_modules-
+            node_modules-v3-
       - uses: actions/download-artifact@v1
         with:
           name: apis
