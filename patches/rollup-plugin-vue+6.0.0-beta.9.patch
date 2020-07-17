@@ -1,13 +1,13 @@
 diff --git a/node_modules/rollup-plugin-vue/dist/index.js b/node_modules/rollup-plugin-vue/dist/index.js
-index e25d48b..dcf9141 100644
+index 1de5b87..ed5b81f 100644
 --- a/node_modules/rollup-plugin-vue/dist/index.js
 +++ b/node_modules/rollup-plugin-vue/dist/index.js
-@@ -133,7 +133,7 @@ function PluginVue(userOptions = {}) {
+@@ -163,7 +163,7 @@ function PluginVue(userOptions = {}) {
                      const result = await compiler_sfc_1.compileStyleAsync({
                          filename: query.filename,
                          id: `data-v-${query.id}`,
 -                        source: code,
 +                        source: options.preprocessOptions && options.preprocessOptions.prependData ? `${options.preprocessOptions.prependData}\n${code}` : code,
                          scoped: block.scoped,
+                         vars: !!block.vars,
                          modules: !!block.module,
-                         postcssOptions: options.postcssOptions,
