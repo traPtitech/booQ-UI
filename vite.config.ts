@@ -1,7 +1,13 @@
 import { UserConfig } from 'vite'
 import path from 'path'
 
-const config: UserConfig = {
+interface Patched {
+  cssPreprocessOptions?: {
+    prependData?: string
+  }
+}
+
+const config: UserConfig | Patched = {
   minify: 'esbuild',
   alias: {
     '/@/': path.resolve(__dirname, 'src')
