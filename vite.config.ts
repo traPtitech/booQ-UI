@@ -25,7 +25,7 @@ const config: UserConfig | Patched = {
       .replace(/\\/g, '/')}/styles/common.scss";`
   },
   define: {
-    '__VERSION__': packageJson.version
+    __VERSION__: `"${packageJson.version}"`
   }
 }
 
