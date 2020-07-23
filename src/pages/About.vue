@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="$style.container">
     <h1 id="booQとは">booQとは</h1>
     <ul>
       <li>traPの備品管理ツール</li>
@@ -90,6 +90,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
+.container {
+  margin: 3rem;
+  text-align: left;
+  ul,
+  li {
+    list-style: initial;
+    margin-left: 1em;
+  }
+}
 .code {
   display: inline-block;
   background-color: #fbe5e1;
