@@ -24,7 +24,11 @@
           <li>備品の登録、変更ができます。</li>
           <ul>
             <li>
-              備品の所持者は<code>traP</code>、<code>個人</code>（管理者のみ）、<code>支援課</code>から選択します。
+              備品の所持者は
+              <code :class="$style.code">traP</code>、
+              <code :class="$style.code">個人</code>（管理者のみ）、
+              <code :class="$style.code">支援課</code>
+              から選択します。
             </li>
             <li>備品の名前、説明、画像を登録、変更できます。</li>
             <li>
@@ -59,7 +63,7 @@
         <ul>
           <li>
             本の所持者登録で
-            <code>traP</code>を選べられます。
+            <code :class="$style.code">traP</code>を選べられます。
           </li>
         </ul>
       </li>
@@ -84,3 +88,15 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" module>
+.code {
+  display: inline-block;
+  background-color: #fbe5e1;
+  color: #c0341d;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
+  font-weight: bold;
+  font-family: monospace;
+}
+</style>
