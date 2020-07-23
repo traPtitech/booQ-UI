@@ -3,15 +3,16 @@
     <logo-and-title />
     <div>search</div>
     <list :class="$style.list" />
-    <div>
-      <span>booQ Project {version}</span>
-      <div>about</div>
+    <div :class="$style.footer">
+      <span :class="$style.version">booQ Project {version}</span>
+      <button :class="$style.aboutButton" @click="onClickAbout">?</button>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
 import LogoAndTitle from './LogoAndTitle.vue'
 import List from './List.vue'
 
@@ -22,7 +23,11 @@ export default defineComponent({
     List
   },
   setup() {
-    return {}
+    const router = useRouter()
+    const onClickAbout = () => {
+      router.push('/about')
+    }
+    return { onClickAbout }
   }
 })
 </script>
@@ -45,5 +50,19 @@ export default defineComponent({
 }
 .list {
   flex: 1;
+}
+.footer {
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+.version {
+  flex: 1;
+  margin-right: 1rem;
+}
+.aboutButton {
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
 }
 </style>
