@@ -4,7 +4,7 @@
     <div>search</div>
     <list :class="$style.list" />
     <div :class="$style.footer">
-      <span :class="$style.version">booQ Project {version}</span>
+      <span :class="$style.version">booQ Project v{{ version }}</span>
       <button :class="$style.aboutButton" @click="onClickAbout">?</button>
     </div>
   </nav>
@@ -13,6 +13,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
+import version from '/@/lib/version'
 import LogoAndTitle from './LogoAndTitle.vue'
 import List from './List.vue'
 
@@ -24,10 +25,12 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
+
     const onClickAbout = () => {
       router.push('/about')
     }
-    return { onClickAbout }
+
+    return { onClickAbout, version }
   }
 })
 </script>

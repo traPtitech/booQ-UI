@@ -1,5 +1,6 @@
 import { UserConfig } from 'vite'
 import path from 'path'
+import packageJson from './package.json'
 
 interface Patched {
   cssPreprocessOptions?: {
@@ -22,6 +23,9 @@ const config: UserConfig | Patched = {
     prependData: `@import "${path
       .resolve(__dirname, 'src')
       .replace(/\\/g, '/')}/styles/common.scss";`
+  },
+  define: {
+    '__VERSION__': packageJson.version
   }
 }
 
