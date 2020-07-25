@@ -1,13 +1,13 @@
 <template>
-  <li :class="$style.container" @click="onClick">
+  <li :class="$style.container" :data-is-selected="isSelected" @click="onClick">
     <icon :class="$style.icon" :name="icon" />
     <div :class="$style.title">{{ name }}</div>
   </li>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { useRouter } from 'vue-router'
+import { defineComponent, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import Icon from '/@/components/UI/Icon.vue'
 
 export default defineComponent({
@@ -31,11 +31,15 @@ export default defineComponent({
   },
   setup(props) {
     const router = useRouter()
+    const route = useRoute()
+
+    const isSelected = computed(() => route.path === props.path)
+
     const onClick = () => {
       router.push(props.path)
     }
 
-    return { onClick }
+    return { isSelected, onClick }
   }
 })
 </script>
@@ -45,7 +49,12 @@ export default defineComponent({
   display: flex;
   align-items: center;
   padding: 0.5rem;
+  border-radius: 2px;
   cursor: pointer;
+  &[data-is-selected='true'] {
+    color: $color-text-white;
+    background-color: $color-primary;
+  }
 }
 .icon {
   margin-right: 1em;
