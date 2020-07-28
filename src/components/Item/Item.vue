@@ -1,8 +1,15 @@
 <template>
-  <div :class="$style.wrapper" @click="onClick">
+  <div
+    :class="$style.wrapper"
+    @click="onClick"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
+  >
     <img :class="$style.img" :src="imgUrl" />
     <div :class="$style.container">
-      <div :class="$style.name">{{ item.name }}</div>
+      <div ref="$title" :class="$style.name" @transitionend="onTransitionEnd">
+        {{ item.name }}
+      </div>
       <div :class="$style.main">
         <div :class="$style.likeCount">
           <icon :class="$style.icon" name="thumbs-up" />{{ likeCount }}
@@ -17,11 +24,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from 'vue'
+import { defineComponent, PropType, computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ItemSummary } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import NoImg from '/@/assets/img/no-image.svg'
+import useTitleTransition from './use/titleTransition'
+
+const useHover = () => {
+  const isHovered = ref(false)
+  const onMouseEnter = () => {
+    isHovered.value = true
+  }
+  const onMouseLeave = () => {
+    isHovered.value = false
+  }
+  return { isHovered, onMouseEnter, onMouseLeave }
+}
 
 export default defineComponent({
   name: 'Item',
@@ -47,7 +66,19 @@ export default defineComponent({
       router.push(`/items/${props.item.id}`)
     }
 
-    return { imgUrl, likeCount, onClick }
+    const $title = ref<HTMLElement | null>(null)
+    const { isHovered, onMouseEnter, onMouseLeave } = useHover()
+    const { onTransitionEnd } = useTitleTransition(isHovered, $title)
+
+    return {
+      imgUrl,
+      likeCount,
+      onClick,
+      onMouseEnter,
+      onMouseLeave,
+      onTransitionEnd,
+      $title
+    }
   }
 })
 </script>
@@ -63,9 +94,6 @@ export default defineComponent({
     padding-top: (182 / 128) * 100%;
   }
   cursor: pointer;
-  &:hover {
-    filter: opacity(0.8);
-  }
 }
 .container {
   position: absolute;
@@ -75,7 +103,7 @@ export default defineComponent({
   padding: 8px;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(2px);
-  word-break: break-all;
+  overflow: hidden;
 }
 .img {
   position: absolute;
@@ -90,13 +118,25 @@ export default defineComponent({
   align-items: center;
 }
 .name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  word-break: break-all;
   font-weight: bold;
+  transition: 0.3s all ease-in-out;
 }
 .likeCount {
   min-width: max-content;
   margin-right: 4px;
 }
 .owners {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-all;
+  text-align: right;
   margin-left: auto;
 }
 .icon {
