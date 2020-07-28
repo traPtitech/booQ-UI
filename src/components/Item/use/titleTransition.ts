@@ -1,8 +1,8 @@
-import { Ref, watchEffect, onMounted } from 'vue'
+import { Ref, watchEffect } from 'vue'
 
 const lines = '3'
 
-const getLineClampedHeight = async ($ref: HTMLElement) => {
+const getLineClampedHeight = ($ref: HTMLElement) => {
   const width = $ref.clientWidth
   const $ninja = $ref.cloneNode(true) as HTMLElement
   $ninja.style.height = (null as unknown) as string
@@ -20,11 +20,11 @@ const useTitleTransition = (
   isExpanded: Ref<boolean>,
   $title: Ref<HTMLElement | null>
 ): { onTransitionEnd: () => void } => {
-  watchEffect(async () => {
+  watchEffect(() => {
     if (!$title.value) return
     $title.value.style.height = isExpanded.value
       ? `${$title.value.scrollHeight}px`
-      : `${await getLineClampedHeight($title.value)}px`
+      : `${getLineClampedHeight($title.value)}px`
   })
 
   const onTransitionEnd = () => {
