@@ -84,6 +84,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
+$border-radius: 2px;
+
 .wrapper {
   position: relative;
   width: 100%;
@@ -93,6 +95,7 @@ export default defineComponent({
     // B6判
     padding-top: (182 / 128) * 100%;
   }
+  border-radius: $border-radius;
   cursor: pointer;
 }
 .container {
@@ -103,6 +106,8 @@ export default defineComponent({
   padding: 8px;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(2px);
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
   overflow: hidden;
 }
 .img {
@@ -112,6 +117,7 @@ export default defineComponent({
   height: 100%;
   width: 100%;
   object-fit: cover;
+  border-radius: $border-radius;
 }
 .main {
   display: flex;
