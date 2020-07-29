@@ -34,7 +34,7 @@ export default defineComponent({
 })
 </script>
 
-<style module>
+<style lang="scss" module>
 .re {
   font-weight: bold;
 }
