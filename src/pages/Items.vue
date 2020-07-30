@@ -1,11 +1,9 @@
 <template>
-  <div>Items Page</div>
-  <input v-model="searchQuery" placeholder="検索" />
-  <ul>
-    <li v-for="item in filteredItems" :key="item.id">
-      <item :item="item" />
-    </li>
-  </ul>
+  <div :class="$style.container">
+    <div>Items Page</div>
+    <input v-model="searchQuery" placeholder="検索" />
+    <items :items="filteredItems" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -19,7 +17,7 @@ import {
 } from 'vue'
 import apis, { ItemSummary, ItemType } from '/@/lib/apis'
 import useTitle from './use/title'
-import Item from '/@/components/Item/Item.vue'
+import Items from '/@/components/Item/Items.vue'
 import useDebouncedRef from '/@/use/debouncedRef'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
@@ -27,7 +25,7 @@ type ItemsPageType = 'all' | 'equipment' | 'property'
 export default defineComponent({
   name: 'Items',
   components: {
-    Item
+    Items
   },
   props: {
     type: {
@@ -74,3 +72,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" module>
+.container {
+  margin: 3rem;
+}
+</style>
