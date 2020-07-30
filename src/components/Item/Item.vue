@@ -12,7 +12,8 @@
       </div>
       <div :class="$style.main">
         <div :class="$style.likeCount">
-          <icon :class="$style.icon" name="thumbs-up" />{{ likeCount }}
+          <icon :class="$style.icon" name="thumbs-up" :size="20" />
+          {{ likeCount }}
         </div>
         <div :class="$style.owners">
           {{ item.owners.map(owner => `@${owner.user.name}`).join() }}
@@ -97,6 +98,11 @@ $border-radius: 2px;
   }
   border-radius: $border-radius;
   cursor: pointer;
+  box-shadow: 0 0 0px 2px transparent;
+  &:hover {
+    box-shadow: 0 0 0px 2px $color-primary;
+  }
+  transition: 0.2s all ease-in-out;
 }
 .container {
   position: absolute;
@@ -130,22 +136,20 @@ $border-radius: 2px;
   overflow: hidden;
   word-break: break-all;
   font-weight: bold;
-  transition: 0.3s all ease-in-out;
+  transition: 0.2s all ease-in-out;
 }
 .likeCount {
   min-width: max-content;
   margin-right: 4px;
 }
 .owners {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   overflow: hidden;
-  word-break: break-all;
   text-align: right;
   margin-left: auto;
 }
 .icon {
-  vertical-align: middle;
+  vertical-align: bottom;
 }
 </style>

@@ -25,11 +25,16 @@ const useTitleTransition = (
     $title.value.style.height = isExpanded.value
       ? `${$title.value.scrollHeight}px`
       : `${getLineClampedHeight($title.value)}px`
+    if (isExpanded.value) {
+      $title.value.style.webkitLineClamp = 'initial'
+    }
   })
 
   const onTransitionEnd = () => {
     if (!$title.value) return
-    $title.value.style.webkitLineClamp = isExpanded.value ? 'initial' : lines
+    if (!isExpanded.value) {
+      $title.value.style.webkitLineClamp = lines
+    }
   }
 
   return { onTransitionEnd }
