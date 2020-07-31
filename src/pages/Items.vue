@@ -2,7 +2,7 @@
   <div :class="$style.container">
     <div>Items Page</div>
     <input v-model="searchQuery" placeholder="検索" />
-    <items :items="filteredItems" />
+    <item-grid :items="filteredItems" />
   </div>
 </template>
 
@@ -17,7 +17,7 @@ import {
 } from 'vue'
 import apis, { ItemSummary, ItemType } from '/@/lib/apis'
 import useTitle from './use/title'
-import Items from '/@/components/Item/Items.vue'
+import ItemGrid from '/@/components/Item/ItemGrid.vue'
 import useDebouncedRef from '/@/use/debouncedRef'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
@@ -25,7 +25,7 @@ type ItemsPageType = 'all' | 'equipment' | 'property'
 export default defineComponent({
   name: 'Items',
   components: {
-    Items
+    ItemGrid
   },
   props: {
     type: {

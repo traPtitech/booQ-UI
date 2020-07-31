@@ -12,7 +12,7 @@ import { ItemSummary } from '/@/lib/apis'
 import Item from './Item.vue'
 
 export default defineComponent({
-  name: 'Items',
+  name: 'ItemGrid',
   components: {
     Item
   },
