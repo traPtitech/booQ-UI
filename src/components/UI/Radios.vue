@@ -28,12 +28,9 @@ export default defineComponent({
   },
   setup(props, context) {
     const val = ref(props.options[0])
-    watch(
-      () => val.value,
-      newVal => {
-        context.emit('update:modelValue', newVal)
-      }
-    )
+    watch(val, newVal => {
+      context.emit('update:modelValue', newVal)
+    })
     return { val }
   }
 })
