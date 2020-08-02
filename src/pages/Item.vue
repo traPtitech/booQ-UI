@@ -1,5 +1,8 @@
 <template>
   <div>Item Page: {{ item?.name ?? '' }}</div>
+  <div v-if="item">
+    <controls :img-url="item.imgUrl" />
+  </div>
   <div>{{ JSON.stringify(item) }}</div>
 </template>
 
@@ -9,9 +12,13 @@ import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
 import apis, { ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
+import Controls from '/@/components/ItemDetail/Controls.vue'
 
 export default defineComponent({
   name: 'Item',
+  components: {
+    Controls
+  },
   setup() {
     const route = useRoute()
 
@@ -23,6 +30,8 @@ export default defineComponent({
       const { data } = await apis.getItem(state.id)
       state.item = data
     })
+
+
 
     useTitle(computed(() => (state.item ? `${state.item?.name}` : '物品')))
 
