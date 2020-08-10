@@ -1,5 +1,4 @@
 <template>
-  <div>RegisterItem Page</div>
   <register-form />
 </template>
 
