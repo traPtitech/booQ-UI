@@ -2,8 +2,8 @@
   <div :class="$style.container">
     <user-icon :user-name="detail.userName" />
     <div :class="$style.numContainer">
-      <div :class="$style.remain">{{ detail.remain }}</div>
-      <div>{{ detail.all }}</div>
+      <div>{{ detail.remain }}</div>
+      <div :class="$style.all">{{ detail.all }}</div>
     </div>
   </div>
 </template>
@@ -37,7 +37,7 @@ export default defineComponent({
   margin-left: 8px;
 }
 
-.remain {
-  border-bottom: solid 1px;
+.all {
+  border-top: solid 1px;
 }
 </style>
