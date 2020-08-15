@@ -1,18 +1,22 @@
 <template>
-  <div :class="$style.container">
+  <div>
     <img :class="$style.img" :src="imgUrl" />
     <div :class="$style.btnContainer">
-      <button>aa</button>
-      <button>bb</button>
+      <icon-button icon="arrow-down-bold-circle" label="借りる" width="100%" />
+      <icon-button icon="arrow-up-bold-circle" label="返す" width="100%" />
+      <icon name="dots-horizontal" :size="30" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import Icon from '/@/components/UI/Icon.vue'
+import IconButton from '/@/components/UI/IconButton.vue'
 
 export default defineComponent({
   name: 'Controls',
+  components: { Icon, IconButton },
   props: {
     imgUrl: {
       type: String,
@@ -26,10 +30,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  width: 432px;
-}
-
 .img {
   width: 100%;
 }
