@@ -1,5 +1,5 @@
 <template>
-  <img :src="iconUri" :width="size" :height="size" />
+  <img :src="iconUri" :width="size" :height="size" :class="$style.icon" />
 </template>
 
 <script lang="ts">
@@ -25,3 +25,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" module>
+.icon {
+  border-radius: 50%;
+}
+</style>
