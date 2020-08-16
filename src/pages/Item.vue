@@ -1,9 +1,8 @@
 <template>
-  <div>Item Page: {{ item?.name ?? '' }}</div>
-  <div v-if="item">
-    <controls :img-url="item.imgUrl" />
+  <div v-if="item" :class="$style.container">
+    <controls :img-url="item.imgUrl" :class="$style.control" />
+    <infomation :item="item" :class="$style.infomation" />
   </div>
-  <div>{{ JSON.stringify(item) }}</div>
 </template>
 
 <script lang="ts">
@@ -13,11 +12,13 @@ import { getFirstParam } from '/@/lib/params'
 import apis, { ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
 import Controls from '/@/components/ItemDetail/Controls.vue'
+import Infomation from '/@/components/ItemDetail/Infomation.vue'
 
 export default defineComponent({
   name: 'Item',
   components: {
-    Controls
+    Controls,
+    Infomation
   },
   setup() {
     const route = useRoute()
@@ -31,11 +32,26 @@ export default defineComponent({
       state.item = data
     })
 
-
-
     useTitle(computed(() => (state.item ? `${state.item?.name}` : '物品')))
 
     return { item: toRef(state, 'item') }
   }
 })
 </script>
+
+<style lang="scss" module>
+.container {
+  display: flex;
+  width: 100%;
+  padding: 8px;
+}
+
+.control {
+  width: 280px;
+}
+
+.infomation {
+  flex-basis: calc(100% - 280px - 16px);
+  padding: 16px;
+}
+</style>

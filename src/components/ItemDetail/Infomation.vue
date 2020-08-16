@@ -1,14 +1,30 @@
 <template>
-  <div>{{ item.name }}</div>
-  <div>{{ item.description }}</div>
+  <div :class="$style.container">
+    <div :class="$style.titleWrapper">
+      <h2>{{ item.name }}</h2>
+      <button :class="$style.favBtn">💛</button>
+    </div>
+    <div>{{ item.description }}</div>
+    <owners :item="item" />
+    <comments :comments="item.comments" />
+    <logs :logs="item.logs" />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
+import Owners from './Owners.vue'
+import Comments from './Comments.vue'
+import Logs from './Logs.vue'
 
 export default defineComponent({
   name: 'Infomation',
+  components: {
+    Owners,
+    Comments,
+    Logs
+  },
   props: {
     item: {
       type: Object as PropType<ItemSummary>,
@@ -22,11 +38,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.img {
-  width: 100%;
+.container {
+  text-align: left;
 }
 
-.btnContainer {
+.titleWrapper {
   display: flex;
+}
+
+.favBtn {
+  border: none;
+  background: white;
 }
 </style>
