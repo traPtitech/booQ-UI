@@ -2,7 +2,7 @@
   <div>
     <h3>コメント</h3>
     <div :class="$style.itemContainer">
-      <div v-for="(comment, i) in comments" :key="i" :class="$style.item">
+      <div v-for="comment in comments" :key="comment.id" :class="$style.item">
         <user-icon :user-name="comment.user.name" />
         <div :class="$style.text">{{ comment.text }}</div>
       </div>
