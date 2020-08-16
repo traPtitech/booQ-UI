@@ -1,26 +1,29 @@
 <template>
-  <div>
-    <h3>所有者</h3>
+  <detail-summary label="所有者">
     <div :class="$style.detailContainer">
       <owners-detail
-        v-for="(detail, i) in details"
-        :key="i"
+        v-for="detail in details"
+        :key="detail.userName"
         :class="$style.detail"
         :detail="detail"
       />
     </div>
-  </div>
+  </detail-summary>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
+import DetailSummary from './DetailSummary.vue'
 import OwnersDetail from './OwnersDetail.vue'
 import useOwners from './use/useOwners'
 
 export default defineComponent({
   name: 'Owners',
-  components: { OwnersDetail },
+  components: {
+    DetailSummary,
+    OwnersDetail
+  },
   props: {
     item: {
       type: Object as PropType<ItemSummary>,
@@ -28,8 +31,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { getOwnerDetail } = useOwners()
-    const details = computed(() => getOwnerDetail(props))
+    const { details } = useOwners(props)
     return { details }
   }
 })
@@ -39,10 +41,9 @@ export default defineComponent({
 .detailContainer {
   display: flex;
   flex-wrap: wrap;
-  padding-left: 8px;
 }
 
 .detail {
-  margin-right: 16px;
+  margin-right: 8px;
 }
 </style>

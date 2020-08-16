@@ -1,24 +1,25 @@
 <template>
-  <div>
-    <h3>ログ</h3>
-    <div :class="$style.itemContainer">
-      <div v-for="(log, i) in logSummaries" :key="i" :class="$style.item">
-        <user-icon :user-name="log.userName" />
-        <div :class="$style.text">{{ log.text }}</div>
-      </div>
+  <detail-summary label="ログ">
+    <div v-for="log in logSummaries" :key="log.id" :class="$style.item">
+      <user-icon :user-name="log.userName" />
+      <div :class="$style.text">{{ log.text }}</div>
     </div>
-  </div>
+  </detail-summary>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { Log } from '/@/lib/apis'
+import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import useLogs from './use/useLogs'
 
 export default defineComponent({
   name: 'Logs',
-  components: { UserIcon },
+  components: {
+    DetailSummary,
+    UserIcon
+  },
   props: {
     logs: {
       type: Array as PropType<Log[]>,
@@ -26,24 +27,19 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { getLogSummary } = useLogs()
-    const logSummaries = computed(() => getLogSummary(props))
+    const { logSummaries } = useLogs(props)
     return { logSummaries }
   }
 })
 </script>
 
 <style lang="scss" module>
-.itemContainer {
-  padding-left: 8px;
-}
-
 .item {
   display: flex;
 }
 
 .text {
-  margin-left: 16px;
+  margin-left: 8px;
   align-self: center;
 }
 </style>

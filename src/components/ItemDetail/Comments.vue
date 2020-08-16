@@ -1,23 +1,24 @@
 <template>
-  <div>
-    <h3>コメント</h3>
-    <div :class="$style.itemContainer">
-      <div v-for="comment in comments" :key="comment.id" :class="$style.item">
-        <user-icon :user-name="comment.user.name" />
-        <div :class="$style.text">{{ comment.text }}</div>
-      </div>
+  <detail-summary label="コメント">
+    <div v-for="comment in comments" :key="comment.id" :class="$style.item">
+      <user-icon :user-name="comment.user.name" />
+      <div :class="$style.text">{{ comment.text }}</div>
     </div>
-  </div>
+  </detail-summary>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { Comment } from '/@/lib/apis'
+import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 
 export default defineComponent({
   name: 'Comments',
-  components: { UserIcon },
+  components: {
+    DetailSummary,
+    UserIcon
+  },
   props: {
     comments: {
       type: Array as PropType<Comment[]>,
@@ -31,16 +32,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.itemContainer {
-  padding-left: 8px;
-}
-
 .item {
   display: flex;
 }
 
 .text {
-  margin-left: 16px;
+  margin-left: 8px;
   align-self: center;
 }
 </style>

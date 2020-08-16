@@ -19,7 +19,7 @@ import Comments from './Comments.vue'
 import Logs from './Logs.vue'
 
 export default defineComponent({
-  name: 'Infomation',
+  name: 'Information',
   components: {
     Owners,
     Comments,

@@ -1,34 +1,25 @@
+import { computed, ComputedRef } from 'vue'
 import { Log } from '/@/lib/apis'
 
 export interface LogSummary {
+  id: number
   userName: string
   text: string
 }
 
 const traP_ID = 1
 
-const useLogs = (): {
-  getLogSummary: (props: { logs: Log[] }) => LogSummary[]
+const useLogs = (props: {
+  logs: Log[]
+}): {
+  logSummaries: ComputedRef<LogSummary[]>
 } => {
-  const getLogSummary = (props: { logs: Log[] }) => {
-    return props.logs.map(v => {
+  const logSummaries = computed(() =>
+    props.logs.map(v => {
       const userName = v.user.name
       const ownerWord =
         v.ownerId === traP_ID || v.type > 1 ? '' : `${v.owner.name}さんの`
-      const logType = (() => {
-        switch (v.type) {
-          case 0:
-            return '借りました'
-          case 1:
-            return '返しました'
-          case 2:
-            return '追加しました'
-          case 3:
-            return '減らしました'
-          default:
-            return ''
-        }
-      })()
+      const logType = getLogTypeString(v.type)
       const cTime = new Date(v.createdAt)
       // cTimeを`yyyy/mm/dd hh:mm`に
       const logTime = `${cTime.getFullYear()}/${(
@@ -38,12 +29,27 @@ const useLogs = (): {
         '0' + cTime.getHours()
       ).slice(-2)}:${('0' + cTime.getMinutes()).slice(-2)}`
       return {
+        id: v.id,
         userName: userName,
         text: `${userName}さんが${ownerWord}物品を${logType} - ${logTime}`
       }
     })
+  )
+  const getLogTypeString = (logType: number) => {
+    switch (logType) {
+      case 0:
+        return '借りました'
+      case 1:
+        return '返しました'
+      case 2:
+        return '追加しました'
+      case 3:
+        return '減らしました'
+      default:
+        return ''
+    }
   }
-  return { getLogSummary }
+  return { logSummaries }
 }
 
 export default useLogs

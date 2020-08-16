@@ -2,7 +2,7 @@
   <div :class="$style.container">
     <user-icon :user-name="detail.userName" />
     <div :class="$style.numContainer">
-      <div>{{ detail.remain }}</div>
+      <div :class="$style.remain">{{ detail.remain }}</div>
       <div :class="$style.all">{{ detail.all }}</div>
     </div>
   </div>
@@ -35,6 +35,10 @@ export default defineComponent({
 
 .numContainer {
   margin-left: 8px;
+}
+
+.remain {
+  margin-bottom: -1px;
 }
 
 .all {

@@ -1,7 +1,7 @@
 <template>
   <div v-if="item" :class="$style.container">
     <controls :img-url="item.imgUrl" :class="$style.control" />
-    <infomation :item="item" :class="$style.infomation" />
+    <information :item="item" :class="$style.information" />
   </div>
 </template>
 
@@ -12,13 +12,13 @@ import { getFirstParam } from '/@/lib/params'
 import apis, { ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
 import Controls from '/@/components/ItemDetail/Controls.vue'
-import Infomation from '/@/components/ItemDetail/Infomation.vue'
+import Information from '/@/components/ItemDetail/Information.vue'
 
 export default defineComponent({
   name: 'Item',
   components: {
     Controls,
-    Infomation
+    Information
   },
   setup() {
     const route = useRoute()
@@ -42,16 +42,16 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   display: flex;
-  width: 100%;
-  padding: 8px;
+  padding: 3rem;
 }
 
 .control {
-  width: 280px;
+  width: 30%;
+  max-width: 480px;
 }
 
-.infomation {
-  flex-basis: calc(100% - 280px - 16px);
+.information {
+  flex: 1;
   padding: 16px;
 }
 </style>

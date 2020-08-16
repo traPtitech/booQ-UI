@@ -30,7 +30,9 @@ export default defineComponent({
   },
   setup(props) {
     const styles = reactive({
-      container: `width: ${props.width};`
+      container: {
+        width: props.width
+      }
     })
     return { styles }
   }
