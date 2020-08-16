@@ -1,5 +1,6 @@
 import { computed, ComputedRef } from 'vue'
 import { Log } from '/@/lib/apis'
+import { stringifyTimeByDate } from '/@/lib/date'
 
 export interface LogSummary {
   id: number
@@ -22,12 +23,7 @@ const useLogs = (props: {
       const logType = getLogTypeString(v.type)
       const cTime = new Date(v.createdAt)
       // cTimeを`yyyy/mm/dd hh:mm`に
-      const logTime = `${cTime.getFullYear()}/${(
-        '0' +
-        (cTime.getMonth() + 1)
-      ).slice(-2)}/${('0' + cTime.getDate()).slice(-2)} ${(
-        '0' + cTime.getHours()
-      ).slice(-2)}:${('0' + cTime.getMinutes()).slice(-2)}`
+      const logTime = stringifyTimeByDate(cTime)
       return {
         id: v.id,
         userName: userName,
