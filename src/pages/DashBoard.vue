@@ -1,23 +1,35 @@
 <template>
-  <div>DashBoard Page</div>
-  <img src="/@/assets/img/logo-main.svg" />
-  <HelloWorld msg="Hello Vue 3.0 + Vite" />
-  <ul v-if="items.length > 0">
-    <li v-for="item in items" :key="item.id">{{ item.name }}</li>
-  </ul>
+  <div v-if="items.length > 0">
+    <h2>あなたが借りている備品</h2>
+    <ul>
+      <borrowed-item
+        v-for="item in items"
+        :key="item.id"
+        :class="$style.item"
+        :item="item"
+      />
+    </ul>
+  </div>
   <div v-else>借りてるアイテムはありません</div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref, computed } from 'vue'
-import HelloWorld from '/@/components/HelloWorld.vue'
 import apis, { ItemSummary } from '/@/lib/apis'
+import { getDue } from '/@/lib/item'
 import useTitle from './use/title'
+import BorrowedItem from '/@/components/BorrowedItem.vue'
+
+const getSortedItemsByDue = (items: readonly ItemSummary[]) => {
+  const is = [...items]
+  is.sort((a, b) => getDue(a) - getDue(b))
+  return is
+}
 
 export default defineComponent({
   name: 'DashBoard',
   components: {
-    HelloWorld
+    BorrowedItem
   },
   setup() {
     useTitle(computed(() => 'ダッシュボード'))
@@ -26,10 +38,16 @@ export default defineComponent({
     onMounted(async () => {
       const { data: me } = await apis.getMe()
       const { data } = await apis.getItems(undefined, undefined, me.name)
-      items.value = data
+      items.value = getSortedItemsByDue(data)
     })
 
     return { items }
   }
 })
 </script>
+
+<style lang="scss" module>
+.item {
+  margin: 16px;
+}
+</style>
