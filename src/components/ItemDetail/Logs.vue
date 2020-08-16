@@ -1,5 +1,5 @@
 <template>
-  <detail-summary label="ログ">
+  <detail-summary title="ログ">
     <div v-for="log in logSummaries" :key="log.id" :class="$style.item">
       <user-icon :user-name="log.userName" />
       <div :class="$style.text">{{ log.text }}</div>

@@ -1,5 +1,5 @@
 <template>
-  <detail-summary label="コメント">
+  <detail-summary title="コメント">
     <div v-for="comment in comments" :key="comment.id" :class="$style.item">
       <user-icon :user-name="comment.user.name" />
       <div :class="$style.text">{{ comment.text }}</div>

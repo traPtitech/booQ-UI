@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>{{ label }}</h3>
+    <h3>{{ title }}</h3>
     <div :class="$style.itemContainer">
       <slot></slot>
     </div>
@@ -13,7 +13,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'DetailSummary',
   props: {
-    label: {
+    title: {
       type: String,
       required: true
     }

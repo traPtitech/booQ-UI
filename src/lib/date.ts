@@ -1,19 +1,23 @@
 const pad0 = (n: number, len: number) => ('' + n).padStart(len, '0')
 
-export const stringifyDate = (num: number): string => {
-  if (!Number.isFinite(num)) return '----/--/--'
-  const date = new Date(num)
+export const stringifyDate = (date: Date): string => {
   return `${date.getFullYear()}/${pad0(date.getMonth() + 1, 2)}/${pad0(
     date.getDate(),
     2
   )}`
 }
 
-export const stringifyTimeByDate = (date: Date): string => {
-  return `${date.getFullYear()}/${pad0(date.getMonth() + 1, 2)}/${pad0(
-    date.getDate(),
+export const stringifyDateFromNumber = (num: number): string => {
+  if (!Number.isFinite(num)) return '----/--/--'
+  const date = new Date(num)
+  return stringifyDate(date)
+}
+
+export const stringifyDateTime = (date: Date): string => {
+  return `${stringifyDate(date)} ${pad0(date.getHours(), 2)}:${pad0(
+    date.getMinutes(),
     2
-  )} ${pad0(date.getHours(), 2)}:${pad0(date.getMinutes(), 2)}`
+  )}`
 }
 
 export const toNow = (num: number): string | undefined => {

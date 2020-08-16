@@ -1,5 +1,5 @@
 <template>
-  <detail-summary label="所有者">
+  <detail-summary title="所有者">
     <div :class="$style.detailContainer">
       <owners-detail
         v-for="detail in details"
