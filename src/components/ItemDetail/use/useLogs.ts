@@ -1,5 +1,5 @@
 import { computed, ComputedRef } from 'vue'
-import { Log, traP_ID } from '/@/lib/apis'
+import { Log, LogType, traP_ID } from '/@/lib/apis'
 import { stringifyDateTime } from '/@/lib/date'
 
 export interface LogSummary {
@@ -17,7 +17,10 @@ const useLogs = (props: {
     props.logs.map(v => {
       const userName = v.user.name
       const ownerWord =
-        v.ownerId === traP_ID || v.type > 1 ? '' : `${v.owner.name}さんの`
+        v.ownerId === traP_ID ||
+        (v.type !== LogType.add && v.type !== LogType.remove)
+          ? ''
+          : `${v.owner.name}さんの`
       const logType = getLogTypeString(v.type)
       // createdAtを`yyyy/mm/dd hh:mm`に
       const logTime = stringifyDateTime(new Date(v.createdAt))
@@ -28,7 +31,7 @@ const useLogs = (props: {
       }
     })
   )
-  const getLogTypeString = (logType: number) => {
+  const getLogTypeString = (logType: LogType) => {
     switch (logType) {
       case 0:
         return '借りました'
