@@ -18,7 +18,8 @@ const useLogs = (props: {
       const userName = v.user.name
       const ownerWord =
         v.ownerId === traP_ID ||
-        (v.type !== LogType.add && v.type !== LogType.remove)
+        v.type === LogType.add ||
+        v.type === LogType.remove
           ? ''
           : `${v.owner.name}さんの`
       const logType = getLogTypeString(v.type)
@@ -33,13 +34,13 @@ const useLogs = (props: {
   )
   const getLogTypeString = (logType: LogType) => {
     switch (logType) {
-      case 0:
+      case LogType.borrow:
         return '借りました'
-      case 1:
+      case LogType.return:
         return '返しました'
-      case 2:
+      case LogType.add:
         return '追加しました'
-      case 3:
+      case LogType.remove:
         return '減らしました'
       default:
         return ''
