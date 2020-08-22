@@ -33,7 +33,7 @@
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "sass": "^1.26.10",
-    "ts-morph": "^7.3.0",
+    "ts-morph": "^8.0.0",
     "typescript": "^3.9.7",
     "vite": "^1.0.0-rc.4"
   },
