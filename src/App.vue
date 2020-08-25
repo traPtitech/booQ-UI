@@ -6,6 +6,7 @@
       <router-view />
     </main>
   </div>
+  <div id="dialog" />
 </template>
 
 <script lang="ts">
@@ -24,6 +25,7 @@ export default defineComponent({
 
 <style lang="scss" module>
 .container {
+  position: relative;
   display: grid;
   height: 100%;
   width: 100%;
