@@ -6,42 +6,51 @@
         icon="arrow-down-bold-circle"
         label="借りる"
         :class="$style.btn"
-        @click="borrowItem"
+        @click="toggleBorrowDialog"
       />
       <icon-button
         icon="arrow-up-bold-circle"
         label="返す"
         :class="$style.btn"
-        @click="returnItem"
       />
-      <icon
-        name="dots-horizontal"
-        :size="32"
-        :class="$style.icon"
-        @click="toggleOther"
-      />
+      <icon name="dots-horizontal" :size="32" :class="$style.icon" />
     </div>
+    <borrow-dialog
+      v-if="isOpenBorrowDialog"
+      :item="item"
+      @close="toggleBorrowDialog"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
+import { ItemSummary } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import IconButton from '/@/components/UI/IconButton.vue'
 import useLending from './use/lending'
+import BorrowDialog from './BorrowDialog.vue'
 
 export default defineComponent({
   name: 'Controls',
-  components: { Icon, IconButton },
+  components: {
+    Icon,
+    IconButton,
+    BorrowDialog
+  },
   props: {
+    item: {
+      type: Object as PropType<ItemSummary>,
+      required: true
+    },
     imgUrl: {
       type: String,
       required: true
     }
   },
   setup() {
-    const { borrowItem, returnItem, toggleOther } = useLending()
-    return { borrowItem, returnItem, toggleOther }
+    const { isOpenBorrowDialog, toggleBorrowDialog } = useLending()
+    return { isOpenBorrowDialog, toggleBorrowDialog }
   }
 })
 </script>
