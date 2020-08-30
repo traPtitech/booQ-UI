@@ -9,7 +9,6 @@ interface Patched {
 }
 
 const config: UserConfig | Patched = {
-  minify: 'esbuild',
   alias: {
     '/@/': path.resolve(__dirname, 'src')
   },
