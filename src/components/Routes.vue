@@ -1,8 +1,4 @@
 <template>
-  <!-- 一時的に無効化 -->
-  <!-- eslint-disable vue/no-template-key -->
-  <!-- eslint-disable vue/require-v-for-key -->
-  <!-- eslint-disable vue/valid-v-for -->
   <div>
     <router-link :to="pages[0].path">{{ pages[0].name }}</router-link>
     <template v-for="page in pages.slice(1)" :key="page.path">
