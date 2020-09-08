@@ -9,7 +9,7 @@
 import { defineComponent, PropType, computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
-import { stringifyDate, toNow } from '/@/lib/date'
+import { stringifyDateFromNumber, toNow } from '/@/lib/date'
 
 export default defineComponent({
   name: 'BorrowedItem',
@@ -22,7 +22,7 @@ export default defineComponent({
   setup(props) {
     const due = computed(() => getDue(props.item))
     const dueString = computed(() => {
-      const str = stringifyDate(due.value)
+      const str = stringifyDateFromNumber(due.value)
       const diff = toNow(due.value)
       if (!diff) return str
       return `${str} (${diff})`
