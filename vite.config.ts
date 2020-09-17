@@ -2,15 +2,11 @@ import { UserConfig } from 'vite'
 import path from 'path'
 import packageJson from './package.json'
 
-interface Patched {
-  cssPreprocessOptions?: {
-    prependData?: string
-  }
-}
+const srcPath = path.resolve(__dirname, 'src').replace(/\\/g, '/')
 
-const config: UserConfig | Patched = {
+const config: UserConfig = {
   alias: {
-    '/@/': path.resolve(__dirname, 'src')
+    '/@/': srcPath
   },
   proxy: {
     '/api': {
@@ -19,9 +15,9 @@ const config: UserConfig | Patched = {
     }
   },
   cssPreprocessOptions: {
-    prependData: `@import "${path
-      .resolve(__dirname, 'src')
-      .replace(/\\/g, '/')}/styles/common.scss";`
+    scss: {
+      additionalData: `@import "${srcPath}/styles/common.scss";`
+    }
   },
   define: {
     __VERSION__: `"${packageJson.version}"`
