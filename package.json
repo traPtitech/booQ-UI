@@ -14,7 +14,7 @@
     "@zxing/library": "^0.17.1",
     "axios": "^0.20.0",
     "direct-vuex": "^0.12.0",
-    "vue": "^3.0.0-rc.12",
+    "vue": "^3.0.0",
     "vue-router": "^4.0.0-beta.10",
     "vuex": "^4.0.0-beta.4"
   },
@@ -22,7 +22,7 @@
     "@openapitools/openapi-generator-cli": "^1.0.18-5.0.0-beta2",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
-    "@vue/compiler-sfc": "^3.0.0-rc.12",
+    "@vue/compiler-sfc": "^3.0.0",
     "autoprefixer": "^9.8.6",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
