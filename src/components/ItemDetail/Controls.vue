@@ -58,15 +58,6 @@ $height: 36px;
   align-items: center;
   padding: 8px;
   user-select: none;
-  .btn {
-    color: $color-primary;
-    background-color: $color-background;
-    transition: all 0.2s;
-  }
-  :hover.btn {
-    background-color: $color-primary;
-    color: $color-background;
-  }
 }
 
 .btn {
@@ -75,6 +66,13 @@ $height: 36px;
   margin-right: 8px;
   border-radius: $height / 2;
   border: solid 1px $color-primary;
+  color: $color-primary;
+  background-color: $color-background;
+  transition: all 0.2s;
+  &:hover {
+    background-color: $color-primary;
+    color: $color-background;
+  }
 }
 
 .icon {
