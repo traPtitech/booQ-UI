@@ -12,7 +12,7 @@ import { defineComponent, PropType } from 'vue'
 import { Log } from '/@/lib/apis'
 import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
-import useLogs from './use/useLogs'
+import useLogs from './use/logs'
 
 export default defineComponent({
   name: 'Logs',
