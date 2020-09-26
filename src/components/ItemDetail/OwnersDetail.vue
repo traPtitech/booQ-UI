@@ -11,7 +11,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
-import { OwnerDetail } from './use/useOwners'
+import { OwnerDetail } from './use/owners'
 
 export default defineComponent({
   name: 'OwnersDetail',

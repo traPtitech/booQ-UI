@@ -28,7 +28,7 @@
 import { defineComponent } from 'vue'
 import Icon from '/@/components/UI/Icon.vue'
 import IconButton from '/@/components/UI/IconButton.vue'
-import useLending from './use/useLending'
+import useLending from './use/lending'
 
 export default defineComponent({
   name: 'Controls',
@@ -47,6 +47,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
+$height: 36px;
+
 .img {
   width: 100%;
 }
@@ -56,14 +58,22 @@ export default defineComponent({
   align-items: center;
   padding: 8px;
   user-select: none;
+  .btn {
+    color: $color-primary;
+    background-color: $color-background;
+    transition: all 0.2s;
+  }
+  :hover.btn {
+    background-color: $color-primary;
+    color: $color-background;
+  }
 }
 
 .btn {
-  height: 36px;
+  height: $height;
   width: 96px;
-  color: $color-primary;
   margin-right: 8px;
-  border-radius: 18px;
+  border-radius: $height / 2;
   border: solid 1px $color-primary;
 }
 

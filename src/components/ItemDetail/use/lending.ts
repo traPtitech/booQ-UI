@@ -1,15 +1,15 @@
 import { ref } from 'vue'
 
 const useLending = (): {
-  rent: () => void
+  lend: () => void
   borrowItem: () => void
   returnItem: () => void
   toggleOther: () => void
 } => {
   const isOpenOther = ref(false)
 
-  const rent = () => {
-    console.log('rent')
+  const lend = () => {
+    console.log('lend')
   }
   const borrowItem = () => {
     console.log('borrowItem')
@@ -20,7 +20,7 @@ const useLending = (): {
   const toggleOther = () => {
     console.log('toggleOther')
   }
-  return { rent, borrowItem, returnItem, toggleOther }
+  return { lend, borrowItem, returnItem, toggleOther }
 }
 
 export default useLending

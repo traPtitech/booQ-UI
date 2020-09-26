@@ -16,7 +16,7 @@ import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import DetailSummary from './DetailSummary.vue'
 import OwnersDetail from './OwnersDetail.vue'
-import useOwners from './use/useOwners'
+import useOwners from './use/owners'
 
 export default defineComponent({
   name: 'Owners',
