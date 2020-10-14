@@ -10,7 +10,7 @@
     "clean": "rimraf ./src/lib/apis/generated"
   },
   "dependencies": {
-    "@mdi/js": "^5.6.55",
+    "@mdi/js": "^5.7.55",
     "@zxing/library": "^0.17.1",
     "axios": "^0.20.0",
     "direct-vuex": "^0.12.0",
