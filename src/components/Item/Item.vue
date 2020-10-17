@@ -7,7 +7,7 @@
   >
     <img :class="$style.img" :src="imgUrl" />
     <div :class="$style.container">
-      <div ref="$title" :class="$style.name" @transitionend="onTransitionEnd">
+      <div ref="titleEle" :class="$style.name" @transitionend="onTransitionEnd">
         {{ item.name }}
       </div>
       <div :class="$style.main">
@@ -67,9 +67,9 @@ export default defineComponent({
       router.push(`/items/${props.item.id}`)
     }
 
-    const $title = ref<HTMLElement | null>(null)
+    const titleEle = ref<HTMLElement | null>(null)
     const { isHovered, onMouseEnter, onMouseLeave } = useHover()
-    const { onTransitionEnd } = useTitleTransition(isHovered, $title)
+    const { onTransitionEnd } = useTitleTransition(isHovered, titleEle)
 
     return {
       imgUrl,
@@ -78,7 +78,7 @@ export default defineComponent({
       onMouseEnter,
       onMouseLeave,
       onTransitionEnd,
-      $title
+      titleEle
     }
   }
 })
