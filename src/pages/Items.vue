@@ -7,18 +7,14 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  ref,
-  computed,
-  PropType,
-  watchEffect
-} from 'vue'
+import { defineComponent, ref, computed, PropType, watch } from 'vue'
 import apis, { ItemSummary, ItemType } from '/@/lib/apis'
 import useTitle from './use/title'
 import ItemGrid from '/@/components/Item/ItemGrid.vue'
 import useDebouncedRef from '/@/use/debouncedRef'
+import { useRoute } from 'vue-router'
+import { getFirstParam } from '/@/lib/params'
+import useSyncParam from './use/syncParam'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
 
@@ -41,22 +37,26 @@ export default defineComponent({
     })
     useTitle(title)
 
+    const route = useRoute()
     const items = ref<ItemSummary[]>([])
-    onMounted(async () => {
-      const { data } = await apis.getItems()
-      items.value = data
-    })
 
-    const searchQuery = useDebouncedRef('')
-    watchEffect(async () => {
-      if (searchQuery.value === '') {
-        const { data } = await apis.getItems()
+    const searchQuery = useDebouncedRef(
+      getFirstParam(route.query?.search) ?? ''
+    )
+    watch(
+      searchQuery,
+      async val => {
+        if (val === '') {
+          const { data } = await apis.getItems()
+          items.value = data
+          return
+        }
+        const { data } = await apis.getItems(undefined, val)
         items.value = data
-        return
-      }
-      const { data } = await apis.getItems(undefined, searchQuery.value)
-      items.value = data
-    })
+      },
+      { immediate: true }
+    )
+    useSyncParam('search', searchQuery)
 
     const filteredItems = computed(() => {
       if (props.type === 'equipment') {

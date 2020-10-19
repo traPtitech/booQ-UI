@@ -1,4 +1,4 @@
-export const getFirstParam = (p: string | string[]): string => {
+export const getFirstParam = <T extends string | null>(p: T | Array<T>): T => {
   if (Array.isArray(p)) {
     return p[0]
   }

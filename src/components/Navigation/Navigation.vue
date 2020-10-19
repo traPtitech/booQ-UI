@@ -1,7 +1,7 @@
 <template>
   <nav :class="$style.nav">
     <logo-and-title />
-    <div>search</div>
+    <search />
     <list :class="$style.list" />
     <div :class="$style.footer">
       <span :class="$style.version">booQ Project v{{ version }}</span>
@@ -15,12 +15,14 @@ import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import version from '/@/lib/version'
 import LogoAndTitle from './LogoAndTitle.vue'
+import Search from './Search.vue'
 import List from './List.vue'
 
 export default defineComponent({
   name: 'Navigation',
   components: {
     LogoAndTitle,
+    Search,
     List
   },
   setup() {
