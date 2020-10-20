@@ -1,6 +1,6 @@
 import { ref, Ref, ComputedRef, computed } from 'vue'
 import apis, { ItemSummary, ItemType, Owner } from '/@/lib/apis'
-import useOwners, { OwnerDetail } from './useOwners'
+import useOwners, { OwnerDetail } from './owners'
 import { stringifyDate } from '/@/lib/date'
 
 const useBorrow = (props: {
