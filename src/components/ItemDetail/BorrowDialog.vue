@@ -2,10 +2,9 @@
   <dialog-template @close="close">
     <div :class="$style.container">
       <h2 :class="$style.title">物品を借りる</h2>
-      <borrow-dialog-select
+      <borrow-dialog-owner-selector
+        v-model="selectedOwnerName"
         :details="details"
-        :selected-owner-name="selectedOwnerName"
-        @select-owner="selectOwner"
       />
       <div :class="$style.label">目的:</div>
       <textarea v-model="purpose" rows="10" :class="$style.input" />
@@ -14,7 +13,7 @@
       <div v-if="owner && owner.count !== 1">
         <div :class="$style.label">個数:</div>
         <input
-          v-model="count"
+          v-model.number="count"
           type="number"
           :class="$style.input"
           :max="owner.count"
@@ -35,7 +34,7 @@
 import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
-import BorrowDialogSelect from './BorrowDialogSelect.vue'
+import BorrowDialogOwnerSelector from './BorrowDialogOwnerSelector.vue'
 import IconButton from '/@/components/UI/IconButton.vue'
 import useBorrow from './use/borrow'
 
@@ -43,7 +42,7 @@ export default defineComponent({
   name: 'BorrowDialog',
   components: {
     DialogTemplate,
-    BorrowDialogSelect,
+    BorrowDialogOwnerSelector,
     IconButton
   },
   props: {
@@ -52,12 +51,13 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ['close'],
+  emits: {
+    close: () => true
+  },
   setup(props, context) {
     const {
       details,
       selectedOwnerName,
-      selectOwner,
       purpose,
       dueDate,
       count,
@@ -72,6 +72,7 @@ export default defineComponent({
         await borrow()
         context.emit('close')
       } catch (e) {
+        // TODO: トーストを出す
         // eslint-disable-next-line no-console
         console.error(e)
       }
@@ -80,7 +81,6 @@ export default defineComponent({
       close,
       details,
       selectedOwnerName,
-      selectOwner,
       purpose,
       dueDate,
       count,

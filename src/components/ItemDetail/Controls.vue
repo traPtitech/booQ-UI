@@ -28,7 +28,7 @@ import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import IconButton from '/@/components/UI/IconButton.vue'
-import useLending from './use/lending'
+import useOpener from '/@/components/UI/use/opener'
 import BorrowDialog from './BorrowDialog.vue'
 
 export default defineComponent({
@@ -49,7 +49,10 @@ export default defineComponent({
     }
   },
   setup() {
-    const { isOpenBorrowDialog, toggleBorrowDialog } = useLending()
+    const {
+      isOpenDialog: isOpenBorrowDialog,
+      toggleDialog: toggleBorrowDialog
+    } = useOpener()
     return { isOpenBorrowDialog, toggleBorrowDialog }
   }
 })

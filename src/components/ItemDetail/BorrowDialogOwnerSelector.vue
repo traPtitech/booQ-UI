@@ -1,11 +1,7 @@
 <template>
   <div :class="$style.container">
     <label>所有者:</label>
-    <select
-      :value="selectedOwnerName"
-      :class="$style.select"
-      @input="selectOwner"
-    >
+    <select :value="modelValue" :class="$style.select" @input="selectOwner">
       <option
         v-for="detail in details"
         :key="detail.userName"
@@ -20,25 +16,27 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import useBorrow from './use/useBorrow'
 import { OwnerDetail } from './use/owners'
 
 export default defineComponent({
-  name: 'BorrowDialogSelect',
+  name: 'BorrowDialogOwnerSelector',
   props: {
     details: {
       type: Object as PropType<OwnerDetail>,
       required: true
     },
-    selectedOwnerName: {
+    modelValue: {
       type: String,
       required: true
     }
   },
-  emits: ['select-owner'],
+  emits: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    'update:modelValue': (value: string) => true
+  },
   setup(_, context) {
     const selectOwner = (e: InputEvent) => {
-      context.emit('select-owner', e)
+      context.emit('update:modelValue', (e.target as HTMLInputElement).value)
     }
     return { selectOwner }
   }
