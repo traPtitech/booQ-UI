@@ -46,7 +46,7 @@ const useBorrow = (props: {
       throw 'unexpcted error: owner information is destroyed'
     }
     const log = {
-      ownerId: owner.value.userId,
+      ownerId: owner.value.user.id,
       type: 0,
       purpose: purpose.value,
       dueDate: dueDate.value,

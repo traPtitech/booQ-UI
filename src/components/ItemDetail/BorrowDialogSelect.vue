@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import useBorrow from './use/useBorrow'
-import { OwnerDetail } from './use/useOwners'
+import { OwnerDetail } from './use/owners'
 
 export default defineComponent({
   name: 'BorrowDialogSelect',

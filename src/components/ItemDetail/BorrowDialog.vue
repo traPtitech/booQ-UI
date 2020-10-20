@@ -37,7 +37,7 @@ import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import BorrowDialogSelect from './BorrowDialogSelect.vue'
 import IconButton from '/@/components/UI/IconButton.vue'
-import useBorrow from './use/useBorrow'
+import useBorrow from './use/borrow'
 
 export default defineComponent({
   name: 'BorrowDialog',
