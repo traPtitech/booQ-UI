@@ -2,24 +2,26 @@
   <dialog-template @close="close">
     <div :class="$style.container">
       <h2 :class="$style.title">物品を借りる</h2>
-      <borrow-dialog-owner-selector
-        v-model="selectedOwnerName"
-        :details="details"
-      />
-      <div :class="$style.label">目的:</div>
-      <textarea v-model="purpose" rows="10" :class="$style.input" />
-      <div :class="$style.label">返却日:</div>
-      <input v-model="dueDate" type="date" :class="$style.input" />
-      <div v-if="owner && owner.count !== 1">
-        <div :class="$style.label">個数:</div>
-        <input
-          v-model.number="count"
-          type="number"
-          :class="$style.input"
-          :max="owner.count"
-          :min="1"
+      <form ref="$formEle">
+        <borrow-dialog-owner-selector
+          v-model="selectedOwnerName"
+          :details="details"
         />
-      </div>
+        <div :class="$style.label">目的:</div>
+        <textarea v-model="purpose" rows="10" :class="$style.input" required />
+        <div :class="$style.label">返却日:</div>
+        <input v-model="dueDate" type="date" :class="$style.input" required />
+        <div v-if="owner && owner.count !== 1">
+          <div :class="$style.label">個数:</div>
+          <input
+            v-model.number="count"
+            type="number"
+            :class="$style.input"
+            :max="owner.count"
+            :min="1"
+          />
+        </div>
+      </form>
       <icon-button
         icon="arrow-down-bold-circle"
         label="借りる"
@@ -31,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import BorrowDialogOwnerSelector from './BorrowDialogOwnerSelector.vue'
@@ -55,6 +57,7 @@ export default defineComponent({
     close: () => true
   },
   setup(props, context) {
+    const $formEle = ref()
     const {
       details,
       selectedOwnerName,
@@ -63,14 +66,14 @@ export default defineComponent({
       count,
       owner,
       borrow
-    } = useBorrow(props)
+    } = useBorrow(props, $formEle)
     const close = () => {
       context.emit('close')
     }
     const borrowItem = async () => {
       try {
         await borrow()
-        context.emit('close')
+        // context.emit('close')
       } catch (e) {
         // TODO: トーストを出す
         // eslint-disable-next-line no-console
@@ -85,7 +88,8 @@ export default defineComponent({
       dueDate,
       count,
       owner,
-      borrowItem
+      borrowItem,
+      $formEle
     }
   }
 })

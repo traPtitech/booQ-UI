@@ -3,9 +3,12 @@ import apis, { ItemSummary, ItemType, Owner } from '/@/lib/apis'
 import useOwners, { OwnerDetail } from './owners'
 import { stringifyDate } from '/@/lib/date'
 
-const useBorrow = (props: {
-  item: ItemSummary
-}): {
+const useBorrow = (
+  props: {
+    item: ItemSummary
+  },
+  $form: Ref<HTMLFormElement>
+): {
   details: ComputedRef<OwnerDetail[]>
   selectedOwnerName: Ref<string>
   purpose: Ref<string>
@@ -24,13 +27,14 @@ const useBorrow = (props: {
   )
 
   const borrow = async () => {
-    if (typeof count.value === 'number') {
-      alert('個数は数字を入力してください。')
-      throw 'count is not number'
+    if (!$form.value.checkValidity()) {
+      alert('入力が不適切です')
+      throw 'input is invalid'
     }
-    if (props.item.type === ItemType.equipment && purpose.value === '') {
-      alert('目的を入力してください')
-      throw 'purpose is empty'
+    // countに空文字が入ってるときcheckValidity()をすり抜ける
+    if (typeof count.value === 'string') {
+      alert('個数が入力されていません')
+      throw 'input is invalid'
     }
     // TODO: storeにmeをおいたらadminならスルーするようにする
     if (props.item.type === ItemType.equipment) {
