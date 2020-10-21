@@ -73,7 +73,7 @@ export default defineComponent({
     const borrowItem = async () => {
       try {
         await borrow()
-        // context.emit('close')
+        context.emit('close')
       } catch (e) {
         // TODO: トーストを出す
         // eslint-disable-next-line no-console
