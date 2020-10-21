@@ -2,7 +2,7 @@
   <dialog-template @close="close">
     <div :class="$style.container">
       <h2 :class="$style.title">物品を借りる</h2>
-      <form ref="$formEle">
+      <form @submit="borrowItem">
         <borrow-dialog-owner-selector
           v-model="selectedOwnerName"
           :details="details"
@@ -21,19 +21,19 @@
             :min="1"
           />
         </div>
+        <icon-button
+          icon="arrow-down-bold-circle"
+          label="借りる"
+          type="submit"
+          :class="$style.button"
+        />
       </form>
-      <icon-button
-        icon="arrow-down-bold-circle"
-        label="借りる"
-        :class="$style.button"
-        @click="borrowItem"
-      />
     </div>
   </dialog-template>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import BorrowDialogOwnerSelector from './BorrowDialogOwnerSelector.vue'
@@ -57,7 +57,6 @@ export default defineComponent({
     close: () => true
   },
   setup(props, context) {
-    const $formEle = ref()
     const {
       details,
       selectedOwnerName,
@@ -66,7 +65,7 @@ export default defineComponent({
       count,
       owner,
       borrow
-    } = useBorrow(props, $formEle)
+    } = useBorrow(props)
     const close = () => {
       context.emit('close')
     }
@@ -88,8 +87,7 @@ export default defineComponent({
       dueDate,
       count,
       owner,
-      borrowItem,
-      $formEle
+      borrowItem
     }
   }
 })

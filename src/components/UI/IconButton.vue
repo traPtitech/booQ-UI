@@ -1,8 +1,8 @@
 <template>
-  <div :class="$style.container">
+  <button :type="type" :class="$style.container">
     <icon :class="$style.icon" :name="icon" />
     <div>{{ label }}</div>
-  </div>
+  </button>
 </template>
 
 <script lang="ts">
@@ -20,6 +20,10 @@ export default defineComponent({
     label: {
       type: String,
       required: true
+    },
+    type: {
+      type: String,
+      default: 'button'
     }
   },
   setup() {

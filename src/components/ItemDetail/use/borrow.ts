@@ -3,12 +3,9 @@ import apis, { ItemSummary, ItemType, Owner } from '/@/lib/apis'
 import useOwners, { OwnerDetail } from './owners'
 import { stringifyDate } from '/@/lib/date'
 
-const useBorrow = (
-  props: {
-    item: ItemSummary
-  },
-  $form: Ref<HTMLFormElement>
-): {
+const useBorrow = (props: {
+  item: ItemSummary
+}): {
   details: ComputedRef<OwnerDetail[]>
   selectedOwnerName: Ref<string>
   purpose: Ref<string>
@@ -27,10 +24,6 @@ const useBorrow = (
   )
 
   const borrow = async () => {
-    if (!$form.value.checkValidity()) {
-      alert('入力が不適切です')
-      throw 'input is invalid'
-    }
     // countに空文字が入ってるときcheckValidity()をすり抜ける
     if (typeof count.value === 'string') {
       alert('個数が入力されていません')
