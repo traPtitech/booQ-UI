@@ -13,10 +13,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, watchEffect } from 'vue'
-import zxing from '@zxing/library'
-
-const { BrowserBarcodeReader } = zxing
-type VideoInputDevice = zxing.VideoInputDevice
+import { BrowserBarcodeReader, VideoInputDevice } from '@zxing/library'
 
 const checkDigit = (isbn: string) => {
   const digits = isbn.split('').map(n => +n)
