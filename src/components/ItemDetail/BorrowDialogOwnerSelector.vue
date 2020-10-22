@@ -1,19 +1,17 @@
 <template>
-  <div :class="$style.container">
-    <label>
-      所有者:
-      <select :value="modelValue" :class="$style.select" @input="selectOwner">
-        <option
-          v-for="detail in details"
-          :key="detail.userName"
-          :value="detail.userName"
-          :disabled="detail.remain === 0"
-        >
-          {{ detail.userName }} ({{ detail.remain }})
-        </option>
-      </select>
-    </label>
-  </div>
+  <label>
+    所有者:
+    <select :value="modelValue" :class="$style.select" @input="selectOwner">
+      <option
+        v-for="detail in details"
+        :key="detail.userName"
+        :value="detail.userName"
+        :disabled="detail.remain === 0"
+      >
+        {{ detail.userName }} ({{ detail.remain }})
+      </option>
+    </select>
+  </label>
 </template>
 
 <script lang="ts">
@@ -46,10 +44,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  display: flex;
-  align-items: center;
-}
 .select {
   margin-left: 0.5rem;
   font-size: 1.05rem;

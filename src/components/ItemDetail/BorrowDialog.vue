@@ -1,7 +1,7 @@
 <template>
-  <dialog-template :class="$style.container" @close="close">
+  <dialog-template @close="close">
     <h2 :class="$style.title">物品を借りる</h2>
-    <form @submit="borrowItem">
+    <form :class="$style.container" @submit="borrowItem">
       <borrow-dialog-owner-selector
         v-model="selectedOwnerName"
         :details="details"
@@ -14,18 +14,16 @@
         返却日:
         <input v-model="dueDate" type="date" :class="$style.input" required />
       </label>
-      <div v-if="owner && owner.count !== 1">
-        <label :class="$style.label">
-          個数:
-          <input
-            v-model.number="count"
-            type="number"
-            :class="$style.input"
-            :max="owner.count"
-            :min="1"
-          />
-        </label>
-      </div>
+      <label v-if="owner && owner.count !== 1" :class="$style.label">
+        個数:
+        <input
+          v-model.number="count"
+          type="number"
+          :class="$style.input"
+          :max="owner.count"
+          :min="1"
+        />
+      </label>
       <icon-button
         icon="arrow-down-bold-circle"
         label="借りる"
@@ -74,14 +72,8 @@ export default defineComponent({
       context.emit('close')
     }
     const borrowItem = async () => {
-      try {
-        await borrow()
-        context.emit('close')
-      } catch (e) {
-        // TODO: トーストを出す
-        // eslint-disable-next-line no-console
-        console.error(e)
-      }
+      await borrow()
+      context.emit('close')
     }
     return {
       close,

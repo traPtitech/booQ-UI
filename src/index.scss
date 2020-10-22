@@ -36,5 +36,5 @@ ul {
 *,
 *::before,
 *::after {
-  -sizing: border-box;
+  box-sizing: border-box;
 }
