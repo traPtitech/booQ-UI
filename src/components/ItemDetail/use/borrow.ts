@@ -33,7 +33,7 @@ const useBorrow = (props: {
     if (props.item.type === ItemType.equipment) {
       // TODO: これリンクあっても押せないからモーダルかなんかにする
       const res = window.confirm(
-        '役員には確認しましたか？\n倉庫に関してはこちら→https://wiki.trapti.tech/general/%E5%80%89%E5%BA%AB'
+        '役員には確認しましたか？\n倉庫に関してはこちら→https://wiki.trap.jp/general/%E5%80%89%E5%BA%AB'
       )
       if (!res) {
         return
