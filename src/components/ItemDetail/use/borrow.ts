@@ -1,5 +1,5 @@
 import { ref, Ref, ComputedRef, computed } from 'vue'
-import apis, { ItemSummary, ItemType, Owner } from '/@/lib/apis'
+import apis, { ItemSummary, ItemType, Owner, LogType } from '/@/lib/apis'
 import useOwners, { OwnerDetail } from './owners'
 import { stringifyDate } from '/@/lib/date'
 
@@ -45,7 +45,7 @@ const useBorrow = (props: {
     }
     const log = {
       ownerId: owner.value.user.id,
-      type: 0,
+      type: LogType.borrow,
       purpose: purpose.value,
       dueDate: dueDate.value,
       count: count.value
