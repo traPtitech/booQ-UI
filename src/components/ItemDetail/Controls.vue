@@ -50,8 +50,8 @@ export default defineComponent({
   },
   setup() {
     const {
-      isOpenDialog: isOpenBorrowDialog,
-      toggleDialog: toggleBorrowDialog
+      isOpen: isOpenBorrowDialog,
+      toggle: toggleBorrowDialog
     } = useOpener()
     return { isOpenBorrowDialog, toggleBorrowDialog }
   }

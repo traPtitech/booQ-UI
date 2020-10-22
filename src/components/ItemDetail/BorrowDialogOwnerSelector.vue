@@ -1,16 +1,18 @@
 <template>
   <div :class="$style.container">
-    <label>所有者:</label>
-    <select :value="modelValue" :class="$style.select" @input="selectOwner">
-      <option
-        v-for="detail in details"
-        :key="detail.userName"
-        :value="detail.userName"
-        :disabled="detail.remain === 0"
-      >
-        {{ detail.userName }}
-      </option>
-    </select>
+    <label>
+      所有者:
+      <select :value="modelValue" :class="$style.select" @input="selectOwner">
+        <option
+          v-for="detail in details"
+          :key="detail.userName"
+          :value="detail.userName"
+          :disabled="detail.remain === 0"
+        >
+          {{ detail.userName }}
+        </option>
+      </select>
+    </label>
   </div>
 </template>
 
@@ -49,7 +51,7 @@ export default defineComponent({
   align-items: center;
 }
 .select {
-  margin-left: 8px;
+  margin-left: 0.5rem;
   font-size: 1.05rem;
   flex: 1;
 }

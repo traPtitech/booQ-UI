@@ -1,17 +1,17 @@
 import { ref, Ref } from 'vue'
 
 const useOpener = (): {
-  isOpenDialog: Ref<boolean>
-  toggleDialog: () => void
+  isOpen: Ref<boolean>
+  toggle: () => void
 } => {
-  const isOpenDialog = ref(false)
+  const isOpen = ref(false)
 
-  const toggleDialog = () => {
-    isOpenDialog.value = !isOpenDialog.value
+  const toggle = () => {
+    isOpen.value = !isOpen.value
   }
   return {
-    isOpenDialog,
-    toggleDialog
+    isOpen,
+    toggle
   }
 }
 

@@ -27,7 +27,7 @@ const useBorrow = (props: {
     // countに空文字が入ってるときcheckValidity()をすり抜ける
     if (typeof count.value === 'string') {
       alert('個数が入力されていません')
-      throw 'input is invalid'
+      return
     }
     // TODO: storeにmeをおいたらadminならスルーするようにする
     if (props.item.type === ItemType.equipment) {
@@ -36,12 +36,12 @@ const useBorrow = (props: {
         '役員には確認しましたか？\n倉庫に関してはこちら→https://wiki.trapti.tech/general/%E5%80%89%E5%BA%AB'
       )
       if (!res) {
-        throw 'not confirmed'
+        return
       }
     }
     if (!owner.value) {
       alert('unexpcted error: owner information is destroyed')
-      throw 'unexpcted error: owner information is destroyed'
+      return
     }
     const log = {
       ownerId: owner.value.user.id,
@@ -55,7 +55,6 @@ const useBorrow = (props: {
       alert(`あなたは「${props.item.name}」を${count.value}個借りました。`)
     } catch (e) {
       alert(e)
-      throw e
     }
   }
   return {

@@ -1,18 +1,22 @@
 <template>
-  <dialog-template @close="close">
-    <div :class="$style.container">
-      <h2 :class="$style.title">物品を借りる</h2>
-      <form @submit="borrowItem">
-        <borrow-dialog-owner-selector
-          v-model="selectedOwnerName"
-          :details="details"
-        />
-        <div :class="$style.label">目的:</div>
+  <dialog-template :class="$style.container" @close="close">
+    <h2 :class="$style.title">物品を借りる</h2>
+    <form @submit="borrowItem">
+      <borrow-dialog-owner-selector
+        v-model="selectedOwnerName"
+        :details="details"
+      />
+      <label :class="$style.label">
+        目的:
         <textarea v-model="purpose" rows="10" :class="$style.input" required />
-        <div :class="$style.label">返却日:</div>
+      </label>
+      <label :class="$style.label">
+        返却日:
         <input v-model="dueDate" type="date" :class="$style.input" required />
-        <div v-if="owner && owner.count !== 1">
-          <div :class="$style.label">個数:</div>
+      </label>
+      <div v-if="owner && owner.count !== 1">
+        <label :class="$style.label">
+          個数:
           <input
             v-model.number="count"
             type="number"
@@ -20,15 +24,15 @@
             :max="owner.count"
             :min="1"
           />
-        </div>
-        <icon-button
-          icon="arrow-down-bold-circle"
-          label="借りる"
-          type="submit"
-          :class="$style.button"
-        />
-      </form>
-    </div>
+        </label>
+      </div>
+      <icon-button
+        icon="arrow-down-bold-circle"
+        label="借りる"
+        type="submit"
+        :class="$style.button"
+      />
+    </form>
   </dialog-template>
 </template>
 
@@ -101,19 +105,24 @@ export default defineComponent({
   text-align: center;
 }
 .label {
-  margin-top: 8px;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  word-break: keep-all;
 }
 .input {
-  width: calc(100% - 8px);
+  width: 100%;
+  margin-top: 0.25rem;
 }
 .button {
-  height: 36px;
   width: 80%;
-  color: $color-primary;
-  margin-right: 8px;
-  border-radius: 18px;
-  border: solid 1px $color-primary;
+  padding: 4px;
   margin: auto;
   margin-top: 32px;
+  border-radius: 18px;
+  color: $color-primary;
+  border: solid 1px $color-primary;
+  background-color: $color-background;
 }
 </style>
