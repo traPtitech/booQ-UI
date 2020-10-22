@@ -9,7 +9,7 @@
           :value="detail.userName"
           :disabled="detail.remain === 0"
         >
-          {{ detail.userName }}
+          {{ detail.userName }} ({{ detail.remain }})
         </option>
       </select>
     </label>
