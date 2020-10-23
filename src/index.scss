@@ -32,3 +32,9 @@ ul {
   width: 100%;
   pointer-events: none;
 }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

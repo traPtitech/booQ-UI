@@ -13,7 +13,9 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'DialogTemplate',
-  emits: ['close'],
+  emits: {
+    close: () => true
+  },
   setup(_, context) {
     const close = () => {
       context.emit('close')

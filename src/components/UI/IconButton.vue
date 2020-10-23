@@ -1,8 +1,8 @@
 <template>
-  <div :class="$style.container">
+  <button :class="$style.container">
     <icon :class="$style.icon" :name="icon" />
     <div>{{ label }}</div>
-  </div>
+  </button>
 </template>
 
 <script lang="ts">

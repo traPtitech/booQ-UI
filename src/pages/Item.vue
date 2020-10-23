@@ -1,6 +1,6 @@
 <template>
   <div v-if="item" :class="$style.container">
-    <controls :img-url="item.imgUrl" :class="$style.control" />
+    <controls :img-url="item.imgUrl" :item="item" :class="$style.control" />
     <information :item="item" :class="$style.information" />
   </div>
 </template>
