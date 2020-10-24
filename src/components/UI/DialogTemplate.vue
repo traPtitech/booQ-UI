@@ -45,7 +45,6 @@ export default defineComponent({
   background-color: $color-background;
   padding: 24px;
   border-radius: 8px;
-  width: 80%;
   min-width: 400px;
   margin: auto;
 }

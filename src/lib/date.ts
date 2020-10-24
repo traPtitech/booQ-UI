@@ -1,10 +1,15 @@
 const pad0 = (n: number, len: number) => ('' + n).padStart(len, '0')
 
-export const stringifyDate = (date: Date): string => {
-  return `${date.getFullYear()}/${pad0(date.getMonth() + 1, 2)}/${pad0(
-    date.getDate(),
-    2
-  )}`
+const getStringifyDateArray = (date: Date): [string, string, string] => {
+  return [
+    `${date.getFullYear()}`,
+    pad0(date.getMonth() + 1, 2),
+    pad0(date.getDate(), 2)
+  ]
+}
+
+export const stringifyDate = (date: Date, delimiter = '/'): string => {
+  return getStringifyDateArray(date).join(delimiter)
 }
 
 export const stringifyDateFromNumber = (num: number): string => {

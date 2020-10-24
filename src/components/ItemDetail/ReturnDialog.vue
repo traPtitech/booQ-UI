@@ -1,16 +1,8 @@
 <template>
   <dialog-template @close="close">
-    <h2 :class="$style.title">物品を借りる</h2>
-    <form :class="$style.container" @submit.prevent="borrowItem">
+    <h2 :class="$style.title">物品を返す</h2>
+    <form :class="$style.container" @submit.prevent="returnItemAndClose">
       <owner-selector v-model="selectedOwnerName" :details="details" />
-      <label :class="$style.label">
-        目的:
-        <textarea v-model="purpose" rows="10" :class="$style.input" required />
-      </label>
-      <label :class="$style.label">
-        返却日:
-        <input v-model="dueDate" type="date" :class="$style.input" required />
-      </label>
       <label v-if="owner && owner.count !== 1" :class="$style.label">
         個数:
         <input
@@ -22,8 +14,8 @@
         />
       </label>
       <icon-button
-        icon="arrow-down-bold-circle"
-        label="借りる"
+        icon="arrow-up-bold-circle"
+        label="返す"
         type="submit"
         :class="$style.button"
       />
@@ -37,10 +29,10 @@ import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import IconButton from '/@/components/UI/IconButton.vue'
-import useBorrow from './use/borrow'
+import useReturn from './use/return'
 
 export default defineComponent({
-  name: 'BorrowDialog',
+  name: 'ReturnDialog',
   components: {
     DialogTemplate,
     OwnerSelector,
@@ -56,31 +48,23 @@ export default defineComponent({
     close: () => true
   },
   setup(props, context) {
-    const {
-      details,
-      selectedOwnerName,
-      purpose,
-      dueDate,
-      count,
-      owner,
-      borrow
-    } = useBorrow(props)
+    const { details, selectedOwnerName, count, owner, returnItem } = useReturn(
+      props
+    )
     const close = () => {
       context.emit('close')
     }
-    const borrowItem = async () => {
-      await borrow()
-      context.emit('close')
+    const returnItemAndClose = async () => {
+      await returnItem()
+      close()
     }
     return {
       close,
       details,
       selectedOwnerName,
-      purpose,
-      dueDate,
       count,
       owner,
-      borrowItem
+      returnItemAndClose
     }
   }
 })
@@ -89,6 +73,7 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   text-align: left;
+  margin-top: 3rem;
 }
 .title {
   text-align: center;

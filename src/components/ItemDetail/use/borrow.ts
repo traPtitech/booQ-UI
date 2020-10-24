@@ -17,7 +17,7 @@ const useBorrow = (props: {
   const { details } = useOwners(props)
   const selectedOwnerName = ref(details.value[0].userName ?? '')
   const purpose = ref('')
-  const dueDate = ref(stringifyDate(new Date()).replace(/\//g, '-'))
+  const dueDate = ref(stringifyDate(new Date(), '-'))
   const count = ref(1)
   const owner = computed(() =>
     props.item.owners.find(v => v.user.name === selectedOwnerName.value)

@@ -1,9 +1,12 @@
 import { computed, ComputedRef } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 
-export interface OwnerDetail {
+export interface OwnerWithCount {
   userName: string
-  remain: number
+  count: number
+}
+
+export interface OwnerDetail extends OwnerWithCount {
   all: number
 }
 
@@ -14,13 +17,13 @@ const useOwners = (props: {
     props.item.owners.map(owner => {
       // そのownerの最後のログを取得
       const latestLog = props.item.latestLogs?.find(
-        v => v.ownerId === owner.userId
+        v => v.ownerId === owner.ownerId
       )
-      const remain = latestLog?.count ?? owner.count
+      const count = latestLog?.count ?? owner.count
       const all = owner.count
       return {
         userName: owner.user.name,
-        remain: remain,
+        count: count,
         all: all
       }
     })
