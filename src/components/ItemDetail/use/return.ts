@@ -14,7 +14,7 @@ const useReturn = (props: {
 } => {
   // TODO: storeにmeをおいたらIDにちゃんとしたやつを入れる(10は@ryoha のID)
   const details = computed(() =>
-    getBorrowedOwner(10, props.item).map(v => ({
+    getOwnerBorrowedFrom(10, props.item).map(v => ({
       userName: v.user.name,
       count: v.count
     }))
@@ -59,15 +59,14 @@ const useReturn = (props: {
   }
 }
 
-export const getBorrowedOwner = (
+export const getOwnerBorrowedFrom = (
   userID: number,
   item: ItemSummary
 ): Owner[] => {
-  return item.owners.filter(
-    owner =>
-      item.rentalUsers.findIndex(
-        v => owner.user.id === v.ownerId && userID === v.userId && v.count !== 0
-      ) > -1
+  return item.owners.filter(owner =>
+    item.rentalUsers.some(
+      v => owner.user.id === v.ownerId && userID === v.userId && v.count !== 0
+    )
   )
 }
 

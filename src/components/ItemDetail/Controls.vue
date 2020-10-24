@@ -12,7 +12,7 @@
         icon="arrow-up-bold-circle"
         label="返す"
         :class="$style.btn"
-        :disabled="disableReturn"
+        :disabled="isDisableReturn"
         @click="toggleReturnDialog"
       />
       <icon name="dots-horizontal" :size="32" :class="$style.icon" />
@@ -33,7 +33,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
-import { getBorrowedOwner } from './use/return'
+import { getOwnerBorrowedFrom } from './use/return'
 import Icon from '/@/components/UI/Icon.vue'
 import IconButton from '/@/components/UI/IconButton.vue'
 import useOpener from '/@/components/UI/use/opener'
@@ -68,15 +68,15 @@ export default defineComponent({
       toggle: toggleReturnDialog
     } = useOpener()
     // TODO: storeにmeをおいたらIDにちゃんとしたやつを入れる(10は@ryoha のID)
-    const disableReturn = computed(
-      () => getBorrowedOwner(10, props.item).length === 0
+    const isDisableReturn = computed(
+      () => getOwnerBorrowedFrom(10, props.item).length === 0
     )
     return {
       isOpenBorrowDialog,
       toggleBorrowDialog,
       isOpenReturnDialog,
       toggleReturnDialog,
-      disableReturn
+      isDisableReturn
     }
   }
 })
@@ -105,11 +105,9 @@ $height: 36px;
   color: $color-primary;
   background-color: $color-background;
   transition: all 0.2s;
-  &:hover {
-    &:not(:disabled) {
-      background-color: $color-primary;
-      color: $color-background;
-    }
+  &:hover:not(:disabled) {
+    background-color: $color-primary;
+    color: $color-background;
   }
 }
 

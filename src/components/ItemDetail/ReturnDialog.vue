@@ -1,20 +1,18 @@
 <template>
   <dialog-template width="480px" @close="close">
     <h2 :class="$style.title">物品を返却する</h2>
-    <form :class="$style.container" @submit="returnItem">
+    <form :class="$style.container" @submit="returnItemAndClose">
       <owner-selector v-model="selectedOwnerName" :details="details" />
-      <div>
-        <label v-if="owner && owner.count !== 1" :class="$style.label">
-          個数:
-          <input
-            v-model.number="count"
-            type="number"
-            :class="$style.input"
-            :max="owner.count"
-            :min="1"
-          />
-        </label>
-      </div>
+      <label v-if="owner && owner.count !== 1" :class="$style.label">
+        個数:
+        <input
+          v-model.number="count"
+          type="number"
+          :class="$style.input"
+          :max="owner.count"
+          :min="1"
+        />
+      </label>
       <icon-button
         icon="arrow-up-bold-circle"
         label="返却する"
@@ -50,18 +48,14 @@ export default defineComponent({
     close: () => true
   },
   setup(props, context) {
-    const {
-      details,
-      selectedOwnerName,
-      count,
-      owner,
-      returnItem: returnItemFunc
-    } = useReturn(props)
+    const { details, selectedOwnerName, count, owner, returnItem } = useReturn(
+      props
+    )
     const close = () => {
       context.emit('close')
     }
-    const returnItem = async () => {
-      await returnItemFunc()
+    const returnItemAndClose = async () => {
+      await returnItem()
       close()
     }
     return {
@@ -70,7 +64,7 @@ export default defineComponent({
       selectedOwnerName,
       count,
       owner,
-      returnItem
+      returnItemAndClose
     }
   }
 })
