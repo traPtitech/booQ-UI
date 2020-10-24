@@ -19,7 +19,7 @@ import { defineComponent, PropType } from 'vue'
 import { OwnerDetail } from './use/owners'
 
 export default defineComponent({
-  name: 'BorrowDialogOwnerSelector',
+  name: 'OwnerSelector',
   props: {
     details: {
       type: Object as PropType<OwnerDetail>,
