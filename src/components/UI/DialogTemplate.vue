@@ -1,7 +1,11 @@
 <template>
   <teleport to="#dialog">
     <div :class="$style.container" @click="close">
-      <div :class="$style.dialog" @click.stop>
+      <div
+        :class="$style.dialog"
+        :style="width ? `width: ${width}` : ''"
+        @click.stop
+      >
         <slot />
       </div>
     </div>
@@ -13,6 +17,12 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'DialogTemplate',
+  props: {
+    width: {
+      type: String,
+      default: ''
+    }
+  },
   emits: {
     close: () => true
   },
