@@ -27,7 +27,7 @@ const defaultValue = {
 }
 
 export const createFormState = (): Store => {
-  const formState = reactive(defaultValue)
+  const formState = reactive({ ...defaultValue })
   const reset = () => {
     const keys = Object.keys(formState) as Array<keyof FormState>
     keys.forEach(key => {
@@ -39,8 +39,10 @@ export const createFormState = (): Store => {
   return { formState, reset }
 }
 
-export const provideFormState = (): void => {
-  provide<Store>(STORE_KEY, createFormState())
+export const provideFormState = (): Store => {
+  const state = createFormState()
+  provide<Store>(STORE_KEY, state)
+  return state
 }
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

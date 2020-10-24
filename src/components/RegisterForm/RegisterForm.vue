@@ -24,8 +24,7 @@ export default defineComponent({
     InputNumber
   },
   setup() {
-    provideFormState()
-    const { formState, reset } = useFormState()
+    const { formState, reset } = provideFormState()
 
     const type = ref(itemTypeToStringMap.get(formState.type))
     watchEffect(() => {
@@ -34,6 +33,8 @@ export default defineComponent({
     const typeOptions = [...itemTypeToStringMap.values()]
 
     const register = async () => {
+      if (!confirm('本当に登録しますか？')) return
+
       // 型変換しているのはreadOnlyのopenapiの生成がうまくいかないため
       try {
         await apis.postItem((formState as unknown) as ItemPosted)
