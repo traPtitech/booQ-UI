@@ -108,7 +108,7 @@ $border-radius: 2px;
   position: absolute;
   bottom: 0;
   left: 0;
-  width: calc(100% - 16px);
+  width: 100%;
   padding: 8px;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(2px);
