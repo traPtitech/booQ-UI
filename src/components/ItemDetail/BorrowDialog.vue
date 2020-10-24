@@ -1,7 +1,7 @@
 <template>
   <dialog-template @close="close">
     <h2 :class="$style.title">物品を借りる</h2>
-    <form :class="$style.container" @submit="borrowItem">
+    <form :class="$style.container" @submit.prevent="borrowItem">
       <owner-selector v-model="selectedOwnerName" :details="details" />
       <label :class="$style.label">
         目的:

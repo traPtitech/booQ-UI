@@ -1,7 +1,7 @@
 <template>
-  <dialog-template width="480px" @close="close">
-    <h2 :class="$style.title">物品を返却する</h2>
-    <form :class="$style.container" @submit="returnItemAndClose">
+  <dialog-template @close="close">
+    <h2 :class="$style.title">物品を返す</h2>
+    <form :class="$style.container" @submit.prevent="returnItemAndClose">
       <owner-selector v-model="selectedOwnerName" :details="details" />
       <label v-if="owner && owner.count !== 1" :class="$style.label">
         個数:
@@ -15,7 +15,7 @@
       </label>
       <icon-button
         icon="arrow-up-bold-circle"
-        label="返却する"
+        label="返す"
         type="submit"
         :class="$style.button"
       />

@@ -17,7 +17,7 @@ const useOwners = (props: {
     props.item.owners.map(owner => {
       // そのownerの最後のログを取得
       const latestLog = props.item.latestLogs?.find(
-        v => v.ownerId === owner.userId
+        v => v.ownerId === owner.ownerId
       )
       const count = latestLog?.count ?? owner.count
       const all = owner.count

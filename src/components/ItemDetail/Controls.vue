@@ -12,7 +12,7 @@
         icon="arrow-up-bold-circle"
         label="返す"
         :class="$style.btn"
-        :disabled="isDisableReturn"
+        :disabled="isReturnDisabled"
         @click="toggleReturnDialog"
       />
       <icon name="dots-horizontal" :size="32" :class="$style.icon" />
@@ -68,7 +68,7 @@ export default defineComponent({
       toggle: toggleReturnDialog
     } = useOpener()
     // TODO: storeにmeをおいたらIDにちゃんとしたやつを入れる(10は@ryoha のID)
-    const isDisableReturn = computed(
+    const isReturnDisabled = computed(
       () => getOwnerBorrowedFrom(10, props.item).length === 0
     )
     return {
@@ -76,7 +76,7 @@ export default defineComponent({
       toggleBorrowDialog,
       isOpenReturnDialog,
       toggleReturnDialog,
-      isDisableReturn
+      isReturnDisabled
     }
   }
 })
