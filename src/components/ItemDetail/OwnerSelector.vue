@@ -6,9 +6,9 @@
         v-for="detail in details"
         :key="detail.userName"
         :value="detail.userName"
-        :disabled="detail.remain === 0"
+        :disabled="detail.count === 0"
       >
-        {{ detail.userName }} ({{ detail.remain }})
+        {{ detail.userName }} ({{ detail.count }})
       </option>
     </select>
   </label>
@@ -16,13 +16,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { OwnerDetail } from './use/owners'
+import { OwnerWithCount } from './use/owners'
 
 export default defineComponent({
-  name: 'OwnerSelector',
+  userName: 'OwnerSelector',
   props: {
     details: {
-      type: Object as PropType<OwnerDetail>,
+      type: Object as PropType<OwnerWithCount[]>,
       required: true
     },
     modelValue: {

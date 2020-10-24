@@ -2,7 +2,7 @@
   <div :class="$style.container">
     <user-icon :user-name="detail.userName" />
     <div :class="$style.numContainer">
-      <div :class="$style.remain">{{ detail.remain }}</div>
+      <div :class="$style.remain">{{ detail.count }}</div>
       <div :class="$style.all">{{ detail.all }}</div>
     </div>
   </div>
