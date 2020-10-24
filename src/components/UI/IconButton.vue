@@ -35,6 +35,9 @@ export default defineComponent({
   padding: 0 8px;
   justify-content: center;
   align-items: center;
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .icon {
