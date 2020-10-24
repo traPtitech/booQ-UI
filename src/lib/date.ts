@@ -7,6 +7,13 @@ export const stringifyDate = (date: Date): string => {
   )}`
 }
 
+export const stringifyDateHyphen = (date: Date): string => {
+  return `${date.getFullYear()}-${pad0(date.getMonth() + 1, 2)}-${pad0(
+    date.getDate(),
+    2
+  )}`
+}
+
 export const stringifyDateFromNumber = (num: number): string => {
   if (!Number.isFinite(num)) return '----/--/--'
   const date = new Date(num)
