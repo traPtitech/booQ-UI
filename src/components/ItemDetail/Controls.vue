@@ -12,6 +12,8 @@
         icon="arrow-up-bold-circle"
         label="返す"
         :class="$style.btn"
+        :disabled="disableReturn"
+        @click="toggleReturnDialog"
       />
       <icon name="dots-horizontal" :size="32" :class="$style.icon" />
     </div>
@@ -20,23 +22,31 @@
       :item="item"
       @close="toggleBorrowDialog"
     />
+    <return-dialog
+      v-if="isOpenReturnDialog"
+      :item="item"
+      @close="toggleReturnDialog"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
+import { getBorrowedOwner } from './use/return'
 import Icon from '/@/components/UI/Icon.vue'
 import IconButton from '/@/components/UI/IconButton.vue'
 import useOpener from '/@/components/UI/use/opener'
 import BorrowDialog from './BorrowDialog.vue'
+import ReturnDialog from './ReturnDialog.vue'
 
 export default defineComponent({
   name: 'Controls',
   components: {
     Icon,
     IconButton,
-    BorrowDialog
+    BorrowDialog,
+    ReturnDialog
   },
   props: {
     item: {
@@ -48,12 +58,26 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
+  setup(props) {
     const {
       isOpen: isOpenBorrowDialog,
       toggle: toggleBorrowDialog
     } = useOpener()
-    return { isOpenBorrowDialog, toggleBorrowDialog }
+    const {
+      isOpen: isOpenReturnDialog,
+      toggle: toggleReturnDialog
+    } = useOpener()
+    // TODO: storeにmeをおいたらIDにちゃんとしたやつを入れる(10は@ryoha のID)
+    const disableReturn = computed(
+      () => getBorrowedOwner(10, props.item).length === 0
+    )
+    return {
+      isOpenBorrowDialog,
+      toggleBorrowDialog,
+      isOpenReturnDialog,
+      toggleReturnDialog,
+      disableReturn
+    }
   }
 })
 </script>
@@ -82,8 +106,10 @@ $height: 36px;
   background-color: $color-background;
   transition: all 0.2s;
   &:hover {
-    background-color: $color-primary;
-    color: $color-background;
+    &:not(:disabled) {
+      background-color: $color-primary;
+      color: $color-background;
+    }
   }
 }
 
