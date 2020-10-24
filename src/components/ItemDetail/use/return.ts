@@ -13,14 +13,13 @@ const useReturn = (props: {
   returnItem: () => Promise<void>
 } => {
   // TODO: storeにmeをおいたらIDにちゃんとしたやつを入れる(10は@ryoha のID)
-  const details = computed(
-    () =>
-      props.item.rentalUsers
-        .filter(v => v.userId === 10 && v.count !== 0)
-        ?.map(v => ({
-          userName: v.owner.name,
-          count: v.count * -1
-        })) ?? []
+  const details = computed(() =>
+    props.item.rentalUsers
+      .filter(v => v.userId === 10 && v.count !== 0)
+      .map(v => ({
+        userName: v.owner.name,
+        count: v.count * -1
+      }))
   )
   const selectedOwnerName = ref(details.value[0]?.userName ?? '')
   const count = ref(1)
