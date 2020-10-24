@@ -11,7 +11,8 @@ const config: UserConfig = {
   proxy: {
     '/api': {
       target: 'https://booq-dev.trapti.tech',
-      changeOrigin: true
+      changeOrigin: true,
+      ws: false
     }
   },
   cssPreprocessOptions: {
