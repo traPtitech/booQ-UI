@@ -1,7 +1,7 @@
 import { ref, Ref, ComputedRef, computed } from 'vue'
 import apis, { ItemSummary, Owner, LogType } from '/@/lib/apis'
 import { OwnerWithCount } from './owners'
-import { stringifyDateHyphen } from '/@/lib/date'
+import { stringifyDate } from '/@/lib/date'
 
 const useReturn = (props: {
   item: ItemSummary
@@ -41,7 +41,7 @@ const useReturn = (props: {
       type: LogType.return,
       count: count.value,
       purpose: '',
-      dueDate: stringifyDateHyphen(new Date())
+      dueDate: stringifyDate(new Date(), '-')
     }
     try {
       await apis.postLog(props.item.id, log)
