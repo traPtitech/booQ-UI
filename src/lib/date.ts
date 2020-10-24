@@ -8,18 +8,18 @@ const getStrigfyDateArray = (date: Date): [string, string, string] => {
   ]
 }
 
-export const stringifyDate = (date: Date, delimiter: string): string => {
+export const stringifyDate = (date: Date, delimiter = '/'): string => {
   return getStrigfyDateArray(date).join(delimiter)
 }
 
 export const stringifyDateFromNumber = (num: number): string => {
   if (!Number.isFinite(num)) return '----/--/--'
   const date = new Date(num)
-  return stringifyDate(date, '/')
+  return stringifyDate(date)
 }
 
 export const stringifyDateTime = (date: Date): string => {
-  return `${stringifyDate(date, '/')} ${pad0(date.getHours(), 2)}:${pad0(
+  return `${stringifyDate(date)} ${pad0(date.getHours(), 2)}:${pad0(
     date.getMinutes(),
     2
   )}`
