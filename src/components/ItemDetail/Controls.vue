@@ -39,6 +39,7 @@ import IconButton from '/@/components/UI/IconButton.vue'
 import useOpener from '/@/components/UI/use/opener'
 import BorrowDialog from './BorrowDialog.vue'
 import ReturnDialog from './ReturnDialog.vue'
+import useMe from '/@/use/me'
 
 export default defineComponent({
   name: 'Controls',
@@ -67,9 +68,9 @@ export default defineComponent({
       isOpen: isOpenReturnDialog,
       toggle: toggleReturnDialog
     } = useOpener()
-    // TODO: storeにmeをおいたらIDにちゃんとしたやつを入れる(10は@ryoha のID)
+    const { id: myId } = useMe()
     const isReturnDisabled = computed(
-      () => getOwnerBorrowedFrom(10, props.item).length === 0
+      () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
     )
     return {
       isOpenBorrowDialog,
