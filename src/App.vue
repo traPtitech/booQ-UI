@@ -3,22 +3,35 @@
     <navigation :class="$style.navigation" />
     <routes :class="$style.title" />
     <main :class="$style.content">
-      <router-view />
+      <router-view v-if="fetchedMe" />
+      <div v-else>Loading...</div>
     </main>
   </div>
   <div id="dialog" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed, onBeforeMount } from 'vue'
 import Navigation from '/@/components/Navigation/Navigation.vue'
 import Routes from '/@/components/Routes.vue'
+import { useStore } from '/@/store'
 
 export default defineComponent({
   name: 'App',
   components: {
     Navigation,
     Routes
+  },
+  setup() {
+    const store = useStore()
+    const fetchedMe = computed(() => store.state.me !== null)
+
+    onBeforeMount(() => {
+      if (fetchedMe.value) return
+      store.dispatch.fetchMe()
+    })
+
+    return { fetchedMe }
   }
 })
 </script>

@@ -2,6 +2,7 @@ import { ref, Ref, ComputedRef, computed } from 'vue'
 import apis, { ItemSummary, ItemType, Owner, LogType } from '/@/lib/apis'
 import useOwners, { OwnerDetail } from './owners'
 import { stringifyDate } from '/@/lib/date'
+import useMe from '/@/use/me'
 
 const useBorrow = (props: {
   item: ItemSummary
@@ -15,6 +16,8 @@ const useBorrow = (props: {
   borrow: () => Promise<void>
 } => {
   const { details } = useOwners(props)
+  const { admin } = useMe()
+
   const selectedOwnerName = ref(details.value[0].userName ?? '')
   const purpose = ref('')
   const dueDate = ref(stringifyDate(new Date(), '-'))
@@ -29,8 +32,7 @@ const useBorrow = (props: {
       alert('個数が入力されていません')
       return
     }
-    // TODO: storeにmeをおいたらadminならスルーするようにする
-    if (props.item.type === ItemType.equipment) {
+    if (!admin.value && props.item.type === ItemType.equipment) {
       // TODO: これリンクあっても押せないからモーダルかなんかにする
       const res = window.confirm(
         '役員には確認しましたか？\n倉庫に関してはこちら→https://wiki.trap.jp/general/%E5%80%89%E5%BA%AB'

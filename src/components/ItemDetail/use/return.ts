@@ -2,6 +2,7 @@ import { ref, Ref, ComputedRef, computed } from 'vue'
 import apis, { ItemSummary, Owner, LogType } from '/@/lib/apis'
 import { OwnerWithCount } from './owners'
 import { stringifyDate } from '/@/lib/date'
+import useMe from '/@/use/me'
 
 const useReturn = (props: {
   item: ItemSummary
@@ -12,10 +13,11 @@ const useReturn = (props: {
   owner: ComputedRef<Owner | undefined>
   returnItem: () => Promise<void>
 } => {
-  // TODO: storeにmeをおいたらIDにちゃんとしたやつを入れる(10は@ryoha のID)
+  const { id: myId } = useMe()
+
   const details = computed(() =>
     props.item.rentalUsers
-      .filter(v => v.userId === 10 && v.count !== 0)
+      .filter(v => v.userId === myId.value && v.count !== 0)
       .map(v => ({
         userName: v.owner.name,
         count: v.count * -1

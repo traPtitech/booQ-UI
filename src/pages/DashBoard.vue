@@ -19,6 +19,7 @@ import apis, { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
 import useTitle from './use/title'
 import BorrowedItem from '/@/components/BorrowedItem.vue'
+import useMe from '/@/use/me'
 
 const getSortedItemsByDue = (items: readonly ItemSummary[]) => {
   const is = [...items]
@@ -34,10 +35,10 @@ export default defineComponent({
   setup() {
     useTitle(computed(() => 'ダッシュボード'))
 
+    const { name: myName } = useMe()
     const items = ref<ItemSummary[]>([])
     onMounted(async () => {
-      const { data: me } = await apis.getMe()
-      const { data } = await apis.getItems(undefined, undefined, me.name)
+      const { data } = await apis.getItems(undefined, undefined, myName.value)
       items.value = getSortedItemsByDue(data)
     })
 
