@@ -1,6 +1,6 @@
 import { createDirectStore } from 'direct-vuex'
 import apis, { User } from '/@/lib/apis'
-import { Toast, DEFAULT_TOAST_TIMEOUT } from './storeTypes'
+import { Toast, DEFAULT_TOAST_TIMEOUT, MAX_TOAST_COUNT } from './storeTypes'
 
 const { store, rootActionContext } = createDirectStore({
   state: {
@@ -16,11 +16,14 @@ const { store, rootActionContext } = createDirectStore({
       state,
       toast: Omit<Toast, 'timeout' | 'id'> & { timeout?: number }
     ) {
-      state.toasts.push({
+      state.toasts.unshift({
         ...toast,
         id: Math.floor(Math.random() * 1024),
         timeout: toast.timeout ?? DEFAULT_TOAST_TIMEOUT
       })
+      while (MAX_TOAST_COUNT < state.toasts.length) {
+        state.toasts.pop()
+      }
     },
     removeToast(state, id) {
       state.toasts = state.toasts.filter(v => v.id !== id)
