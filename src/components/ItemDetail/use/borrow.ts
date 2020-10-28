@@ -18,6 +18,7 @@ const useBorrow = (props: {
 } => {
   const { details } = useOwners(props)
   const { admin } = useMe()
+  const store = useStore()
 
   const selectedOwnerName = ref(details.value[0].userName ?? '')
   const purpose = ref('')
@@ -55,7 +56,7 @@ const useBorrow = (props: {
     }
     try {
       await apis.postLog(props.item.id, log)
-      useStore().commit.addToast({
+      store.commit.addToast({
         type: 'success',
         text: `あなたは「${props.item.name}」を${count.value}個借りました。`
       })

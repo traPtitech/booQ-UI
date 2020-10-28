@@ -13,7 +13,7 @@ import {
   onMounted,
   onUnmounted
 } from 'vue'
-import { Toast } from '/@/store/storeTypes'
+import { Toast } from '/@/store/types'
 import Icon from './Icon.vue'
 import { useStore } from '/@/store'
 
