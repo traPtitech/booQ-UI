@@ -3,19 +3,19 @@
     <img :class="$style.img" :src="imgUrl" />
     <div :class="$style.btnContainer">
       <icon-button
-        icon="arrow-down-bold-circle"
+        icon="mdi:arrow-down-bold-circle"
         label="借りる"
         :class="$style.btn"
         @click="toggleBorrowDialog"
       />
       <icon-button
-        icon="arrow-up-bold-circle"
+        icon="mdi:arrow-up-bold-circle"
         label="返す"
         :class="$style.btn"
         :disabled="isReturnDisabled"
         @click="toggleReturnDialog"
       />
-      <icon name="dots-horizontal" :size="32" :class="$style.icon" />
+      <icon name="mdi:dots-horizontal" :size="32" :class="$style.icon" />
     </div>
     <borrow-dialog
       v-if="isOpenBorrowDialog"

@@ -14,7 +14,7 @@
         />
       </label>
       <icon-button
-        icon="arrow-up-bold-circle"
+        icon="mdi:arrow-up-bold-circle"
         label="返す"
         type="submit"
         :class="$style.button"

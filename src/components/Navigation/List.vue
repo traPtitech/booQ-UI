@@ -28,14 +28,18 @@ export default defineComponent({
   },
   setup() {
     const items: Item[] = [
-      { name: 'Dashboard', icon: 'view-dashboard', path: '/' },
-      { name: 'Equipment List', icon: 'home-city', path: '/items/equipment' },
+      { name: 'Dashboard', icon: 'mdi:view-dashboard', path: '/' },
+      {
+        name: 'Equipment List',
+        icon: 'mdi:home-city',
+        path: '/items/equipment'
+      },
       {
         name: 'Personal Property List',
-        icon: 'book-open-page-variant',
+        icon: 'mdi:book-open-page-variant',
         path: '/items/property'
       },
-      { name: 'Register Item', icon: 'plus-box', path: '/items/new' }
+      { name: 'Register Item', icon: 'mdi:plus-box', path: '/items/new' }
     ]
     return { items }
   }

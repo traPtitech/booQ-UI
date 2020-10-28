@@ -22,7 +22,7 @@
         />
       </label>
       <icon-button
-        icon="arrow-down-bold-circle"
+        icon="mdi:arrow-down-bold-circle"
         label="借りる"
         type="submit"
         :class="$style.button"

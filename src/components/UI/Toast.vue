@@ -18,9 +18,9 @@ import Icon from './Icon.vue'
 import { useStore } from '/@/store'
 
 const iconNameMap: Record<Toast['type'], string> = {
-  success: 'info',
-  error: 'alert',
-  info: 'info'
+  success: 'mdi:information',
+  error: 'mdi:alert',
+  info: 'mdi:information'
 }
 
 const useAutoHide = (props: { toast: Toast }) => {
