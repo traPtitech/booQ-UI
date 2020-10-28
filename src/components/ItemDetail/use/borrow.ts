@@ -3,6 +3,7 @@ import apis, { ItemSummary, ItemType, Owner, LogType } from '/@/lib/apis'
 import useOwners, { OwnerDetail } from './owners'
 import { stringifyDate } from '/@/lib/date'
 import useMe from '/@/use/me'
+import { useStore } from '/@/store'
 
 const useBorrow = (props: {
   item: ItemSummary
@@ -54,7 +55,10 @@ const useBorrow = (props: {
     }
     try {
       await apis.postLog(props.item.id, log)
-      alert(`あなたは「${props.item.name}」を${count.value}個借りました。`)
+      useStore().commit.addToast({
+        type: 'success',
+        text: `あなたは「${props.item.name}」を${count.value}個借りました。`
+      })
     } catch (e) {
       alert(e)
     }

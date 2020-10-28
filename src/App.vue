@@ -8,19 +8,22 @@
     </main>
   </div>
   <div id="dialog" />
+  <toast-container />
 </template>
 
 <script lang="ts">
 import { defineComponent, computed, onBeforeMount } from 'vue'
 import Navigation from '/@/components/Navigation/Navigation.vue'
 import Routes from '/@/components/Routes.vue'
+import ToastContainer from '/@/components/UI/ToastContainer.vue'
 import { useStore } from '/@/store'
 
 export default defineComponent({
   name: 'App',
   components: {
     Navigation,
-    Routes
+    Routes,
+    ToastContainer
   },
   setup() {
     const store = useStore()
