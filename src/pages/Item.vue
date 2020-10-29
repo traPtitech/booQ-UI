@@ -28,6 +28,7 @@ export default defineComponent({
       item: undefined as ItemDetail | undefined
     })
     watchEffect(async () => {
+      if (!Number.isFinite(state.id)) return
       const { data } = await apis.getItem(state.id)
       state.item = data
     })
