@@ -39,7 +39,10 @@ const useReturn = (props: {
     }
     // countに空文字が入ってるときcheckValidity()をすり抜ける
     if (typeof count.value === 'string') {
-      alert('個数が入力されていません')
+      store.commit.addToast({
+        type: 'error',
+        text: '個数が入力されていません'
+      })
       return
     }
     const log = {
@@ -51,7 +54,10 @@ const useReturn = (props: {
     }
     try {
       await apis.postLog(props.item.id, log)
-      alert(`あなたは「${props.item.name}」を${count.value}個返却しました。`)
+      store.commit.addToast({
+        type: 'success',
+        text: `あなたは「${props.item.name}」を${count.value}個返却しました。`
+      })
     } catch (e) {
       store.commit.addToast({
         type: 'error',

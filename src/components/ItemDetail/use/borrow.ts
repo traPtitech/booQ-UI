@@ -31,7 +31,10 @@ const useBorrow = (props: {
   const borrow = async () => {
     // countに空文字が入ってるときcheckValidity()をすり抜ける
     if (typeof count.value === 'string') {
-      alert('個数が入力されていません')
+      store.commit.addToast({
+        type: 'error',
+        text: '個数が入力されていません'
+      })
       return
     }
     if (!admin.value && props.item.type === ItemType.equipment) {
