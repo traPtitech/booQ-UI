@@ -29,7 +29,10 @@ const { store, rootActionContext } = createDirectStore({
       }
     },
     removeToast(state, id) {
-      state.toasts = state.toasts.filter(v => v.id !== id)
+      state.toasts.splice(
+        state.toasts.findIndex(v => v.id === id),
+        1
+      )
     }
   },
   actions: {

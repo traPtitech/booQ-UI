@@ -61,7 +61,10 @@ const useBorrow = (props: {
         text: `あなたは「${props.item.name}」を${count.value}個借りました。`
       })
     } catch (e) {
-      alert(e)
+      store.commit.addToast({
+        type: 'error',
+        text: e.toString()
+      })
     }
   }
   return {
