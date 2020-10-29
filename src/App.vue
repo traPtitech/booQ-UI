@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
+    <page-header :class="$style.header" />
     <navigation :class="$style.navigation" />
-    <routes :class="$style.title" />
     <main :class="$style.content">
       <router-view v-if="fetchedMe" />
       <div v-else>Loading...</div>
@@ -13,16 +13,16 @@
 
 <script lang="ts">
 import { defineComponent, computed, onBeforeMount } from 'vue'
+import PageHeader from '/@/components/PageHeader/PageHeader.vue'
 import Navigation from '/@/components/Navigation/Navigation.vue'
-import Routes from '/@/components/Routes.vue'
 import ToastContainer from '/@/components/UI/ToastContainer.vue'
 import { useStore } from '/@/store'
 
 export default defineComponent({
   name: 'App',
   components: {
+    PageHeader,
     Navigation,
-    Routes,
     ToastContainer
   },
   setup() {
@@ -46,7 +46,7 @@ export default defineComponent({
   height: 100%;
   width: 100%;
   grid-template-areas:
-    'nav title'
+    'header header'
     'nav content';
   grid-template-rows: min-content 1fr;
   grid-template-columns: 260px 1fr;
@@ -54,8 +54,8 @@ export default defineComponent({
 .navigation {
   grid-area: nav;
 }
-.title {
-  grid-area: title;
+.header {
+  grid-area: header;
 }
 .content {
   grid-area: content;
