@@ -40,6 +40,7 @@ import useOpener from '/@/components/UI/use/opener'
 import BorrowDialog from './BorrowDialog.vue'
 import ReturnDialog from './ReturnDialog.vue'
 import useMe from '/@/use/me'
+import NoImg from '/@/assets/img/no-image.svg'
 
 export default defineComponent({
   name: 'Controls',
@@ -53,13 +54,15 @@ export default defineComponent({
     item: {
       type: Object as PropType<ItemSummary>,
       required: true
-    },
-    imgUrl: {
-      type: String,
-      required: true
     }
   },
   setup(props) {
+    const imgUrl = computed(() =>
+      props.item.imgUrl ? props.item.imgUrl : NoImg
+    )
+
+    props.item.imgUrl ? props.item.imgUrl : NoImg
+
     const {
       isOpen: isOpenBorrowDialog,
       toggle: toggleBorrowDialog
@@ -68,11 +71,14 @@ export default defineComponent({
       isOpen: isOpenReturnDialog,
       toggle: toggleReturnDialog
     } = useOpener()
+
     const { id: myId } = useMe()
     const isReturnDisabled = computed(
       () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
     )
+
     return {
+      imgUrl,
       isOpenBorrowDialog,
       toggleBorrowDialog,
       isOpenReturnDialog,
