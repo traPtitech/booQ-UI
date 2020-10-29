@@ -1,13 +1,11 @@
 <template>
   <div>
     <input-text v-model="formState.code" label="物品コード / ISBNコード" />
-    <button @click="openModal">バーコード読み取り</button>
-    <teleport to="#modal-container">
-      <div v-if="modalShown" :class="$style.barCodeScannerModal">
-        <bar-code-scanner />
-        <button @click="closeModal">閉じる</button>
-      </div>
-    </teleport>
+    <button @click="toggleDialog">バーコード読み取り</button>
+    <dialog-template v-if="isDialogShown" @close="toggleDialog">
+      <bar-code-scanner />
+      <button @click="toggleDialog">閉じる</button>
+    </dialog-template>
   </div>
   <input-text v-model="formState.name" label="物品名" />
   <input-text v-model="formState.description" multiline label="物品詳細" />
@@ -20,27 +18,20 @@ import { useFormState } from './use/formState'
 import InputText from '/@/components/UI/InputText.vue'
 import useModal from './use/modal'
 import BarCodeScanner from './BarCodeScanner.vue'
+import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
+import useOpener from '/@/components/UI/use/opener'
 
 export default defineComponent({
   name: 'RegisterFormDescription',
   components: {
     InputText,
+    DialogTemplate,
     BarCodeScanner
   },
   setup() {
     const { formState } = useFormState()
-    const { modalShown, openModal, closeModal } = useModal()
-    return { formState, modalShown, openModal, closeModal }
+    const { isOpen: isDialogShown, toggle: toggleDialog } = useOpener()
+    return { formState, isDialogShown, toggleDialog }
   }
 })
 </script>
-
-<style lang="scss" module>
-.barCodeScannerModal {
-  margin: 20%;
-  background: $color-background;
-  border: solid 2px $color-primary;
-  border-radius: 2px;
-  pointer-events: initial;
-}
-</style>
