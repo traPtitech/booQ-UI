@@ -7,7 +7,9 @@ import {
   mdiArrowDownBoldCircle,
   mdiArrowUpBoldCircle,
   mdiDotsHorizontal,
-  mdiChevronDown
+  mdiChevronDown,
+  mdiInformation,
+  mdiAlert
 } from '@mdi/js'
 
 const mdi = new Map<string, string>([
@@ -19,7 +21,9 @@ const mdi = new Map<string, string>([
   ['arrow-down-bold-circle', mdiArrowDownBoldCircle],
   ['arrow-up-bold-circle', mdiArrowUpBoldCircle],
   ['dots-horizontal', mdiDotsHorizontal],
-  ['chevron-down', mdiChevronDown]
+  ['chevron-down', mdiChevronDown],
+  ['info', mdiInformation],
+  ['alert', mdiAlert]
 ])
 
 export default mdi

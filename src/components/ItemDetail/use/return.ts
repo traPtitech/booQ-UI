@@ -3,6 +3,7 @@ import apis, { ItemSummary, Owner, LogType } from '/@/lib/apis'
 import { OwnerWithCount } from './owners'
 import { stringifyDate } from '/@/lib/date'
 import useMe from '/@/use/me'
+import { useStore } from '/@/store'
 
 const useReturn = (props: {
   item: ItemSummary
@@ -28,6 +29,7 @@ const useReturn = (props: {
   const owner = computed(() =>
     props.item.owners.find(v => v.user.name === selectedOwnerName.value)
   )
+  const store = useStore()
 
   const returnItem = async () => {
     const ownerId = owner.value?.user.id
@@ -37,7 +39,10 @@ const useReturn = (props: {
     }
     // countに空文字が入ってるときcheckValidity()をすり抜ける
     if (typeof count.value === 'string') {
-      alert('個数が入力されていません')
+      store.commit.addToast({
+        type: 'error',
+        text: '個数が入力されていません'
+      })
       return
     }
     const log = {
@@ -49,9 +54,15 @@ const useReturn = (props: {
     }
     try {
       await apis.postLog(props.item.id, log)
-      alert(`あなたは「${props.item.name}」を${count.value}個返却しました。`)
+      store.commit.addToast({
+        type: 'success',
+        text: `あなたは「${props.item.name}」を${count.value}個返却しました。`
+      })
     } catch (e) {
-      alert(e)
+      store.commit.addToast({
+        type: 'error',
+        text: e.toString()
+      })
     }
   }
   return {

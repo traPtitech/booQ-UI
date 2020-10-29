@@ -1,3 +1,5 @@
+@import "./animation";
+
 $color-primary: #5CB860;
 $color-primary-hover: #7FC782;
 $color-primary-disabled: #A9D0AB;
@@ -5,6 +7,8 @@ $color-primary-disabled: #A9D0AB;
 $color-secondary: #E2E2E2;
 $color-secondary-hover: #F0F0F0;
 $color-secondary-disabled: #C9CAC9;
+
+$color-error: #ff4500;
 
 $color-text-primary: #2B2B2B;
 $color-text-primary-disabled: #7A7A7A;

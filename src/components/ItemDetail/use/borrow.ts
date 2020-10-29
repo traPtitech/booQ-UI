@@ -3,6 +3,7 @@ import apis, { ItemSummary, ItemType, Owner, LogType } from '/@/lib/apis'
 import useOwners, { OwnerDetail } from './owners'
 import { stringifyDate } from '/@/lib/date'
 import useMe from '/@/use/me'
+import { useStore } from '/@/store'
 
 const useBorrow = (props: {
   item: ItemSummary
@@ -17,6 +18,7 @@ const useBorrow = (props: {
 } => {
   const { details } = useOwners(props)
   const { admin } = useMe()
+  const store = useStore()
 
   const selectedOwnerName = ref(details.value[0].userName ?? '')
   const purpose = ref('')
@@ -29,7 +31,10 @@ const useBorrow = (props: {
   const borrow = async () => {
     // countに空文字が入ってるときcheckValidity()をすり抜ける
     if (typeof count.value === 'string') {
-      alert('個数が入力されていません')
+      store.commit.addToast({
+        type: 'error',
+        text: '個数が入力されていません'
+      })
       return
     }
     if (!admin.value && props.item.type === ItemType.equipment) {
@@ -54,9 +59,15 @@ const useBorrow = (props: {
     }
     try {
       await apis.postLog(props.item.id, log)
-      alert(`あなたは「${props.item.name}」を${count.value}個借りました。`)
+      store.commit.addToast({
+        type: 'success',
+        text: `あなたは「${props.item.name}」を${count.value}個借りました。`
+      })
     } catch (e) {
-      alert(e)
+      store.commit.addToast({
+        type: 'error',
+        text: e.toString()
+      })
     }
   }
   return {
