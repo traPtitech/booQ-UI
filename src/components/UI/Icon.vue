@@ -1,18 +1,9 @@
 <template>
-  <svg
-    :width="size"
-    :height="size"
-    viewBox="0 0 24 24"
-    role="img"
-    :class="$style.icon"
-  >
-    <path :d="path" fill="currentColor" />
-  </svg>
+  <span class="iconify" :data-icon="name" :style="styles" />
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import mdi from '/@/assets/mdi'
 
 export default defineComponent({
   name: 'Icon',
@@ -27,8 +18,11 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const path = computed(() => mdi.get(props.name))
-    return { path }
+    const styles = computed(() => ({
+      height: `${props.size}px`,
+      width: `${props.size}px`
+    }))
+    return { styles }
   }
 })
 </script>
