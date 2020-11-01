@@ -9,7 +9,7 @@
 import { defineComponent, PropType } from 'vue'
 import Icon from '/@/components/UI/Icon.vue'
 
-export type Variant = 'primary' | 'secondary'
+export type Variant = 'primary' | 'secondary' | 'caution'
 
 export default defineComponent({
   name: 'IconButton',
@@ -53,6 +53,24 @@ export default defineComponent({
     &:hover:not(:disabled) {
       color: $color-background;
       background-color: $color-primary;
+    }
+  }
+  &[data-variant='secondary'] {
+    color: $color-text-secondary;
+    border: solid 1px $color-text-secondary;
+    background-color: $color-background;
+    &:hover:not(:disabled) {
+      color: $color-background;
+      background-color: $color-text-secondary;
+    }
+  }
+  &[data-variant='caution'] {
+    color: $color-error;
+    border: solid 1px $color-error;
+    background-color: $color-background;
+    &:hover:not(:disabled) {
+      color: $color-background;
+      background-color: $color-error;
     }
   }
 }

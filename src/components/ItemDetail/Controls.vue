@@ -11,6 +11,7 @@
       <normal-icon-button
         icon="mdi:arrow-up-bold-circle"
         label="返す"
+        variant="secondary"
         :class="$style.btn"
         :disabled="isReturnDisabled"
         @click="toggleReturnDialog"
