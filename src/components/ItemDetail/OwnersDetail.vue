@@ -34,14 +34,12 @@ export default defineComponent({
 }
 
 .numContainer {
-  margin-left: 8px;
-}
-
-.remain {
-  margin-bottom: -1px;
+  margin-left: 0.5rem;
+  text-align: center;
 }
 
 .all {
+  padding: 1px 2px 0 2px;
   border-top: solid 1px;
 }
 </style>

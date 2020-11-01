@@ -44,6 +44,6 @@ export default defineComponent({
 }
 
 .detail {
-  margin-right: 8px;
+  margin-right: 1rem;
 }
 </style>
