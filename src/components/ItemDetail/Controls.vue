@@ -16,7 +16,7 @@
         :disabled="isReturnDisabled"
         @click="toggleReturnDialog"
       />
-      <icon name="mdi:dots-horizontal" :size="32" :class="$style.icon" />
+      <other-controls :item="item" />
     </div>
     <borrow-dialog
       v-if="isOpenBorrowDialog"
@@ -35,19 +35,19 @@
 import { defineComponent, PropType, computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import { getOwnerBorrowedFrom } from './use/return'
-import Icon from '/@/components/UI/Icon.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/components/UI/use/opener'
 import BorrowDialog from './BorrowDialog.vue'
 import ReturnDialog from './ReturnDialog.vue'
 import useMe from '/@/use/me'
 import NoImg from '/@/assets/img/no-image.svg'
+import OtherControls from './OtherControls.vue'
 
 export default defineComponent({
   name: 'Controls',
   components: {
-    Icon,
     NormalIconButton,
+    OtherControls,
     BorrowDialog,
     ReturnDialog
   },
@@ -102,9 +102,5 @@ export default defineComponent({
 
 .btn {
   margin-right: 8px;
-}
-
-.icon {
-  cursor: pointer;
 }
 </style>
