@@ -61,8 +61,6 @@ export default defineComponent({
       props.item.imgUrl ? props.item.imgUrl : NoImg
     )
 
-    props.item.imgUrl ? props.item.imgUrl : NoImg
-
     const {
       isOpen: isOpenBorrowDialog,
       toggle: toggleBorrowDialog
