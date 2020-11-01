@@ -2,13 +2,13 @@
   <div>
     <img :class="$style.img" :src="imgUrl" />
     <div :class="$style.btnContainer">
-      <icon-button
+      <normal-icon-button
         icon="mdi:arrow-down-bold-circle"
         label="借りる"
         :class="$style.btn"
         @click="toggleBorrowDialog"
       />
-      <icon-button
+      <normal-icon-button
         icon="mdi:arrow-up-bold-circle"
         label="返す"
         :class="$style.btn"
@@ -35,7 +35,7 @@ import { defineComponent, PropType, computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import { getOwnerBorrowedFrom } from './use/return'
 import Icon from '/@/components/UI/Icon.vue'
-import IconButton from '/@/components/UI/IconButton.vue'
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/components/UI/use/opener'
 import BorrowDialog from './BorrowDialog.vue'
 import ReturnDialog from './ReturnDialog.vue'
@@ -46,7 +46,7 @@ export default defineComponent({
   name: 'Controls',
   components: {
     Icon,
-    IconButton,
+    NormalIconButton,
     BorrowDialog,
     ReturnDialog
   },
@@ -88,8 +88,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-$height: 36px;
-
 .img {
   width: 100%;
 }
@@ -102,10 +100,7 @@ $height: 36px;
 }
 
 .btn {
-  height: $height;
-  width: 96px;
   margin-right: 8px;
-  border-radius: $height / 2;
 }
 
 .icon {

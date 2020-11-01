@@ -9,7 +9,7 @@
 import { defineComponent, PropType } from 'vue'
 import Icon from '/@/components/UI/Icon.vue'
 
-type Variant = 'primary' | 'secondary'
+export type Variant = 'primary' | 'secondary'
 
 export default defineComponent({
   name: 'IconButton',
