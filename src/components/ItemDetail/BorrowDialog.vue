@@ -110,8 +110,5 @@ export default defineComponent({
   margin: auto;
   margin-top: 32px;
   border-radius: 18px;
-  color: $color-primary;
-  border: solid 1px $color-primary;
-  background-color: $color-background;
 }
 </style>

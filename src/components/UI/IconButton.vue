@@ -1,13 +1,15 @@
 <template>
-  <button :class="$style.container">
+  <button :class="$style.container" :data-variant="variant">
     <icon :class="$style.icon" :name="icon" />
     <div>{{ label }}</div>
   </button>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import Icon from '/@/components/UI/Icon.vue'
+
+type Variant = 'primary' | 'secondary'
 
 export default defineComponent({
   name: 'IconButton',
@@ -20,6 +22,10 @@ export default defineComponent({
     label: {
       type: String,
       required: true
+    },
+    variant: {
+      type: String as PropType<Variant>,
+      default: 'primary' as const
     }
   },
   setup() {
@@ -35,8 +41,19 @@ export default defineComponent({
   padding: 0 8px;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s;
   &:disabled {
     opacity: 0.5;
+  }
+
+  &[data-variant='primary'] {
+    color: $color-primary;
+    border: solid 1px $color-primary;
+    background-color: $color-background;
+    &:hover:not(:disabled) {
+      color: $color-background;
+      background-color: $color-primary;
+    }
   }
 }
 

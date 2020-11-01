@@ -106,14 +106,6 @@ $height: 36px;
   width: 96px;
   margin-right: 8px;
   border-radius: $height / 2;
-  border: solid 1px $color-primary;
-  color: $color-primary;
-  background-color: $color-background;
-  transition: all 0.2s;
-  &:hover:not(:disabled) {
-    background-color: $color-primary;
-    color: $color-background;
-  }
 }
 
 .icon {
