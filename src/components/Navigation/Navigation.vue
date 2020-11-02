@@ -1,8 +1,8 @@
 <template>
   <nav :class="$style.nav">
-    <logo-and-title />
     <search />
     <list :class="$style.list" />
+    <routes :class="$style.title" />
     <div :class="$style.footer">
       <span :class="$style.version">booQ Project v{{ version }}</span>
       <button :class="$style.aboutButton" @click="onClickAbout">?</button>
@@ -14,16 +14,16 @@
 import { defineComponent } from 'vue'
 import { useRouter } from 'vue-router'
 import version from '/@/lib/version'
-import LogoAndTitle from './LogoAndTitle.vue'
 import Search from './Search.vue'
 import List from './List.vue'
+import Routes from '/@/components/Routes.vue'
 
 export default defineComponent({
   name: 'Navigation',
   components: {
-    LogoAndTitle,
     Search,
-    List
+    List,
+    Routes
   },
   setup() {
     const router = useRouter()
