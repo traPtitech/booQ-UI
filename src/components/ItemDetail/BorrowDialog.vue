@@ -21,7 +21,7 @@
           :min="1"
         />
       </label>
-      <icon-button
+      <wide-icon-button
         icon="mdi:arrow-down-bold-circle"
         label="借りる"
         type="submit"
@@ -36,7 +36,7 @@ import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
-import IconButton from '/@/components/UI/IconButton.vue'
+import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import useBorrow from './use/borrow'
 
 export default defineComponent({
@@ -44,7 +44,7 @@ export default defineComponent({
   components: {
     DialogTemplate,
     OwnerSelector,
-    IconButton
+    WideIconButton
   },
   props: {
     item: {
@@ -105,13 +105,7 @@ export default defineComponent({
   margin-top: 0.25rem;
 }
 .button {
-  width: 80%;
-  padding: 4px;
   margin: auto;
   margin-top: 32px;
-  border-radius: 18px;
-  color: $color-primary;
-  border: solid 1px $color-primary;
-  background-color: $color-background;
 }
 </style>

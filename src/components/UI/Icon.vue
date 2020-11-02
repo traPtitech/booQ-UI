@@ -1,5 +1,7 @@
 <template>
-  <span class="iconify" :data-icon="name" :style="styles" />
+  <div :class="$style.container">
+    <span class="iconify" :data-icon="name" :style="styles" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -28,6 +30,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
+.container {
+  display: contents;
+}
 .icon {
   contain: strict;
 }
