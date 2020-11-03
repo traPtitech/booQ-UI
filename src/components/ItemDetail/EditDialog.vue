@@ -31,7 +31,6 @@ import { defineComponent, PropType, ref } from 'vue'
 import { Owner } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import useBorrow from './use/borrow'
 
 export default defineComponent({
   name: 'EditDialog',
