@@ -25,6 +25,8 @@
           label="削除"
           variant="caution"
           :class="$style.btn"
+          :disabled="!isAdmin"
+          @click="deleteItem"
         />
       </div>
     </transition>
@@ -37,6 +39,7 @@ import { ItemSummary } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import useOpener from '/@/components/UI/use/opener'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
+import useOtherControl from './use/otherControl'
 
 const popupId = 'other-controls-popup'
 
@@ -72,11 +75,12 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
+  setup(props) {
     const { isOpen, toggle } = useOpener()
     useHideOnClickOutside(isOpen, toggle)
 
-    return { isOpen, toggle, popupId }
+    const { ownInfo, isAdmin, deleteItem } = useOtherControl(props)
+    return { isOpen, toggle, popupId, ownInfo, isAdmin, deleteItem }
   }
 })
 </script>
