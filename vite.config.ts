@@ -22,7 +22,7 @@ const config: UserConfig = {
     }
   },
   define: {
-    __VERSION__: `"${packageJson.version}"`
+    __VERSION__: packageJson.version
   },
   plugins: [PurgeIcons()]
 }
