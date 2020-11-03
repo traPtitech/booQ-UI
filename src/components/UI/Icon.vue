@@ -30,9 +30,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  display: contents;
-}
 .icon {
   contain: strict;
 }

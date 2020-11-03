@@ -1,5 +1,5 @@
 <template>
-  <register-form />
+  <register-form :class="$style.container" />
 </template>
 
 <script lang="ts">
@@ -18,3 +18,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" module>
+.container {
+  margin: 3rem;
+}
+</style>
