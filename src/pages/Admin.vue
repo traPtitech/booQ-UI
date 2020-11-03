@@ -1,29 +1,31 @@
 <template>
-  <div>Admin Page</div>
-  <ul>
-    <li v-for="user in users" :key="user.id">
-      {{ user.displayName }} (@{{ user.name }})
-    </li>
-  </ul>
+  <admin-manager v-if="isAdmin" :class="$style.container" />
+  <div v-else :class="$style.container">このページは管理者のみ閲覧可能です</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, computed } from 'vue'
-import apis, { User } from '/@/lib/apis'
+import { defineComponent, computed } from 'vue'
+import AdminManager from '/@/components/Admin/AdminManager.vue'
 import useTitle from './use/title'
+import useMe from '/@/use/me'
 
 export default defineComponent({
   name: 'Admin',
+  components: {
+    AdminManager
+  },
   setup() {
     useTitle(computed(() => '管理画面'))
 
-    const users = ref<User[]>([])
-    onMounted(async () => {
-      const { data } = await apis.getUsers()
-      users.value = data
-    })
+    const { admin: isAdmin } = useMe()
 
-    return { users }
+    return { isAdmin }
   }
 })
 </script>
+
+<style lang="scss" module>
+.container {
+  margin: 3rem;
+}
+</style>
