@@ -39,6 +39,7 @@ import { ItemSummary } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import useOpener from '/@/components/UI/use/opener'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
+import EditDialog from './EditDialog.vue'
 import useOtherControl from './use/otherControl'
 
 const popupId = 'other-controls-popup'
@@ -67,7 +68,8 @@ export default defineComponent({
   name: 'OtherControls',
   components: {
     Icon,
-    NormalIconButton
+    NormalIconButton,
+    EditDialog
   },
   props: {
     item: {
@@ -78,9 +80,27 @@ export default defineComponent({
   setup(props) {
     const { isOpen, toggle } = useOpener()
     useHideOnClickOutside(isOpen, toggle)
+    const { isOpen: isOpenEditDialog, toggle: toggleEditDialog } = useOpener()
 
-    const { ownInfo, isAdmin, deleteItem } = useOtherControl(props)
-    return { isOpen, toggle, popupId, ownInfo, isAdmin, deleteItem }
+    const { ownInfo, remain, isAdmin, deleteItem, editItem } = useOtherControl(
+      props
+    )
+    const edit = async (payload: { rentalable: boolean; count: number }) => {
+      await editItem(payload)
+      toggleEditDialog()
+    }
+    return {
+      isOpen,
+      toggle,
+      isOpenEditDialog,
+      toggleEditDialog,
+      popupId,
+      ownInfo,
+      remain,
+      isAdmin,
+      edit,
+      deleteItem
+    }
   }
 })
 </script>
