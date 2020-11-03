@@ -18,7 +18,6 @@ export default defineComponent({
   setup() {
     const pages = [
       { path: '/', name: 'Dashboard' },
-      { path: '/users', name: 'All Users' },
       { path: '/users/sienka', name: 'User Page' },
       { path: '/items', name: 'All Items' },
       { path: '/items/new', name: 'Register Item' },

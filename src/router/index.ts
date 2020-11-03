@@ -9,11 +9,6 @@ const routes: RouteRecordRaw[] = [
     component: () => import('/@/pages/DashBoard.vue')
   },
   {
-    path: '/users',
-    name: 'All Users',
-    component: () => import('/@/pages/Users.vue')
-  },
-  {
     path: '/users/:name',
     name: 'User Page',
     component: () => import('/@/pages/User.vue')
