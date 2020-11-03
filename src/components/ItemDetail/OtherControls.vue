@@ -12,13 +12,19 @@
           icon="mdi:account-plus"
           label="追加"
           variant="secondary"
+          :disabled="
+            (!isAdmin && ownInfo) || isOwns.reduce((acc, cur) => acc && cur)
+          "
           :class="$style.btn"
+          @click="toggleAddOwnerDialog"
         />
         <normal-icon-button
           icon="mdi:account-edit"
           label="変更"
           variant="secondary"
           :class="$style.btn"
+          :disabled="!ownInfo"
+          @click="toggleEditDialog"
         />
         <normal-icon-button
           icon="mdi:close-circle"
@@ -30,6 +36,20 @@
         />
       </div>
     </transition>
+    <edit-dialog
+      v-if="isOpenEditDialog"
+      :own-info="ownInfo"
+      :remain="remain"
+      @close="toggleEditDialog"
+      @edit="edit"
+    />
+    <add-owner-dialog
+      v-if="isOpenAddOwnerDialog"
+      :is-admin="isAdmin"
+      :is-owns="isOwns"
+      @close="toggleAddOwnerDialog"
+      @add="add"
+    />
   </div>
 </template>
 
@@ -40,6 +60,7 @@ import Icon from '/@/components/UI/Icon.vue'
 import useOpener from '/@/components/UI/use/opener'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import EditDialog from './EditDialog.vue'
+import AddOwnerDialog from './AddOwnerDialog.vue'
 import useOtherControl from './use/otherControl'
 
 const popupId = 'other-controls-popup'
@@ -69,7 +90,8 @@ export default defineComponent({
   components: {
     Icon,
     NormalIconButton,
-    EditDialog
+    EditDialog,
+    AddOwnerDialog
   },
   props: {
     item: {
@@ -81,24 +103,46 @@ export default defineComponent({
     const { isOpen, toggle } = useOpener()
     useHideOnClickOutside(isOpen, toggle)
     const { isOpen: isOpenEditDialog, toggle: toggleEditDialog } = useOpener()
+    const {
+      isOpen: isOpenAddOwnerDialog,
+      toggle: toggleAddOwnerDialog
+    } = useOpener()
 
-    const { ownInfo, remain, isAdmin, deleteItem, editItem } = useOtherControl(
-      props
-    )
+    const {
+      ownInfo,
+      isOwns,
+      remain,
+      isAdmin,
+      deleteItem,
+      editItem,
+      addOwner
+    } = useOtherControl(props)
     const edit = async (payload: { rentalable: boolean; count: number }) => {
       await editItem(payload)
       toggleEditDialog()
+    }
+    const add = async (payload: {
+      ownerType: number
+      rentalable: boolean
+      count: number
+    }) => {
+      await addOwner(payload)
+      toggleAddOwnerDialog()
     }
     return {
       isOpen,
       toggle,
       isOpenEditDialog,
       toggleEditDialog,
+      isOpenAddOwnerDialog,
+      toggleAddOwnerDialog,
       popupId,
       ownInfo,
+      isOwns,
       remain,
       isAdmin,
       edit,
+      add,
       deleteItem
     }
   }

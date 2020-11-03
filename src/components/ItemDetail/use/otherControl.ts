@@ -3,16 +3,24 @@ import apis, { ItemSummary, Owner } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import { useStore } from '/@/store'
 
+export const OWNER_TYPES = ['自身', 'traP', '支援課']
+
 const useOtherControl = (props: {
   item: ItemSummary
 }): {
   remain: ComputedRef<number>
   ownInfo: Ref<Owner | undefined>
+  isOwns: ComputedRef<boolean[]>
   isAdmin: Ref<boolean>
+  addOwner: (payload: {
+    ownerType: number
+    rentalable: boolean
+    count: number
+  }) => Promise<void>
   editItem: (payload: { rentalable: boolean; count: number }) => Promise<void>
   deleteItem: () => Promise<void>
 } => {
-  const { id, admin: isAdmin } = useMe()
+  const { id, admin: isAdmin, displayName } = useMe()
   const ownInfo = computed(() =>
     props.item.owners.find(v => v.ownerId === id.value)
   )
@@ -22,6 +30,12 @@ const useOtherControl = (props: {
       props.item.latestLogs?.find(v => v.ownerId === id.value)?.count ??
       ownInfo.value?.count ??
       0
+  )
+  const isOwns = computed(() =>
+    OWNER_TYPES.map((_, i) => {
+      const ownerID = i === 0 ? id.value : i
+      return !!props.item.owners.find(v => v.ownerId === ownerID)
+    })
   )
 
   const deleteItem = async () => {
@@ -102,10 +116,42 @@ const useOtherControl = (props: {
       })
     }
   }
+
+  const addOwner = async (payload: {
+    ownerType: number
+    rentalable: boolean
+    count: number
+  }) => {
+    const ownerID = payload.ownerType === 0 ? id.value : payload.ownerType
+    try {
+      const ownerShip = {
+        userId: ownerID,
+        rentalable: payload.rentalable,
+        count: payload.count
+      }
+      await apis.postItemOwners(props.item.id, ownerShip)
+
+      const ownerName =
+        payload.ownerType === 0
+          ? displayName.value
+          : OWNER_TYPES[payload.ownerType]
+      store.commit.addToast({
+        type: 'success',
+        text: `所有者に ${ownerName} を追加しました。`
+      })
+    } catch (e) {
+      store.commit.addToast({
+        type: 'error',
+        text: e.toString()
+      })
+    }
+  }
   return {
     remain,
     ownInfo,
+    isOwns,
     isAdmin,
+    addOwner,
     editItem,
     deleteItem
   }
