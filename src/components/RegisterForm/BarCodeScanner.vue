@@ -8,12 +8,14 @@
         </option>
       </select>
     </div>
+    <p>使用できるカメラが存在しません</p>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, watchEffect } from 'vue'
 import { BrowserBarcodeReader, VideoInputDevice } from '@zxing/library'
+import { useStore } from '/@/store'
 
 const checkDigit = (isbn: string) => {
   const digits = isbn.split('').map(n => +n)
@@ -37,6 +39,7 @@ export default defineComponent({
     'change-code': (code: string) => true
   },
   setup(_, context) {
+    const store = useStore()
     const codeReader = new BrowserBarcodeReader()
     const inputs = ref<VideoInputDevice[]>([])
     const input = ref<VideoInputDevice>()
@@ -51,7 +54,10 @@ export default defineComponent({
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e)
-        // TODO
+        store.commit.addToast({
+          type: 'error',
+          text: e.toString()
+        })
       }
     }
 
@@ -59,15 +65,15 @@ export default defineComponent({
       initialize()
     })
 
-    const $video = ref()
+    const videoEle = ref<HTMLVideoElement>()
 
     const start = async () => {
       const device = input.value
-      if (!device || !$video.value) return
+      if (!device || !videoEle.value) return
       try {
         await codeReader.decodeFromVideoDevice(
           device.deviceId,
-          $video.value,
+          videoEle.value,
           (result, err) => {
             if (!result) {
               // eslint-disable-next-line no-console
@@ -83,7 +89,10 @@ export default defineComponent({
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e)
-        // TODO
+        store.commit.addToast({
+          type: 'error',
+          text: e.toString()
+        })
       }
     }
     const stop = () => {
@@ -102,7 +111,7 @@ export default defineComponent({
       start()
     })
 
-    return { inputs, input, $video, onResume }
+    return { inputs, input, videoEle, onResume }
   }
 })
 </script>
