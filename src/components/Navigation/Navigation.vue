@@ -2,7 +2,6 @@
   <nav :class="$style.nav">
     <search />
     <list :class="$style.list" />
-    <routes :class="$style.title" />
     <div :class="$style.footer">
       <span :class="$style.version">booQ Project v{{ version }}</span>
       <button :class="$style.aboutButton" @click="onClickAbout">?</button>
@@ -16,14 +15,12 @@ import { useRouter } from 'vue-router'
 import version from '/@/lib/version'
 import Search from './Search.vue'
 import List from './List.vue'
-import Routes from '/@/components/Routes.vue'
 
 export default defineComponent({
   name: 'Navigation',
   components: {
     Search,
-    List,
-    Routes
+    List
   },
   setup() {
     const router = useRouter()
