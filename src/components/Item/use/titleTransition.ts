@@ -1,4 +1,4 @@
-import { Ref, watchEffect } from 'vue'
+import { Ref, onMounted, watch } from 'vue'
 
 const lines = '3'
 
@@ -20,12 +20,17 @@ const useTitleTransition = (
   isExpanded: Ref<boolean>,
   $title: Ref<HTMLElement | null>
 ): { onTransitionEnd: () => void } => {
-  watchEffect(() => {
+  onMounted(() => {
     if (!$title.value) return
-    $title.value.style.height = isExpanded.value
+    $title.value.style.height = `${getLineClampedHeight($title.value)}px`
+  })
+
+  watch(isExpanded, newVal => {
+    if (!$title.value) return
+    $title.value.style.height = newVal
       ? `${$title.value.scrollHeight}px`
       : `${getLineClampedHeight($title.value)}px`
-    if (isExpanded.value) {
+    if (newVal) {
       $title.value.style.webkitLineClamp = 'initial'
     }
   })
