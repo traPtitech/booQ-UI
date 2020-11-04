@@ -1,8 +1,11 @@
 <template>
-  <div :class="$style.container" :data-is-expired="isExpired">
-    <div :class="$style.title">{{ item.name }}</div>
-    <div>{{ dueString }}</div>
-  </div>
+  <item-wide
+    :item="item"
+    :class="$style.container"
+    :data-is-expired="isExpired"
+  >
+    <div :class="$style.due">{{ dueString }}</div>
+  </item-wide>
 </template>
 
 <script lang="ts">
@@ -10,9 +13,13 @@ import { defineComponent, PropType, computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
 import { stringifyDateFromNumber, toNow } from '/@/lib/date'
+import ItemWide from '/@/components/ItemWide/ItemWide.vue'
 
 export default defineComponent({
   name: 'BorrowedItem',
+  components: {
+    ItemWide
+  },
   props: {
     item: {
       type: Object as PropType<ItemSummary>,
@@ -35,11 +42,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  padding: 16px;
-  background: $color-secondary;
-}
-.title {
-  font-weight: bold;
+.due {
+  .container[data-is-expired='true'] & {
+    color: $color-error;
+  }
 }
 </style>
