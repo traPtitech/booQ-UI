@@ -47,7 +47,7 @@ export default defineComponent({
 }
 
 .control {
-  width: 30%;
+  width: 40%;
   max-width: 480px;
 }
 

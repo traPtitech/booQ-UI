@@ -2,21 +2,23 @@
   <div>
     <img :class="$style.img" :src="imgUrl" />
     <div :class="$style.btnContainer">
-      <normal-icon-button
-        icon="mdi:arrow-down-bold-circle"
-        label="借りる"
-        :class="$style.btn"
-        @click="toggleBorrowDialog"
-      />
-      <normal-icon-button
-        icon="mdi:arrow-up-bold-circle"
-        label="返す"
-        variant="secondary"
-        :class="$style.btn"
-        :disabled="isReturnDisabled"
-        @click="toggleReturnDialog"
-      />
-      <other-controls :item="item" />
+      <div :class="$style.mainBtns">
+        <normal-icon-button
+          icon="mdi:arrow-down-bold-circle"
+          label="借りる"
+          :class="$style.btn"
+          @click="toggleBorrowDialog"
+        />
+        <normal-icon-button
+          icon="mdi:arrow-up-bold-circle"
+          label="返す"
+          variant="secondary"
+          :class="$style.btn"
+          :disabled="isReturnDisabled"
+          @click="toggleReturnDialog"
+        />
+      </div>
+      <other-controls :item="item" :class="$style.otherControl" />
     </div>
     <borrow-dialog
       v-if="isOpenBorrowDialog"
@@ -95,12 +97,21 @@ export default defineComponent({
 
 .btnContainer {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   padding: 8px;
   user-select: none;
 }
 
+.mainBtns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .btn {
-  margin-right: 8px;
+  margin: 0.25rem;
 }
 </style>
