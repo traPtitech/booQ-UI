@@ -16,7 +16,6 @@
 import { defineComponent } from 'vue'
 import { useFormState } from './use/formState'
 import InputText from '/@/components/UI/InputText.vue'
-import useModal from './use/modal'
 import BarCodeScanner from './BarCodeScanner.vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import useOpener from '/@/components/UI/use/opener'

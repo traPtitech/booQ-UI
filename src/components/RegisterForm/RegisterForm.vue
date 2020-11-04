@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watchEffect } from 'vue'
-import { provideFormState, useFormState } from './use/formState'
+import { provideFormState } from './use/formState'
 import RegisterFormDescription from './RegisterFormDescription.vue'
 import Radios from '/@/components/UI/Radios.vue'
 import { itemTypeToStringMap, stringToItemTypeMap } from './use/itemTypeMap'
