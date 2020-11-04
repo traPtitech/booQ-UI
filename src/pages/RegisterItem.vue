@@ -21,6 +21,6 @@ export default defineComponent({
 
 <style lang="scss" module>
 .container {
-  margin: 3rem;
+  padding: 3rem;
 }
 </style>
