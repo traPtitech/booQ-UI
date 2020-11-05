@@ -1,7 +1,7 @@
-$ts: 'toast-slide';
 $easeOutCirc: cubic-bezier(0.075, 0.82, 0.165, 1);
 $easeInExpo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
 
+$ts: 'toast-slide';
 .#{$ts}-enter-active {
   transition: all 0.3s $easeOutCirc;
   transform: translateX(0px);
@@ -19,4 +19,18 @@ $easeInExpo: cubic-bezier(0.95, 0.05, 0.795, 0.035);
 }
 .#{$ts}-move {
   transition: transform 3s;
+}
+
+$op: 'other-popup';
+.#{$op}-enter-active,
+.#{$op}-leave-active {
+  transition: all 0.3s ease-in;
+}
+.#{$op}-enter-from,
+.#{$op}-leave-to {
+  transform: scale(0);
+}
+.#{$op}-enter-to,
+.#{$op}-leave-from {
+  transform: scale(1);
 }
