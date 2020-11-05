@@ -36,14 +36,15 @@ export default defineComponent({
 
 <style lang="scss" module>
 .container {
-  cursor: pointer;
   display: flex;
   padding: 0 8px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   transition: all 0.2s;
   &:disabled {
     opacity: 0.5;
+    cursor: not-allowed;
   }
 
   &[data-variant='primary'] {
