@@ -1,13 +1,13 @@
 <template>
-  <li :class="$style.container" :data-is-selected="isSelected" @click="onClick">
+  <li :class="$style.container" :data-is-selected="isActive" @click="navigate">
     <icon :class="$style.icon" :name="icon" />
     <div :class="$style.title">{{ name }}</div>
   </li>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { defineComponent, toRef } from 'vue'
+import { useLink } from 'vue-router'
 import Icon from '/@/components/UI/Icon.vue'
 
 export default defineComponent({
@@ -30,16 +30,11 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const router = useRouter()
-    const route = useRoute()
+    const { isActive, navigate } = useLink({
+      to: toRef(props, 'path')
+    })
 
-    const isSelected = computed(() => route.path === props.path)
-
-    const onClick = () => {
-      router.push(props.path)
-    }
-
-    return { isSelected, onClick }
+    return { isActive, navigate }
   }
 })
 </script>
