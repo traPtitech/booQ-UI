@@ -6,26 +6,28 @@
       :class="$style.icon"
       @click.stop="toggle"
     />
-    <div v-if="isOpen" :id="popupId" :class="$style.popup">
-      <normal-icon-button
-        icon="mdi:account-plus"
-        label="追加"
-        variant="secondary"
-        :class="$style.btn"
-      />
-      <normal-icon-button
-        icon="mdi:account-edit"
-        label="変更"
-        variant="secondary"
-        :class="$style.btn"
-      />
-      <normal-icon-button
-        icon="mdi:close-circle"
-        label="削除"
-        variant="caution"
-        :class="$style.btn"
-      />
-    </div>
+    <transition name="other-popup">
+      <div v-if="isOpen" :id="popupId" :class="$style.popup">
+        <normal-icon-button
+          icon="mdi:account-plus"
+          label="追加"
+          variant="secondary"
+          :class="$style.btn"
+        />
+        <normal-icon-button
+          icon="mdi:account-edit"
+          label="変更"
+          variant="secondary"
+          :class="$style.btn"
+        />
+        <normal-icon-button
+          icon="mdi:close-circle"
+          label="削除"
+          variant="caution"
+          :class="$style.btn"
+        />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -94,6 +96,7 @@ export default defineComponent({
   background: $color-background;
   border: 1px solid $color-text-secondary;
   border-radius: 1rem;
+  transform-origin: top right;
 }
 .btn {
   margin: 1rem 0;
