@@ -13,7 +13,7 @@
             type="radio"
             name="owner"
             :value="i"
-            :disabled="isOwns[i]"
+            :disabled="alreadyOwns[i]"
           />
           {{ owner }}
         </label>
@@ -59,7 +59,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-    isOwns: {
+    alreadyOwns: {
       type: Array as PropType<boolean[]>,
       default: false
     }
@@ -76,14 +76,14 @@ export default defineComponent({
     const ownerType = ref(0)
 
     watchEffect(() => {
-      if (props.isOwns[ownerType.value]) {
-        ownerType.value = props.isOwns.findIndex(v => !v)
+      if (props.alreadyOwns[ownerType.value]) {
+        ownerType.value = props.alreadyOwns.findIndex(v => !v)
       }
     })
     const close = () => {
       context.emit('close')
     }
-    const addOwner = async () => {
+    const addOwner = () => {
       context.emit('add', {
         ownerType: ownerType.value,
         rentalable: rentalable.value,

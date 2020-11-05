@@ -12,9 +12,7 @@
           icon="mdi:account-plus"
           label="追加"
           variant="secondary"
-          :disabled="
-            (!isAdmin && ownInfo) || isOwns.reduce((acc, cur) => acc && cur)
-          "
+          :disabled="isDisabledAddOwnerButton"
           :class="$style.btn"
           @click="toggleAddOwnerDialog"
         />
@@ -23,7 +21,7 @@
           label="変更"
           variant="secondary"
           :class="$style.btn"
-          :disabled="!ownInfo"
+          :disabled="!isAdmin && !ownInfo"
           @click="toggleEditDialog"
         />
         <normal-icon-button
@@ -32,21 +30,23 @@
           variant="caution"
           :class="$style.btn"
           :disabled="!isAdmin"
-          @click="deleteItem"
+          @click="clickDeleteItem"
         />
       </div>
     </transition>
     <edit-dialog
       v-if="isOpenEditDialog"
-      :own-info="ownInfo"
-      :remain="remain"
+      :own-infos="item.owners"
+      :details="details"
+      :me-name="meName"
+      :is-admin="isAdmin"
       @close="toggleEditDialog"
       @edit="edit"
     />
     <add-owner-dialog
       v-if="isOpenAddOwnerDialog"
       :is-admin="isAdmin"
-      :is-owns="isOwns"
+      :already-owns="alreadyOwns"
       @close="toggleAddOwnerDialog"
       @add="add"
     />
@@ -62,6 +62,9 @@ import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import EditDialog from './EditDialog.vue'
 import AddOwnerDialog from './AddOwnerDialog.vue'
 import useOtherControl from './use/otherControl'
+import { addOwner } from './use/addOwner'
+import { editItem } from './use/editItem'
+import { deleteItem } from './use/deleteItem'
 
 const popupId = 'other-controls-popup'
 
@@ -110,24 +113,39 @@ export default defineComponent({
 
     const {
       ownInfo,
-      isOwns,
-      remain,
+      alreadyOwns,
+      meName,
       isAdmin,
-      deleteItem,
-      editItem,
-      addOwner
+      isDisabledAddOwnerButton,
+      details
     } = useOtherControl(props)
-    const edit = async (payload: { rentalable: boolean; count: number }) => {
-      await editItem(payload)
+
+    const edit = async (payload: {
+      userID: number
+      rentalable: boolean
+      count: number
+    }) => {
+      if (!ownInfo.value) return
+      await editItem({
+        ...payload,
+        itemID: props.item.id,
+        ownInfo: ownInfo.value
+      })
       toggleEditDialog()
     }
+
     const add = async (payload: {
       ownerType: number
       rentalable: boolean
       count: number
     }) => {
-      await addOwner(payload)
+      await addOwner({ ...payload, itemID: props.item.id })
       toggleAddOwnerDialog()
+    }
+
+    const clickDeleteItem = async () => {
+      await deleteItem({ itemID: props.item.id, itemName: props.item.name })
+      toggle()
     }
     return {
       isOpen,
@@ -138,12 +156,14 @@ export default defineComponent({
       toggleAddOwnerDialog,
       popupId,
       ownInfo,
-      isOwns,
-      remain,
+      alreadyOwns,
+      isDisabledAddOwnerButton,
+      details,
+      meName,
       isAdmin,
       edit,
       add,
-      deleteItem
+      clickDeleteItem
     }
   }
 })
