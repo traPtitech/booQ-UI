@@ -1,13 +1,8 @@
 <template>
   <div v-if="items.length > 0">
     <h2>あなたが借りている備品</h2>
-    <ul>
-      <borrowed-item
-        v-for="item in items"
-        :key="item.id"
-        :class="$style.item"
-        :item="item"
-      />
+    <ul :class="$style.list">
+      <borrowed-item v-for="item in items" :key="item.id" :item="item" />
     </ul>
   </div>
   <div v-else>借りてるアイテムはありません</div>
@@ -48,7 +43,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.item {
-  margin: 16px;
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+  gap: 1rem;
+  margin: 1rem;
 }
 </style>
