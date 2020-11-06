@@ -38,8 +38,6 @@
       v-if="isOpenEditDialog"
       :own-infos="item.owners"
       :details="details"
-      :me-name="meName"
-      :is-admin="isAdmin"
       @close="toggleEditDialog"
       @edit="edit"
     />
@@ -62,9 +60,9 @@ import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import EditDialog from './EditDialog.vue'
 import AddOwnerDialog from './AddOwnerDialog.vue'
 import useOtherControl from './use/otherControl'
-import { addOwner } from './use/addOwner'
-import { editItem } from './use/editItem'
-import { deleteItem } from './use/deleteItem'
+import useAddOwner from './use/addOwner'
+import useEditItem from './use/editItem'
+import useDeleteItem from './use/deleteItem'
 
 const popupId = 'other-controls-popup'
 
@@ -114,7 +112,6 @@ export default defineComponent({
     const {
       ownInfo,
       alreadyOwns,
-      meName,
       isAdmin,
       isDisabledAddOwnerButton,
       details
@@ -126,6 +123,7 @@ export default defineComponent({
       count: number
     }) => {
       if (!ownInfo.value) return
+      const { editItem } = useEditItem()
       await editItem({
         ...payload,
         itemID: props.item.id,
@@ -139,11 +137,13 @@ export default defineComponent({
       rentalable: boolean
       count: number
     }) => {
+      const { addOwner } = useAddOwner()
       await addOwner({ ...payload, itemID: props.item.id })
       toggleAddOwnerDialog()
     }
 
     const clickDeleteItem = async () => {
+      const { deleteItem } = useDeleteItem()
       await deleteItem({ itemID: props.item.id, itemName: props.item.name })
       toggle()
     }
@@ -159,7 +159,6 @@ export default defineComponent({
       alreadyOwns,
       isDisabledAddOwnerButton,
       details,
-      meName,
       isAdmin,
       edit,
       add,

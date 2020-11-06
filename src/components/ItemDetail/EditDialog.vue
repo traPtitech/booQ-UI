@@ -35,6 +35,7 @@ import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import { OwnerWithCount } from './use/owners'
+import useMe from '/@/use/me'
 
 export default defineComponent({
   name: 'EditDialog',
@@ -51,14 +52,6 @@ export default defineComponent({
     details: {
       type: Array as PropType<OwnerWithCount[]>,
       required: true
-    },
-    meName: {
-      type: String,
-      required: true
-    },
-    isAdmin: {
-      type: Boolean,
-      default: false
     }
   },
   emits: {
@@ -68,10 +61,11 @@ export default defineComponent({
       true
   },
   setup(props, context) {
+    const { name: meName, admin: isAdmin } = useMe()
     const ownerName = ref(
       props.details[
         Math.max(
-          props.details.findIndex(v => v.userName === props.meName),
+          props.details.findIndex(v => v.userName === meName.value),
           0
         )
       ].userName
@@ -113,6 +107,7 @@ export default defineComponent({
       rentalable,
       count,
       isDisabled,
+      isAdmin,
       editItem
     }
   }

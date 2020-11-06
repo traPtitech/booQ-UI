@@ -4,18 +4,18 @@
     <form :class="$style.container" @submit.prevent="addOwner">
       <div v-if="isAdmin">
         <label
-          v-for="(owner, i) in OWNER_TYPES"
-          :key="i"
+          v-for="owner in itemTypeToStringMap"
+          :key="owner[0]"
           :class="$style.radioLabel"
         >
           <input
             v-model="ownerType"
             type="radio"
             name="owner"
-            :value="i"
-            :disabled="alreadyOwns[i]"
+            :value="owner[0]"
+            :disabled="alreadyOwns[owner[0]]"
           />
-          {{ owner }}
+          {{ owner[1] }}
         </label>
       </div>
       <label :class="$style.label">
@@ -43,10 +43,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watchEffect, PropType } from 'vue'
+import { defineComponent, ref, PropType } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import { OWNER_TYPES } from './use/otherControl'
+import { itemTypeToStringMap } from '/@/components/RegisterForm/use/itemTypeMap'
 
 export default defineComponent({
   name: 'AddOwnerDialog',
@@ -73,13 +73,8 @@ export default defineComponent({
   setup(props, context) {
     const rentalable = ref(true)
     const count = ref(1)
-    const ownerType = ref(0)
+    const ownerType = ref(props.alreadyOwns.findIndex(v => !v))
 
-    watchEffect(() => {
-      if (props.alreadyOwns[ownerType.value]) {
-        ownerType.value = props.alreadyOwns.findIndex(v => !v)
-      }
-    })
     const close = () => {
       context.emit('close')
     }
@@ -95,7 +90,7 @@ export default defineComponent({
       rentalable,
       count,
       ownerType,
-      OWNER_TYPES,
+      itemTypeToStringMap,
       addOwner
     }
   }
