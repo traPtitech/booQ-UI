@@ -31,7 +31,7 @@ const useAddOwner = (): {
       await apis.postItemOwners(payload.itemID, ownerShip)
 
       const ownerName =
-        payload.ownerType === 0
+        payload.ownerType === ItemType.individual
           ? displayName.value
           : itemTypeToStringMap.get(payload.ownerType)
       store.commit.addToast({

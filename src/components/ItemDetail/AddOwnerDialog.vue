@@ -3,20 +3,11 @@
     <h2 :class="$style.title">所有者を追加する</h2>
     <form :class="$style.container" @submit.prevent="addOwner">
       <div v-if="isAdmin">
-        <label
-          v-for="owner in itemTypeToStringMap"
-          :key="owner[0]"
-          :class="$style.radioLabel"
-        >
-          <input
-            v-model="ownerType"
-            type="radio"
-            name="owner"
-            :value="owner[0]"
-            :disabled="alreadyOwns[owner[0]]"
-          />
-          {{ owner[1] }}
-        </label>
+        <owner-selector
+          v-model="ownerName"
+          :details="details"
+          :is-show-count="false"
+        />
       </div>
       <label :class="$style.label">
         貸し出し可:
@@ -43,15 +34,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from 'vue'
+import { defineComponent, ref, PropType, onMounted } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
+import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import { itemTypeToStringMap } from '/@/components/RegisterForm/use/itemTypeMap'
+import {
+  itemTypeToStringMap,
+  stringToItemTypeMap
+} from '/@/components/RegisterForm/use/itemTypeMap'
+import { AlreadyOwns, getFirstNotOwn } from './use/otherControl'
+import { ItemType } from '/@/lib/apis'
+import { OwnerWithCount } from './use/owners'
 
 export default defineComponent({
   name: 'AddOwnerDialog',
   components: {
     DialogTemplate,
+    OwnerSelector,
     WideIconButton
   },
   props: {
@@ -60,7 +59,7 @@ export default defineComponent({
       default: false
     },
     alreadyOwns: {
-      type: Array as PropType<boolean[]>,
+      type: Object as PropType<AlreadyOwns>,
       default: false
     }
   },
@@ -73,14 +72,38 @@ export default defineComponent({
   setup(props, context) {
     const rentalable = ref(true)
     const count = ref(1)
-    const ownerType = ref(props.alreadyOwns.findIndex(v => !v))
+
+    const details = ref<OwnerWithCount[]>([])
+    onMounted(() => {
+      if (!props.alreadyOwns[ItemType.individual]) {
+        details.value.push({
+          userName: itemTypeToStringMap.get(ItemType.individual),
+          count: 1
+        })
+      }
+      if (!props.alreadyOwns[ItemType.equipment]) {
+        details.value.push({
+          userName: itemTypeToStringMap.get(ItemType.equipment),
+          count: 1
+        })
+      }
+      if (!props.alreadyOwns[ItemType.sienka]) {
+        details.value.push({
+          userName: itemTypeToStringMap.get(ItemType.sienka),
+          count: 1
+        })
+      }
+    })
+    const ownerName = ref(
+      itemTypeToStringMap.get(getFirstNotOwn(props.alreadyOwns))
+    )
 
     const close = () => {
       context.emit('close')
     }
     const addOwner = () => {
       context.emit('add', {
-        ownerType: ownerType.value,
+        ownerType: stringToItemTypeMap.get(ownerName.value),
         rentalable: rentalable.value,
         count: count.value
       })
@@ -89,9 +112,9 @@ export default defineComponent({
       close,
       rentalable,
       count,
-      ownerType,
-      itemTypeToStringMap,
-      addOwner
+      addOwner,
+      details,
+      ownerName
     }
   }
 })

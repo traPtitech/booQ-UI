@@ -30,7 +30,7 @@
           variant="caution"
           :class="$style.btn"
           :disabled="!isAdmin"
-          @click="clickDeleteItem"
+          @click="onDeleteClick"
         />
       </div>
     </transition>
@@ -117,13 +117,16 @@ export default defineComponent({
       details
     } = useOtherControl(props)
 
+    const { addOwner } = useAddOwner()
+    const { editItem } = useEditItem()
+    const { deleteItem } = useDeleteItem()
+
     const edit = async (payload: {
       userID: number
       rentalable: boolean
       count: number
     }) => {
       if (!ownInfo.value) return
-      const { editItem } = useEditItem()
       await editItem({
         ...payload,
         itemID: props.item.id,
@@ -137,13 +140,11 @@ export default defineComponent({
       rentalable: boolean
       count: number
     }) => {
-      const { addOwner } = useAddOwner()
       await addOwner({ ...payload, itemID: props.item.id })
       toggleAddOwnerDialog()
     }
 
-    const clickDeleteItem = async () => {
-      const { deleteItem } = useDeleteItem()
+    const onDeleteClick = async () => {
       await deleteItem({ itemID: props.item.id, itemName: props.item.name })
       toggle()
     }
@@ -162,7 +163,7 @@ export default defineComponent({
       isAdmin,
       edit,
       add,
-      clickDeleteItem
+      onDeleteClick
     }
   }
 })

@@ -13,7 +13,7 @@
           v-model.number="count"
           type="number"
           :class="$style.input"
-          :min="(ownInfo?.count ?? 0) - remain"
+          :min="minCount"
         />
       </label>
       <wide-icon-button
@@ -36,6 +36,15 @@ import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import { OwnerWithCount } from './use/owners'
 import useMe from '/@/use/me'
+
+const getInitialOwner = (details: OwnerWithCount[], name: string) => {
+  return details[
+    Math.max(
+      details.findIndex(v => v.userName === name),
+      0
+    )
+  ].userName
+}
 
 export default defineComponent({
   name: 'EditDialog',
@@ -62,19 +71,9 @@ export default defineComponent({
   },
   setup(props, context) {
     const { name: meName, admin: isAdmin } = useMe()
-    const ownerName = ref(
-      props.details[
-        Math.max(
-          props.details.findIndex(v => v.userName === meName.value),
-          0
-        )
-      ].userName
-    )
+    const ownerName = ref(getInitialOwner(props.details, meName.value))
     const ownInfo = computed(() =>
       props.ownInfos.find(v => v.user.name === ownerName.value)
-    )
-    const remain = computed(
-      () => props.details.find(v => v.userName === ownerName.value)?.count ?? 0
     )
 
     const rentalable = ref(!!ownInfo.value?.rentalable)
@@ -89,6 +88,11 @@ export default defineComponent({
         ownInfo.value?.rentalable === rentalable.value &&
         ownInfo.value?.count === count.value
     )
+    const minCount = computed(
+      () =>
+        (ownInfo.value?.count ?? 0) -
+        (props.details.find(v => v.userName === ownerName.value)?.count ?? 0)
+    )
     const close = () => {
       context.emit('close')
     }
@@ -102,13 +106,12 @@ export default defineComponent({
     return {
       close,
       ownerName,
-      ownInfo,
-      remain,
       rentalable,
       count,
       isDisabled,
       isAdmin,
-      editItem
+      editItem,
+      minCount
     }
   }
 })

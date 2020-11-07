@@ -1,5 +1,4 @@
 import apis, { Owner } from '/@/lib/apis'
-import useMe from '/@/use/me'
 import { useStore } from '/@/store'
 
 const useEditItem = (): {
@@ -19,8 +18,7 @@ const useEditItem = (): {
     count: number
   }): Promise<void> => {
     const store = useStore()
-    const { id: meID } = useMe()
-    const id = payload.userID ?? meID.value
+    const id = payload.userID
     // countに空文字が入ってるときcheckValidity()をすり抜ける
     if (typeof payload.count === 'string') {
       store.commit.addToast({
@@ -37,15 +35,15 @@ const useEditItem = (): {
       }
       await apis.editItemOwners(payload.itemID, ownerShip)
 
-      const message = (() => {
-        if (payload.ownInfo.rentalable !== payload.rentalable) {
-          return `物品の登録を貸し出し${payload.rentalable ? '可' : '不可'} × ${
-            payload.count
-          }個 に変更しました`
-        }
+      let message = ''
+      if (payload.ownInfo.rentalable !== payload.rentalable) {
+        message = `物品の登録を貸し出し${
+          payload.rentalable ? '可' : '不可'
+        } × ${payload.count}個 に変更しました`
+      } else {
         const diff = payload.count - payload.ownInfo.count
-        return `${Math.abs(diff)}個 ${diff > 0 ? '追加' : '減ら'}しました。`
-      })()
+        message = `${Math.abs(diff)}個 ${diff > 0 ? '追加' : '減ら'}しました。`
+      }
       store.commit.addToast({
         type: 'success',
         text: message
