@@ -2,13 +2,12 @@
   <dialog-template @close="close">
     <h2 :class="$style.title">所有者を追加する</h2>
     <form :class="$style.container" @submit.prevent="addOwner">
-      <div v-if="isAdmin">
-        <owner-selector
-          v-model="ownerName"
-          :details="details"
-          :is-show-count="false"
-        />
-      </div>
+      <owner-selector
+        v-if="isAdmin"
+        v-model="ownerName"
+        :details="details"
+        :is-show-count="false"
+      />
       <label :class="$style.label">
         貸し出し可:
         <input v-model="rentalable" type="checkbox" :class="$style.input" />
@@ -42,9 +41,10 @@ import {
   itemTypeToStringMap,
   stringToItemTypeMap
 } from '/@/components/RegisterForm/use/itemTypeMap'
-import { AlreadyOwns, getFirstNotOwn } from './use/otherControl'
+import { getFirstNotOwn } from './use/otherControl'
 import { ItemType } from '/@/lib/apis'
 import { OwnerWithCount } from './use/owners'
+import useMe from '/@/use/me'
 
 export default defineComponent({
   name: 'AddOwnerDialog',
@@ -54,12 +54,8 @@ export default defineComponent({
     WideIconButton
   },
   props: {
-    isAdmin: {
-      type: Boolean,
-      default: false
-    },
-    alreadyOwns: {
-      type: Object as PropType<AlreadyOwns>,
+    nonOwnerTypes: {
+      type: Set as PropType<Set<ItemType>>,
       default: false
     }
   },
@@ -70,32 +66,19 @@ export default defineComponent({
       true
   },
   setup(props, context) {
+    const { admin: isAdmin } = useMe()
     const rentalable = ref(true)
     const count = ref(1)
 
     const details = ref<OwnerWithCount[]>([])
     onMounted(() => {
-      if (!props.alreadyOwns[ItemType.individual]) {
-        details.value.push({
-          userName: itemTypeToStringMap.get(ItemType.individual),
-          count: 1
-        })
-      }
-      if (!props.alreadyOwns[ItemType.equipment]) {
-        details.value.push({
-          userName: itemTypeToStringMap.get(ItemType.equipment),
-          count: 1
-        })
-      }
-      if (!props.alreadyOwns[ItemType.sienka]) {
-        details.value.push({
-          userName: itemTypeToStringMap.get(ItemType.sienka),
-          count: 1
-        })
-      }
+      details.value = [...props.nonOwnerTypes].map(typ => ({
+        userName: itemTypeToStringMap.get(typ),
+        count: 1
+      }))
     })
     const ownerName = ref(
-      itemTypeToStringMap.get(getFirstNotOwn(props.alreadyOwns))
+      itemTypeToStringMap.get(getFirstNotOwn(props.nonOwnerTypes))
     )
 
     const close = () => {
@@ -110,6 +93,7 @@ export default defineComponent({
     }
     return {
       close,
+      isAdmin,
       rentalable,
       count,
       addOwner,

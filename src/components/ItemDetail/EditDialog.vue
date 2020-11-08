@@ -38,12 +38,8 @@ import { OwnerWithCount } from './use/owners'
 import useMe from '/@/use/me'
 
 const getInitialOwner = (details: OwnerWithCount[], name: string) => {
-  return details[
-    Math.max(
-      details.findIndex(v => v.userName === name),
-      0
-    )
-  ].userName
+  const initialOwner = details.find(v => v.userName === name) ?? details[0]
+  return initialOwner.userName
 }
 
 export default defineComponent({

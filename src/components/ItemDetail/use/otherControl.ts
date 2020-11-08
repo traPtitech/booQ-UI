@@ -3,20 +3,14 @@ import { ItemSummary, Owner, ItemType } from '/@/lib/apis'
 import { getRemainByOwnerID, OwnerWithCount } from './owners'
 import useMe from '/@/use/me'
 
-export interface AlreadyOwns {
-  [ItemType.individual]: boolean
-  [ItemType.equipment]: boolean
-  [ItemType.sienka]: boolean
-}
-
-export const getFirstNotOwn = (alreadyOwns: AlreadyOwns): number => {
-  if (!alreadyOwns[ItemType.individual]) {
+export const getFirstNotOwn = (nonOwnerTypes: Set<ItemType>): ItemType | -1 => {
+  if (nonOwnerTypes.has(ItemType.individual)) {
     return ItemType.individual
   }
-  if (!alreadyOwns[ItemType.equipment]) {
+  if (nonOwnerTypes.has(ItemType.equipment)) {
     return ItemType.equipment
   }
-  if (!alreadyOwns[ItemType.sienka]) {
+  if (nonOwnerTypes.has(ItemType.sienka)) {
     return ItemType.sienka
   }
   return -1
@@ -26,7 +20,7 @@ const useOtherControl = (props: {
   item: ItemSummary
 }): {
   ownInfo: Ref<Owner | undefined>
-  alreadyOwns: ComputedRef<AlreadyOwns>
+  nonOwnerTypes: ComputedRef<Set<ItemType>>
   isAdmin: Ref<boolean>
   isDisabledAddOwnerButton: ComputedRef<boolean>
   details: ComputedRef<OwnerWithCount[]>
@@ -35,21 +29,21 @@ const useOtherControl = (props: {
   const ownInfo = computed(() =>
     props.item.owners.find(v => v.ownerId === id.value)
   )
-  const alreadyOwns = computed(() => ({
-    [ItemType.individual]: !!props.item.owners.find(
-      v => v.ownerId === id.value
-    ),
-    [ItemType.equipment]: !!props.item.owners.find(
-      v => v.ownerId === ItemType.equipment
-    ),
-    [ItemType.sienka]: !!props.item.owners.find(
-      v => v.ownerId === ItemType.sienka
-    )
-  }))
+  const nonOwnerTypes = computed(() => {
+    const arr: ItemType[] = []
+    if (props.item.owners.every(o => o.ownerId !== id.value)) {
+      arr.push(ItemType.individual)
+    } else if (props.item.owners.every(o => o.ownerId !== ItemType.equipment)) {
+      arr.push(ItemType.equipment)
+    } else if (props.item.owners.every(o => o.ownerId !== ItemType.sienka)) {
+      arr.push(ItemType.sienka)
+    }
+    return new Set(arr)
+  })
   const isDisabledAddOwnerButton = computed(
     () =>
       (!isAdmin.value && !!ownInfo.value) ||
-      getFirstNotOwn(alreadyOwns.value) === -1
+      getFirstNotOwn(nonOwnerTypes.value) === -1
   )
   const details = computed(() =>
     props.item.owners.map(owner => ({
@@ -64,7 +58,7 @@ const useOtherControl = (props: {
 
   return {
     ownInfo,
-    alreadyOwns,
+    nonOwnerTypes,
     isAdmin,
     isDisabledAddOwnerButton,
     details

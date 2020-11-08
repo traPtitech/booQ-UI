@@ -43,8 +43,7 @@
     />
     <add-owner-dialog
       v-if="isOpenAddOwnerDialog"
-      :is-admin="isAdmin"
-      :already-owns="alreadyOwns"
+      :non-owner-types="nonOwnerTypes"
       @close="toggleAddOwnerDialog"
       @add="add"
     />
@@ -111,7 +110,7 @@ export default defineComponent({
 
     const {
       ownInfo,
-      alreadyOwns,
+      nonOwnerTypes,
       isAdmin,
       isDisabledAddOwnerButton,
       details
@@ -157,7 +156,7 @@ export default defineComponent({
       toggleAddOwnerDialog,
       popupId,
       ownInfo,
-      alreadyOwns,
+      nonOwnerTypes,
       isDisabledAddOwnerButton,
       details,
       isAdmin,
