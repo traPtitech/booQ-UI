@@ -13,7 +13,7 @@
           v-model.number="count"
           type="number"
           :class="$style.input"
-          :min="minCount"
+          :min="initCount - remain"
         />
       </label>
       <wide-icon-button
@@ -75,12 +75,13 @@ export default defineComponent({
     const ownInfo = computed(() =>
       props.ownInfos.find(v => v.user.name === ownerName.value)
     )
+    const initCount = computed(() => ownInfo.value?.count ?? 0)
 
     const rentalable = ref(!!ownInfo.value?.rentalable)
-    const count = ref(ownInfo.value?.count ?? 0)
+    const count = ref(initCount.value)
     watchEffect(() => {
       rentalable.value = !!ownInfo.value?.rentalable
-      count.value = ownInfo.value?.count ?? 0
+      count.value = initCount.value
     })
 
     const isDisabled = computed(
@@ -88,10 +89,8 @@ export default defineComponent({
         ownInfo.value?.rentalable === rentalable.value &&
         ownInfo.value?.count === count.value
     )
-    const minCount = computed(
-      () =>
-        (ownInfo.value?.count ?? 0) -
-        (props.details.find(v => v.userName === ownerName.value)?.count ?? 0)
+    const remain = computed(
+      () => props.details.find(v => v.userName === ownerName.value)?.count ?? 0
     )
     const close = () => {
       context.emit('close')
@@ -111,7 +110,8 @@ export default defineComponent({
       isDisabled,
       isAdmin,
       editItem,
-      minCount
+      initCount,
+      remain
     }
   }
 })
