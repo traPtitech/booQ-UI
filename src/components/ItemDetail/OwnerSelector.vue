@@ -8,7 +8,7 @@
         :value="detail.userName"
         :disabled="detail.count === 0"
       >
-        {{ detail.userName }} ({{ detail.count }})
+        {{ detail.userName }} {{ isShowCount ? `(${detail.count})` : '' }}
       </option>
     </select>
   </label>
@@ -28,6 +28,10 @@ export default defineComponent({
     modelValue: {
       type: String,
       required: true
+    },
+    isShowCount: {
+      type: Boolean,
+      default: true
     }
   },
   emits: {

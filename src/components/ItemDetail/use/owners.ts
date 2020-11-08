@@ -1,5 +1,5 @@
 import { computed, ComputedRef } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import { ItemSummary, Log } from '/@/lib/apis'
 
 export interface OwnerWithCount {
   userName: string
@@ -10,16 +10,26 @@ export interface OwnerDetail extends OwnerWithCount {
   all: number
 }
 
+export const getRemainByOwnerID = (
+  id: number,
+  initialRemain: number,
+  latestLogs: Log[]
+): number => {
+  // そのownerの最後のログを取得
+  const latestLog = latestLogs.find(v => v.ownerId === id)
+  return latestLog?.count ?? initialRemain
+}
+
 const useOwners = (props: {
   item: ItemSummary
 }): { details: ComputedRef<OwnerDetail[]> } => {
   const details = computed(() =>
     props.item.owners.map(owner => {
-      // そのownerの最後のログを取得
-      const latestLog = props.item.latestLogs?.find(
-        v => v.ownerId === owner.ownerId
+      const count = getRemainByOwnerID(
+        owner.id,
+        owner.count,
+        props.item.latestLogs ?? []
       )
-      const count = latestLog?.count ?? owner.count
       const all = owner.count
       return {
         userName: owner.user.name,
