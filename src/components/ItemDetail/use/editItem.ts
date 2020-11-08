@@ -10,6 +10,8 @@ const useEditItem = (): {
     count: number
   }) => Promise<void>
 } => {
+  const store = useStore()
+
   const editItem = async (payload: {
     itemID: number
     userID: number
@@ -17,8 +19,6 @@ const useEditItem = (): {
     rentalable: boolean
     count: number
   }): Promise<void> => {
-    const store = useStore()
-    const id = payload.userID
     // countに空文字が入ってるときcheckValidity()をすり抜ける
     if (typeof payload.count === 'string') {
       store.commit.addToast({
@@ -29,7 +29,7 @@ const useEditItem = (): {
     }
     try {
       const ownerShip = {
-        userId: id,
+        userId: payload.userID,
         rentalable: payload.rentalable,
         count: payload.count
       }

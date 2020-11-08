@@ -12,7 +12,11 @@ import { defineComponent, ref, watchEffect } from 'vue'
 import { provideFormState } from './use/formState'
 import RegisterFormDescription from './RegisterFormDescription.vue'
 import Radios from '/@/components/UI/Radios.vue'
-import { itemTypeToStringMap, stringToItemTypeMap } from './use/itemTypeMap'
+import {
+  itemTypeMap,
+  itemTypeToName,
+  itemTypeNameToType
+} from '/@/lib/itemType'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 import apis, { ItemPosted } from '/@/lib/apis'
 
@@ -26,11 +30,11 @@ export default defineComponent({
   setup() {
     const { formState, reset } = provideFormState()
 
-    const type = ref(itemTypeToStringMap.get(formState.type))
+    const type = ref(itemTypeToName(formState.type))
     watchEffect(() => {
-      formState.type = stringToItemTypeMap.get(type.value)
+      formState.type = itemTypeNameToType(type.value)
     })
-    const typeOptions = [...itemTypeToStringMap.values()]
+    const typeOptions = [...itemTypeMap.values()]
 
     const register = async () => {
       if (!confirm('本当に登録しますか？')) return

@@ -37,10 +37,7 @@ import { defineComponent, ref, PropType, onMounted } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import {
-  itemTypeToStringMap,
-  stringToItemTypeMap
-} from '/@/components/RegisterForm/use/itemTypeMap'
+import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
 import { getFirstNotOwn } from './use/otherControl'
 import { ItemType } from '/@/lib/apis'
 import { OwnerWithCount } from './use/owners'
@@ -73,20 +70,18 @@ export default defineComponent({
     const details = ref<OwnerWithCount[]>([])
     onMounted(() => {
       details.value = [...props.nonOwnerTypes].map(typ => ({
-        userName: itemTypeToStringMap.get(typ),
+        userName: itemTypeToName(typ),
         count: 1
       }))
     })
-    const ownerName = ref(
-      itemTypeToStringMap.get(getFirstNotOwn(props.nonOwnerTypes))
-    )
+    const ownerName = ref(itemTypeToName(getFirstNotOwn(props.nonOwnerTypes)))
 
     const close = () => {
       context.emit('close')
     }
     const addOwner = () => {
       context.emit('add', {
-        ownerType: stringToItemTypeMap.get(ownerName.value),
+        ownerType: itemTypeNameToType(ownerName.value),
         rentalable: rentalable.value,
         count: count.value
       })

@@ -1,7 +1,7 @@
 import apis, { ItemType } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import { useStore } from '/@/store'
-import { itemTypeToStringMap } from '/@/components/RegisterForm/use/itemTypeMap'
+import { itemTypeToOwnerId, itemTypeToOwnerName } from '/@/lib/itemType'
 
 const useAddOwner = (): {
   addOwner: (payload: {
@@ -11,17 +11,16 @@ const useAddOwner = (): {
     count: number
   }) => Promise<void>
 } => {
+  const store = useStore()
+  const { id, displayName } = useMe()
+
   const addOwner = async (payload: {
     itemID: number
     ownerType: number
     rentalable: boolean
     count: number
   }): Promise<void> => {
-    const store = useStore()
-    const { id, displayName } = useMe()
-
-    const ownerID =
-      payload.ownerType === ItemType.individual ? id.value : payload.ownerType
+    const ownerID = itemTypeToOwnerId(payload.ownerType, id.value)
     try {
       const ownerShip = {
         userId: ownerID,
@@ -30,10 +29,10 @@ const useAddOwner = (): {
       }
       await apis.postItemOwners(payload.itemID, ownerShip)
 
-      const ownerName =
-        payload.ownerType === ItemType.individual
-          ? displayName.value
-          : itemTypeToStringMap.get(payload.ownerType)
+      const ownerName = itemTypeToOwnerName(
+        payload.ownerType,
+        displayName.value
+      )
       store.commit.addToast({
         type: 'success',
         text: `所有者に ${ownerName} を追加しました。`
