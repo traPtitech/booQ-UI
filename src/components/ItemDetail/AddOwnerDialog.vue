@@ -2,12 +2,7 @@
   <dialog-template @close="close">
     <h2 :class="$style.title">所有者を追加する</h2>
     <form :class="$style.container" @submit.prevent="addOwner">
-      <owner-selector
-        v-if="isAdmin"
-        v-model="ownerName"
-        :details="details"
-        :is-show-count="false"
-      />
+      <owner-selector v-if="isAdmin" v-model="ownerName" :details="details" />
       <label :class="$style.label">
         貸し出し可:
         <input v-model="rentalable" type="checkbox" :class="$style.input" />
@@ -40,7 +35,7 @@ import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
 import { getFirstNotOwn } from './use/otherControl'
 import { ItemType } from '/@/lib/apis'
-import { OwnerWithCount } from './use/owners'
+import { OwnerMayWithCount } from './use/owners'
 import useMe from '/@/use/me'
 
 export default defineComponent({
@@ -67,11 +62,10 @@ export default defineComponent({
     const rentalable = ref(true)
     const count = ref(1)
 
-    const details = ref<OwnerWithCount[]>([])
+    const details = ref<OwnerMayWithCount[]>([])
     onMounted(() => {
       details.value = [...props.nonOwnerTypes].map(typ => ({
-        userName: itemTypeToName(typ),
-        count: 1
+        userName: itemTypeToName(typ)
       }))
     })
     const ownerName = ref(itemTypeToName(getFirstNotOwn(props.nonOwnerTypes)))
