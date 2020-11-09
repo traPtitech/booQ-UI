@@ -2,10 +2,24 @@ import { computed, ComputedRef } from 'vue'
 import { ItemSummary, ItemType } from '/@/lib/apis'
 import useMe from '/@/use/me'
 
+const getFirstNotOwn = (nonOwnerTypes: Set<ItemType>): ItemType | -1 => {
+  if (nonOwnerTypes.has(ItemType.individual)) {
+    return ItemType.individual
+  }
+  if (nonOwnerTypes.has(ItemType.equipment)) {
+    return ItemType.equipment
+  }
+  if (nonOwnerTypes.has(ItemType.sienka)) {
+    return ItemType.sienka
+  }
+  return -1
+}
+
 const useNonOwnerTypes = (props: {
   item: ItemSummary
 }): {
   nonOwnerTypes: ComputedRef<Set<ItemType>>
+  firstNonOwnType: ComputedRef<ItemType | -1>
 } => {
   const { id: myId } = useMe()
 
@@ -20,9 +34,11 @@ const useNonOwnerTypes = (props: {
     }
     return new Set(arr)
   })
+  const firstNonOwnType = computed(() => getFirstNotOwn(nonOwnerTypes.value))
 
   return {
-    nonOwnerTypes
+    nonOwnerTypes,
+    firstNonOwnType
   }
 }
 

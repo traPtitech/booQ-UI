@@ -28,14 +28,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, onMounted } from 'vue'
+import { defineComponent, ref, PropType, computed } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
-import { getFirstNotOwn } from './use/otherControl'
 import { ItemSummary } from '/@/lib/apis'
-import { OwnerMayWithCount } from './use/owners'
 import useMe from '/@/use/me'
 import useAddOwner from './use/addOwner'
 import useNonOwnerTypes from './use/nonOwnerTypes'
@@ -59,18 +57,16 @@ export default defineComponent({
   setup(props, context) {
     const { admin: isAdmin } = useMe()
     const { addOwner } = useAddOwner()
-    const { nonOwnerTypes } = useNonOwnerTypes(props)
+    const { nonOwnerTypes, firstNonOwnType } = useNonOwnerTypes(props)
+    const details = computed(() =>
+      [...nonOwnerTypes.value].map(typ => ({
+        userName: itemTypeToName(typ)
+      }))
+    )
 
     const rentalable = ref(true)
     const count = ref(1)
-
-    const details = ref<OwnerMayWithCount[]>([])
-    onMounted(() => {
-      details.value = [...nonOwnerTypes.value].map(typ => ({
-        userName: itemTypeToName(typ)
-      }))
-    })
-    const ownerName = ref(itemTypeToName(getFirstNotOwn(nonOwnerTypes.value)))
+    const ownerName = ref(itemTypeToName(firstNonOwnType.value))
 
     const close = () => {
       context.emit('close')
