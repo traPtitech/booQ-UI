@@ -1,7 +1,7 @@
 <template>
   <dialog-template @close="close">
     <h2 :class="$style.title">所有者を追加する</h2>
-    <form :class="$style.container" @submit.prevent="addOwner">
+    <form :class="$style.container" @submit.prevent="submit">
       <owner-selector v-if="isAdmin" v-model="ownerName" :details="details" />
       <label :class="$style.label">
         貸し出し可:
@@ -37,6 +37,7 @@ import { getFirstNotOwn } from './use/otherControl'
 import { ItemType } from '/@/lib/apis'
 import { OwnerMayWithCount } from './use/owners'
 import useMe from '/@/use/me'
+import useAddOwner from './use/addOwner'
 
 export default defineComponent({
   name: 'AddOwnerDialog',
@@ -46,19 +47,22 @@ export default defineComponent({
     WideIconButton
   },
   props: {
+    itemId: {
+      type: Number,
+      required: true
+    },
     nonOwnerTypes: {
       type: Set as PropType<Set<ItemType>>,
       default: false
     }
   },
   emits: {
-    close: () => true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    add: (payload: { ownerType: number; rentalable: boolean; count: number }) =>
-      true
+    close: () => true
   },
   setup(props, context) {
     const { admin: isAdmin } = useMe()
+    const { addOwner } = useAddOwner()
+
     const rentalable = ref(true)
     const count = ref(1)
 
@@ -73,19 +77,22 @@ export default defineComponent({
     const close = () => {
       context.emit('close')
     }
-    const addOwner = () => {
-      context.emit('add', {
+    const submit = async () => {
+      await addOwner({
         ownerType: itemTypeNameToType(ownerName.value),
         rentalable: rentalable.value,
-        count: count.value
+        count: count.value,
+        itemID: props.itemId
       })
+      close()
     }
+
     return {
       close,
       isAdmin,
       rentalable,
       count,
-      addOwner,
+      submit,
       details,
       ownerName
     }

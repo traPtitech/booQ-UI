@@ -1,7 +1,7 @@
 <template>
   <dialog-template @close="close">
     <h2 :class="$style.title">所有者の情報を変更する</h2>
-    <form :class="$style.container" @submit.prevent="editItem">
+    <form :class="$style.container" @submit.prevent="submit">
       <owner-selector v-if="isAdmin" v-model="ownerName" :details="details" />
       <label :class="$style.label">
         貸し出し可:
@@ -36,6 +36,7 @@ import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import { OwnerWithCount } from './use/owners'
 import useMe from '/@/use/me'
+import useEditItem from './use/editItem'
 
 const getInitialOwner = (details: OwnerWithCount[], name: string) => {
   const initialOwner = details.find(v => v.userName === name) ?? details[0]
@@ -50,6 +51,10 @@ export default defineComponent({
     WideIconButton
   },
   props: {
+    itemId: {
+      type: Number,
+      required: true
+    },
     ownInfos: {
       type: Array as PropType<Owner[]>,
       required: true
@@ -60,13 +65,12 @@ export default defineComponent({
     }
   },
   emits: {
-    close: () => true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    edit: (payload: { userID: number; rentalable: boolean; count: number }) =>
-      true
+    close: () => true
   },
   setup(props, context) {
+    const { editItem } = useEditItem()
     const { name: meName, admin: isAdmin } = useMe()
+
     const ownerName = ref(getInitialOwner(props.details, meName.value))
     const ownInfo = computed(() =>
       props.ownInfos.find(v => v.user.name === ownerName.value)
@@ -88,15 +92,20 @@ export default defineComponent({
     const remain = computed(
       () => props.details.find(v => v.userName === ownerName.value)?.count ?? 0
     )
+
     const close = () => {
       context.emit('close')
     }
-    const editItem = async () => {
-      context.emit('edit', {
+    const submit = async () => {
+      if (!ownInfo.value) return
+      await editItem({
         userID: ownInfo.value?.ownerId ?? 0,
         rentalable: rentalable.value,
-        count: count.value
+        count: count.value,
+        itemID: props.itemId,
+        ownInfo: ownInfo.value
       })
+      close()
     }
     return {
       close,
@@ -105,7 +114,7 @@ export default defineComponent({
       count,
       isDisabled,
       isAdmin,
-      editItem,
+      submit,
       initCount,
       remain
     }
