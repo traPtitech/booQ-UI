@@ -1,7 +1,7 @@
 <template>
   <dialog-template @close="close">
     <h2 :class="$style.title">所有者の情報を変更する</h2>
-    <form :class="$style.container" @submit.prevent="editItem">
+    <form :class="$style.container" @submit.prevent="submit">
       <owner-selector v-if="isAdmin" v-model="ownerName" :details="details" />
       <label :class="$style.label">
         貸し出し可:
@@ -30,12 +30,13 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, computed, watchEffect } from 'vue'
-import { Owner } from '/@/lib/apis'
+import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import { OwnerWithCount } from './use/owners'
+import useOwners, { OwnerWithCount } from './use/owners'
 import useMe from '/@/use/me'
+import useEditItem from './use/editItem'
 
 const getInitialOwner = (details: OwnerWithCount[], name: string) => {
   const initialOwner = details.find(v => v.userName === name) ?? details[0]
@@ -50,26 +51,22 @@ export default defineComponent({
     WideIconButton
   },
   props: {
-    ownInfos: {
-      type: Array as PropType<Owner[]>,
-      required: true
-    },
-    details: {
-      type: Array as PropType<OwnerWithCount[]>,
+    item: {
+      type: Object as PropType<ItemSummary>,
       required: true
     }
   },
   emits: {
-    close: () => true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    edit: (payload: { userID: number; rentalable: boolean; count: number }) =>
-      true
+    close: () => true
   },
   setup(props, context) {
+    const { editItem } = useEditItem()
     const { name: meName, admin: isAdmin } = useMe()
-    const ownerName = ref(getInitialOwner(props.details, meName.value))
+    const { details } = useOwners(props)
+
+    const ownerName = ref(getInitialOwner(details.value, meName.value))
     const ownInfo = computed(() =>
-      props.ownInfos.find(v => v.user.name === ownerName.value)
+      props.item.owners.find(v => v.user.name === ownerName.value)
     )
     const initCount = computed(() => ownInfo.value?.count ?? 0)
 
@@ -86,17 +83,22 @@ export default defineComponent({
         ownInfo.value?.count === count.value
     )
     const remain = computed(
-      () => props.details.find(v => v.userName === ownerName.value)?.count ?? 0
+      () => details.value.find(v => v.userName === ownerName.value)?.count ?? 0
     )
+
     const close = () => {
       context.emit('close')
     }
-    const editItem = async () => {
-      context.emit('edit', {
+    const submit = async () => {
+      if (!ownInfo.value) return
+      await editItem({
         userID: ownInfo.value?.ownerId ?? 0,
         rentalable: rentalable.value,
-        count: count.value
+        count: count.value,
+        itemID: props.item.id,
+        ownInfo: ownInfo.value
       })
+      close()
     }
     return {
       close,
@@ -105,9 +107,10 @@ export default defineComponent({
       count,
       isDisabled,
       isAdmin,
-      editItem,
+      submit,
       initCount,
-      remain
+      remain,
+      details
     }
   }
 })

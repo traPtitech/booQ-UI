@@ -4,11 +4,12 @@ import { useStore } from '/@/store'
 const useDeleteItem = (): {
   deleteItem: (payload: { itemID: number; itemName: string }) => Promise<void>
 } => {
+  const store = useStore()
+
   const deleteItem = async (payload: {
     itemID: number
     itemName: string
   }): Promise<void> => {
-    const store = useStore()
     try {
       if (window.confirm('本当に削除しますか？')) {
         await apis.deleteItem(payload.itemID)

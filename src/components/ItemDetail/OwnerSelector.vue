@@ -8,7 +8,7 @@
         :value="detail.userName"
         :disabled="detail.count === 0"
       >
-        {{ detail.userName }} {{ isShowCount ? `(${detail.count})` : '' }}
+        {{ detail.userName }} {{ detail.count ? `(${detail.count})` : '' }}
       </option>
     </select>
   </label>
@@ -16,22 +16,18 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { OwnerWithCount } from './use/owners'
+import { OwnerMayWithCount } from './use/owners'
 
 export default defineComponent({
   userName: 'OwnerSelector',
   props: {
     details: {
-      type: Object as PropType<OwnerWithCount[]>,
+      type: Object as PropType<OwnerMayWithCount[]>,
       required: true
     },
     modelValue: {
       type: String,
       required: true
-    },
-    isShowCount: {
-      type: Boolean,
-      default: true
     }
   },
   emits: {

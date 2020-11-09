@@ -1,13 +1,8 @@
 <template>
   <dialog-template @close="close">
     <h2 :class="$style.title">所有者を追加する</h2>
-    <form :class="$style.container" @submit.prevent="addOwner">
-      <owner-selector
-        v-if="isAdmin"
-        v-model="ownerName"
-        :details="details"
-        :is-show-count="false"
-      />
+    <form :class="$style.container" @submit.prevent="submit">
+      <owner-selector v-if="isAdmin" v-model="ownerName" :details="details" />
       <label :class="$style.label">
         貸し出し可:
         <input v-model="rentalable" type="checkbox" :class="$style.input" />
@@ -33,18 +28,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, onMounted } from 'vue'
+import { defineComponent, ref, PropType, computed } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import {
-  itemTypeToStringMap,
-  stringToItemTypeMap
-} from '/@/components/RegisterForm/use/itemTypeMap'
-import { getFirstNotOwn } from './use/otherControl'
-import { ItemType } from '/@/lib/apis'
-import { OwnerWithCount } from './use/owners'
+import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
+import { ItemSummary } from '/@/lib/apis'
 import useMe from '/@/use/me'
+import useAddOwner from './use/addOwner'
+import useNonOwnerTypes from './use/nonOwnerTypes'
 
 export default defineComponent({
   name: 'AddOwnerDialog',
@@ -54,49 +46,47 @@ export default defineComponent({
     WideIconButton
   },
   props: {
-    nonOwnerTypes: {
-      type: Set as PropType<Set<ItemType>>,
-      default: false
+    item: {
+      type: Object as PropType<ItemSummary>,
+      required: true
     }
   },
   emits: {
-    close: () => true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    add: (payload: { ownerType: number; rentalable: boolean; count: number }) =>
-      true
+    close: () => true
   },
   setup(props, context) {
     const { admin: isAdmin } = useMe()
+    const { addOwner } = useAddOwner()
+    const { nonOwnerTypes, firstNonOwnType } = useNonOwnerTypes(props)
+    const details = computed(() =>
+      [...nonOwnerTypes.value].map(typ => ({
+        userName: itemTypeToName(typ)
+      }))
+    )
+
     const rentalable = ref(true)
     const count = ref(1)
-
-    const details = ref<OwnerWithCount[]>([])
-    onMounted(() => {
-      details.value = [...props.nonOwnerTypes].map(typ => ({
-        userName: itemTypeToStringMap.get(typ),
-        count: 1
-      }))
-    })
-    const ownerName = ref(
-      itemTypeToStringMap.get(getFirstNotOwn(props.nonOwnerTypes))
-    )
+    const ownerName = ref(itemTypeToName(firstNonOwnType.value))
 
     const close = () => {
       context.emit('close')
     }
-    const addOwner = () => {
-      context.emit('add', {
-        ownerType: stringToItemTypeMap.get(ownerName.value),
+    const submit = async () => {
+      await addOwner({
+        ownerType: itemTypeNameToType(ownerName.value),
         rentalable: rentalable.value,
-        count: count.value
+        count: count.value,
+        itemID: props.item.id
       })
+      close()
     }
+
     return {
       close,
       isAdmin,
       rentalable,
       count,
-      addOwner,
+      submit,
       details,
       ownerName
     }

@@ -1,8 +1,12 @@
 import { computed, ComputedRef } from 'vue'
 import { ItemSummary, Log } from '/@/lib/apis'
 
-export interface OwnerWithCount {
+export interface OwnerMayWithCount {
   userName: string
+  count?: number
+}
+
+export interface OwnerWithCount extends OwnerMayWithCount {
   count: number
 }
 
@@ -10,7 +14,7 @@ export interface OwnerDetail extends OwnerWithCount {
   all: number
 }
 
-export const getRemainByOwnerID = (
+const getRemainByOwnerID = (
   id: number,
   initialRemain: number,
   latestLogs: Log[]
