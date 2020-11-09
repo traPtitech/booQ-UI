@@ -30,11 +30,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, computed, watchEffect } from 'vue'
-import { Owner } from '/@/lib/apis'
+import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import { OwnerWithCount } from './use/owners'
+import useOwners, { OwnerWithCount } from './use/owners'
 import useMe from '/@/use/me'
 import useEditItem from './use/editItem'
 
@@ -51,16 +51,8 @@ export default defineComponent({
     WideIconButton
   },
   props: {
-    itemId: {
-      type: Number,
-      required: true
-    },
-    ownInfos: {
-      type: Array as PropType<Owner[]>,
-      required: true
-    },
-    details: {
-      type: Array as PropType<OwnerWithCount[]>,
+    item: {
+      type: Object as PropType<ItemSummary>,
       required: true
     }
   },
@@ -70,10 +62,11 @@ export default defineComponent({
   setup(props, context) {
     const { editItem } = useEditItem()
     const { name: meName, admin: isAdmin } = useMe()
+    const { details } = useOwners(props)
 
-    const ownerName = ref(getInitialOwner(props.details, meName.value))
+    const ownerName = ref(getInitialOwner(details.value, meName.value))
     const ownInfo = computed(() =>
-      props.ownInfos.find(v => v.user.name === ownerName.value)
+      props.item.owners.find(v => v.user.name === ownerName.value)
     )
     const initCount = computed(() => ownInfo.value?.count ?? 0)
 
@@ -90,7 +83,7 @@ export default defineComponent({
         ownInfo.value?.count === count.value
     )
     const remain = computed(
-      () => props.details.find(v => v.userName === ownerName.value)?.count ?? 0
+      () => details.value.find(v => v.userName === ownerName.value)?.count ?? 0
     )
 
     const close = () => {
@@ -102,7 +95,7 @@ export default defineComponent({
         userID: ownInfo.value?.ownerId ?? 0,
         rentalable: rentalable.value,
         count: count.value,
-        itemID: props.itemId,
+        itemID: props.item.id,
         ownInfo: ownInfo.value
       })
       close()
@@ -116,7 +109,8 @@ export default defineComponent({
       isAdmin,
       submit,
       initCount,
-      remain
+      remain,
+      details
     }
   }
 })

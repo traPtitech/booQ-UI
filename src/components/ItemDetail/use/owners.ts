@@ -14,7 +14,7 @@ export interface OwnerDetail extends OwnerWithCount {
   all: number
 }
 
-export const getRemainByOwnerID = (
+const getRemainByOwnerID = (
   id: number,
   initialRemain: number,
   latestLogs: Log[]

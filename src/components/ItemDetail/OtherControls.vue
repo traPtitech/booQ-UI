@@ -21,7 +21,7 @@
           label="変更"
           variant="secondary"
           :class="$style.btn"
-          :disabled="!isAdmin && !ownInfo"
+          :disabled="!isAdmin && !isMeOwner"
           @click="toggleEditDialog"
         />
         <normal-icon-button
@@ -36,15 +36,12 @@
     </transition>
     <edit-dialog
       v-if="isOpenEditDialog"
-      :item-id="item.id"
-      :own-infos="item.owners"
-      :details="details"
+      :item="item"
       @close="toggleEditDialog"
     />
     <add-owner-dialog
       v-if="isOpenAddOwnerDialog"
-      :item-id="item.id"
-      :non-owner-types="nonOwnerTypes"
+      :item="item"
       @close="toggleAddOwnerDialog"
     />
   </div>
@@ -107,13 +104,9 @@ export default defineComponent({
       toggle: toggleAddOwnerDialog
     } = useOpener()
 
-    const {
-      ownInfo,
-      nonOwnerTypes,
-      isAdmin,
-      isDisabledAddOwnerButton,
-      details
-    } = useOtherControl(props)
+    const { isMeOwner, isAdmin, isDisabledAddOwnerButton } = useOtherControl(
+      props
+    )
 
     const { deleteItem } = useDeleteItem()
     const onDeleteClick = async () => {
@@ -129,10 +122,8 @@ export default defineComponent({
       isOpenAddOwnerDialog,
       toggleAddOwnerDialog,
       popupId,
-      ownInfo,
-      nonOwnerTypes,
+      isMeOwner,
       isDisabledAddOwnerButton,
-      details,
       isAdmin,
       onDeleteClick
     }

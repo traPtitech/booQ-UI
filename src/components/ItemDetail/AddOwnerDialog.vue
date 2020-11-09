@@ -34,10 +34,11 @@ import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
 import { getFirstNotOwn } from './use/otherControl'
-import { ItemType } from '/@/lib/apis'
+import { ItemSummary } from '/@/lib/apis'
 import { OwnerMayWithCount } from './use/owners'
 import useMe from '/@/use/me'
 import useAddOwner from './use/addOwner'
+import useNonOwnerTypes from './use/nonOwnerTypes'
 
 export default defineComponent({
   name: 'AddOwnerDialog',
@@ -47,13 +48,9 @@ export default defineComponent({
     WideIconButton
   },
   props: {
-    itemId: {
-      type: Number,
+    item: {
+      type: Object as PropType<ItemSummary>,
       required: true
-    },
-    nonOwnerTypes: {
-      type: Set as PropType<Set<ItemType>>,
-      default: false
     }
   },
   emits: {
@@ -62,17 +59,18 @@ export default defineComponent({
   setup(props, context) {
     const { admin: isAdmin } = useMe()
     const { addOwner } = useAddOwner()
+    const { nonOwnerTypes } = useNonOwnerTypes(props)
 
     const rentalable = ref(true)
     const count = ref(1)
 
     const details = ref<OwnerMayWithCount[]>([])
     onMounted(() => {
-      details.value = [...props.nonOwnerTypes].map(typ => ({
+      details.value = [...nonOwnerTypes.value].map(typ => ({
         userName: itemTypeToName(typ)
       }))
     })
-    const ownerName = ref(itemTypeToName(getFirstNotOwn(props.nonOwnerTypes)))
+    const ownerName = ref(itemTypeToName(getFirstNotOwn(nonOwnerTypes.value)))
 
     const close = () => {
       context.emit('close')
@@ -82,7 +80,7 @@ export default defineComponent({
         ownerType: itemTypeNameToType(ownerName.value),
         rentalable: rentalable.value,
         count: count.value,
-        itemID: props.itemId
+        itemID: props.item.id
       })
       close()
     }
