@@ -1,5 +1,6 @@
 import { computed, ComputedRef } from 'vue'
-import { ItemSummary, Log } from '/@/lib/apis'
+import { ItemSummary } from '/@/lib/apis'
+import { getRemainByOwnerID } from '/@/lib/item'
 
 export interface OwnerMayWithCount {
   userName: string
@@ -12,16 +13,6 @@ export interface OwnerWithCount extends OwnerMayWithCount {
 
 export interface OwnerDetail extends OwnerWithCount {
   all: number
-}
-
-const getRemainByOwnerID = (
-  id: number,
-  initialRemain: number,
-  latestLogs: Log[]
-): number => {
-  // そのownerの最後のログを取得
-  const latestLog = latestLogs.find(v => v.ownerId === id)
-  return latestLog?.count ?? initialRemain
 }
 
 const useOwners = (props: {

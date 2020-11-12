@@ -36,7 +36,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
-import { getOwnerBorrowedFrom } from './use/return'
+import { getOwnerBorrowedFrom } from '/@/lib/item'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/components/UI/use/opener'
 import BorrowDialog from './BorrowDialog.vue'
