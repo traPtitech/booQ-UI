@@ -21,7 +21,7 @@ const useOwners = (props: {
   const details = computed(() =>
     props.item.owners.map(owner => {
       const count = getRemainByOwnerID(
-        owner.id,
+        owner.ownerId,
         owner.count,
         props.item.latestLogs ?? []
       )
