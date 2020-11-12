@@ -4,6 +4,7 @@ import { OwnerWithCount } from './owners'
 import { stringifyDate } from '/@/lib/date'
 import useMe from '/@/use/me'
 import { useStore } from '/@/store'
+import { getRentalUserBorrowedFrom } from '/@/lib/item'
 
 const useReturn = (props: {
   item: ItemSummary
@@ -17,12 +18,10 @@ const useReturn = (props: {
   const { id: myId } = useMe()
 
   const details = computed(() =>
-    props.item.rentalUsers
-      .filter(v => v.userId === myId.value && v.count !== 0)
-      .map(v => ({
-        userName: v.owner.name,
-        count: v.count * -1
-      }))
+    getRentalUserBorrowedFrom(myId.value, props.item.rentalUsers).map(v => ({
+      userName: v.owner.name,
+      count: v.count * -1
+    }))
   )
   const selectedOwnerName = ref(details.value[0]?.userName ?? '')
   const count = ref(1)
@@ -72,17 +71,6 @@ const useReturn = (props: {
     owner,
     returnItem
   }
-}
-
-export const getOwnerBorrowedFrom = (
-  userID: number,
-  item: ItemSummary
-): Owner[] => {
-  return item.owners.filter(owner =>
-    item.rentalUsers.some(
-      v => owner.user.id === v.ownerId && userID === v.userId && v.count !== 0
-    )
-  )
 }
 
 export default useReturn
