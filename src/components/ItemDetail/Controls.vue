@@ -7,6 +7,7 @@
           icon="mdi:arrow-down-bold-circle"
           label="借りる"
           :class="$style.btn"
+          :disabled="isBorrowDisabled"
           @click="toggleBorrowDialog"
         />
         <normal-icon-button
@@ -36,7 +37,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
-import { getOwnerBorrowedFrom } from '/@/lib/item'
+import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/components/UI/use/opener'
 import BorrowDialog from './BorrowDialog.vue'
@@ -74,6 +75,9 @@ export default defineComponent({
     } = useOpener()
 
     const { id: myId } = useMe()
+    const isBorrowDisabled = computed(
+      () => getOwnersCanLend(props.item).length === 0
+    )
     const isReturnDisabled = computed(
       () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
     )
@@ -84,6 +88,7 @@ export default defineComponent({
       toggleBorrowDialog,
       isOpenReturnDialog,
       toggleReturnDialog,
+      isBorrowDisabled,
       isReturnDisabled
     }
   }

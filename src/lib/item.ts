@@ -23,6 +23,13 @@ export const getRentalUserBorrowedFrom = (
   rentalUsers: RentalUser[]
 ): RentalUser[] => rentalUsers.filter(v => v.userId === id && v.count !== 0)
 
+export const getOwnersCanLend = (item: ItemSummary): Owner[] =>
+  item.owners.filter(
+    owner =>
+      owner.rentalable &&
+      getRemainByOwnerID(owner.ownerId, owner.count, item.latestLogs ?? []) > 0
+  )
+
 export const getRemainByOwnerID = (
   id: number,
   initialRemain: number,
