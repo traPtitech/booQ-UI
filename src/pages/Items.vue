@@ -1,7 +1,9 @@
 <template>
   <div :class="$style.container">
-    <div>Items Page</div>
-    <input v-model="searchQuery" placeholder="検索" />
+    <div :class="$style.header">
+      <h3>{{ title }}</h3>
+      <search-input v-model="searchQuery" :class="$style.search" />
+    </div>
     <item-grid :items="filteredItems" />
   </div>
 </template>
@@ -15,13 +17,15 @@ import useDebouncedRef from '/@/use/debouncedRef'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
 import useSyncParam from './use/syncParam'
+import SearchInput from '/@/components/UI/SearchInput.vue'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
 
 export default defineComponent({
   name: 'Items',
   components: {
-    ItemGrid
+    ItemGrid,
+    SearchInput
   },
   props: {
     type: {
@@ -68,7 +72,7 @@ export default defineComponent({
       return items.value
     })
 
-    return { searchQuery, filteredItems }
+    return { title, searchQuery, filteredItems }
   }
 })
 </script>
@@ -76,5 +80,13 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   padding: 3rem;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.search {
+  width: 12em;
 }
 </style>
