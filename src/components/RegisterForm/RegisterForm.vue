@@ -34,7 +34,7 @@ export default defineComponent({
     watchEffect(() => {
       formState.type = itemTypeNameToType(type.value)
     })
-    const typeOptions = [...itemTypeMap.values()]
+    const typeOptions = itemTypeMap.map(([, typeName]) => typeName)
 
     const register = async () => {
       if (!confirm('本当に登録しますか？')) return
