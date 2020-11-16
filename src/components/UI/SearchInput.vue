@@ -10,6 +10,8 @@
       @input="onInput"
       @keypress.enter="onEnter"
     />
+    <span :class="$style.underline" />
+    <span :class="$style.underlineFocus" />
   </div>
 </template>
 
@@ -53,13 +55,12 @@ export default defineComponent({
 
 <style lang="scss" module>
 .container {
+  position: relative;
   display: flex;
   color: $color-text-secondary;
-  border-bottom: solid 2px $color-text-secondary;
+  border-bottom: solid 2px transparent;
   cursor: text;
-  &:focus-within {
-    border-bottom-color: $color-primary;
-  }
+  overflow: hidden;
 }
 .icon {
   flex: 0;
@@ -72,6 +73,26 @@ export default defineComponent({
   border: none;
   &:focus {
     outline: none;
+  }
+}
+
+.underline,
+.underlineFocus {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+}
+.underline {
+  background-color: $color-text-secondary;
+  left: 0;
+}
+.underlineFocus {
+  background-color: $color-primary;
+  left: -100%;
+  transition: all 0.2s ease;
+  .container:focus-within & {
+    left: 0;
   }
 }
 </style>
