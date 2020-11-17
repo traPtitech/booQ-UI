@@ -1,20 +1,17 @@
 <template>
-  <div :class="$style.container">
-    <input
-      v-model="query"
-      type="text"
-      placeholder="検索"
-      @keypress.enter="search"
-    />
-  </div>
+  <search-input v-model="query" @search="search" />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import SearchInput from '/@/components/UI/SearchInput.vue'
 
 export default defineComponent({
   name: 'Search',
+  components: {
+    SearchInput
+  },
   setup() {
     const router = useRouter()
 
@@ -31,8 +28,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style lang="scss" module>
-.container {
-}
-</style>

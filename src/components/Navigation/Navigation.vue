@@ -1,6 +1,6 @@
 <template>
   <nav :class="$style.nav">
-    <search />
+    <search :class="$style.search" />
     <list :class="$style.list" />
     <div :class="$style.footer">
       <span :class="$style.version">booQ Project v{{ version }}</span>
@@ -49,6 +49,9 @@ export default defineComponent({
       margin-bottom: 0;
     }
   }
+}
+.search {
+  width: auto;
 }
 .list {
   flex: 1;
