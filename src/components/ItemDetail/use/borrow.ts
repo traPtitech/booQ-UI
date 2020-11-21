@@ -20,7 +20,7 @@ const useBorrow = (props: {
   const { admin } = useMe()
   const store = useStore()
 
-  const selectedOwnerName = ref(details.value[0].userName ?? '')
+  const selectedOwnerName = ref(details.value[0]?.userName ?? '')
   const purpose = ref('')
   const dueDate = ref(stringifyDate(new Date(), '-'))
   const count = ref(1)

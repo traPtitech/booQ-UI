@@ -27,7 +27,7 @@ export default defineComponent({
     'update:modelValue': (val: string) => true
   },
   setup(props, context) {
-    const val = ref(props.options[0])
+    const val = ref(props.options[0] ?? '')
     watch(val, newVal => {
       context.emit('update:modelValue', newVal)
     })
