@@ -18,7 +18,7 @@ export default defineComponent({
     const route = useRoute()
 
     const state = reactive({
-      username: computed(() => getFirstParam(route.params.name)),
+      username: computed(() => getFirstParam(route.params.name) ?? ''),
       items: [] as ItemSummary[]
     })
     watchEffect(async () => {

@@ -40,7 +40,7 @@ import useEditItem from './use/editItem'
 
 const getInitialOwner = (details: OwnerWithCount[], name: string) => {
   const initialOwner = details.find(v => v.userName === name) ?? details[0]
-  return initialOwner.userName
+  return initialOwner?.userName ?? ''
 }
 
 export default defineComponent({

@@ -24,7 +24,7 @@ export default defineComponent({
     const route = useRoute()
 
     const state = reactive({
-      id: computed(() => +getFirstParam(route.params.id)),
+      id: computed(() => +(getFirstParam(route.params.id) ?? '')),
       item: undefined as ItemDetail | undefined
     })
     watchEffect(async () => {
