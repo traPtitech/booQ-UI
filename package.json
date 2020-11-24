@@ -23,7 +23,7 @@
     "@iconify/json": "^1.1.263",
     "@openapitools/openapi-generator-cli": "^2.1.7",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
-    "@typescript-eslint/parser": "^4.8.1",
+    "@typescript-eslint/parser": "^4.8.2",
     "@vue/compiler-sfc": "^3.0.2",
     "autoprefixer": "^9.8.6",
     "eslint": "^7.14.0",
