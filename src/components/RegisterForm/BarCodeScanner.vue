@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, watchEffect } from 'vue'
+import { defineComponent, ref, onMounted, watchEffect, shallowRef } from 'vue'
 import { BrowserBarcodeReader, VideoInputDevice } from '@zxing/library'
 import { useStore } from '/@/store'
 
@@ -65,7 +65,7 @@ export default defineComponent({
       initialize()
     })
 
-    const videoEle = ref<HTMLVideoElement>()
+    const videoEle = shallowRef<HTMLVideoElement>()
 
     const start = async () => {
       const device = input.value
