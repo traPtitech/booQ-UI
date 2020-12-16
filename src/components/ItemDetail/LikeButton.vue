@@ -31,7 +31,11 @@ export default defineComponent({
     const isLiked = ref(props.likes.findIndex(v => meID.value === v.id) > -1)
     const toggleLike = async () => {
       try {
-        await apis.addLike(props.itemId)
+        if (isLiked.value) {
+          await apis.removeLike(props.itemId)
+        } else {
+          await apis.addLike(props.itemId)
+        }
         isLiked.value = !isLiked.value
       } catch (e) {
         const store = useStore()
