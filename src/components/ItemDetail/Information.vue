@@ -2,16 +2,18 @@
   <div :class="$style.container">
     <div :class="$style.titleWrapper">
       <h2>{{ item.name }}</h2>
-      <like-button
-        :class="$style.favBtn"
-        :likes="item.likes"
-        :item-id="item.id"
-        @mouseenter="toggleHover"
-        @mouseleave="toggleHover"
-      />
-      <transition name="fade">
-        <like-button-balloon v-if="isHover" :likes="item.likes" />
-      </transition>
+      <div :class="$style.likeContainer">
+        <like-button
+          :class="$style.favBtn"
+          :likes="item.likes"
+          :item-id="item.id"
+          @mouseenter="toggleHover"
+          @mouseleave="toggleHover"
+        />
+        <transition name="fade">
+          <like-button-balloon v-if="isHover" :likes="item.likes" />
+        </transition>
+      </div>
     </div>
     <div>{{ item.description }}</div>
     <owners :item="item" />
@@ -59,6 +61,11 @@ export default defineComponent({
 
 .titleWrapper {
   display: flex;
+}
+
+.likeContainer {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 </style>
