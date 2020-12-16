@@ -6,7 +6,12 @@
         :class="$style.favBtn"
         :likes="item.likes"
         :item-id="item.id"
+        @mouseenter="toggleHover"
+        @mouseleave="toggleHover"
       />
+      <transition name="fade">
+        <like-button-balloon v-if="isHover" :likes="item.likes" />
+      </transition>
     </div>
     <div>{{ item.description }}</div>
     <owners :item="item" />
@@ -16,12 +21,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import { ItemDetail } from '/@/lib/apis'
 import Owners from './Owners.vue'
 import Comments from './Comments.vue'
 import Logs from './Logs.vue'
 import LikeButton from './LikeButton.vue'
+import LikeButtonBalloon from './LikeButtonBalloon.vue'
 
 export default defineComponent({
   name: 'Information',
@@ -29,7 +35,8 @@ export default defineComponent({
     Owners,
     Comments,
     Logs,
-    LikeButton
+    LikeButton,
+    LikeButtonBalloon
   },
   props: {
     item: {
@@ -38,7 +45,9 @@ export default defineComponent({
     }
   },
   setup() {
-    return {}
+    const isHover = ref(false)
+    const toggleHover = () => (isHover.value = !isHover.value)
+    return { isHover, toggleHover }
   }
 })
 </script>
@@ -50,10 +59,6 @@ export default defineComponent({
 
 .titleWrapper {
   display: flex;
-}
-
-.favBtn {
-  border: none;
-  background: white;
+  position: relative;
 }
 </style>

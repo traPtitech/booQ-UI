@@ -7,7 +7,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, PropType } from 'vue'
-import IconButton from '/@/components/UI/IconButton.vue'
 import Icon from '/@/components/UI/Icon.vue'
 import apis, { User } from '/@/lib/apis'
 import useMe from '/@/use/me'
@@ -31,11 +30,8 @@ export default defineComponent({
     const isLiked = ref(props.likes.findIndex(v => meID.value === v.id) > -1)
     const toggleLike = async () => {
       try {
-        if (isLiked.value) {
-          await apis.removeLike(props.itemId)
-        } else {
-          await apis.addLike(props.itemId)
-        }
+        if (isLiked.value) await apis.removeLike(props.itemId)
+        else await apis.addLike(props.itemId)
         isLiked.value = !isLiked.value
       } catch (e) {
         const store = useStore()
@@ -53,6 +49,8 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   cursor: pointer;
+  background-color: $color-background;
+  border: 0;
 
   &:focus {
     outline: 0;
