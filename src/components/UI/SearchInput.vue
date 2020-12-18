@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, shallowRef } from 'vue'
 import Icon from '/@/components/UI/Icon.vue'
 
 export default defineComponent({
@@ -36,7 +36,7 @@ export default defineComponent({
     'update:modelValue': (value: string) => true
   },
   setup(props, context) {
-    const inputEle = ref<HTMLInputElement>()
+    const inputEle = shallowRef<HTMLInputElement>()
     const focus = () => {
       inputEle.value?.focus()
     }

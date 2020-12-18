@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, ref } from 'vue'
+import { defineComponent, PropType, computed, ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 import { ItemSummary } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
@@ -67,7 +67,7 @@ export default defineComponent({
       router.push(`/items/${props.item.id}`)
     }
 
-    const titleEle = ref<HTMLElement | null>(null)
+    const titleEle = shallowRef<HTMLElement | null>(null)
     const { isHovered, onMouseEnter, onMouseLeave } = useHover()
     const { onTransitionEnd } = useTitleTransition(isHovered, titleEle)
 
