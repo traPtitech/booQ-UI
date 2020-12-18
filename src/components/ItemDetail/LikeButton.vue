@@ -15,12 +15,13 @@
       <transition name="fade">
         <like-button-balloon
           v-if="isHover"
-          :likes="likes"
           :right="(32 + 8 * 2) / 2"
           :width="width"
         >
-          <div v-if="likes.length === 0">誰もいいねしていません</div>
-          <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
+          <div :class="likes.length ? $style.userContainer : ''">
+            <div v-if="likes.length === 0">誰もいいねしていません</div>
+            <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
+          </div>
         </like-button-balloon>
       </transition>
     </button>
@@ -67,8 +68,10 @@ export default defineComponent({
         })
       }
     }
+
     const isHover = ref(false)
     const toggleHover = () => (isHover.value = !isHover.value)
+
     const { measureText, measureGrid } = useMeasure()
     const width = ref(
       props.likes.length > 0
@@ -101,6 +104,12 @@ export default defineComponent({
 .liked {
   animation: clicked 0.5s;
   color: red;
+}
+
+.userContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  gap: 8px;
 }
 
 @keyframes clicked {

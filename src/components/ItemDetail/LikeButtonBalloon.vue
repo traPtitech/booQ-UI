@@ -1,19 +1,15 @@
 <template>
   <div :class="$style.balloonContainer">
-    <div :class="$style.before" :style="styles.before"></div>
-    <div
-      :class="[$style.balloon, likes.length !== 0 ? $style.userContainer : '']"
-      :style="styles.balloon"
-    >
+    <div :class="$style.before" :style="styles.before" />
+    <div :class="$style.balloon" :style="styles.balloon">
       <slot></slot>
     </div>
-    <div :class="$style.after" :style="styles.after"></div>
+    <div :class="$style.after" :style="styles.after" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { User } from '/@/lib/apis'
+import { defineComponent } from 'vue'
 
 // 吹き出してるとこの三角形の底辺
 const BORDER_TRIANGLE_BASE = 28
@@ -26,10 +22,6 @@ const BALLOON_BORDER = 1
 export default defineComponent({
   name: 'LikeButtonBalloon',
   props: {
-    likes: {
-      type: Array as PropType<User[]>,
-      default: []
-    },
     // 吹き出してるところの頂点を指定するイメージ
     right: {
       type: Number,
@@ -70,11 +62,6 @@ export default defineComponent({
   background: $color-background;
   border: solid 1px $color-text-secondary;
   border-radius: 8px;
-}
-.userContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
-  gap: 8px;
 }
 
 .before {
