@@ -1,11 +1,13 @@
 <template>
   <div :class="$style.balloonContainer">
+    <div :class="$style.before" :style="styles.before"></div>
     <div
       :class="[$style.balloon, likes.length !== 0 ? $style.userContainer : '']"
     >
       <div v-if="likes.length === 0">誰もいいねしていません</div>
       <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
     </div>
+    <div :class="$style.after" :style="styles.after"></div>
   </div>
 </template>
 
@@ -14,6 +16,12 @@ import { defineComponent, PropType } from 'vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import { User } from '/@/lib/apis'
 
+// 吹き出してるとこの三角形の底辺
+const BORDER_TRIANGLE_BASE = 28
+const CONTENT_TRIANGLE_BASE = 24
+// baloonContainerのright
+const CONTAINER_RIGHT = -16
+
 export default defineComponent({
   name: 'LikeButtonBalloon',
   components: { UserIcon },
@@ -21,10 +29,23 @@ export default defineComponent({
     likes: {
       type: Array as PropType<User[]>,
       default: []
+    },
+    // 吹き出してるところの頂点を指定するイメージ
+    right: {
+      type: Number,
+      required: true
     }
   },
-  setup() {
-    return
+  setup(props) {
+    const styles = {
+      before: `right: ${
+        props.right - CONTENT_TRIANGLE_BASE / 2 - CONTAINER_RIGHT
+      }px;`,
+      after: `right: ${
+        props.right - BORDER_TRIANGLE_BASE / 2 - CONTAINER_RIGHT
+      }px;`
+    }
+    return { styles }
   }
 })
 </script>
@@ -32,14 +53,14 @@ export default defineComponent({
 <style lang="scss" module>
 .balloonContainer {
   position: absolute;
-  right: -20px;
+  right: -16px;
   top: 70%;
 }
 .balloon {
   position: relative;
   margin-top: 1.5rem;
   padding: 1.2rem;
-  min-width: 8rem;
+  max-width: 25vw;
   background: $color-background;
   border: solid 1px $color-text-secondary-pale;
   border-radius: 8px;
@@ -51,22 +72,20 @@ export default defineComponent({
   gap: 0.5rem;
 }
 
-.balloon:before {
+.before {
   content: '';
   position: absolute;
-  top: -24px;
-  right: 26px;
+  top: 1px;
   margin-left: -15px;
   border: 12px solid transparent;
   border-bottom: 12px solid $color-background;
   z-index: 2;
 }
 
-.balloon:after {
+.after {
   content: '';
   position: absolute;
-  top: -28px;
-  right: 24px;
+  top: -3px;
   margin-left: -17px;
   border: 14px solid transparent;
   border-bottom: 14px solid $color-text-secondary-pale;

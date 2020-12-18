@@ -1,8 +1,22 @@
 <template>
-  <button :class="$style.container" @click="toggleLike">
-    <icon v-if="!isLiked" name="mdi:heart-outline" :size="32" />
-    <icon v-else name="mdi:heart" :size="32" :class="$style.liked" />
-  </button>
+  <div :class="$style.container">
+    <button
+      :class="$style.button"
+      @click="toggleLike"
+      @mouseenter="toggleHover"
+      @mouseleave="toggleHover"
+    >
+      <icon v-if="!isLiked" name="mdi:heart-outline" :size="32" />
+      <icon v-else name="mdi:heart" :size="32" :class="$style.liked" />
+    </button>
+    <transition name="fade">
+      <like-button-balloon
+        v-if="isHover"
+        :likes="likes"
+        :right="(32 + 8 * 2) / 2"
+      />
+    </transition>
+  </div>
 </template>
 
 <script lang="ts">
@@ -11,10 +25,11 @@ import Icon from '/@/components/UI/Icon.vue'
 import apis, { User } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import { useStore } from '/@/store'
+import LikeButtonBalloon from './LikeButtonBalloon.vue'
 
 export default defineComponent({
   name: 'LikeButton',
-  components: { Icon },
+  components: { Icon, LikeButtonBalloon },
   props: {
     itemId: {
       type: Number,
@@ -41,16 +56,25 @@ export default defineComponent({
         })
       }
     }
-    return { isLiked, toggleLike }
+    const isHover = ref(false)
+    const toggleHover = () => (isHover.value = !isHover.value)
+    return { isLiked, toggleLike, isHover, toggleHover }
   }
 })
 </script>
 
 <style lang="scss" module>
 .container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.button {
   cursor: pointer;
   background-color: $color-background;
   border: 0;
+  padding: 8px;
 
   &:focus {
     outline: 0;
