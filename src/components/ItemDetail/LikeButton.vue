@@ -1,21 +1,30 @@
 <template>
-  <div :class="$style.container">
-    <button
-      :class="$style.button"
-      @click="toggleLike"
-      @mouseenter="toggleHover"
-      @mouseleave="toggleHover"
-    >
-      <icon v-if="!isLiked" name="mdi:heart-outline" :size="32" />
-      <icon v-else name="mdi:heart" :size="32" :class="$style.liked" />
-    </button>
-    <transition name="fade">
-      <like-button-balloon
-        v-if="isHover"
-        :likes="likes"
-        :right="(32 + 8 * 2) / 2"
+  <div
+    :class="$style.container"
+    @mouseenter="toggleHover"
+    @mouseleave="toggleHover"
+  >
+    <button :class="$style.button" @click="toggleLike">
+      <icon v-show="!isLiked" name="mdi:heart-outline" :size="32" />
+      <icon
+        v-show="isLiked"
+        name="mdi:heart"
+        :size="32"
+        :class="$style.liked"
       />
-    </transition>
+      <transition name="fade">
+        <like-button-balloon
+          v-if="isHover"
+          :likes="likes"
+          :right="(32 + 8 * 2) / 2"
+          :width="width"
+        >
+          <div v-if="likes.length === 0">誰もいいねしていません</div>
+          <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
+        </like-button-balloon>
+      </transition>
+    </button>
+    <div>{{ likes.length }}</div>
   </div>
 </template>
 
@@ -26,10 +35,12 @@ import apis, { User } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import { useStore } from '/@/store'
 import LikeButtonBalloon from './LikeButtonBalloon.vue'
+import useMeasure from './use/measure'
+import UserIcon from '/@/components/UI/UserIcon.vue'
 
 export default defineComponent({
   name: 'LikeButton',
-  components: { Icon, LikeButtonBalloon },
+  components: { Icon, LikeButtonBalloon, UserIcon },
   props: {
     itemId: {
       type: Number,
@@ -58,14 +69,19 @@ export default defineComponent({
     }
     const isHover = ref(false)
     const toggleHover = () => (isHover.value = !isHover.value)
-    return { isLiked, toggleLike, isHover, toggleHover }
+    const { measureText, measureGrid } = useMeasure()
+    const width = ref(
+      props.likes.length > 0
+        ? measureGrid(props.likes.length, { width: 36, height: 36 }, 4, 8).width
+        : measureText('誰もいいねしていません').width
+    )
+    return { isLiked, toggleLike, isHover, toggleHover, width }
   }
 })
 </script>
 
 <style lang="scss" module>
 .container {
-  position: relative;
   display: flex;
   align-items: center;
 }
@@ -75,6 +91,8 @@ export default defineComponent({
   background-color: $color-background;
   border: 0;
   padding: 8px;
+  position: relative;
+  font: inherit;
 
   &:focus {
     outline: 0;

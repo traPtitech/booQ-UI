@@ -3,9 +3,9 @@
     <div :class="$style.before" :style="styles.before"></div>
     <div
       :class="[$style.balloon, likes.length !== 0 ? $style.userContainer : '']"
+      :style="styles.balloon"
     >
-      <div v-if="likes.length === 0">誰もいいねしていません</div>
-      <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
+      <slot></slot>
     </div>
     <div :class="$style.after" :style="styles.after"></div>
   </div>
@@ -13,7 +13,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import UserIcon from '/@/components/UI/UserIcon.vue'
 import { User } from '/@/lib/apis'
 
 // 吹き出してるとこの三角形の底辺
@@ -21,10 +20,11 @@ const BORDER_TRIANGLE_BASE = 28
 const CONTENT_TRIANGLE_BASE = 24
 // baloonContainerのright
 const CONTAINER_RIGHT = -16
+const BALLOON_PADDING = 20
+const BALLOON_BORDER = 1
 
 export default defineComponent({
   name: 'LikeButtonBalloon',
-  components: { UserIcon },
   props: {
     likes: {
       type: Array as PropType<User[]>,
@@ -32,6 +32,10 @@ export default defineComponent({
     },
     // 吹き出してるところの頂点を指定するイメージ
     right: {
+      type: Number,
+      required: true
+    },
+    width: {
       type: Number,
       required: true
     }
@@ -43,7 +47,10 @@ export default defineComponent({
       }px;`,
       after: `right: ${
         props.right - BORDER_TRIANGLE_BASE / 2 - CONTAINER_RIGHT
-      }px;`
+      }px;`,
+      balloon: `width: ${
+        props.width + (BALLOON_PADDING + BALLOON_BORDER) * 2
+      }px`
     }
     return { styles }
   }
@@ -59,8 +66,7 @@ export default defineComponent({
 .balloon {
   position: relative;
   margin-top: 1.5rem;
-  padding: 1.2rem;
-  max-width: 25vw;
+  padding: 20px;
   background: $color-background;
   border: solid 1px $color-text-secondary-pale;
   border-radius: 8px;
@@ -69,7 +75,7 @@ export default defineComponent({
 .userContainer {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 .before {
