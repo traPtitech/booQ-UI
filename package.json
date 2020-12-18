@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@iconify/json": "^1.1.274",
-    "@openapitools/openapi-generator-cli": "^2.1.10",
+    "@openapitools/openapi-generator-cli": "^2.1.12",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "@vue/compiler-sfc": "^3.0.4",
