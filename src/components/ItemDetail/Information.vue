@@ -8,7 +8,7 @@
         :item-id="item.id"
       />
     </div>
-    <div>{{ item.description }}</div>
+    <div :class="$style.description">{{ item.description }}</div>
     <owners :item="item" />
     <comments :comments="item.comments" />
     <logs :logs="item.logs" />
@@ -50,5 +50,9 @@ export default defineComponent({
 
 .titleWrapper {
   display: flex;
+}
+
+.description {
+  color: $color-text-secondary;
 }
 </style>

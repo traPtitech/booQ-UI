@@ -68,9 +68,8 @@ export default defineComponent({
   margin-top: 1.5rem;
   padding: 20px;
   background: $color-background;
-  border: solid 1px $color-text-secondary-pale;
+  border: solid 1px $color-text-secondary;
   border-radius: 8px;
-  filter: drop-shadow(2px 2px 4px $color-text-secondary-pale);
 }
 .userContainer {
   display: grid;
@@ -94,7 +93,7 @@ export default defineComponent({
   top: -3px;
   margin-left: -17px;
   border: 14px solid transparent;
-  border-bottom: 14px solid $color-text-secondary-pale;
+  border-bottom: 14px solid $color-text-secondary;
   z-index: 1;
 }
 </style>
