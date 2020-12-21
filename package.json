@@ -27,7 +27,7 @@
     "@vue/compiler-sfc": "^3.0.4",
     "autoprefixer": "^9.8.6",
     "eslint": "^7.16.0",
-    "eslint-config-prettier": "^7.0.0",
+    "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-vue": "^7.1.0",
     "postcss-normalize": "^9.0.0",
