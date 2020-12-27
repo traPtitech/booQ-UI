@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-restricted-imports
-import { Apis } from '/@/lib/apis/generated'
+import { Apis, Configuration } from '/@/lib/apis/generated'
 
-const apis = new Apis({ basePath: '/api' })
+const apis = new Apis(new Configuration({ basePath: '/api' }))
 
 export default apis
 // eslint-disable-next-line no-restricted-imports
