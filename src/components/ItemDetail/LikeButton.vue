@@ -1,9 +1,5 @@
 <template>
-  <div
-    :class="$style.container"
-    @mouseenter="toggleHover"
-    @mouseleave="toggleHover"
-  >
+  <div :class="$style.container">
     <button :class="$style.button" @click="toggleLike">
       <icon v-show="!isLiked" name="mdi:heart-outline" :size="32" />
       <icon
@@ -12,18 +8,6 @@
         :size="32"
         :class="$style.liked"
       />
-      <transition name="fade">
-        <like-button-balloon
-          v-if="isHover"
-          :right="(32 + 8 * 2) / 2"
-          :width="width"
-        >
-          <div :class="likes.length ? $style.userContainer : ''">
-            <div v-if="likes.length === 0">誰もいいねしていません</div>
-            <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
-          </div>
-        </like-button-balloon>
-      </transition>
     </button>
     <div>{{ likes.length }}</div>
   </div>
@@ -35,13 +19,10 @@ import Icon from '/@/components/UI/Icon.vue'
 import apis, { User } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import { useStore } from '/@/store'
-import LikeButtonBalloon from './LikeButtonBalloon.vue'
-import useMeasure from './use/measure'
-import UserIcon from '/@/components/UI/UserIcon.vue'
 
 export default defineComponent({
   name: 'LikeButton',
-  components: { Icon, LikeButtonBalloon, UserIcon },
+  components: { Icon },
   props: {
     itemId: {
       type: Number,
@@ -68,17 +49,7 @@ export default defineComponent({
         })
       }
     }
-
-    const isHover = ref(false)
-    const toggleHover = () => (isHover.value = !isHover.value)
-
-    const { measureText, measureGrid } = useMeasure()
-    const width = ref(
-      props.likes.length > 0
-        ? measureGrid(props.likes.length, { width: 36, height: 36 }, 4, 8).width
-        : measureText('誰もいいねしていません').width
-    )
-    return { isLiked, toggleLike, isHover, toggleHover, width }
+    return { isLiked, toggleLike }
   }
 })
 </script>
@@ -104,12 +75,6 @@ export default defineComponent({
 .liked {
   animation: clicked 0.5s;
   color: red;
-}
-
-.userContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
-  gap: 8px;
 }
 
 @keyframes clicked {

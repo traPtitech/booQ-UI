@@ -1,14 +1,16 @@
+export interface Size {
+  width: number
+  height: number
+}
+
 const useMeasure = (): {
-  measureText: (
-    text: string,
-    fontSize?: number
-  ) => { width: number; height: number }
+  measureText: (text: string, fontSize?: number) => Size
   measureGrid: (
     eleLength: number,
-    eachSize: { width: number; height: number },
+    eachSize: Size,
     maxCol: number,
     gap: number
-  ) => { width: number; height: number }
+  ) => Size
 } => {
   const measureText = (text: string, fontSize?: number) => {
     const dom = document.createElement('span')
@@ -17,14 +19,14 @@ const useMeasure = (): {
       dom.style.fontSize = `${fontSize}px`
     }
     document.body.appendChild(dom)
-    const rect = dom.getClientRects().item(0)
+    const rect = dom.getClientRects()[0]
     dom.remove()
     if (!rect) return { width: 0, height: 0 }
     return { width: rect.width, height: rect.height }
   }
   const measureGrid = (
     eleLength: number,
-    eachSize: { width: number; height: number },
+    eachSize: Size,
     maxCol: number,
     gap: number
   ) => {
