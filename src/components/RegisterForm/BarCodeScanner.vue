@@ -36,7 +36,7 @@ export default defineComponent({
   emits: {
     search: null,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'change-code': (code: string) => true
+    changeCode: (code: string) => true
   },
   setup(_, context) {
     const store = useStore()
@@ -82,7 +82,7 @@ export default defineComponent({
             }
             const text = result.getText()
             if (!checkDigit(text) || !checkISBN(text)) return
-            context.emit('change-code', result.getText())
+            context.emit('changeCode', result.getText())
             context.emit('search')
           }
         )
