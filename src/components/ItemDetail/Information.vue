@@ -193,8 +193,8 @@ export default defineComponent({
 }
 
 .userContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 </style>
