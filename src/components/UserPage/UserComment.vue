@@ -1,5 +1,7 @@
 <template>
-  <item-wide :item="item"> {{comment.text}} </item-wide>
+  <div v-if="item">
+    <item-wide :item="item"> {{ comment.text }} </item-wide>
+  </div>
 </template>
 
 <script lang="ts">
@@ -16,11 +18,11 @@ export default defineComponent({
     comment: {
       type: Object as PropType<Comment>,
       required: true
-    },
+    }
   },
-  setup(props){
+  setup(props) {
     const state = reactive({
-      item: {}
+      item: undefined as ItemDetail | undefined
     })
     watchEffect(async () => {
       const { data } = await apis.getItem(props.comment.itemId)
