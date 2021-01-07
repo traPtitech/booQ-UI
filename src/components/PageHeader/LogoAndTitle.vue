@@ -1,15 +1,19 @@
 <template>
   <div :class="$style.container">
-    <img :class="$style.logo" src="/@/assets/img/logo-main.svg" />
+    <img :class="$style.logo" :src="logoMain" />
     <div>booQ</div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import logoMain from '/@/assets/img/logo-main.svg'
 
 export default defineComponent({
-  name: 'LogoAndTitle'
+  name: 'LogoAndTitle',
+  setup() {
+    return { logoMain }
+  }
 })
 </script>
 

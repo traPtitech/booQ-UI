@@ -97,7 +97,7 @@ export default defineComponent({
   margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
   word-break: keep-all;
 }
 .input {
