@@ -40,8 +40,10 @@ export default defineComponent({
     const route = useRoute()
 
     const state = reactive({
-      username: computed(() => getFirstParam(route.params.name) ?? ''),
-      items: [] as ItemSummary[]
+      username: computed(() => getFirstParam(route.params.name)),
+      items: [] as ItemSummary[],
+      comments: [] as Comment[],
+      commentedItems: new Map() as Map<number, ItemDetail>
     })
     watchEffect(async () => {
       const [{ data: items }, { data: comments }] = await Promise.all([
