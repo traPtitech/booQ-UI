@@ -10,7 +10,11 @@
     </div>
     <h2>コメント</h2>
     <div v-for="comment in comments" :key="comment.id">
-      <user-comment :comment="comment" />
+      <div v-if="commentedItems.get(comment.itemId)">
+        <item-wide :item="commentedItems.get(comment.itemId)">
+          {{ comment.text }}
+        </item-wide>
+      </div>
     </div>
   </div>
 </template>
@@ -19,18 +23,18 @@
 import { defineComponent, reactive, computed, watchEffect, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
-import apis, { ItemSummary, Comment } from '/@/lib/apis'
+import apis, { ItemSummary, Comment, ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import ItemGrid from '/@/components/Item/ItemGrid.vue'
-import UserComment from '/@/components/UserPage/UserComment.vue'
+import ItemWide from '/@/components/ItemWide/ItemWide.vue'
 
 export default defineComponent({
   name: 'User',
   components: {
     UserIcon,
     ItemGrid,
-    UserComment
+    ItemWide
   },
   setup() {
     const route = useRoute()
@@ -40,10 +44,17 @@ export default defineComponent({
       items: [] as ItemSummary[]
     })
     watchEffect(async () => {
-      const { data: items } = await apis.getItems(state.username)
+      const [{ data: items }, { data: comments }] = await Promise.all([
+        apis.getItems(state.username),
+        apis.getComments(state.username)
+      ])
       state.items = items
-      const { data: comments } = await apis.getComments(state.username)
       state.comments = comments
+      for (const comment of comments) {
+        apis.getItem(comment.itemId).then(({ data: commentedItem }) => {
+          state.commentedItems.set(commentedItem.id, commentedItem)
+        })
+      }
     })
 
     useTitle(computed(() => state.username))
