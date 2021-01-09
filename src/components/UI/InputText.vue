@@ -1,15 +1,26 @@
 <template>
   <div :class="$style.container">
-    <label>
+    <label :class="$style.label">
       {{ label }}
-      <input
-        v-if="!multiline"
-        type="text"
-        :value="modelValue"
-        @input="onInput"
-      />
-      <textarea v-else :value="modelValue" @input="onInput" />
+      <div :class="$style.inputWrapper">
+        <input
+          v-if="!multiline"
+          :class="$style.input"
+          type="text"
+          :value="modelValue"
+          @input="onInput"
+        />
+        <textarea
+          v-else
+          :class="$style.input"
+          :value="modelValue"
+          @input="onInput"
+        />
+        <slot />
+      </div>
     </label>
+    <span :class="$style.underline" />
+    <span :class="$style.underlineFocus" />
   </div>
 </template>
 
@@ -48,5 +59,48 @@ export default defineComponent({
 
 <style lang="scss" module>
 .container {
+  position: relative;
+  border-bottom: solid 2px transparent;
+  cursor: text;
+  overflow: hidden;
+}
+.label {
+  color: $color-text-secondary;
+  cursor: text;
+}
+.inputWrapper {
+  display: flex;
+  margin: 0.25em 0;
+}
+.input {
+  flex: 1;
+  color: $color-text-secondary;
+  background-color: transparent;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}
+
+.underline,
+.underlineFocus {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+}
+.underline {
+  background-color: $color-text-secondary;
+  left: 0;
+  z-index: 1;
+}
+.underlineFocus {
+  background-color: $color-primary;
+  left: -100%;
+  transition: all 0.2s ease;
+  z-index: 2;
+  .container:focus-within & {
+    left: 0;
+  }
 }
 </style>

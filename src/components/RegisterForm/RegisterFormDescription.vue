@@ -1,7 +1,8 @@
 <template>
   <div>
-    <input-text v-model="formState.code" label="物品コード / ISBNコード" />
-    <button @click="toggleDialog">バーコード読み取り</button>
+    <input-text v-model="formState.code" label="物品コード / ISBNコード">
+      <icon name="mdi:qrcode" :class="$style.toggleQr" @click="toggleDialog" />
+    </input-text>
     <dialog-template v-if="isDialogShown" @close="toggleDialog">
       <bar-code-scanner />
       <button @click="toggleDialog">閉じる</button>
@@ -19,11 +20,13 @@ import InputText from '/@/components/UI/InputText.vue'
 import BarCodeScanner from './BarCodeScanner.vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import useOpener from '/@/components/UI/use/opener'
+import Icon from '/@/components/UI/Icon.vue'
 
 export default defineComponent({
   name: 'RegisterFormDescription',
   components: {
     InputText,
+    Icon,
     DialogTemplate,
     BarCodeScanner
   },
@@ -34,3 +37,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" module>
+.toggleQr {
+  flex-shrink: 0;
+  cursor: pointer;
+}
+</style>
