@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.container" @click="focus">
+  <with-focus-underline :class="$style.container" @click="focus">
     <icon name="mdi:search" :class="$style.icon" />
     <input
       ref="inputEle"
@@ -10,19 +10,19 @@
       @input="onInput"
       @keypress.enter="onEnter"
     />
-    <span :class="$style.underline" />
-    <span :class="$style.underlineFocus" />
-  </div>
+  </with-focus-underline>
 </template>
 
 <script lang="ts">
 import { defineComponent, shallowRef } from 'vue'
 import Icon from '/@/components/UI/Icon.vue'
+import WithFocusUnderline from './WithFocusUnderline.vue'
 
 export default defineComponent({
   name: 'SearchInput',
   components: {
-    Icon
+    Icon,
+    WithFocusUnderline
   },
   props: {
     modelValue: {
@@ -73,28 +73,6 @@ export default defineComponent({
   border: none;
   &:focus {
     outline: none;
-  }
-}
-
-.underline,
-.underlineFocus {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 2px;
-}
-.underline {
-  background-color: $color-text-secondary;
-  left: 0;
-  z-index: 1;
-}
-.underlineFocus {
-  background-color: $color-primary;
-  left: -100%;
-  transition: all 0.2s ease;
-  z-index: 2;
-  .container:focus-within & {
-    left: 0;
   }
 }
 </style>
