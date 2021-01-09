@@ -1,9 +1,10 @@
 <template>
   <div :class="$style.container">
     <h1 :class="$style.title">物品登録</h1>
-    <selector v-model="type" :options="typeOptions" label="所有者" />
     <register-form-description />
+    <selector v-model="type" :options="typeOptions" label="所有者" />
     <input-number v-model="formState.count" label="個数" />
+    <input-checkbox v-model="formState.rentalable" label="貸し出し可" />
     <button @click="register">登録</button>
   </div>
 </template>
@@ -20,16 +21,20 @@ import {
 import InputNumber from '/@/components/UI/InputNumber.vue'
 import apis, { ItemPosted } from '/@/lib/apis'
 import Selector from '/@/components/UI/Selector.vue'
+import useAddOwner from '/@/components/ItemDetail/use/addOwner'
+import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 
 export default defineComponent({
   name: 'RegisterForm',
   components: {
     Selector,
     RegisterFormDescription,
-    InputNumber
+    InputNumber,
+    InputCheckbox
   },
   setup() {
     const { formState, reset } = provideFormState()
+    const { addOwner } = useAddOwner()
 
     const type = ref(itemTypeToName(formState.type))
     watchEffect(() => {
@@ -42,7 +47,13 @@ export default defineComponent({
 
       // 型変換しているのはreadOnlyのopenapiの生成がうまくいかないため
       try {
-        await apis.postItem((formState as unknown) as ItemPosted)
+        const res = await apis.postItem((formState as unknown) as ItemPosted)
+        await addOwner({
+          itemID: res.data.id,
+          ownerType: type.value,
+          count: formState.count,
+          rentalable: formState.rentalable
+        })
         reset()
       } catch (e) {
         // eslint-disable-next-line no-console

@@ -10,6 +10,7 @@ interface FormState {
   description: string
   imgUrl: string
   count: number
+  rentalable: boolean
 }
 
 interface Store {
@@ -23,7 +24,8 @@ const defaultValue = {
   name: '',
   description: '',
   imgUrl: '',
-  count: 1
+  count: 1,
+  rentalable: false
 }
 
 export const createFormState = (): Store => {
