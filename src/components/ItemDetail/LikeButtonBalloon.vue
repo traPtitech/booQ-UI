@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.balloonContainer">
+  <div :class="$style.balloonContainer" :style="styles.balloonContainer">
     <div :class="$style.outsideTriangle" :style="styles.outsideTriangle" />
     <div :class="$style.balloon" :style="styles.balloon">
       <slot></slot>
@@ -30,6 +30,10 @@ export default defineComponent({
     width: {
       type: Number,
       required: true
+    },
+    top: {
+      type: Number,
+      required: true
     }
   },
   setup(props) {
@@ -41,7 +45,10 @@ export default defineComponent({
         right: `${props.right - OUTSIDE_TRIANGLE_BASE / 2 - CONTAINER_RIGHT}px`
       },
       balloon: {
-        // width: `${props.width + (BALLOON_PADDING + BALLOON_BORDER) * 2}px`
+        width: `${props.width + (BALLOON_PADDING + BALLOON_BORDER) * 2}px`
+      },
+      balloonContainer: {
+        top: `${props.top}px`
       }
     }))
     return { styles }
@@ -53,9 +60,9 @@ export default defineComponent({
 .balloonContainer {
   position: absolute;
   right: -16px;
-  top: 70%;
   width: 100%;
 }
+
 .balloon {
   position: absolute;
   margin-top: 1.5rem;
@@ -63,7 +70,6 @@ export default defineComponent({
   background: $color-background;
   border: solid 1px $color-text-secondary;
   border-radius: 8px;
-  max-width: 50%;
   right: 0;
 }
 

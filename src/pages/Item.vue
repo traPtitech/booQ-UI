@@ -43,7 +43,7 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   display: flex;
-  padding: 3rem;
+  padding: 48px;
 }
 
 .control {
