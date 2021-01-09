@@ -1,6 +1,7 @@
 <template>
   <div :class="$style.container">
-    <radios v-model="type" :options="typeOptions" />
+    <h1 :class="$style.title">物品登録</h1>
+    <selector v-model="type" :options="typeOptions" label="所有者" />
     <register-form-description />
     <input-number v-model="formState.count" label="個数" />
     <button @click="register">登録</button>
@@ -11,7 +12,6 @@
 import { defineComponent, ref, watchEffect } from 'vue'
 import { provideFormState } from './use/formState'
 import RegisterFormDescription from './RegisterFormDescription.vue'
-import Radios from '/@/components/UI/Radios.vue'
 import {
   itemTypeMap,
   itemTypeToName,
@@ -19,11 +19,12 @@ import {
 } from '/@/lib/itemType'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 import apis, { ItemPosted } from '/@/lib/apis'
+import Selector from '/@/components/UI/Selector.vue'
 
 export default defineComponent({
   name: 'RegisterForm',
   components: {
-    Radios,
+    Selector,
     RegisterFormDescription,
     InputNumber
   },
@@ -56,5 +57,10 @@ export default defineComponent({
 
 <style lang="scss" module>
 .container {
+  color: $color-text-primary;
+  text-align: left;
+}
+.title {
+  margin-top: 0;
 }
 </style>
