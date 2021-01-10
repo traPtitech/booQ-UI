@@ -1,9 +1,5 @@
 <template>
-  <div
-    :class="$style.container"
-    @mouseenter="toggleHover"
-    @mouseleave="toggleHover"
-  >
+  <div :class="$style.container" @mouseenter="enter" @mouseleave="leave">
     <button ref="$button" :class="$style.button" @click="toggleLike">
       <icon v-show="!isLiked" name="mdi:heart-outline" :size="32" />
       <icon
@@ -14,26 +10,25 @@
       />
     </button>
     <div>{{ likes.length }}</div>
-    <div :class="$style.likeBalloon">
-      <transition name="fade">
-        <like-button-balloon
-          v-if="isHover"
-          :right="(32 + 8 * 2) / 2"
-          :width="balloonWidth"
-          :top="balloonTop"
-        >
-          <div :class="likes.length ? $style.userContainer : ''">
-            <div v-if="likes.length === 0">誰もいいねしていません</div>
-            <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
-          </div>
-        </like-button-balloon>
-      </transition>
-    </div>
+    <transition name="fade">
+      <like-button-balloon
+        v-if="isHover"
+        :hamidashi-right="36 / 2 + 20"
+        :width="balloonWidth"
+        :left="balloonLeft"
+        :top="balloonTop"
+      >
+        <div :class="likes.length ? $style.userContainer : ''">
+          <div v-if="likes.length === 0">誰もいいねしていません</div>
+          <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
+        </div>
+      </like-button-balloon>
+    </transition>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, onMounted } from 'vue'
+import { defineComponent, ref, PropType } from 'vue'
 import { User } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import LikeButtonBalloon from './LikeButtonBalloon.vue'
@@ -41,8 +36,7 @@ import UserIcon from '/@/components/UI/UserIcon.vue'
 import useLike from './use/like'
 import useOpener from '../UI/use/opener'
 
-const HEADER_HEIGHT = 70
-const CONTAINER_PADDING = 48 + 16
+const HEART_CONTAINER_SIZE = 32 + 8 * 2
 
 export default defineComponent({
   name: 'LikeButton',
@@ -60,25 +54,32 @@ export default defineComponent({
   setup(props) {
     const { isLiked, toggleLike, balloonWidth } = useLike(props)
 
-    const { isOpen: isHover, toggle: toggleHover } = useOpener()
-
     const $button = ref<HTMLButtonElement | null>(null)
     const balloonTop = ref(0)
-    onMounted(() => {
+    const balloonLeft = ref(0)
+
+    // const { isOpen: isHover, toggle: toggleIsHover } = useOpener()
+    const isHover = ref(false)
+    const enter = () => {
+      // windowのresize時の吹き出し位置を調整するため
       const rect = $button.value?.getBoundingClientRect()
       if (rect) {
-        balloonTop.value =
-          rect.y + rect.height - HEADER_HEIGHT - CONTAINER_PADDING
+        balloonTop.value = rect.y + rect.height
+        balloonLeft.value = rect.x + HEART_CONTAINER_SIZE / 2
       }
-    })
+      isHover.value = true
+    }
+    const leave = () => (isHover.value = false)
     return {
       isLiked,
       toggleLike,
       balloonWidth,
       isHover,
-      toggleHover,
+      enter,
+      leave,
       $button,
-      balloonTop
+      balloonTop,
+      balloonLeft
     }
   }
 })
@@ -95,7 +96,6 @@ export default defineComponent({
   background-color: $color-background;
   border: 0;
   padding: 8px;
-  position: relative;
   font: inherit;
 
   &:focus {
@@ -106,13 +106,6 @@ export default defineComponent({
 .liked {
   animation: clicked 0.5s;
   color: red;
-}
-
-.likeBalloon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
 }
 
 .userContainer {

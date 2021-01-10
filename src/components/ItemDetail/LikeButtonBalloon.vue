@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.balloonContainer" :style="styles.balloonContainer">
+  <div>
     <div :class="$style.outsideTriangle" :style="styles.outsideTriangle" />
     <div :class="$style.balloon" :style="styles.balloon">
       <slot></slot>
@@ -14,8 +14,7 @@ import { computed, defineComponent } from 'vue'
 // 吹き出してるとこの三角形の底辺
 const OUTSIDE_TRIANGLE_BASE = 28
 const INSIDE_TRIANGLE_BASE = 26
-// baloonContainerのright
-const CONTAINER_RIGHT = -16
+// containerのright
 const BALLOON_PADDING = 20
 const BALLOON_BORDER = 1
 
@@ -23,7 +22,7 @@ export default defineComponent({
   name: 'LikeButtonBalloon',
   props: {
     // 吹き出してるところの頂点を指定するイメージ
-    right: {
+    left: {
       type: Number,
       required: true
     },
@@ -34,21 +33,34 @@ export default defineComponent({
     top: {
       type: Number,
       required: true
+    },
+    // leftで指定したところから右にはみ出してる部分の長さを指定する
+    /*
+    -------^----
+           ↑   ↑
+            ココ
+    */
+    hamidashiRight: {
+      type: Number,
+      required: true
     }
   },
   setup(props) {
     const styles = computed(() => ({
       outsideTriangle: {
-        right: `${props.right - INSIDE_TRIANGLE_BASE / 2 - CONTAINER_RIGHT}px`
+        left: `${props.left - INSIDE_TRIANGLE_BASE / 2}px`,
+        top: `${props.top - 1}px`
       },
       insideTriangle: {
-        right: `${props.right - OUTSIDE_TRIANGLE_BASE / 2 - CONTAINER_RIGHT}px`
+        left: `${props.left - OUTSIDE_TRIANGLE_BASE / 2}px`,
+        top: `${props.top - 3}px`
       },
       balloon: {
-        width: `${props.width + (BALLOON_PADDING + BALLOON_BORDER) * 2}px`
-      },
-      balloonContainer: {
-        top: `${props.top}px`
+        width: `${props.width + (BALLOON_PADDING + BALLOON_BORDER) * 2}px`,
+        top: `${props.top}px`,
+        right: `${
+          document.body.clientWidth - props.left - props.hamidashiRight
+        }px`
       }
     }))
     return { styles }
@@ -57,35 +69,24 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.balloonContainer {
-  position: absolute;
-  right: -16px;
-  width: 100%;
-}
-
 .balloon {
   position: absolute;
-  margin-top: 1.5rem;
+  margin-top: 24px;
   padding: 20px;
   background: $color-background;
   border: solid 1px $color-text-secondary;
   border-radius: 8px;
-  right: 0;
 }
 
 .outsideTriangle {
-  content: '';
   position: absolute;
-  top: -1px;
   border: 13px solid transparent;
   border-bottom: 13px solid $color-background;
   z-index: 2;
 }
 
 .insideTriangle {
-  content: '';
   position: absolute;
-  top: -3px;
   border: 14px solid transparent;
   border-bottom: 14px solid $color-text-secondary;
   z-index: 1;

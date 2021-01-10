@@ -42,7 +42,6 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   text-align: left;
-  position: relative;
 }
 
 .titleWrapper {
