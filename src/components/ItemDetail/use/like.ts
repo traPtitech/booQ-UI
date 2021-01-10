@@ -13,14 +13,15 @@ const useLike = (props: {
   balloonWidth: ComputedRef<number>
 } => {
   const { id: meID } = useMe()
-  const isLiked = ref(props.likes.findIndex(v => meID.value === v.id) > -1)
+  const store = useStore()
+  const isLiked = ref(props.likes.some(v => meID.value === v.id))
+
   const toggleLike = async () => {
     try {
       if (isLiked.value) await apis.removeLike(props.itemId)
       else await apis.addLike(props.itemId)
       isLiked.value = !isLiked.value
     } catch (e) {
-      const store = useStore()
       store.commit.addToast({
         type: 'error',
         text: '「いいね」に失敗しました'
