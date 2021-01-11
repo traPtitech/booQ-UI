@@ -14,12 +14,17 @@ const useLike = (props: {
 } => {
   const { id: meID } = useMe()
   const store = useStore()
+  const { measureText, measureGrid } = useMeasure()
+
   const isLiked = ref(props.likes.some(v => meID.value === v.id))
 
   const toggleLike = async () => {
     try {
-      if (isLiked.value) await apis.removeLike(props.itemId)
-      else await apis.addLike(props.itemId)
+      if (isLiked.value) {
+        await apis.removeLike(props.itemId)
+      } else {
+        await apis.addLike(props.itemId)
+      }
       isLiked.value = !isLiked.value
     } catch (e) {
       store.commit.addToast({
@@ -29,7 +34,6 @@ const useLike = (props: {
     }
   }
 
-  const { measureText, measureGrid } = useMeasure()
   const balloonWidth = computed(() =>
     props.likes.length > 0
       ? measureGrid(props.likes.length, { width: 36, height: 36 }, 4, 8).width

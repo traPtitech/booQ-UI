@@ -6,7 +6,7 @@ export interface Size {
 const useMeasure = (): {
   measureText: (text: string, fontSize?: number) => Size
   measureGrid: (
-    eleLength: number,
+    itemCount: number,
     eachSize: Size,
     maxCol: number,
     gap: number
@@ -24,22 +24,25 @@ const useMeasure = (): {
     if (!rect) return { width: 0, height: 0 }
     return { width: rect.width, height: rect.height }
   }
+
   const measureGrid = (
-    eleLength: number,
+    itemCount: number,
     eachSize: Size,
     maxCol: number,
     gap: number
   ) => {
-    const row = Math.floor(eleLength / maxCol)
-    const remain = eleLength - row * maxCol
+    const row = Math.floor(itemCount / maxCol)
+    const remain = itemCount % maxCol
     return {
       width: getEdgeLength(row === 0 ? remain : maxCol, eachSize.width, gap),
       height: getEdgeLength(row + +!!remain, eachSize.height, gap)
     }
   }
+
   const getEdgeLength = (length: number, size: number, gap: number) => {
     return size * length + gap * (length - 1)
   }
+
   return { measureText, measureGrid }
 }
 

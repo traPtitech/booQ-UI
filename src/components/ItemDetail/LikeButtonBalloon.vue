@@ -26,7 +26,8 @@ export default defineComponent({
       type: Number,
       required: true
     },
-    width: {
+    // 内容のwidth、paddingとかを含んだ吹き出し部分のwidthではない
+    contentWidth: {
       type: Number,
       required: true
     },
@@ -46,7 +47,9 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const getWidth = (w: number) => w + (BALLOON_PADDING + BALLOON_BORDER) * 2
+    const outerWidth = computed(
+      () => props.contentWidth + (BALLOON_PADDING + BALLOON_BORDER) * 2
+    )
     const styles = computed(() => ({
       outsideTriangle: {
         left: `${props.left - INSIDE_TRIANGLE_BASE / 2}px`,
@@ -57,9 +60,9 @@ export default defineComponent({
         top: `${props.top - 3}px`
       },
       balloon: {
-        width: `${getWidth(props.width)}px`,
+        width: `${outerWidth.value}px`,
         top: `${props.top}px`,
-        left: `${props.left - (getWidth(props.width) - props.hamidashiRight)}px`
+        left: `${props.left - (outerWidth.value - props.hamidashiRight)}px`
       }
     }))
     return { styles }

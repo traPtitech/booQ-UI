@@ -10,15 +10,15 @@
       />
       <transition name="fade">
         <like-button-balloon
-          v-if="isHover"
+          v-if="isHoved"
           :hamidashi-right="36 / 2 + 20"
-          :width="balloonWidth"
+          :content-width="balloonWidth"
           :left="HEART_CONTAINER_SIZE / 2"
           :top="HEART_CONTAINER_SIZE"
           @click.stop
         >
-          <div :class="likes.length ? $style.userContainer : ''">
-            <div v-if="likes.length === 0">誰もいいねしていません</div>
+          <div v-if="likes.length === 0">誰もいいねしていません</div>
+          <div v-else :class="$style.userContainer">
             <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
           </div>
         </like-button-balloon>
@@ -29,12 +29,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { User } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import LikeButtonBalloon from './LikeButtonBalloon.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import useLike from './use/like'
+import useDevidedOpener from '/@/components/UI/use/devidedOpener'
 
 const HEART_CONTAINER_SIZE = 32 + 8 * 2
 
@@ -54,14 +55,12 @@ export default defineComponent({
   setup(props) {
     const { isLiked, toggleLike, balloonWidth } = useLike(props)
 
-    const isHover = ref(false)
-    const enter = () => (isHover.value = true)
-    const leave = () => (isHover.value = false)
+    const { isOpen: isHoved, open: enter, close: leave } = useDevidedOpener()
     return {
       isLiked,
       toggleLike,
       balloonWidth,
-      isHover,
+      isHoved,
       enter,
       leave,
       HEART_CONTAINER_SIZE
