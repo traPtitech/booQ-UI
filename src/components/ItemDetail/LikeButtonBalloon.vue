@@ -59,9 +59,7 @@ export default defineComponent({
       balloon: {
         width: `${getWidth(props.width)}px`,
         top: `${props.top}px`,
-        left: `${
-          props.left - (getWidth(props.width) - props.hamidashiRight)
-        }px`
+        left: `${props.left - (getWidth(props.width) - props.hamidashiRight)}px`
       }
     }))
     return { styles }

@@ -11,11 +11,11 @@
       <transition name="fade">
         <like-button-balloon
           v-if="isHover"
-          @click.stop
           :hamidashi-right="36 / 2 + 20"
           :width="balloonWidth"
           :left="HEART_CONTAINER_SIZE / 2"
           :top="HEART_CONTAINER_SIZE"
+          @click.stop
         >
           <div :class="likes.length ? $style.userContainer : ''">
             <div v-if="likes.length === 0">誰もいいねしていません</div>
@@ -35,7 +35,6 @@ import Icon from '/@/components/UI/Icon.vue'
 import LikeButtonBalloon from './LikeButtonBalloon.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import useLike from './use/like'
-import useOpener from '../UI/use/opener'
 
 const HEART_CONTAINER_SIZE = 32 + 8 * 2
 
