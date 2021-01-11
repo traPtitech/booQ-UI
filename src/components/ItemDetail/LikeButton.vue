@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container" @mouseenter="enter" @mouseleave="leave">
-    <button ref="$button" :class="$style.button" @click="toggleLike">
+    <button :class="$style.button" @click="toggleLike">
       <icon v-show="!isLiked" name="mdi:heart-outline" :size="32" />
       <icon
         v-show="isLiked"
@@ -8,22 +8,23 @@
         :size="32"
         :class="$style.liked"
       />
+      <transition name="fade">
+        <like-button-balloon
+          v-if="isHover"
+          @click.stop
+          :hamidashi-right="36 / 2 + 20"
+          :width="balloonWidth"
+          :left="HEART_CONTAINER_SIZE / 2"
+          :top="HEART_CONTAINER_SIZE"
+        >
+          <div :class="likes.length ? $style.userContainer : ''">
+            <div v-if="likes.length === 0">誰もいいねしていません</div>
+            <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
+          </div>
+        </like-button-balloon>
+      </transition>
     </button>
     <div>{{ likes.length }}</div>
-    <transition name="fade">
-      <like-button-balloon
-        v-if="isHover"
-        :hamidashi-right="36 / 2 + 20"
-        :width="balloonWidth"
-        :left="balloonLeft"
-        :top="balloonTop"
-      >
-        <div :class="likes.length ? $style.userContainer : ''">
-          <div v-if="likes.length === 0">誰もいいねしていません</div>
-          <user-icon v-for="u in likes" :key="u.id" :user-name="u.name" />
-        </div>
-      </like-button-balloon>
-    </transition>
   </div>
 </template>
 
@@ -54,21 +55,8 @@ export default defineComponent({
   setup(props) {
     const { isLiked, toggleLike, balloonWidth } = useLike(props)
 
-    const $button = ref<HTMLButtonElement | null>(null)
-    const balloonTop = ref(0)
-    const balloonLeft = ref(0)
-
-    // const { isOpen: isHover, toggle: toggleIsHover } = useOpener()
     const isHover = ref(false)
-    const enter = () => {
-      // windowのresize時の吹き出し位置を調整するため
-      const rect = $button.value?.getBoundingClientRect()
-      if (rect) {
-        balloonTop.value = rect.y + rect.height
-        balloonLeft.value = rect.x + HEART_CONTAINER_SIZE / 2
-      }
-      isHover.value = true
-    }
+    const enter = () => (isHover.value = true)
     const leave = () => (isHover.value = false)
     return {
       isLiked,
@@ -77,9 +65,7 @@ export default defineComponent({
       isHover,
       enter,
       leave,
-      $button,
-      balloonTop,
-      balloonLeft
+      HEART_CONTAINER_SIZE
     }
   }
 })
@@ -97,6 +83,7 @@ export default defineComponent({
   border: 0;
   padding: 8px;
   font: inherit;
+  position: relative;
 
   &:focus {
     outline: 0;

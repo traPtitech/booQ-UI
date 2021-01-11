@@ -46,6 +46,7 @@ export default defineComponent({
     }
   },
   setup(props) {
+    const getWidth = (w: number) => w + (BALLOON_PADDING + BALLOON_BORDER) * 2
     const styles = computed(() => ({
       outsideTriangle: {
         left: `${props.left - INSIDE_TRIANGLE_BASE / 2}px`,
@@ -56,10 +57,10 @@ export default defineComponent({
         top: `${props.top - 3}px`
       },
       balloon: {
-        width: `${props.width + (BALLOON_PADDING + BALLOON_BORDER) * 2}px`,
+        width: `${getWidth(props.width)}px`,
         top: `${props.top}px`,
-        right: `${
-          document.body.clientWidth - props.left - props.hamidashiRight
+        left: `${
+          props.left - (getWidth(props.width) - props.hamidashiRight)
         }px`
       }
     }))
