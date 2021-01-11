@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div :class="$style.container" :style="styles.container">
     <div :class="$style.outsideTriangle" :style="styles.outsideTriangle" />
-    <div :class="$style.balloon" :style="styles.balloon">
+    <div :class="$style.balloon">
       <slot></slot>
     </div>
     <div :class="$style.insideTriangle" :style="styles.insideTriangle" />
@@ -52,14 +52,16 @@ export default defineComponent({
     )
     const styles = computed(() => ({
       outsideTriangle: {
-        left: `${props.left - INSIDE_TRIANGLE_BASE / 2}px`,
-        top: `${props.top - 1}px`
+        left: `${
+          outerWidth.value - props.hamidashiRight - INSIDE_TRIANGLE_BASE / 2
+        }px`
       },
       insideTriangle: {
-        left: `${props.left - OUTSIDE_TRIANGLE_BASE / 2}px`,
-        top: `${props.top - 3}px`
+        left: `${
+          outerWidth.value - props.hamidashiRight - OUTSIDE_TRIANGLE_BASE / 2
+        }px`
       },
-      balloon: {
+      container: {
         width: `${outerWidth.value}px`,
         top: `${props.top}px`,
         left: `${props.left - (outerWidth.value - props.hamidashiRight)}px`
@@ -71,8 +73,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.balloon {
+.container {
   position: absolute;
+}
+
+.balloon {
   margin-top: 24px;
   padding: 20px;
   background: $color-background;
@@ -85,6 +90,7 @@ export default defineComponent({
   border: 13px solid transparent;
   border-bottom: 13px solid $color-background;
   z-index: 2;
+  top: -1px;
 }
 
 .insideTriangle {
@@ -92,5 +98,6 @@ export default defineComponent({
   border: 14px solid transparent;
   border-bottom: 14px solid $color-text-secondary;
   z-index: 1;
+  top: -3px;
 }
 </style>
