@@ -34,12 +34,12 @@ const useMeasure = (): {
     const row = Math.floor(itemCount / maxCol)
     const remain = itemCount % maxCol
     return {
-      width: getEdgeLength(row === 0 ? remain : maxCol, eachSize.width, gap),
-      height: getEdgeLength(row + +!!remain, eachSize.height, gap)
+      width: getTotalLength(row === 0 ? remain : maxCol, eachSize.width, gap),
+      height: getTotalLength(row + +!!remain, eachSize.height, gap)
     }
   }
 
-  const getEdgeLength = (length: number, size: number, gap: number) => {
+  const getTotalLength = (length: number, size: number, gap: number) => {
     return size * length + gap * (length - 1)
   }
 
