@@ -7,8 +7,10 @@
       <register-form-image-button
         :class="$style.addButton"
         :is-uploading="isUploading"
+        :is-clear-button-shown="modelValue !== ''"
         @upload="uploadImage"
         @input-url="toggleUrlInputDialog"
+        @clear-url="clearUrl"
       />
       <url-input-dialog
         v-if="isUrlInputDialogOpen"
@@ -59,6 +61,9 @@ export default defineComponent({
       toggleUrlInputDialog()
       context.emit('update:modelValue', url)
     }
+    const clearUrl = () => {
+      context.emit('update:modelValue', '')
+    }
 
     const imgUrl = computed(() =>
       props.modelValue !== '' ? props.modelValue : noImg
@@ -70,7 +75,8 @@ export default defineComponent({
       uploadImage,
       isUrlInputDialogOpen,
       toggleUrlInputDialog,
-      setImageUrl
+      setImageUrl,
+      clearUrl
     }
   }
 })

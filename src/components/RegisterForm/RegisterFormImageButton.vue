@@ -23,6 +23,14 @@
           :class="$style.btn"
           @click="onInputUrlClick"
         />
+        <normal-icon-button
+          v-if="isClearButtonShown"
+          icon="mdi:link-off"
+          label="画像の指定を解除"
+          variant="caution"
+          :class="$style.btn"
+          @click="onClearUrlClick"
+        />
       </template>
     </mini-popup>
   </button>
@@ -46,11 +54,16 @@ export default defineComponent({
     isUploading: {
       type: Boolean,
       default: false
+    },
+    isClearButtonShown: {
+      type: Boolean,
+      default: false
     }
   },
   emits: {
     upload: () => true,
-    inputUrl: () => true
+    inputUrl: () => true,
+    clearUrl: () => true
   },
   setup(props, context) {
     const { isOpen, toggle } = useOpener()
@@ -63,7 +76,11 @@ export default defineComponent({
       context.emit('inputUrl')
       toggle()
     }
-    return { isOpen, onUploadClick, onInputUrlClick }
+    const onClearUrlClick = () => {
+      context.emit('clearUrl')
+      toggle()
+    }
+    return { isOpen, onUploadClick, onInputUrlClick, onClearUrlClick }
   }
 })
 </script>
