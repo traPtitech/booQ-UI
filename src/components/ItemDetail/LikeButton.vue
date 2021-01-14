@@ -10,7 +10,7 @@
       />
       <transition name="fade">
         <like-button-balloon
-          v-if="isHoved"
+          v-if="isHovered"
           :hamidashi-right="36 / 2 + 20"
           :content-width="balloonWidth"
           :left="HEART_CONTAINER_SIZE / 2"
@@ -35,7 +35,7 @@ import Icon from '/@/components/UI/Icon.vue'
 import LikeButtonBalloon from './LikeButtonBalloon.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import useLike from './use/like'
-import useDevidedOpener from '/@/components/UI/use/devidedOpener'
+import useHover from '/@/components/UI/use/hover'
 
 const HEART_CONTAINER_SIZE = 32 + 8 * 2
 
@@ -55,12 +55,12 @@ export default defineComponent({
   setup(props) {
     const { isLiked, toggleLike, balloonWidth } = useLike(props)
 
-    const { isOpen: isHoved, open: enter, close: leave } = useDevidedOpener()
+    const { isHovered, open: enter, close: leave } = useHover()
     return {
       isLiked,
       toggleLike,
       balloonWidth,
-      isHoved,
+      isHovered,
       enter,
       leave,
       HEART_CONTAINER_SIZE

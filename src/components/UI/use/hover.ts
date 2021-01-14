@@ -1,24 +1,25 @@
 import { ref, Ref } from 'vue'
 
-const useDevidedOpener = (): {
-  isOpen: Ref<boolean>
+const useHover = (): {
+  isHovered: Ref<boolean>
   open: () => void
   close: () => void
 } => {
-  const isOpen = ref(false)
+  const isHovered = ref(false)
 
   const open = () => {
-    isOpen.value = true
+    isHovered.value = true
   }
 
   const close = () => {
-    isOpen.value = false
+    isHovered.value = false
   }
+
   return {
-    isOpen,
+    isHovered,
     open,
     close
   }
 }
 
-export default useDevidedOpener
+export default useHover
