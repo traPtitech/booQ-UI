@@ -27,12 +27,18 @@ export default defineComponent({
     InputText,
     WideIconButton
   },
+  props: {
+    initUrl: {
+      type: String,
+      default: ''
+    }
+  },
   emits: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     close: (_url: string) => true
   },
   setup(props, context) {
-    const url = ref('')
+    const url = ref(props.initUrl)
 
     const close = () => {
       context.emit('close', url.value)

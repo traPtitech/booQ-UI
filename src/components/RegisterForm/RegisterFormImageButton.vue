@@ -2,6 +2,7 @@
   <button :class="$style.button">
     <mini-popup
       v-model:isOpen="isOpen"
+      :disabled="isUploading"
       transition-transform-origin="bottom right"
     >
       <template #opener>
@@ -40,6 +41,12 @@ export default defineComponent({
     Icon,
     MiniPopup,
     NormalIconButton
+  },
+  props: {
+    isUploading: {
+      type: Boolean,
+      default: false
+    }
   },
   emits: {
     upload: () => true,

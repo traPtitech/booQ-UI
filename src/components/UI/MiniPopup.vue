@@ -2,7 +2,11 @@
   <!-- 外からpositionを指定されたとき用に二重でくるむ -->
   <div>
     <div :class="$style.container">
-      <div :class="$style.opener" @click.stop="toggle">
+      <div
+        :class="$style.opener"
+        :data-is-disabled="disabled"
+        @click.stop="toggle"
+      >
         <slot name="opener" />
       </div>
       <transition name="mini-popup">
@@ -61,6 +65,10 @@ export default defineComponent({
       type: Boolean,
       required: true
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     transitionTransformOrigin: {
       type: String as PropType<'top right' | 'bottom right'>,
       required: true
@@ -78,6 +86,7 @@ export default defineComponent({
       }
     })
     const toggle = () => {
+      if (props.disabled) return
       localIsOpen.value = !localIsOpen.value
     }
 
@@ -112,6 +121,9 @@ export default defineComponent({
 }
 .opener {
   cursor: pointer;
+  &[data-is-disabled='true'] {
+    cursor: not-allowed;
+  }
 }
 .popup {
   position: absolute;

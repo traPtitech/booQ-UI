@@ -10,8 +10,7 @@
   </div>
   <input-text v-model="formState.name" label="物品名" />
   <input-text v-model="formState.description" multiline label="物品詳細" />
-  <input-text v-model="formState.imgUrl" label="物品画像" />
-  <register-form-image />
+  <register-form-image v-model="formState.imgUrl" />
 </template>
 
 <script lang="ts">
