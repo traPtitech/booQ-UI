@@ -9,10 +9,10 @@
       <item-grid :items="items" />
     </div>
     <h2>コメント</h2>
-    <div v-for="comment in comments" :key="comment.id">
-      <div v-if="commentedItems.get(comment.itemId)">
-        <item-wide :item="commentedItems.get(comment.itemId)">
-          {{ comment.text }}
+    <div v-for="commentedItem in commentedItems" :key="commentedItem.comment.id">
+      <div v-if="commentedItem.item">
+        <item-wide :item="commentedItem.item">
+          {{ commentedItem.comment.text }}
         </item-wide>
       </div>
     </div>
@@ -42,8 +42,7 @@ export default defineComponent({
     const state = reactive({
       username: computed(() => getFirstParam(route.params.name)),
       items: [] as ItemSummary[],
-      comments: [] as Comment[],
-      commentedItems: new Map() as Map<number, ItemDetail>
+      commentedItems: [] as {comment: {id: number, text: string}, item: ItemDetail}[]
     })
     watchEffect(async () => {
       const [{ data: items }, { data: comments }] = await Promise.all([
@@ -51,12 +50,12 @@ export default defineComponent({
         apis.getComments(state.username)
       ])
       state.items = items
-      state.comments = comments
-      for (const comment of comments) {
+      comments.forEach((comment) => {
         apis.getItem(comment.itemId).then(({ data: commentedItem }) => {
-          state.commentedItems.set(commentedItem.id, commentedItem)
+          const {id, text} = comment
+          state.commentedItems.push({comment: {id, text}, item: commentedItem})
         })
-      }
+      });
     })
 
     useTitle(computed(() => state.username))
