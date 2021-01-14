@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, onMounted, onBeforeUnmount, Ref } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import useOpener from '/@/components/UI/use/opener'
