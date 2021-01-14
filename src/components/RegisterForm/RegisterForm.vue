@@ -4,7 +4,9 @@
     <register-form-description />
     <selector v-model="type" :options="typeOptions" label="所有者" />
     <input-number v-model="formState.count" label="個数" />
-    <input-checkbox v-model="formState.rentalable" label="貸し出し可" />
+    <div>
+      <input-checkbox v-model="formState.rentalable" label="貸し出し可" />
+    </div>
     <button @click="register">登録</button>
   </div>
 </template>
