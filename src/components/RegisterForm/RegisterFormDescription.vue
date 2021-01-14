@@ -11,6 +11,7 @@
   <input-text v-model="formState.name" label="物品名" />
   <input-text v-model="formState.description" multiline label="物品詳細" />
   <input-text v-model="formState.imgUrl" label="物品画像" />
+  <register-form-image />
 </template>
 
 <script lang="ts">
@@ -21,6 +22,7 @@ import BarCodeScanner from './BarCodeScanner.vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import useOpener from '/@/components/UI/use/opener'
 import Icon from '/@/components/UI/Icon.vue'
+import RegisterFormImage from './RegisterFormImage.vue'
 
 export default defineComponent({
   name: 'RegisterFormDescription',
@@ -28,7 +30,8 @@ export default defineComponent({
     InputText,
     Icon,
     DialogTemplate,
-    BarCodeScanner
+    BarCodeScanner,
+    RegisterFormImage
   },
   setup() {
     const { formState } = useFormState()
