@@ -7,7 +7,13 @@
     <div>
       <input-checkbox v-model="formState.rentalable" label="貸し出し可" />
     </div>
-    <button @click="register">登録</button>
+    <normal-icon-button
+      icon="mdi:plus-circle"
+      label="登録"
+      variant="primary"
+      :disabled="isRegistering"
+      @click="register"
+    />
   </div>
 </template>
 
@@ -25,6 +31,7 @@ import apis, { ItemPosted } from '/@/lib/apis'
 import Selector from '/@/components/UI/Selector.vue'
 import useAddOwner from '/@/components/ItemDetail/use/addOwner'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 
 export default defineComponent({
   name: 'RegisterForm',
@@ -32,7 +39,8 @@ export default defineComponent({
     Selector,
     RegisterFormDescription,
     InputNumber,
-    InputCheckbox
+    InputCheckbox,
+    NormalIconButton
   },
   setup() {
     const { formState, reset } = provideFormState()
@@ -44,15 +52,18 @@ export default defineComponent({
     })
     const typeOptions = itemTypeMap.map(([, typeName]) => typeName)
 
+    const isRegistering = ref(false)
     const register = async () => {
       if (!confirm('本当に登録しますか？')) return
+
+      isRegistering.value = true
 
       // 型変換しているのはreadOnlyのopenapiの生成がうまくいかないため
       try {
         const res = await apis.postItem((formState as unknown) as ItemPosted)
         await addOwner({
           itemID: res.data.id,
-          ownerType: type.value,
+          ownerType: formState.type,
           count: formState.count,
           rentalable: formState.rentalable
         })
@@ -61,9 +72,10 @@ export default defineComponent({
         // eslint-disable-next-line no-console
         console.error(e)
       }
+      isRegistering.value = false
     }
 
-    return { formState, type, typeOptions, register }
+    return { formState, type, typeOptions, isRegistering, register }
   }
 })
 </script>
