@@ -8,6 +8,14 @@
       <button @click="toggleDialog">閉じる</button>
     </dialog-template>
   </div>
+  <normal-icon-button
+    :class="$style.completeButton"
+    icon="mdi:auto-fix"
+    label="コードを元に情報を自動入力"
+    variant="secondary"
+    :disabled="isCompleting || !isValidCode"
+    @click="completeFromCode"
+  />
   <input-text v-model="formState.name" label="物品名" />
   <input-text v-model="formState.description" multiline label="物品詳細" />
   <register-form-image v-model="formState.imgUrl" />
@@ -22,6 +30,8 @@ import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import useOpener from '/@/components/UI/use/opener'
 import Icon from '/@/components/UI/Icon.vue'
 import RegisterFormImage from './RegisterFormImage.vue'
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
+import useCompleteFromCode from './use/completeFromCode'
 
 export default defineComponent({
   name: 'RegisterFormDescription',
@@ -30,12 +40,23 @@ export default defineComponent({
     Icon,
     DialogTemplate,
     BarCodeScanner,
-    RegisterFormImage
+    RegisterFormImage,
+    NormalIconButton
   },
   setup() {
     const { formState } = useFormState()
     const { isOpen: isDialogShown, toggle: toggleDialog } = useOpener()
-    return { formState, isDialogShown, toggleDialog }
+    const { isCompleting, isValidCode, completeFromCode } = useCompleteFromCode(
+      formState
+    )
+    return {
+      formState,
+      isDialogShown,
+      toggleDialog,
+      isCompleting,
+      isValidCode,
+      completeFromCode
+    }
   }
 })
 </script>
@@ -44,5 +65,8 @@ export default defineComponent({
 .toggleQr {
   flex-shrink: 0;
   cursor: pointer;
+}
+.completeButton {
+  width: max-content;
 }
 </style>

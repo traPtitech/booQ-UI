@@ -3,7 +3,7 @@ import { ItemType } from '/@/lib/apis'
 
 const STORE_KEY = Symbol()
 
-interface FormState {
+export interface FormState {
   type: ItemType
   code: string
   name: string
