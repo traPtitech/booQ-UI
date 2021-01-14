@@ -45,17 +45,16 @@ export default defineComponent({
       commentedItems: [] as {comment: {id: number, text: string}, item: ItemDetail}[]
     })
     watchEffect(async () => {
-      const [{ data: items }, { data: comments }] = await Promise.all([
-        apis.getItems(state.username),
-        apis.getComments(state.username)
-      ])
-      state.items = items
-      comments.forEach((comment) => {
-        apis.getItem(comment.itemId).then(({ data: commentedItem }) => {
-          const {id, text} = comment
-          state.commentedItems.push({comment: {id, text}, item: commentedItem})
-        })
-      });
+      apis.getComments(state.username).then(({data: comments}) => {
+        comments.forEach((comment) => {
+          apis.getItem(comment.itemId).then(({ data: commentedItem }) => {
+            const {id, text} = comment
+            state.commentedItems.push({comment: {id, text}, item: commentedItem})
+          })
+        });
+      })
+      const { data } = await apis.getItems(state.username)
+      state.items = data
     })
 
     useTitle(computed(() => state.username))
