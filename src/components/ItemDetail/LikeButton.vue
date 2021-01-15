@@ -90,7 +90,7 @@ export default defineComponent({
 
 .liked {
   animation: clicked 0.5s;
-  color: red;
+  color: #ef4c4c;
 }
 
 .userContainer {
@@ -105,7 +105,7 @@ export default defineComponent({
   }
   25% {
     transform: translateY(-0.5rem);
-    color: red;
+    color: #ef4c4c;
   }
   50% {
     transform: translateY(0);
