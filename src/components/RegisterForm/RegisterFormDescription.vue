@@ -1,24 +1,35 @@
 <template>
   <div>
-    <input-text v-model="formState.code" label="物品コード / ISBNコード">
-      <icon name="mdi:qrcode" :class="$style.toggleQr" @click="toggleDialog" />
-    </input-text>
-    <dialog-template v-if="isDialogShown" @close="toggleDialog">
-      <bar-code-scanner />
-      <button @click="toggleDialog">閉じる</button>
-    </dialog-template>
+    <div :class="$style.item">
+      <input-text v-model="formState.code" label="物品コード / ISBNコード">
+        <icon
+          name="mdi:qrcode"
+          :class="$style.toggleQr"
+          @click="toggleDialog"
+        />
+      </input-text>
+      <dialog-template v-if="isDialogShown" @close="toggleDialog">
+        <bar-code-scanner />
+        <button @click="toggleDialog">閉じる</button>
+      </dialog-template>
+    </div>
+    <normal-icon-button
+      :class="$style.completeButton"
+      icon="mdi:auto-fix"
+      label="コードを元に情報を自動入力"
+      variant="secondary"
+      :disabled="isCompleting || !isValidCode"
+      @click="completeFromCode"
+    />
+    <input-text v-model="formState.name" :class="$style.item" label="物品名" />
+    <input-text
+      v-model="formState.description"
+      :class="$style.item"
+      multiline
+      label="物品詳細"
+    />
+    <register-form-image v-model="formState.imgUrl" :class="$style.item" />
   </div>
-  <normal-icon-button
-    :class="$style.completeButton"
-    icon="mdi:auto-fix"
-    label="コードを元に情報を自動入力"
-    variant="secondary"
-    :disabled="isCompleting || !isValidCode"
-    @click="completeFromCode"
-  />
-  <input-text v-model="formState.name" label="物品名" />
-  <input-text v-model="formState.description" multiline label="物品詳細" />
-  <register-form-image v-model="formState.imgUrl" />
 </template>
 
 <script lang="ts">
@@ -68,5 +79,15 @@ export default defineComponent({
 }
 .completeButton {
   width: max-content;
+  margin: 1rem 0;
+}
+.item {
+  margin: 1rem 0;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 </style>

@@ -92,6 +92,7 @@ $border-radius: 2px;
   position: relative;
   width: 100%;
   max-width: 300px;
+  margin: 0.25em 0;
   &::before {
     content: '';
     display: block;

@@ -1,13 +1,10 @@
 <template>
   <div :class="$style.container">
     <h1 :class="$style.title">物品登録</h1>
-    <register-form-description />
-    <selector v-model="type" :options="typeOptions" label="所有者" />
-    <input-number v-model="formState.count" label="個数" />
-    <div>
-      <input-checkbox v-model="formState.rentalable" label="貸し出し可" />
-    </div>
+    <register-form-description :class="$style.item" />
+    <register-form-owner :class="$style.item" />
     <normal-icon-button
+      :class="$style.item"
       icon="mdi:plus-circle"
       label="登録"
       variant="primary"
@@ -18,39 +15,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { provideFormState } from './use/formState'
 import RegisterFormDescription from './RegisterFormDescription.vue'
-import {
-  itemTypeMap,
-  itemTypeToName,
-  itemTypeNameToType
-} from '/@/lib/itemType'
-import InputNumber from '/@/components/UI/InputNumber.vue'
+import RegisterFormOwner from './RegisterFormOwner.vue'
 import apis, { ItemPosted } from '/@/lib/apis'
-import Selector from '/@/components/UI/Selector.vue'
 import useAddOwner from '/@/components/ItemDetail/use/addOwner'
-import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 
 export default defineComponent({
   name: 'RegisterForm',
   components: {
-    Selector,
     RegisterFormDescription,
-    InputNumber,
-    InputCheckbox,
+    RegisterFormOwner,
     NormalIconButton
   },
   setup() {
     const { formState, reset } = provideFormState()
     const { addOwner } = useAddOwner()
-
-    const type = ref(itemTypeToName(formState.type))
-    watchEffect(() => {
-      formState.type = itemTypeNameToType(type.value)
-    })
-    const typeOptions = itemTypeMap.map(([, typeName]) => typeName)
 
     const isRegistering = ref(false)
     const register = async () => {
@@ -75,17 +57,28 @@ export default defineComponent({
       isRegistering.value = false
     }
 
-    return { formState, type, typeOptions, isRegistering, register }
+    return { formState, isRegistering, register }
   }
 })
 </script>
 
 <style lang="scss" module>
 .container {
+  max-width: 600px;
   color: $color-text-primary;
   text-align: left;
 }
 .title {
   margin-top: 0;
+  margin-bottom: 2rem;
+}
+.item {
+  margin: 2rem 0;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 </style>
