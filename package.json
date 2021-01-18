@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@iconify/iconify": "^1.0.7",
-    "@mdi/js": "^5.8.55",
     "@zxing/library": "^0.18.3",
     "axios": "^0.21.1",
     "direct-vuex": "^0.12.1",
