@@ -1,17 +1,19 @@
 <template>
   <div :class="$style.container" @mouseenter="enter" @mouseleave="leave">
-    <button :class="$style.button" @click="toggleLike">
-      <icon v-show="!isLiked" name="mdi:heart-outline" :size="32" />
-      <icon
-        v-show="isLiked"
-        name="mdi:heart"
-        :size="32"
-        :class="$style.liked"
-      />
+    <div :class="$style.btnContainer">
+      <button :class="$style.button" @click="toggleLike">
+        <icon v-show="!isLiked" name="mdi:heart-outline" :size="32" />
+        <icon
+          v-show="isLiked"
+          name="mdi:heart"
+          :size="32"
+          :class="$style.liked"
+        />
+      </button>
       <transition name="fade">
         <like-button-balloon
           v-if="isHovered"
-          :hamidashi-right="36 / 2 + 20"
+          :hamidashi-right="HAMIDASHI_RIGHT"
           :content-width="balloonWidth"
           :left="HEART_CONTAINER_SIZE / 2"
           :top="HEART_CONTAINER_SIZE"
@@ -23,7 +25,7 @@
           </div>
         </like-button-balloon>
       </transition>
-    </button>
+    </div>
     <div>{{ likes.length }}</div>
   </div>
 </template>
@@ -38,6 +40,8 @@ import useLike from './use/like'
 import useHover from '/@/components/UI/use/hover'
 
 const HEART_CONTAINER_SIZE = 32 + 8 * 2
+// ユーザーアイコンのサイズの半分 + padding、いいねが一人だったとき丁度真ん中になるように
+const HAMIDASHI_RIGHT = 36 / 2 + 20
 
 export default defineComponent({
   name: 'LikeButton',
@@ -54,7 +58,6 @@ export default defineComponent({
   },
   setup(props) {
     const { isLiked, toggleLike, balloonWidth } = useLike(props)
-
     const { isHovered, open: enter, close: leave } = useHover()
     return {
       isLiked,
@@ -63,7 +66,8 @@ export default defineComponent({
       isHovered,
       enter,
       leave,
-      HEART_CONTAINER_SIZE
+      HEART_CONTAINER_SIZE,
+      HAMIDASHI_RIGHT
     }
   }
 })
@@ -75,13 +79,16 @@ export default defineComponent({
   align-items: center;
 }
 
+.btnContainer {
+  position: relative;
+}
+
 .button {
   cursor: pointer;
   background-color: $color-background;
   border: 0;
   padding: 8px;
   font: inherit;
-  position: relative;
 
   &:focus {
     outline: 0;
@@ -89,7 +96,7 @@ export default defineComponent({
 }
 
 .liked {
-  animation: clicked 0.5s;
+  animation: clicked 0.5s ease;
   color: #ef4c4c;
 }
 

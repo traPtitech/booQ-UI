@@ -21,12 +21,12 @@ const BALLOON_BORDER = 1
 export default defineComponent({
   name: 'LikeButtonBalloon',
   props: {
-    // 吹き出してるところの頂点を指定するイメージ
+    /** 吹き出してるところの頂点を指定するイメージ */
     left: {
       type: Number,
       required: true
     },
-    // 内容のwidth、paddingとかを含んだ吹き出し部分のwidthではない
+    /** 内容のwidth、paddingとかを含んだ吹き出し部分のwidthではない */
     contentWidth: {
       type: Number,
       required: true
@@ -35,7 +35,9 @@ export default defineComponent({
       type: Number,
       required: true
     },
-    // leftで指定したところから右にはみ出してる部分の長さを指定する
+    /**
+      leftで指定したところから右にはみ出してる部分の長さを指定する
+    */
     /*
     -------^----
            ↑   ↑
