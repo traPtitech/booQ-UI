@@ -2,9 +2,9 @@
   <div :class="$style.container">
     <div :class="$style.titleWrapper">
       <h2>{{ item.name }}</h2>
-      <button :class="$style.favBtn">💛</button>
+      <like-button :likes="item.likes" :item-id="item.id" />
     </div>
-    <div>{{ item.description }}</div>
+    <div :class="$style.description">{{ item.description }}</div>
     <owners :item="item" />
     <comments :comments="item.comments" />
     <logs :logs="item.logs" />
@@ -13,21 +13,23 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import { ItemDetail } from '/@/lib/apis'
 import Owners from './Owners.vue'
 import Comments from './Comments.vue'
 import Logs from './Logs.vue'
+import LikeButton from './LikeButton.vue'
 
 export default defineComponent({
   name: 'Information',
   components: {
     Owners,
     Comments,
-    Logs
+    Logs,
+    LikeButton
   },
   props: {
     item: {
-      type: Object as PropType<ItemSummary>,
+      type: Object as PropType<ItemDetail>,
       required: true
     }
   },
@@ -46,8 +48,7 @@ export default defineComponent({
   display: flex;
 }
 
-.favBtn {
-  border: none;
-  background: white;
+.description {
+  color: $color-text-secondary;
 }
 </style>

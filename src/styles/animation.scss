@@ -21,6 +21,20 @@ $ts: 'toast-slide';
   transition: transform 3s;
 }
 
+$fd: 'fade';
+.#{$fd}-enter-active,
+.#{$fd}-leave-active {
+  transition: all 0.5s;
+}
+.#{$fd}-enter-from,
+.#{$fd}-leave-to {
+  opacity: 0;
+}
+.#{$fd}-enter-to,
+.#{$fd}-leave-from {
+  opacity: 1;
+}
+
 $op: 'other-popup';
 .#{$op}-enter-active,
 .#{$op}-leave-active {

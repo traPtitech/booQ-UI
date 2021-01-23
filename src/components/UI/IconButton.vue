@@ -46,6 +46,9 @@ export default defineComponent({
     opacity: 0.5;
     cursor: not-allowed;
   }
+  &:focus {
+    outline: 0;
+  }
 
   &[data-variant='primary'] {
     color: $color-primary;
