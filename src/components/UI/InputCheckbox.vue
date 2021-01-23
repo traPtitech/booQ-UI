@@ -53,6 +53,9 @@ export default defineComponent({
     width: 1em;
     background-color: $color-text-secondary;
   }
+  &:focus-within::before {
+    box-shadow: 0px 0px 0px 5px rgba($color-primary, 0.3);
+  }
   &::after {
     content: '';
     position: absolute;
@@ -71,9 +74,6 @@ export default defineComponent({
   }
   &[data-is-checked='true']::after {
     border-color: $color-text-white;
-  }
-  &:focus-within {
-    outline: solid 1px $color-primary;
   }
 }
 .checkbox {
