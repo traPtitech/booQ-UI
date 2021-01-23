@@ -33,7 +33,7 @@ export default defineComponent({
   },
   setup() {
     const { formState, reset } = provideFormState()
-    const { addOwner } = useAddOwner()
+    const { addOwner } = useAddOwner(false)
     const router = useRouter()
 
     const isRegistering = ref(false)
