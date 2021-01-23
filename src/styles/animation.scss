@@ -35,16 +35,16 @@ $fd: 'fade';
   opacity: 1;
 }
 
-$op: 'other-popup';
-.#{$op}-enter-active,
-.#{$op}-leave-active {
+$mp: 'mini-popup';
+.#{$mp}-enter-active,
+.#{$mp}-leave-active {
   transition: all 0.3s ease-in;
 }
-.#{$op}-enter-from,
-.#{$op}-leave-to {
+.#{$mp}-enter-from,
+.#{$mp}-leave-to {
   transform: scale(0);
 }
-.#{$op}-enter-to,
-.#{$op}-leave-from {
+.#{$mp}-enter-to,
+.#{$mp}-leave-from {
   transform: scale(1);
 }

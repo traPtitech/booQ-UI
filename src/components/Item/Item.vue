@@ -94,7 +94,7 @@ $border-radius: 2px;
     content: '';
     display: block;
     // B6判
-    padding-top: (182 / 128) * 100%;
+    padding-top: $b6-padding-top;
   }
   border-radius: $border-radius;
   cursor: pointer;

@@ -1,13 +1,13 @@
 <template>
   <div :class="$style.container">
-    <icon
-      name="mdi:dots-horizontal"
-      :size="32"
-      :class="$style.icon"
-      @click.stop="toggle"
-    />
-    <transition name="other-popup">
-      <div v-if="isOpen" :id="popupId" :class="$style.popup">
+    <mini-popup
+      v-model:isOpen="isPopupOpen"
+      transition-transform-origin="top right"
+    >
+      <template #opener>
+        <icon name="mdi:dots-horizontal" :size="32" :class="$style.icon" />
+      </template>
+      <template #content>
         <normal-icon-button
           icon="mdi:account-plus"
           label="追加"
@@ -32,8 +32,8 @@
           :disabled="!isAdmin"
           @click="onDeleteClick"
         />
-      </div>
-    </transition>
+      </template>
+    </mini-popup>
     <edit-dialog
       v-if="isOpenEditDialog"
       :item="item"
@@ -48,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, onMounted, onBeforeUnmount, Ref } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import useOpener from '/@/components/UI/use/opener'
@@ -57,28 +57,7 @@ import EditDialog from './EditDialog.vue'
 import AddOwnerDialog from './AddOwnerDialog.vue'
 import useOtherControl from './use/otherControl'
 import useDeleteItem from './use/deleteItem'
-
-const popupId = 'other-controls-popup'
-
-const useHideOnClickOutside = (isOpen: Ref<boolean>, toggle: () => void) => {
-  const onClickBody = (e: MouseEvent) => {
-    // 外側をクリックしたときは閉じる動作しかしない
-    if (!isOpen.value) return
-    if (!e.target) return
-
-    const popupElement = (e.target as Element).closest(`#${popupId}`)
-    // クリックした箇所の親にポップアップを持たないとき
-    if (!popupElement) {
-      toggle()
-    }
-  }
-  onMounted(() => {
-    document.body.addEventListener('click', onClickBody)
-  })
-  onBeforeUnmount(() => {
-    document.body.removeEventListener('click', onClickBody)
-  })
-}
+import MiniPopup from '/@/components/UI/MiniPopup.vue'
 
 export default defineComponent({
   name: 'OtherControls',
@@ -86,7 +65,8 @@ export default defineComponent({
     Icon,
     NormalIconButton,
     EditDialog,
-    AddOwnerDialog
+    AddOwnerDialog,
+    MiniPopup
   },
   props: {
     item: {
@@ -95,8 +75,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { isOpen, toggle } = useOpener()
-    useHideOnClickOutside(isOpen, toggle)
+    const { isOpen: isPopupOpen, toggle: togglePopup } = useOpener()
 
     const { isOpen: isOpenEditDialog, toggle: toggleEditDialog } = useOpener()
     const {
@@ -111,17 +90,15 @@ export default defineComponent({
     const { deleteItem } = useDeleteItem()
     const onDeleteClick = async () => {
       await deleteItem({ itemID: props.item.id, itemName: props.item.name })
-      toggle()
+      togglePopup()
     }
 
     return {
-      isOpen,
-      toggle,
+      isPopupOpen,
       isOpenEditDialog,
       toggleEditDialog,
       isOpenAddOwnerDialog,
       toggleAddOwnerDialog,
-      popupId,
       isMeOwner,
       isDisabledAddOwnerButton,
       isAdmin,
@@ -137,16 +114,6 @@ export default defineComponent({
 }
 .icon {
   cursor: pointer;
-}
-.popup {
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 1rem;
-  background: $color-background;
-  border: 1px solid $color-text-secondary;
-  border-radius: 1rem;
-  transform-origin: top right;
 }
 .btn {
   margin: 1rem 0;
