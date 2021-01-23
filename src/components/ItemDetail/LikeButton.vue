@@ -17,7 +17,6 @@
           :content-width="balloonWidth"
           :left="HEART_CONTAINER_SIZE / 2"
           :top="HEART_CONTAINER_SIZE"
-          @click.stop
         >
           <div v-if="likes.length === 0">誰もいいねしていません</div>
           <div v-else :class="$style.userContainer">
