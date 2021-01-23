@@ -3,7 +3,9 @@ import useMe from '/@/use/me'
 import { useStore } from '/@/store'
 import { itemTypeToOwnerId, itemTypeToOwnerName } from '/@/lib/itemType'
 
-const useAddOwner = (): {
+const useAddOwner = (
+  showSuccessToast = true
+): {
   addOwner: (payload: {
     itemID: number
     ownerType: ItemType
@@ -29,14 +31,16 @@ const useAddOwner = (): {
       }
       await apis.postItemOwners(payload.itemID, ownerShip)
 
-      const ownerName = itemTypeToOwnerName(
-        payload.ownerType,
-        displayName.value
-      )
-      store.commit.addToast({
-        type: 'success',
-        text: `所有者に ${ownerName} を追加しました。`
-      })
+      if (showSuccessToast) {
+        const ownerName = itemTypeToOwnerName(
+          payload.ownerType,
+          displayName.value
+        )
+        store.commit.addToast({
+          type: 'success',
+          text: `所有者に ${ownerName} を追加しました。`
+        })
+      }
     } catch (e) {
       store.commit.addToast({
         type: 'error',

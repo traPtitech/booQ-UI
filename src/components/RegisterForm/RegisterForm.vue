@@ -22,6 +22,7 @@ import RegisterFormOwner from './RegisterFormOwner.vue'
 import apis, { ItemPosted } from '/@/lib/apis'
 import useAddOwner from '/@/components/ItemDetail/use/addOwner'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'RegisterForm',
@@ -33,6 +34,7 @@ export default defineComponent({
   setup() {
     const { formState, reset } = provideFormState()
     const { addOwner } = useAddOwner()
+    const router = useRouter()
 
     const isRegistering = ref(false)
     const register = async () => {
@@ -50,6 +52,8 @@ export default defineComponent({
           rentalable: formState.rentalable
         })
         reset()
+
+        router.push(`/items/${res.data.id}`)
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e)
