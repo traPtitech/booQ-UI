@@ -70,10 +70,10 @@ export default defineComponent({
 }
 .title {
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 .item {
-  margin: 2rem 0;
+  margin: 3rem 0;
   &:first-child {
     margin-top: 0;
   }

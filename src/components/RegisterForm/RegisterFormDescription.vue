@@ -79,10 +79,10 @@ export default defineComponent({
 }
 .completeButton {
   width: max-content;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
 }
 .item {
-  margin: 1rem 0;
+  margin: 1.5rem 0;
   &:first-child {
     margin-top: 0;
   }

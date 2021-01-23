@@ -1,7 +1,7 @@
 <template>
   <with-focus-underline>
     <label :class="$style.label">
-      {{ label }}
+      <div :class="$style.labelText">{{ label }}</div>
       <div :class="$style.inputWrapper">
         <input
           v-if="!multiline"
@@ -69,6 +69,9 @@ export default defineComponent({
 .label {
   color: $color-text-secondary;
   cursor: text;
+}
+.labelText {
+  margin-bottom: 0.5em;
 }
 .inputWrapper {
   display: flex;

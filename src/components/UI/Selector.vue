@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
     <label>
-      {{ label }}
+      <div :class="$style.labelText">{{ label }}</div>
       <div :class="$style.selectWrapper">
         <select v-model="val" :class="$style.select">
           <option v-for="option in options" :key="option" :value="option">
@@ -52,6 +52,9 @@ $padding: 0.25em;
 
 .container {
   color: $color-text-secondary;
+}
+.labelText {
+  margin-bottom: 0.5em;
 }
 .selectWrapper {
   position: relative;
