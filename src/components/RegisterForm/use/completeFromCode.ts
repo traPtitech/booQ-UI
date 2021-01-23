@@ -1,6 +1,7 @@
 import { computed, Ref, ref } from 'vue'
 import { FormState } from './formState'
 import axios from 'axios'
+import any from '@ungap/promise-any'
 
 interface BookData {
   name: string
@@ -9,72 +10,48 @@ interface BookData {
 }
 
 const fetchFromOpenBd = async (code: string): Promise<BookData | null> => {
-  try {
-    const res = await axios.get(`https://api.openbd.jp/v1/get?isbn=${code}`)
-    if (!res.data || !res.data[0]) {
-      return null
-    }
+  const res = await axios.get(`https://api.openbd.jp/v1/get?isbn=${code}`)
+  if (!res.data || !res.data[0]) {
+    throw new Error('No data')
+  }
 
-    const data = res.data[0].onix
-    return {
-      name: data.DescriptiveDetail.TitleDetail.TitleElement.TitleText.content,
-      description: data.CollateralDetail.TextContent?.[0]?.Text,
-      imgUrl:
-        data.CollateralDetail.SupportingResource?.[0]?.ResourceVersion?.[0]
-          ?.ResourceLink
-    }
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e)
-    return null
+  const data = res.data[0].onix
+  return {
+    name: data.DescriptiveDetail.TitleDetail.TitleElement.TitleText.content,
+    description: data.CollateralDetail.TextContent?.[0]?.Text,
+    imgUrl:
+      data.CollateralDetail.SupportingResource?.[0]?.ResourceVersion?.[0]
+        ?.ResourceLink
   }
 }
 
 const fetchFromGoogleBooks = async (code: string): Promise<BookData | null> => {
-  try {
-    const res = await axios.get(
-      `https://www.googleapis.com/books/v1/volumes?q=isbn:${code}&maxResults=1`
-    )
-    if (!res.data || res.data.totalItems !== 0) {
-      return null
-    }
+  const res = await axios.get(
+    `https://www.googleapis.com/books/v1/volumes?q=isbn:${code}&maxResults=1`
+  )
+  if (!res.data || res.data.totalItems !== 0) {
+    throw new Error('No data')
+  }
 
-    const data = res.data.items[0].volumeInfo
-    return {
-      name: data.title,
-      description: data.description,
-      imgUrl: data.imageLinks.thumbnail
-    }
+  const data = res.data.items[0].volumeInfo
+  return {
+    name: data.title,
+    description: data.description,
+    imgUrl: data.imageLinks.thumbnail
+  }
+}
+
+const fetchFromCodeFromAny = async (code: string): Promise<BookData | null> => {
+  const fetchFuncs = [fetchFromOpenBd, fetchFromGoogleBooks]
+
+  try {
+    const ress = await any(fetchFuncs.map(fetchFunc => fetchFunc(code)))
+    return ress
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e)
     return null
   }
-}
-
-/**
- * 渡したPromiseの配列に追加して、完了したらその配列から取り除く
- */
-const addToPromiseQueue = async <T>(
-  promise: Promise<T>,
-  promiseArray: Array<Promise<unknown>>
-): Promise<T> => {
-  promiseArray.push(promise)
-  const res = await promise
-  promiseArray.splice(promiseArray.indexOf(promise), 1)
-  return res
-}
-
-const fetchFromCodeFromAny = async (code: string): Promise<BookData | null> => {
-  const promises: Array<Promise<BookData | null>> = []
-  addToPromiseQueue(fetchFromOpenBd(code), promises)
-  addToPromiseQueue(fetchFromGoogleBooks(code), promises)
-
-  let result: BookData | null = null
-  while (promises.length > 0 && !result) {
-    result = await Promise.race(promises)
-  }
-  return result
 }
 
 const useCompleteFromCode = (
