@@ -4,12 +4,11 @@
     <p>管理者権限を付与します。</p>
     <div :class="$style.users">
       <label v-for="user in users" :key="user.id" :class="$style.label">
-        <input
-          :checked="user.admin"
-          type="checkbox"
-          @change="toggleAdmin(user.id)"
+        <input-checkbox
+          :label="`@${user.name}`"
+          :model-value="user.admin"
+          @update:modelValue="toggleAdmin(user.id)"
         />
-        <span :class="$style.name">@{{ user.name }}</span>
       </label>
     </div>
   </div>
@@ -19,9 +18,13 @@
 import { defineComponent, onMounted, ref } from 'vue'
 import apis, { User } from '/@/lib/apis'
 import { useStore } from '/@/store'
+import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 
 export default defineComponent({
   name: 'AdminManager',
+  components: {
+    InputCheckbox
+  },
   setup() {
     const store = useStore()
 
