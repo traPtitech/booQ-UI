@@ -42,9 +42,13 @@ export default defineComponent({
       if (!user) return
 
       try {
-        await apis.editUser({ ...user, admin: !user.admin })
+        const res = await apis.editUser({ ...user, admin: !user.admin })
+        const updatedUser = res.data
 
-        await fetchData()
+        const userIndex = users.value.findIndex(
+          user => user.id === updatedUser.id
+        )
+        users.value[userIndex] = updatedUser
       } catch (e) {
         store.commit.addToast({
           type: 'error',
