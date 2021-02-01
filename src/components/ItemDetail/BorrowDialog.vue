@@ -9,7 +9,7 @@
       </label>
       <label :class="$style.label">
         返却日:
-        <input v-model="dueDate" type="date" :class="$style.input" required />
+        <date-picker v-model="dueDate" />
       </label>
       <label v-if="owner && owner.count !== 1" :class="$style.label">
         個数:
@@ -32,11 +32,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, ref } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
+import { DatePicker } from 'v-calendar';
 import useBorrow from './use/borrow'
 
 export default defineComponent({
@@ -44,7 +45,8 @@ export default defineComponent({
   components: {
     DialogTemplate,
     OwnerSelector,
-    WideIconButton
+    WideIconButton,
+    DatePicker
   },
   props: {
     item: {
