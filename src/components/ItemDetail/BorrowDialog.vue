@@ -32,12 +32,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import { DatePicker } from 'v-calendar';
+import { DatePicker } from 'v-calendar'
 import useBorrow from './use/borrow'
 
 export default defineComponent({
