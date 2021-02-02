@@ -22,7 +22,7 @@
   "devDependencies": {
     "@iconify/json": "^1.1.295",
     "@openapitools/openapi-generator-cli": "^2.1.20",
-    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "@vitejs/plugin-vue": "^1.1.4",
     "@vue/compiler-sfc": "^3.0.5",
