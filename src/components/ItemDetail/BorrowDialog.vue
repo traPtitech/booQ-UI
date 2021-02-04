@@ -9,7 +9,7 @@
       </label>
       <label :class="$style.label">
         返却日:
-        <date-picker v-model="dueDate" />
+        <date-picker v-model="dueDate" :min-date="new Date()" />
       </label>
       <label v-if="owner && owner.count !== 1" :class="$style.label">
         個数:
