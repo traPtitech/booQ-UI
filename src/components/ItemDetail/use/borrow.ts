@@ -11,7 +11,7 @@ const useBorrow = (props: {
   details: ComputedRef<OwnerDetail[]>
   selectedOwnerName: Ref<string>
   purpose: Ref<string>
-  dueDate: Ref<string>
+  dueDate: Ref<Date>
   count: Ref<number>
   owner: ComputedRef<Owner | undefined>
   borrow: () => Promise<void>
@@ -22,7 +22,7 @@ const useBorrow = (props: {
 
   const selectedOwnerName = ref(details.value[0]?.userName ?? '')
   const purpose = ref('')
-  const dueDate = ref(stringifyDate(new Date(), '-'))
+  const dueDate = ref(new Date())
   const count = ref(1)
   const owner = computed(() =>
     props.item.owners.find(v => v.user.name === selectedOwnerName.value)
@@ -54,7 +54,7 @@ const useBorrow = (props: {
       ownerId: owner.value.user.id,
       type: LogType.borrow,
       purpose: purpose.value,
-      dueDate: dueDate.value,
+      dueDate: stringifyDate(dueDate.value, '-'),
       count: count.value
     }
     try {

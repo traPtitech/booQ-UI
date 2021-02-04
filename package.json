@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@iconify/iconify": "^1.0.7",
+    "@popperjs/core": "^2.6.0",
     "@ungap/promise-any": "^1.1.1",
     "@zxing/library": "^0.18.3",
     "axios": "^0.21.1",
     "direct-vuex": "^0.12.1",
+    "v-calendar": "^3.0.0-alpha.3",
     "vue": "^3.0.5",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
