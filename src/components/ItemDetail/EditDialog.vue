@@ -1,7 +1,6 @@
 <template>
-  <dialog-template @close="close">
-    <h2 :class="$style.title">所有者の情報を変更する</h2>
-    <form :class="$style.container" @submit.prevent="submit">
+  <dialog-template title="所有者の情報を変更する" @close="close">
+    <form @submit.prevent="submit">
       <owner-selector v-if="isAdmin" v-model="ownerName" :details="details" />
       <label :class="$style.label">
         貸し出し可:
@@ -117,12 +116,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  text-align: left;
-}
-.title {
-  text-align: center;
-}
 .label {
   margin-top: 0.5rem;
   display: flex;

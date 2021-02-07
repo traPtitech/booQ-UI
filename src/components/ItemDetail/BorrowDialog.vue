@@ -1,7 +1,6 @@
 <template>
-  <dialog-template @close="close">
-    <h2 :class="$style.title">物品を借りる</h2>
-    <form :class="$style.container" @submit.prevent="borrowItem">
+  <dialog-template title="物品を借りる" @close="close">
+    <form @submit.prevent="borrowItem">
       <owner-selector v-model="selectedOwnerName" :details="details" />
       <label :class="$style.label">
         目的:
@@ -89,12 +88,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  text-align: left;
-}
-.title {
-  text-align: center;
-}
 .label {
   margin-top: 0.5rem;
   display: flex;

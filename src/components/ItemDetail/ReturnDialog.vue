@@ -1,7 +1,6 @@
 <template>
-  <dialog-template @close="close">
-    <h2 :class="$style.title">物品を返す</h2>
-    <form :class="$style.container" @submit.prevent="returnItemAndClose">
+  <dialog-template title="物品を返す" @close="close">
+    <form @submit.prevent="returnItemAndClose">
       <owner-selector v-model="selectedOwnerName" :details="details" />
       <label v-if="owner && owner.count !== 1" :class="$style.label">
         個数:
@@ -71,13 +70,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  text-align: left;
-  margin-top: 3rem;
-}
-.title {
-  text-align: center;
-}
 .label {
   margin-top: 0.5rem;
   display: flex;
