@@ -10,8 +10,10 @@ declare const __dirname: string
 const srcPath = path.resolve(__dirname, 'src').replace(/\\/g, '/')
 
 const config: UserConfig = {
-  alias: {
-    '/@': srcPath
+  resolve: {
+    alias: {
+      '/@': srcPath
+    }
   },
   server: {
     proxy: {
@@ -30,7 +32,7 @@ const config: UserConfig = {
     }
   },
   define: {
-    __VERSION__: packageJson.version
+    __VERSION__: `"${packageJson.version}"`
   },
   plugins: [VuePlugin(), PurgeIcons()]
 }
