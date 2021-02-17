@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@iconify/iconify": "^1.0.7",
-    "@popperjs/core": "^2.6.0",
+    "@popperjs/core": "^2.7.0",
     "@ungap/promise-any": "^1.1.1",
     "@zxing/library": "^0.18.3",
     "axios": "^0.21.1",
