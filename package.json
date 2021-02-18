@@ -22,7 +22,7 @@
     "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@iconify/json": "^1.1.303",
+    "@iconify/json": "^1.1.304",
     "@openapitools/openapi-generator-cli": "^2.1.23",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
