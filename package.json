@@ -18,7 +18,7 @@
     "direct-vuex": "^0.12.1",
     "v-calendar": "^3.0.0-alpha.3",
     "vue": "^3.0.5",
-    "vue-router": "^4.0.3",
+    "vue-router": "^4.0.4",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
