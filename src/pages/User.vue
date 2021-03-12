@@ -1,20 +1,16 @@
 <template>
-  <div>
-    <h1>
-      <user-icon :user-name="username" />
-      @{{ username }}
+  <div :class="$style.container">
+    <h1 :class="$style.header">
+      <user-icon :user-name="username" :size="64" />
+      <div :class="$style.username">@{{ username }}</div>
     </h1>
     <div>
       <h2>所有物</h2>
-      <item-grid :items="items" />
+      <item-flex-list :items="items" />
     </div>
-    <h2>コメント</h2>
-    <div v-for="commentedItem in commentedItems" :key="commentedItem.comment.id">
-      <div v-if="commentedItem.item">
-        <item-wide :item="commentedItem.item">
-          {{ commentedItem.comment.text }}
-        </item-wide>
-      </div>
+    <div>
+      <h2>コメント</h2>
+      <item-wide-grid :items="commentedItems" :slots="comments" />
     </div>
   </div>
 </template>
@@ -23,18 +19,18 @@
 import { defineComponent, reactive, computed, watchEffect, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
-import apis, { ItemSummary, Comment, ItemDetail } from '/@/lib/apis'
+import apis, { ItemSummary, ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
 import UserIcon from '/@/components/UI/UserIcon.vue'
-import ItemGrid from '/@/components/Item/ItemGrid.vue'
-import ItemWide from '/@/components/ItemWide/ItemWide.vue'
+import ItemFlexList from '/@/components/Item/ItemFlexList.vue'
+import ItemWideGrid from '/@/components/ItemWide/ItemWideGrid.vue'
 
 export default defineComponent({
   name: 'User',
   components: {
     UserIcon,
-    ItemGrid,
-    ItemWide
+    ItemFlexList,
+    ItemWideGrid
   },
   setup() {
     const route = useRoute()
@@ -42,19 +38,27 @@ export default defineComponent({
     const state = reactive({
       username: computed(() => getFirstParam(route.params.name)),
       items: [] as ItemSummary[],
-      commentedItems: [] as {comment: {id: number, text: string}, item: ItemDetail}[]
+      commentedItems: [] as ItemDetail[],
+      comments: [] as string[]
     })
     watchEffect(async () => {
-      apis.getComments(state.username).then(({data: comments}) => {
-        comments.forEach((comment) => {
-          apis.getItem(comment.itemId).then(({ data: commentedItem }) => {
-            const {id, text} = comment
-            state.commentedItems.push({comment: {id, text}, item: commentedItem})
-          })
-        });
+      apis.getItems(state.username).then(({ data }) => {
+        state.items = data
       })
-      const { data } = await apis.getItems(state.username)
-      state.items = data
+      const { data: commentObjects } = await apis.getComments(state.username)
+      const comments = commentObjects.map(({ text }) => text)
+      const items = await Promise.all(
+        commentObjects.map(({ itemId }) =>
+          apis
+            .getItem(itemId)
+            .then(({ data }) => data)
+            .catch(() => null)
+        )
+      )
+      state.comments = comments.filter((_, index) => items[index])
+      state.commentedItems = items.filter<ItemDetail>(
+        (item): item is ItemDetail => !!item
+      )
     })
 
     useTitle(computed(() => state.username))
@@ -63,3 +67,19 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" module>
+.container {
+  padding: 3rem;
+  text-align: left;
+}
+.header {
+  display: flex;
+}
+.username {
+  padding: 1rem;
+}
+h2 {
+  padding: 2rem 0 0.5rem 0;
+}
+</style>
