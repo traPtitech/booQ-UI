@@ -8,10 +8,18 @@
       <user-icon :user-name="comment.user.name" />
       <div :class="$style.text">{{ comment.text }}</div>
     </div>
-    <div :class="[$style.container, inputComment ? '' : $style.input]">
-      <user-icon :user-name="name" />
-      <comments-textarea v-model="inputComment" :class="$style.text" />
-    </div>
+    <form @submit.prevent="submit">
+      <div :class="[$style.container, inputComment ? '' : $style.input]">
+        <user-icon :user-name="name" />
+        <comments-textarea v-model="inputComment" :class="$style.text" />
+      </div>
+      <wide-icon-button
+        icon="mdi:send"
+        label="送信する"
+        variant="secondary"
+        type="submit"
+      />
+    </form>
   </detail-summary>
 </template>
 
@@ -21,6 +29,7 @@ import { Comment } from '/@/lib/apis'
 import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import CommentsTextarea from './CommentsTextarea.vue'
+import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import useMe from '/@/use/me'
 
 export default defineComponent({
@@ -28,7 +37,8 @@ export default defineComponent({
   components: {
     DetailSummary,
     UserIcon,
-    CommentsTextarea
+    CommentsTextarea,
+    WideIconButton
   },
   props: {
     comments: {
@@ -36,10 +46,17 @@ export default defineComponent({
       default: []
     }
   },
-  setup() {
+  emits: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    submit: (val: string) => true
+  },
+  setup(_, context) {
     const inputComment = ref('')
     const { name } = useMe()
-    return { inputComment, name }
+    const submit = async () => {
+      context.emit('submit', inputComment.value)
+    }
+    return { inputComment, name, submit }
   }
 })
 </script>
