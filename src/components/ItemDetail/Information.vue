@@ -6,7 +6,7 @@
     </div>
     <div :class="$style.description">{{ item.description }}</div>
     <owners :item="item" />
-    <comments :comments="item.comments" @submit="sendComment" />
+    <comments :item-id="item.id" :comments="item.comments" />
     <logs :logs="item.logs" />
   </div>
 </template>
@@ -18,8 +18,6 @@ import Owners from './Owners.vue'
 import Comments from './Comments.vue'
 import Logs from './Logs.vue'
 import LikeButton from './LikeButton.vue'
-import apis from '/@/lib/apis'
-import { useStore } from '/@/store'
 
 export default defineComponent({
   name: 'Information',
@@ -35,16 +33,8 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
-    const store = useStore()
-    const sendComment = async (text: string) => {
-      await apis.postComment(props.item.id, { text: text })
-      store.commit.addToast({
-        type: 'success',
-        text: `あなたは${props.item.name}にコメントを投稿しました。`
-      })
-    }
-    return { sendComment }
+  setup() {
+    return
   }
 })
 </script>

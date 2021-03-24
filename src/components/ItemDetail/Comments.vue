@@ -19,6 +19,8 @@ import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import CommentsTextarea from './CommentsTextarea.vue'
 import useMe from '/@/use/me'
+import apis from '/@/lib/apis'
+import { useStore } from '/@/store'
 
 export default defineComponent({
   name: 'Comments',
@@ -28,20 +30,28 @@ export default defineComponent({
     CommentsTextarea
   },
   props: {
+    itemId: {
+      type: Number,
+      required: true
+    },
     comments: {
       type: Array as PropType<Comment[]>,
       default: []
     }
   },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    submit: (val: string) => true
-  },
-  setup(_, context) {
+  setup(props) {
+    const store = useStore()
+
     const inputComment = ref('')
     const { name } = useMe()
+
     const submit = async () => {
-      context.emit('submit', inputComment.value)
+      await apis.postComment(props.itemId, { text: inputComment.value })
+      store.commit.addToast({
+        type: 'success',
+        text: `コメントを投稿しました。`
+      })
+      inputComment.value = ''
     }
     return { inputComment, name, submit }
   }
