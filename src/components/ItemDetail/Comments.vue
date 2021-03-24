@@ -8,18 +8,7 @@
       <user-icon :user-name="comment.user.name" />
       <div :class="$style.text">{{ comment.text }}</div>
     </div>
-    <form @submit.prevent="submit">
-      <div :class="[$style.container, inputComment ? '' : $style.input]">
-        <user-icon :user-name="name" />
-        <comments-textarea v-model="inputComment" :class="$style.text" />
-      </div>
-      <wide-icon-button
-        icon="mdi:send"
-        label="送信する"
-        variant="secondary"
-        type="submit"
-      />
-    </form>
+    <comments-textarea v-model="inputComment" @submit="submit" />
   </detail-summary>
 </template>
 
@@ -29,7 +18,6 @@ import { Comment } from '/@/lib/apis'
 import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import CommentsTextarea from './CommentsTextarea.vue'
-import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import useMe from '/@/use/me'
 
 export default defineComponent({
@@ -37,8 +25,7 @@ export default defineComponent({
   components: {
     DetailSummary,
     UserIcon,
-    CommentsTextarea,
-    WideIconButton
+    CommentsTextarea
   },
   props: {
     comments: {
@@ -74,14 +61,5 @@ export default defineComponent({
   border: 1px solid $color-text-secondary;
   border-radius: 12px;
   width: 100%;
-}
-
-.input {
-  opacity: 0.5;
-  pointer-events: none;
-  transition: opacity 0.5s;
-  &:focus-within {
-    opacity: 1;
-  }
 }
 </style>
