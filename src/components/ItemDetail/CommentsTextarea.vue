@@ -1,6 +1,6 @@
 <template>
   <div :class="[$style.container, modelValue ? '' : $style.input]">
-    <user-icon :user-name="name" />
+    <user-icon :user-name="name" :class="$style.icon" />
     <textarea
       :value="modelValue"
       :class="[$style.textarea, $style.text, modelValue ? $style.large : '']"
@@ -35,17 +35,16 @@ export default defineComponent({
   emits: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     'update:modelValue': (val: string) => true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    submit: (val: string) => true
+    submit: () => true
   },
-  setup(props, context) {
+  setup(_, context) {
     const { name } = useMe()
     const onInput = (e: InputEvent) => {
       const target = e.target as HTMLInputElement
       context.emit('update:modelValue', target.value)
     }
     const submit = async () => {
-      context.emit('submit', props.modelValue)
+      context.emit('submit')
     }
     return { name, onInput, submit }
   }
@@ -54,13 +53,12 @@ export default defineComponent({
 
 <style lang="scss" module>
 .textarea {
-  pointer-events: auto;
   padding: 0.5rem;
   appearance: none;
   font: inherit;
   resize: none;
   height: 5rem;
-  transition: height 0.5s;
+  transition: height 0.3s ease;
   &:focus {
     outline: none;
     height: 10rem;
@@ -81,15 +79,14 @@ export default defineComponent({
   margin-left: 8px;
   align-self: center;
   padding: 0.7rem;
-  border: 1px solid $color-text-secondary;
+  border: 2px solid $color-text-secondary;
   border-radius: 12px;
   width: 100%;
 }
 
 .input {
   opacity: 0.5;
-  pointer-events: none;
-  transition: opacity 0.5s;
+  transition: opacity 0.3s ease;
   &:focus-within {
     opacity: 1;
   }
@@ -105,8 +102,12 @@ export default defineComponent({
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  color: white;
+  color: $color-text-white;
   background-color: $color-text-secondary;
   cursor: pointer;
+}
+
+.icon {
+  pointer-events: none;
 }
 </style>

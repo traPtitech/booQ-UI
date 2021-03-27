@@ -68,7 +68,7 @@ export default defineComponent({
   margin-left: 8px;
   align-self: center;
   padding: 0.7rem;
-  border: 1px solid $color-text-secondary;
+  border: 2px solid $color-text-secondary;
   border-radius: 12px;
   width: 100%;
 }
