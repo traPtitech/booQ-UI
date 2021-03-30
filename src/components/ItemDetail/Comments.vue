@@ -5,7 +5,7 @@
       :key="comment.id"
       :class="$style.container"
     >
-      <user-icon :user-name="comment.user.name" />
+      <user-icon :user-name="comment.user.name" :class="$style.icon" />
       <div :class="$style.text">{{ comment.text }}</div>
     </div>
     <comments-textarea v-model="inputComment" @submit="submit" />
@@ -71,5 +71,9 @@ export default defineComponent({
   border: 2px solid $color-text-secondary;
   border-radius: 12px;
   width: 100%;
+}
+
+.icon {
+  margin: 0.2rem;
 }
 </style>

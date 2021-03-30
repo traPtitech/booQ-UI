@@ -109,5 +109,6 @@ export default defineComponent({
 
 .icon {
   pointer-events: none;
+  margin: 0.2rem;
 }
 </style>
