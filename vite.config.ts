@@ -1,11 +1,8 @@
 import { UserConfig } from 'vite'
-//@ts-expect-error: to avoid installing @types/node
 import path from 'path'
 import packageJson from './package.json'
 import VuePlugin from '@vitejs/plugin-vue'
 import PurgeIcons from 'vite-plugin-purge-icons'
-
-declare const __dirname: string
 
 const srcPath = path.resolve(__dirname, 'src').replace(/\\/g, '/')
 
