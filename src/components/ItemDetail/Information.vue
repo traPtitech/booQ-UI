@@ -6,7 +6,7 @@
     </div>
     <div :class="$style.description">{{ item.description }}</div>
     <owners :item="item" />
-    <comments :comments="item.comments" />
+    <comments :item-id="item.id" :comments="item.comments" />
     <logs :logs="item.logs" />
   </div>
 </template>
