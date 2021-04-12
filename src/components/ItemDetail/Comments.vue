@@ -36,7 +36,7 @@ export default defineComponent({
     },
     comments: {
       type: Array as PropType<Comment[]>,
-      default: []
+      default: () => []
     }
   },
   setup(props) {

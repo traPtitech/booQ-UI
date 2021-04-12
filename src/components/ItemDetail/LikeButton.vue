@@ -52,7 +52,7 @@ export default defineComponent({
     },
     likes: {
       type: Array as PropType<User[]>,
-      default: []
+      default: () => []
     }
   },
   setup(props) {
