@@ -25,6 +25,7 @@
       v-if="isOpenBorrowDialog"
       :item="item"
       @close="toggleBorrowDialog"
+      @updateItem="updateItem"
     />
     <return-dialog
       v-if="isOpenReturnDialog"
@@ -60,7 +61,12 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    updateItem: (item: ItemDetail) => true
+  },
+  setup(props, context) {
+    const updateItem = (item: ItemDetail) => context.emit('updateItem', item)
     const imgUrl = computed(() =>
       props.item.imgUrl ? props.item.imgUrl : NoImg
     )
@@ -83,6 +89,7 @@ export default defineComponent({
     )
 
     return {
+      updateItem,
       imgUrl,
       isOpenBorrowDialog,
       toggleBorrowDialog,

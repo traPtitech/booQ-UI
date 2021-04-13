@@ -1,6 +1,6 @@
 <template>
   <div v-if="item" :class="$style.container">
-    <controls :item="item" :class="$style.control" />
+    <controls :item="item" :class="$style.control" @updateItem="updateItem" />
     <information
       :item="item"
       :class="$style.information"
