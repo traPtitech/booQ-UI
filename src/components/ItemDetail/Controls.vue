@@ -31,6 +31,7 @@
       v-if="isOpenReturnDialog"
       :item="item"
       @close="toggleReturnDialog"
+      @updateItem="updateItem"
     />
   </div>
 </template>

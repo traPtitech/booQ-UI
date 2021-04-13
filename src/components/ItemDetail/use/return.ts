@@ -1,5 +1,5 @@
 import { ref, Ref, ComputedRef, computed } from 'vue'
-import apis, { ItemSummary, Owner, LogType } from '/@/lib/apis'
+import apis, { ItemSummary, Owner, LogType, Log } from '/@/lib/apis'
 import { OwnerWithCount } from './owners'
 import { stringifyDate } from '/@/lib/date'
 import useMe from '/@/use/me'
@@ -13,7 +13,7 @@ const useReturn = (props: {
   selectedOwnerName: Ref<string>
   count: Ref<number>
   owner: ComputedRef<Owner | undefined>
-  returnItem: () => Promise<void>
+  returnItem: () => Promise<void | Log>
 } => {
   const { id: myId } = useMe()
 
@@ -52,11 +52,12 @@ const useReturn = (props: {
       dueDate: stringifyDate(new Date(), '-')
     }
     try {
-      await apis.postLog(props.item.id, log)
+      const { data: newLog } = await apis.postLog(props.item.id, log)
       store.commit.addToast({
         type: 'success',
         text: `あなたは「${props.item.name}」を${count.value}個返却しました。`
       })
+      return newLog
     } catch (e) {
       store.commit.addToast({
         type: 'error',
