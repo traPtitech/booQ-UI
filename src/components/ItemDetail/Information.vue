@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, inject } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { ItemDetail, Comment, User } from '/@/lib/apis'
 import Owners from './Owners.vue'
 import Comments from './Comments.vue'
@@ -41,21 +41,20 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
-    const updateItem = inject<(item: ItemDetail) => void>('updateItem')
+  emits: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    updateItem: (item: ItemDetail) => true
+  },
+  setup(props, context) {
     const postComment = (comment: Comment) => {
       const newItem = {
         ...props.item,
         comments: [...props.item.comments, comment]
       }
-      if (updateItem) {
-        updateItem(newItem)
-      }
+      context.emit('updateItem', newItem)
     }
     const updateLikes = (likes: User[]) => {
-      if (updateItem) {
-        updateItem({ ...props.item, likes: likes })
-      }
+      context.emit('updateItem', { ...props.item, likes: likes })
     }
     return { postComment, updateLikes }
   }

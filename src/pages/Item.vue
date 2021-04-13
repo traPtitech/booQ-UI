@@ -1,19 +1,16 @@
 <template>
   <div v-if="item" :class="$style.container">
     <controls :item="item" :class="$style.control" />
-    <information :item="item" :class="$style.information" />
+    <information
+      :item="item"
+      :class="$style.information"
+      @updateItem="updateItem"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  computed,
-  watchEffect,
-  toRef,
-  provide
-} from 'vue'
+import { defineComponent, reactive, computed, watchEffect, toRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
 import apis, { ItemDetail } from '/@/lib/apis'
@@ -37,7 +34,6 @@ export default defineComponent({
     const updateItem = (item: ItemDetail) => {
       state.item = item
     }
-    provide('updateItem', updateItem)
     watchEffect(async () => {
       if (!Number.isFinite(state.id)) return
       const { data } = await apis.getItem(state.id)
@@ -46,7 +42,7 @@ export default defineComponent({
 
     useTitle(computed(() => (state.item ? `${state.item?.name}` : '物品')))
 
-    return { item: toRef(state, 'item') }
+    return { item: toRef(state, 'item'), updateItem }
   }
 })
 </script>
