@@ -36,7 +36,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import { ItemDetail } from '/@/lib/apis'
 import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/components/UI/use/opener'
@@ -56,7 +56,7 @@ export default defineComponent({
   },
   props: {
     item: {
-      type: Object as PropType<ItemSummary>,
+      type: Object as PropType<ItemDetail>,
       required: true
     }
   },

@@ -33,7 +33,7 @@ import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
-import { ItemSummary } from '/@/lib/apis'
+import { ItemDetail } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import useAddOwner from './use/addOwner'
 import useNonOwnerTypes from './use/nonOwnerTypes'
@@ -47,7 +47,7 @@ export default defineComponent({
   },
   props: {
     item: {
-      type: Object as PropType<ItemSummary>,
+      type: Object as PropType<ItemDetail>,
       required: true
     }
   },

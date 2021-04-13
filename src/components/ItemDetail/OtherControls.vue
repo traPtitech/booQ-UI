@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import { ItemDetail } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import useOpener from '/@/components/UI/use/opener'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
@@ -70,7 +70,7 @@ export default defineComponent({
   },
   props: {
     item: {
-      type: Object as PropType<ItemSummary>,
+      type: Object as PropType<ItemDetail>,
       required: true
     }
   },

@@ -1,12 +1,12 @@
 import { ref, Ref, ComputedRef, computed } from 'vue'
-import apis, { ItemSummary, ItemType, Owner, LogType } from '/@/lib/apis'
+import apis, { ItemType, Owner, LogType, ItemDetail } from '/@/lib/apis'
 import useOwners, { OwnerDetail } from './owners'
 import { stringifyDate } from '/@/lib/date'
 import useMe from '/@/use/me'
 import { useStore } from '/@/store'
 
 const useBorrow = (props: {
-  item: ItemSummary
+  item: ItemDetail
 }): {
   details: ComputedRef<OwnerDetail[]>
   selectedOwnerName: Ref<string>
