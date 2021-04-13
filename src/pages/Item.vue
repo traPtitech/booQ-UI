@@ -6,7 +6,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, watchEffect, toRef } from 'vue'
+import {
+  defineComponent,
+  reactive,
+  computed,
+  watchEffect,
+  toRef,
+  provide
+} from 'vue'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
 import apis, { ItemDetail } from '/@/lib/apis'
@@ -27,10 +34,14 @@ export default defineComponent({
       id: computed(() => +(getFirstParam(route.params.id) ?? '')),
       item: undefined as ItemDetail | undefined
     })
+    const updateItem = (item: ItemDetail) => {
+      state.item = item
+    }
+    provide('updateItem', updateItem)
     watchEffect(async () => {
       if (!Number.isFinite(state.id)) return
       const { data } = await apis.getItem(state.id)
-      state.item = data
+      updateItem(data)
     })
 
     useTitle(computed(() => (state.item ? `${state.item?.name}` : '物品')))

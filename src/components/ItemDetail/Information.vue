@@ -6,14 +6,18 @@
     </div>
     <div :class="$style.description">{{ item.description }}</div>
     <owners :item="item" />
-    <comments :item-id="item.id" :comments="item.comments" />
+    <comments
+      :item-id="item.id"
+      :comments="item.comments"
+      @postComment="postComment"
+    />
     <logs :logs="item.logs" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { ItemDetail } from '/@/lib/apis'
+import { defineComponent, PropType, inject } from 'vue'
+import { ItemDetail, Comment } from '/@/lib/apis'
 import Owners from './Owners.vue'
 import Comments from './Comments.vue'
 import Logs from './Logs.vue'
@@ -33,8 +37,18 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
-    return {}
+  setup(props) {
+    const updateItem = inject<(item: ItemDetail) => void>('updateItem')
+    const postComment = (comment: Comment) => {
+      const newItem = {
+        ...props.item,
+        comments: [...props.item.comments, comment]
+      }
+      if (updateItem) {
+        updateItem(newItem)
+      }
+    }
+    return { postComment }
   }
 })
 </script>

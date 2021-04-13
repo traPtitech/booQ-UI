@@ -39,19 +39,33 @@ export default defineComponent({
       default: () => []
     }
   },
-  setup(props) {
+  emits: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    postComment: (comment: Comment) => true
+  },
+  setup(props, context) {
     const store = useStore()
 
     const inputComment = ref('')
     const { name } = useMe()
 
     const submit = async () => {
-      await apis.postComment(props.itemId, { text: inputComment.value })
-      store.commit.addToast({
-        type: 'success',
-        text: `コメントを投稿しました。`
-      })
-      inputComment.value = ''
+      try {
+        const { data: comment } = await apis.postComment(props.itemId, {
+          text: inputComment.value
+        })
+        store.commit.addToast({
+          type: 'success',
+          text: `コメントを投稿しました。`
+        })
+        context.emit('postComment', comment)
+        inputComment.value = ''
+      } catch {
+        store.commit.addToast({
+          type: 'error',
+          text: 'コメントの投稿に失敗しました'
+        })
+      }
     }
     return { inputComment, name, submit }
   }
