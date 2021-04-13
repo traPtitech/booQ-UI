@@ -2,7 +2,11 @@
   <div :class="$style.container">
     <div :class="$style.titleWrapper">
       <h2>{{ item.name }}</h2>
-      <like-button :likes="item.likes" :item-id="item.id" />
+      <like-button
+        :likes="item.likes"
+        :item-id="item.id"
+        @updateLikes="updateLikes"
+      />
     </div>
     <div :class="$style.description">{{ item.description }}</div>
     <owners :item="item" />
@@ -17,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, inject } from 'vue'
-import { ItemDetail, Comment } from '/@/lib/apis'
+import { ItemDetail, Comment, User } from '/@/lib/apis'
 import Owners from './Owners.vue'
 import Comments from './Comments.vue'
 import Logs from './Logs.vue'
@@ -48,7 +52,12 @@ export default defineComponent({
         updateItem(newItem)
       }
     }
-    return { postComment }
+    const updateLikes = (likes: User[]) => {
+      if (updateItem) {
+        updateItem({ ...props.item, likes: likes })
+      }
+    }
+    return { postComment, updateLikes }
   }
 })
 </script>
