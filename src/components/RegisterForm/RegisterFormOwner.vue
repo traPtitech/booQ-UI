@@ -39,7 +39,7 @@ export default defineComponent({
     watchEffect(() => {
       formState.type = itemTypeNameToType(type.value)
     })
-    const typeOptions = itemTypeMap.map(([, typeName]) => typeName)
+    const typeOptions = itemTypeMap.map(([, typeName]) => ({ key: typeName }))
 
     return { formState, type, typeOptions }
   }

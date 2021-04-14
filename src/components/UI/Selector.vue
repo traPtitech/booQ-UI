@@ -4,8 +4,13 @@
       <div :class="$style.labelText">{{ label }}</div>
       <div :class="$style.selectWrapper">
         <select v-model="val" :class="$style.select">
-          <option v-for="option in options" :key="option" :value="option">
-            {{ option }}
+          <option
+            v-for="option in options"
+            :key="option.key"
+            :value="option.key"
+            :disabled="option.disabled"
+          >
+            {{ option.label ?? option.key }}
           </option>
         </select>
       </div>
@@ -14,7 +19,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
+
+type Option = { key: string; label?: string; disabled?: true }
 
 export default defineComponent({
   name: 'Selector',
@@ -24,7 +31,7 @@ export default defineComponent({
       default: undefined
     },
     options: {
-      type: Array as PropType<string[]>,
+      type: Array as PropType<Option[]>,
       required: true
     },
     modelValue: {
@@ -34,12 +41,16 @@ export default defineComponent({
   },
   emits: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (val: string) => true
+    'update:modelValue': (_val: string) => true
   },
   setup(props, context) {
-    const val = ref(props.options[0] ?? '')
-    watch(val, newVal => {
-      context.emit('update:modelValue', newVal)
+    const val = computed<string>({
+      get() {
+        return props.modelValue
+      },
+      set(v) {
+        context.emit('update:modelValue', v)
+      }
     })
     return { val }
   }

@@ -1,25 +1,34 @@
 <template>
   <dialog-template title="物品を借りる" @close="close">
     <form @submit.prevent="borrowItem">
-      <owner-selector v-model="selectedOwnerName" :details="details" />
-      <label :class="$style.label">
-        目的:
-        <textarea v-model="purpose" rows="10" :class="$style.input" required />
-      </label>
-      <label :class="$style.label">
-        返却日:
-        <date-picker v-model="dueDate" :min-date="new Date()" />
-      </label>
-      <label v-if="owner && owner.count !== 1" :class="$style.label">
-        個数:
-        <input
-          v-model.number="count"
-          type="number"
-          :class="$style.input"
-          :max="owner.count"
-          :min="1"
-        />
-      </label>
+      <owner-selector
+        v-model="selectedOwnerName"
+        :class="$style.item"
+        :details="details"
+      />
+      <input-text
+        v-model="purpose"
+        :class="$style.item"
+        label="目的"
+        multiline
+        rows="10"
+        required
+      />
+      <input-date
+        v-model="dueDate"
+        :class="$style.item"
+        label="返却日"
+        :min-date="new Date()"
+        required
+      />
+      <input-number
+        v-if="owner && owner.count !== 1"
+        v-model="count"
+        :class="$style.item"
+        label="個数"
+        :max="owner.count"
+        :min="1"
+      />
       <wide-icon-button
         icon="mdi:arrow-down-bold-circle"
         label="借りる"
@@ -36,16 +45,20 @@ import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import { DatePicker } from 'v-calendar'
 import useBorrow from './use/borrow'
+import InputText from '/@/components/UI/InputText.vue'
+import InputNumber from '/@/components/UI/InputNumber.vue'
+import InputDate from '/@/components/UI/InputDate.vue'
 
 export default defineComponent({
   name: 'BorrowDialog',
   components: {
     DialogTemplate,
     OwnerSelector,
-    WideIconButton,
-    DatePicker
+    InputText,
+    InputDate,
+    InputNumber,
+    WideIconButton
   },
   props: {
     item: {
@@ -88,16 +101,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.label {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  word-break: keep-all;
-}
-.input {
-  width: 100%;
-  margin-top: 0.25rem;
+.item {
+  margin: 16px 0;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 .button {
   margin: auto;
