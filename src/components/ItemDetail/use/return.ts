@@ -13,7 +13,7 @@ const useReturn = (props: {
   selectedOwnerName: Ref<string>
   count: Ref<number>
   owner: ComputedRef<Owner | undefined>
-  returnItem: () => Promise<void | Log>
+  returnItem: () => Promise<Log | undefined>
 } => {
   const { id: myId } = useMe()
 

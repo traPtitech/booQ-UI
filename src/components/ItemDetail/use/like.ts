@@ -1,4 +1,4 @@
-import { computed, ComputedRef, Ref, ref, SetupContext } from 'vue'
+import { computed, ComputedRef, Ref, ref } from 'vue'
 import useMeasure from './measure'
 import apis, { User } from '/@/lib/apis'
 import { useStore } from '/@/store'
@@ -9,7 +9,7 @@ const useLike = (
     likes: User[]
     itemId: number
   },
-  context: SetupContext<{ updateLikes: (users: User[]) => true }>
+  emit: (name: 'updateLikes', users: User[]) => void
 ): {
   isLiked: Ref<boolean>
   toggleLike: () => Promise<void>
@@ -26,7 +26,7 @@ const useLike = (
       if (isLiked.value) {
         await apis.removeLike(props.itemId)
         if (store.state.me) {
-          context.emit(
+          emit(
             'updateLikes',
             props.likes.filter(v => v.id !== meID.value)
           )
@@ -34,7 +34,7 @@ const useLike = (
       } else {
         await apis.addLike(props.itemId)
         if (store.state.me) {
-          context.emit('updateLikes', [...props.likes, store.state.me])
+          emit('updateLikes', [...props.likes, store.state.me])
         }
       }
       isLiked.value = !isLiked.value

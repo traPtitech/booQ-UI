@@ -14,7 +14,7 @@ const useBorrow = (props: {
   dueDate: Ref<Date>
   count: Ref<number>
   owner: ComputedRef<Owner | undefined>
-  borrow: () => Promise<void | Log>
+  borrow: () => Promise<Log | undefined>
 } => {
   const { details } = useOwners(props)
   const { admin } = useMe()

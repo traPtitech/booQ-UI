@@ -59,8 +59,8 @@ export default defineComponent({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     updateLikes: (users: User[]) => true
   },
-  setup(props, context) {
-    const { isLiked, toggleLike, balloonWidth } = useLike(props, context)
+  setup(props, { emit }) {
+    const { isLiked, toggleLike, balloonWidth } = useLike(props, emit)
     const { isHovered, open: enter, close: leave } = useHover()
     return {
       isLiked,
