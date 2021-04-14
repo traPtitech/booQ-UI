@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import apis, { ItemDetail, ItemSummary } from '/@/lib/apis'
+import { ItemSummary } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
@@ -46,8 +46,7 @@ export default defineComponent({
   },
   emits: {
     close: () => true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    updateItem: (item: ItemDetail) => true
+    updateItem: () => true
   },
   setup(props, context) {
     const { details, selectedOwnerName, count, owner, returnItem } = useReturn(
@@ -59,7 +58,7 @@ export default defineComponent({
     const returnItemAndClose = async () => {
       const log = await returnItem()
       if (log) {
-        context.emit('updateItem', (await apis.getItem(props.item.id)).data)
+        context.emit('updateItem')
       }
       close()
     }

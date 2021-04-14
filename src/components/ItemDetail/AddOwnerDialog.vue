@@ -52,7 +52,8 @@ export default defineComponent({
     }
   },
   emits: {
-    close: () => true
+    close: () => true,
+    updateItem: () => true
   },
   setup(props, context) {
     const { admin: isAdmin } = useMe()
@@ -78,6 +79,7 @@ export default defineComponent({
         count: count.value,
         itemID: props.item.id
       })
+      context.emit('updateItem')
       close()
     }
 

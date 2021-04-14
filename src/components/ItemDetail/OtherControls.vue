@@ -38,11 +38,13 @@
       v-if="isOpenEditDialog"
       :item="item"
       @close="toggleEditDialog"
+      @updateItem="() => emit('updateItem')"
     />
     <add-owner-dialog
       v-if="isOpenAddOwnerDialog"
       :item="item"
       @close="toggleAddOwnerDialog"
+      @updateItem="() => emit('updateItem')"
     />
   </div>
 </template>
@@ -58,6 +60,7 @@ import AddOwnerDialog from './AddOwnerDialog.vue'
 import useOtherControl from './use/otherControl'
 import useDeleteItem from './use/deleteItem'
 import MiniPopup from '/@/components/UI/MiniPopup.vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'OtherControls',
@@ -74,7 +77,10 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: {
+    updateItem: () => true
+  },
+  setup(props, { emit }) {
     const { isOpen: isPopupOpen, toggle: togglePopup } = useOpener()
 
     const { isOpen: isOpenEditDialog, toggle: toggleEditDialog } = useOpener()
@@ -87,10 +93,12 @@ export default defineComponent({
       props
     )
 
+    const router = useRouter()
     const { deleteItem } = useDeleteItem()
     const onDeleteClick = async () => {
       await deleteItem({ itemID: props.item.id, itemName: props.item.name })
       togglePopup()
+      router.push('/')
     }
 
     return {
@@ -102,7 +110,8 @@ export default defineComponent({
       isMeOwner,
       isDisabledAddOwnerButton,
       isAdmin,
-      onDeleteClick
+      onDeleteClick,
+      emit
     }
   }
 })

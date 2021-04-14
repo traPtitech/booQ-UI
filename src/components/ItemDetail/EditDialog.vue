@@ -57,7 +57,8 @@ export default defineComponent({
     }
   },
   emits: {
-    close: () => true
+    close: () => true,
+    updateItem: () => true
   },
   setup(props, context) {
     const { editItem } = useEditItem()
@@ -98,6 +99,7 @@ export default defineComponent({
         itemID: props.item.id,
         ownInfo: ownInfo.value
       })
+      context.emit('updateItem')
       close()
     }
     return {

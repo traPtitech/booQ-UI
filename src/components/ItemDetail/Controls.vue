@@ -19,7 +19,11 @@
           @click="toggleReturnDialog"
         />
       </div>
-      <other-controls :item="item" :class="$style.otherControl" />
+      <other-controls
+        :item="item"
+        :class="$style.otherControl"
+        @updateItem="updateItem"
+      />
     </div>
     <borrow-dialog
       v-if="isOpenBorrowDialog"
@@ -38,7 +42,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
-import { ItemDetail } from '/@/lib/apis'
+import apis, { ItemDetail } from '/@/lib/apis'
 import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/components/UI/use/opener'
@@ -67,7 +71,8 @@ export default defineComponent({
     updateItem: (item: ItemDetail) => true
   },
   setup(props, context) {
-    const updateItem = (item: ItemDetail) => context.emit('updateItem', item)
+    const updateItem = async () =>
+      context.emit('updateItem', (await apis.getItem(props.item.id)).data)
     const imgUrl = computed(() =>
       props.item.imgUrl ? props.item.imgUrl : NoImg
     )

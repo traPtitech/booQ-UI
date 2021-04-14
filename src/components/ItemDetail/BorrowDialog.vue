@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import apis, { ItemDetail } from '/@/lib/apis'
+import { ItemDetail } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
@@ -56,8 +56,7 @@ export default defineComponent({
   },
   emits: {
     close: () => true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    updateItem: (item: ItemDetail) => true
+    updateItem: () => true
   },
   setup(props, context) {
     const {
@@ -75,7 +74,7 @@ export default defineComponent({
     const borrowItem = async () => {
       const log = await borrow()
       if (log) {
-        context.emit('updateItem', (await apis.getItem(props.item.id)).data)
+        context.emit('updateItem')
       }
       context.emit('close')
     }
