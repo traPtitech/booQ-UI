@@ -1,18 +1,19 @@
 <template>
-  <dialog-template @close="close">
-    <h2 :class="$style.title">物品を返す</h2>
-    <form :class="$style.container" @submit.prevent="returnItemAndClose">
-      <owner-selector v-model="selectedOwnerName" :details="details" />
-      <label v-if="owner && owner.count !== 1" :class="$style.label">
-        個数:
-        <input
-          v-model.number="count"
-          type="number"
-          :class="$style.input"
-          :max="owner.count"
-          :min="1"
-        />
-      </label>
+  <dialog-template title="物品を返す" @close="close">
+    <form @submit.prevent="returnItemAndClose">
+      <owner-selector
+        v-model="selectedOwnerName"
+        :class="$style.item"
+        :details="details"
+      />
+      <input-number
+        v-if="owner && owner.count !== 1"
+        v-model="count"
+        :class="$style.item"
+        label="個数"
+        :max="owner.count"
+        :min="1"
+      />
       <wide-icon-button
         icon="mdi:arrow-up-bold-circle"
         label="返す"
@@ -30,12 +31,14 @@ import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import useReturn from './use/return'
+import InputNumber from '/@/components/UI/InputNumber.vue'
 
 export default defineComponent({
   name: 'ReturnDialog',
   components: {
     DialogTemplate,
     OwnerSelector,
+    InputNumber,
     WideIconButton
   },
   props: {
@@ -71,23 +74,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  text-align: left;
-  margin-top: 3rem;
-}
-.title {
-  text-align: center;
-}
-.label {
-  margin-top: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  word-break: keep-all;
-}
-.input {
-  width: 100%;
-  margin-top: 0.25rem;
+.item {
+  margin: 16px 0;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 .button {
   margin: auto;

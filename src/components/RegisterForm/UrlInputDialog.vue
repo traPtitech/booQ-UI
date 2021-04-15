@@ -1,7 +1,6 @@
 <template>
-  <dialog-template @close="close">
-    <h2 :class="$style.title">画像URLを指定する</h2>
-    <form :class="$style.container" @submit.prevent="close">
+  <dialog-template title="画像URLを指定する" @close="close">
+    <form @submit.prevent="close">
       <input-text v-model="url" label="画像URL" />
       <wide-icon-button
         icon="mdi:link-plus"
@@ -50,12 +49,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  text-align: left;
-}
-.title {
-  text-align: center;
-}
 .button {
   margin: auto;
   margin-top: 32px;

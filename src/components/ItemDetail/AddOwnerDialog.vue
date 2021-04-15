@@ -1,21 +1,23 @@
 <template>
-  <dialog-template @close="close">
-    <h2 :class="$style.title">所有者を追加する</h2>
-    <form :class="$style.container" @submit.prevent="submit">
-      <owner-selector v-if="isAdmin" v-model="ownerName" :details="details" />
-      <label :class="$style.label">
-        貸し出し可:
-        <input v-model="rentalable" type="checkbox" :class="$style.input" />
-      </label>
-      <label :class="$style.label">
-        個数:
-        <input
-          v-model.number="count"
-          type="number"
-          :class="$style.input"
-          :min="1"
-        />
-      </label>
+  <dialog-template title="所有者を追加する" @close="close">
+    <form @submit.prevent="submit">
+      <owner-selector
+        v-if="isAdmin"
+        v-model="ownerName"
+        :class="$style.item"
+        :details="details"
+      />
+      <input-checkbox
+        v-model="rentalable"
+        :class="$style.item"
+        label="貸し出し可"
+      />
+      <input-number
+        v-model="count"
+        :class="$style.item"
+        label="個数"
+        :min="1"
+      />
       <wide-icon-button
         icon="mdi:account-plus"
         label="追加する"
@@ -37,12 +39,16 @@ import { ItemSummary } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import useAddOwner from './use/addOwner'
 import useNonOwnerTypes from './use/nonOwnerTypes'
+import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
+import InputNumber from '/@/components/UI/InputNumber.vue'
 
 export default defineComponent({
   name: 'AddOwnerDialog',
   components: {
     DialogTemplate,
     OwnerSelector,
+    InputCheckbox,
+    InputNumber,
     WideIconButton
   },
   props: {
@@ -95,24 +101,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  text-align: left;
-}
-.title {
-  text-align: center;
-}
-.radioLabel {
-  margin-right: 1rem;
-}
-.label {
-  margin-top: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  word-break: keep-all;
-}
-.input {
-  margin-left: 0.5rem;
+.item {
+  margin: 16px 0;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 .button {
   margin: auto;

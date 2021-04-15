@@ -7,6 +7,8 @@
           :class="$style.input"
           type="number"
           :value="modelValue"
+          :min="min"
+          :max="max"
           @input="onInput"
         />
         <slot />
@@ -32,6 +34,14 @@ export default defineComponent({
     modelValue: {
       type: Number,
       required: true
+    },
+    min: {
+      type: Number,
+      default: undefined
+    },
+    max: {
+      type: Number,
+      default: undefined
     }
   },
   emits: {

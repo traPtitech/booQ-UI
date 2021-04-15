@@ -8,12 +8,17 @@
           :class="$style.input"
           type="text"
           :value="modelValue"
+          :required="required"
+          :readonly="readonly"
           @input="onInput"
         />
         <textarea
           v-else
           :class="$style.input"
           :value="modelValue"
+          :required="required"
+          :readonly="readonly"
+          :rows="rows"
           @input="onInput"
         />
         <slot />
@@ -41,6 +46,18 @@ export default defineComponent({
       required: true
     },
     multiline: {
+      type: Boolean,
+      default: false
+    },
+    required: {
+      type: Boolean,
+      default: false
+    },
+    rows: {
+      type: String,
+      default: undefined
+    },
+    readonly: {
       type: Boolean,
       default: false
     }
