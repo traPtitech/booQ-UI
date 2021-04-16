@@ -1,4 +1,4 @@
-import { ref, Ref, ComputedRef, computed } from 'vue'
+import { ref, Ref, ComputedRef, computed, watch } from 'vue'
 import apis, { ItemType, Owner, LogType, ItemDetail, Log } from '/@/lib/apis'
 import useOwners, { OwnerDetail } from './owners'
 import { stringifyDate } from '/@/lib/date'
@@ -26,6 +26,19 @@ const useBorrow = (props: {
   const count = ref(1)
   const owner = computed(() =>
     props.item.owners.find(v => v.user.name === selectedOwnerName.value)
+  )
+
+  watch(
+    details,
+    (newDetails, oldDetails) => {
+      if ((!oldDetails || oldDetails.length === 0) && newDetails.length > 0) {
+        return
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      selectedOwnerName.value = newDetails[0]!.userName
+    },
+    { immediate: true }
   )
 
   const borrow = async () => {

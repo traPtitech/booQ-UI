@@ -2,6 +2,7 @@
   <teleport to="#dialog">
     <div :class="$style.container" @click="close">
       <div :class="$style.dialog" @click.stop>
+        <h2 :class="$style.title">{{ title }}</h2>
         <slot />
       </div>
     </div>
@@ -13,6 +14,12 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'DialogTemplate',
+  props: {
+    title: {
+      type: String,
+      required: true
+    }
+  },
   emits: {
     close: () => true
   },
@@ -38,15 +45,22 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: left;
 }
 
 .dialog {
+  color: $color-text-primary;
   z-index: 2;
   background-color: $color-background;
-  padding: 24px;
+  padding: 2.5rem 3rem;
   border-radius: 8px;
   min-width: 400px;
   margin: auto;
+}
+.title {
+  margin: 0;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
 }
 
 @keyframes fadeIn {

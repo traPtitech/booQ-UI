@@ -8,7 +8,11 @@
           @click="toggleDialog"
         />
       </input-text>
-      <dialog-template v-if="isDialogShown" @close="toggleDialog">
+      <dialog-template
+        v-if="isDialogShown"
+        title="バーコードを読み取る"
+        @close="toggleDialog"
+      >
         <bar-code-scanner />
         <button @click="toggleDialog">閉じる</button>
       </dialog-template>

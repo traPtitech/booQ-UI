@@ -1,21 +1,23 @@
 <template>
-  <dialog-template @close="close">
-    <h2 :class="$style.title">所有者の情報を変更する</h2>
-    <form :class="$style.container" @submit.prevent="submit">
-      <owner-selector v-if="isAdmin" v-model="ownerName" :details="details" />
-      <label :class="$style.label">
-        貸し出し可:
-        <input v-model="rentalable" type="checkbox" :class="$style.input" />
-      </label>
-      <label :class="$style.label">
-        個数:
-        <input
-          v-model.number="count"
-          type="number"
-          :class="$style.input"
-          :min="initCount - remain"
-        />
-      </label>
+  <dialog-template title="所有者の情報を変更する" @close="close">
+    <form @submit.prevent="submit">
+      <owner-selector
+        v-if="isAdmin"
+        v-model="ownerName"
+        :class="$style.item"
+        :details="details"
+      />
+      <input-checkbox
+        v-model="rentalable"
+        :class="$style.item"
+        label="貸し出し可"
+      />
+      <input-number
+        v-model="count"
+        :class="$style.item"
+        label="個数"
+        :min="initCount - remain"
+      />
       <wide-icon-button
         icon="mdi:account-edit"
         label="変更する"
@@ -37,6 +39,8 @@ import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import useOwners, { OwnerWithCount } from './use/owners'
 import useMe from '/@/use/me'
 import useEditItem from './use/editItem'
+import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
+import InputNumber from '/@/components/UI/InputNumber.vue'
 
 const getInitialOwner = (details: OwnerWithCount[], name: string) => {
   const initialOwner = details.find(v => v.userName === name) ?? details[0]
@@ -48,6 +52,8 @@ export default defineComponent({
   components: {
     DialogTemplate,
     OwnerSelector,
+    InputCheckbox,
+    InputNumber,
     WideIconButton
   },
   props: {
@@ -119,21 +125,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" module>
-.container {
-  text-align: left;
-}
-.title {
-  text-align: center;
-}
-.label {
-  margin-top: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  word-break: keep-all;
-}
-.input {
-  margin-left: 0.5rem;
+.item {
+  margin: 16px 0;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 .button {
   margin: auto;

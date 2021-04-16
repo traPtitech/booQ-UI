@@ -1,25 +1,17 @@
 <template>
-  <label>
-    所有者:
-    <select :value="modelValue" :class="$style.select" @input="selectOwner">
-      <option
-        v-for="detail in details"
-        :key="detail.userName"
-        :value="detail.userName"
-        :disabled="detail.count === 0"
-      >
-        {{ detail.userName }} {{ detail.count ? `(${detail.count})` : '' }}
-      </option>
-    </select>
-  </label>
+  <selector v-model="value" label="所有者" :options="options" />
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import { OwnerMayWithCount } from './use/owners'
+import Selector from '/@/components/UI/Selector.vue'
 
 export default defineComponent({
   userName: 'OwnerSelector',
+  components: {
+    Selector
+  },
   props: {
     details: {
       type: Object as PropType<OwnerMayWithCount[]>,
@@ -32,21 +24,25 @@ export default defineComponent({
   },
   emits: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (value: string) => true
+    'update:modelValue': (_value: string) => true
   },
-  setup(_, context) {
-    const selectOwner = (e: InputEvent) => {
-      context.emit('update:modelValue', (e.target as HTMLInputElement).value)
-    }
-    return { selectOwner }
+  setup(props, context) {
+    const value = computed<string>({
+      get() {
+        return props.modelValue
+      },
+      set(v) {
+        context.emit('update:modelValue', v)
+      }
+    })
+    const options = computed(() =>
+      props.details.map(d => ({
+        key: d.userName,
+        label: `${d.userName} ${d.count ? `(${d.count})` : ''}`,
+        disabled: d.count === 0
+      }))
+    )
+    return { value, options }
   }
 })
 </script>
-
-<style lang="scss" module>
-.select {
-  margin-left: 0.5rem;
-  font-size: 1.05rem;
-  flex: 1;
-}
-</style>
