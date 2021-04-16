@@ -1,4 +1,4 @@
-import { ItemSummary, Owner, Log, RentalUser } from '/@/lib/apis'
+import { ItemSummary, Owner, Log, RentalUser, ItemDetail } from '/@/lib/apis'
 
 export const getDue = (item: ItemSummary): number => {
   if (!item.latestLogs) return Infinity
@@ -10,7 +10,7 @@ export const isOwner = (id: number, owners: Owner[]): boolean =>
 
 export const getOwnerBorrowedFrom = (
   userID: number,
-  item: ItemSummary
+  item: ItemDetail
 ): Owner[] =>
   item.owners.filter(owner =>
     item.rentalUsers.some(
@@ -23,7 +23,7 @@ export const getRentalUserBorrowedFrom = (
   rentalUsers: RentalUser[]
 ): RentalUser[] => rentalUsers.filter(v => v.userId === id && v.count !== 0)
 
-export const getOwnersCanLend = (item: ItemSummary): Owner[] =>
+export const getOwnersCanLend = (item: ItemDetail): Owner[] =>
   item.owners.filter(
     owner =>
       owner.rentalable &&

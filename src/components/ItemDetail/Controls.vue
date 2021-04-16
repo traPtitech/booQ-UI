@@ -19,24 +19,30 @@
           @click="toggleReturnDialog"
         />
       </div>
-      <other-controls :item="item" :class="$style.otherControl" />
+      <other-controls
+        :item="item"
+        :class="$style.otherControl"
+        @updateItem="updateItem"
+      />
     </div>
     <borrow-dialog
       v-if="isOpenBorrowDialog"
       :item="item"
       @close="toggleBorrowDialog"
+      @updateItem="updateItem"
     />
     <return-dialog
       v-if="isOpenReturnDialog"
       :item="item"
       @close="toggleReturnDialog"
+      @updateItem="updateItem"
     />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import apis, { ItemDetail } from '/@/lib/apis'
 import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/components/UI/use/opener'
@@ -56,11 +62,17 @@ export default defineComponent({
   },
   props: {
     item: {
-      type: Object as PropType<ItemSummary>,
+      type: Object as PropType<ItemDetail>,
       required: true
     }
   },
-  setup(props) {
+  emits: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    updateItem: (item: ItemDetail) => true
+  },
+  setup(props, context) {
+    const updateItem = async () =>
+      context.emit('updateItem', (await apis.getItem(props.item.id)).data)
     const imgUrl = computed(() =>
       props.item.imgUrl ? props.item.imgUrl : NoImg
     )
@@ -83,6 +95,7 @@ export default defineComponent({
     )
 
     return {
+      updateItem,
       imgUrl,
       isOpenBorrowDialog,
       toggleBorrowDialog,

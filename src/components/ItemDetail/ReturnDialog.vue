@@ -48,7 +48,8 @@ export default defineComponent({
     }
   },
   emits: {
-    close: () => true
+    close: () => true,
+    updateItem: () => true
   },
   setup(props, context) {
     const { details, selectedOwnerName, count, owner, returnItem } = useReturn(
@@ -58,7 +59,10 @@ export default defineComponent({
       context.emit('close')
     }
     const returnItemAndClose = async () => {
-      await returnItem()
+      const log = await returnItem()
+      if (log) {
+        context.emit('updateItem')
+      }
       close()
     }
     return {

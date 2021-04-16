@@ -1,11 +1,11 @@
 import { Ref, computed, ComputedRef } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import { ItemDetail } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import useNonOwnerTypes from './nonOwnerTypes'
 import { isOwner } from '/@/lib/item'
 
 const useOtherControl = (props: {
-  item: ItemSummary
+  item: ItemDetail
 }): {
   isMeOwner: Ref<boolean>
   isAdmin: Ref<boolean>

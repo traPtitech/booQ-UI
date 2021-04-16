@@ -1,12 +1,12 @@
 import { ref, Ref, ComputedRef, computed, watch } from 'vue'
-import apis, { ItemSummary, ItemType, Owner, LogType } from '/@/lib/apis'
+import apis, { ItemType, Owner, LogType, ItemDetail, Log } from '/@/lib/apis'
 import useOwners, { OwnerDetail } from './owners'
 import { stringifyDate } from '/@/lib/date'
 import useMe from '/@/use/me'
 import { useStore } from '/@/store'
 
 const useBorrow = (props: {
-  item: ItemSummary
+  item: ItemDetail
 }): {
   details: ComputedRef<OwnerDetail[]>
   selectedOwnerName: Ref<string>
@@ -14,7 +14,7 @@ const useBorrow = (props: {
   dueDate: Ref<Date>
   count: Ref<number>
   owner: ComputedRef<Owner | undefined>
-  borrow: () => Promise<void>
+  borrow: () => Promise<Log | undefined>
 } => {
   const { details } = useOwners(props)
   const { admin } = useMe()
@@ -71,11 +71,12 @@ const useBorrow = (props: {
       count: count.value
     }
     try {
-      await apis.postLog(props.item.id, log)
+      const { data: newLog } = await apis.postLog(props.item.id, log)
       store.commit.addToast({
         type: 'success',
         text: `あなたは「${props.item.name}」を${count.value}個借りました。`
       })
+      return newLog
     } catch (e) {
       store.commit.addToast({
         type: 'error',

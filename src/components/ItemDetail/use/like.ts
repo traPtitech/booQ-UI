@@ -4,10 +4,13 @@ import apis, { User } from '/@/lib/apis'
 import { useStore } from '/@/store'
 import useMe from '/@/use/me'
 
-const useLike = (props: {
-  likes: User[]
-  itemId: number
-}): {
+const useLike = (
+  props: {
+    likes: User[]
+    itemId: number
+  },
+  emit: (name: 'updateLikes', users: User[]) => void
+): {
   isLiked: Ref<boolean>
   toggleLike: () => Promise<void>
   balloonWidth: ComputedRef<number>
@@ -22,8 +25,17 @@ const useLike = (props: {
     try {
       if (isLiked.value) {
         await apis.removeLike(props.itemId)
+        if (store.state.me) {
+          emit(
+            'updateLikes',
+            props.likes.filter(v => v.id !== meID.value)
+          )
+        }
       } else {
         await apis.addLike(props.itemId)
+        if (store.state.me) {
+          emit('updateLikes', [...props.likes, store.state.me])
+        }
       }
       isLiked.value = !isLiked.value
     } catch (e) {

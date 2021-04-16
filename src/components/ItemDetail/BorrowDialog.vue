@@ -41,7 +41,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import { ItemDetail } from '/@/lib/apis'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
@@ -62,12 +62,13 @@ export default defineComponent({
   },
   props: {
     item: {
-      type: Object as PropType<ItemSummary>,
+      type: Object as PropType<ItemDetail>,
       required: true
     }
   },
   emits: {
-    close: () => true
+    close: () => true,
+    updateItem: () => true
   },
   setup(props, context) {
     const {
@@ -83,7 +84,10 @@ export default defineComponent({
       context.emit('close')
     }
     const borrowItem = async () => {
-      await borrow()
+      const log = await borrow()
+      if (log) {
+        context.emit('updateItem')
+      }
       context.emit('close')
     }
     return {

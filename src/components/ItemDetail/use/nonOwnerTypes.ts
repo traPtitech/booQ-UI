@@ -1,5 +1,5 @@
 import { computed, ComputedRef } from 'vue'
-import { ItemSummary, ItemType } from '/@/lib/apis'
+import { ItemDetail, ItemType } from '/@/lib/apis'
 import useMe from '/@/use/me'
 
 const getFirstNotOwn = (nonOwnerTypes: Set<ItemType>): ItemType | -1 => {
@@ -16,7 +16,7 @@ const getFirstNotOwn = (nonOwnerTypes: Set<ItemType>): ItemType | -1 => {
 }
 
 const useNonOwnerTypes = (props: {
-  item: ItemSummary
+  item: ItemDetail
 }): {
   nonOwnerTypes: ComputedRef<Set<ItemType>>
   firstNonOwnType: ComputedRef<ItemType | -1>

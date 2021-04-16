@@ -1,7 +1,11 @@
 <template>
   <div v-if="item" :class="$style.container">
-    <controls :item="item" :class="$style.control" />
-    <information :item="item" :class="$style.information" />
+    <controls :item="item" :class="$style.control" @updateItem="updateItem" />
+    <information
+      :item="item"
+      :class="$style.information"
+      @updateItem="updateItem"
+    />
   </div>
 </template>
 
@@ -27,15 +31,18 @@ export default defineComponent({
       id: computed(() => +(getFirstParam(route.params.id) ?? '')),
       item: undefined as ItemDetail | undefined
     })
+    const updateItem = (item: ItemDetail) => {
+      state.item = item
+    }
     watchEffect(async () => {
       if (!Number.isFinite(state.id)) return
       const { data } = await apis.getItem(state.id)
-      state.item = data
+      updateItem(data)
     })
 
     useTitle(computed(() => (state.item ? `${state.item?.name}` : '物品')))
 
-    return { item: toRef(state, 'item') }
+    return { item: toRef(state, 'item'), updateItem }
   }
 })
 </script>
