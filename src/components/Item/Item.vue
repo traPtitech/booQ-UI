@@ -12,7 +12,7 @@
       </div>
       <div :class="$style.main">
         <div :class="$style.likeCount">
-          <icon :class="$style.icon" name="mdi:thumbs-up" :size="20" />
+          <icon :class="$style.icon" name="mdi:heart" :size="20" />
           {{ likeCount }}
         </div>
         <div :class="$style.owners">
