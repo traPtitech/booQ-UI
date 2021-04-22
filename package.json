@@ -13,7 +13,7 @@
     "@iconify/iconify": "^1.0.7",
     "@popperjs/core": "^2.9.2",
     "@ungap/promise-any": "^1.1.1",
-    "@zxing/library": "^0.18.4",
+    "@zxing/library": "^0.18.5",
     "axios": "^0.21.1",
     "direct-vuex": "^0.12.1",
     "v-calendar": "^3.0.0-alpha.3",
