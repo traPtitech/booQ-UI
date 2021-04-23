@@ -25,7 +25,7 @@
 import { computed, defineComponent } from 'vue'
 import noImg from '/@/assets/img/no-image.svg'
 import RegisterFormImageButton from './RegisterFormImageButton.vue'
-import useOpener from '/@/components/UI/use/opener'
+import useOpener from '/@/use/opener'
 import UrlInputDialog from './UrlInputDialog.vue'
 import useImageUpload from './use/imageUpload'
 
