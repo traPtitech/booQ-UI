@@ -118,6 +118,7 @@ export default defineComponent({
   right: 0;
   bottom: 0;
   display: flex;
+  z-index: 1;
 }
 .mobileNavigation {
   width: 260px;
