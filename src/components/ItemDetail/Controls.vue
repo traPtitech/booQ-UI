@@ -2,23 +2,21 @@
   <div>
     <img :class="$style.img" :src="imgUrl" />
     <div :class="$style.btnContainer">
-      <div :class="$style.mainBtns">
-        <normal-icon-button
-          icon="mdi:arrow-down-bold-circle"
-          label="借りる"
-          :class="$style.btn"
-          :disabled="isBorrowDisabled"
-          @click="toggleBorrowDialog"
-        />
-        <normal-icon-button
-          icon="mdi:arrow-up-bold-circle"
-          label="返す"
-          variant="secondary"
-          :class="$style.btn"
-          :disabled="isReturnDisabled"
-          @click="toggleReturnDialog"
-        />
-      </div>
+      <normal-icon-button
+        icon="mdi:arrow-down-bold-circle"
+        label="借りる"
+        :class="$style.btn"
+        :disabled="isBorrowDisabled"
+        @click="toggleBorrowDialog"
+      />
+      <normal-icon-button
+        icon="mdi:arrow-up-bold-circle"
+        label="返す"
+        variant="secondary"
+        :class="$style.btn"
+        :disabled="isReturnDisabled"
+        @click="toggleReturnDialog"
+      />
       <other-controls
         :item="item"
         :class="$style.otherControl"
@@ -115,18 +113,10 @@ export default defineComponent({
 
 .btnContainer {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   padding: 8px;
   user-select: none;
-}
-
-.mainBtns {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
 }
 
 .btn {
