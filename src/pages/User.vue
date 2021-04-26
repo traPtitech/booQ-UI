@@ -10,7 +10,7 @@
     </div>
     <div>
       <h2>コメント</h2>
-      <item-wide-grid :items="commentedItems" :slots="comments" />
+      <item-wide-grid :items="commentedItems" :texts="comments" />
     </div>
   </div>
 </template>
@@ -42,9 +42,8 @@ export default defineComponent({
       comments: [] as string[]
     })
     watchEffect(async () => {
-      apis.getItems(state.username).then(({ data }) => {
-        state.items = data
-      })
+      const { data } = await apis.getItems(state.username)
+      state.items = data
       const { data: commentObjects } = await apis.getComments(state.username)
       const comments = commentObjects.map(({ text }) => text)
       const items = await Promise.all(
@@ -52,7 +51,8 @@ export default defineComponent({
           apis
             .getItem(itemId)
             .then(({ data }) => data)
-            .catch(() => null)
+            // eslint-disable-next-line no-console
+            .catch(error => console.error(error))
         )
       )
       state.comments = comments.filter((_, index) => items[index])

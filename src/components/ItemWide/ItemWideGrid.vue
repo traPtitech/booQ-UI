@@ -1,7 +1,7 @@
 <template>
   <ul :class="$style.list">
     <li v-for="(item, index) in items" :key="item.id">
-      <item-wide :item="item">{{ slots[index] }}</item-wide>
+      <item-wide :item="item">{{ texts[index] }}</item-wide>
     </li>
   </ul>
 </template>
@@ -21,7 +21,7 @@ export default defineComponent({
       type: Array as PropType<ItemSummary[]>,
       required: true
     },
-    slots: {
+    texts: {
       type: Array as PropType<string[]>,
       required: true
     }
