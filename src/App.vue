@@ -13,21 +13,27 @@
         <router-view v-if="fetchedMe" />
         <div v-else>Loading...</div>
       </main>
-      <navigation
-        v-if="!canToggleNavigationShown"
-        :class="$style.desktopNavigation"
-      />
-      <div
-        v-else
-        v-show="isNavigationShown"
-        :class="$style.mobileNavigationWrapper"
-      >
-        <navigation :class="$style.mobileNavigation" />
-        <div
-          :class="$style.mobileNavigationDim"
-          @click="toggleNavigationShown"
-        ></div>
-      </div>
+      <transition name="navigation">
+        <navigation
+          v-if="!canToggleNavigationShown"
+          :class="$style.desktopNavigation"
+        />
+      </transition>
+      <template v-if="canToggleNavigationShown">
+        <transition name="fade-fast">
+          <div
+            v-show="isNavigationShown"
+            :class="$style.mobileNavigationDim"
+            @click="toggleNavigationShown"
+          ></div>
+        </transition>
+        <transition name="navigation">
+          <navigation
+            v-show="isNavigationShown"
+            :class="$style.mobileNavigation"
+          />
+        </transition>
+      </template>
     </div>
   </div>
   <div id="dialog" />
@@ -116,22 +122,23 @@ export default defineComponent({
   flex-shrink: 0;
   width: 260px;
 }
-.mobileNavigationWrapper {
+.mobileNavigation {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  display: flex;
+  width: 260px;
   z-index: 1;
 }
-.mobileNavigation {
-  width: 260px;
-  flex-shrink: 0;
-}
 .mobileNavigationDim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
   background: $color-background-dim;
-  flex: 1;
 }
 .content {
   flex: 1;

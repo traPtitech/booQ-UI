@@ -35,6 +35,20 @@ $fd: 'fade';
   opacity: 1;
 }
 
+$fdf: 'fade-fast';
+.#{$fdf}-enter-active,
+.#{$fdf}-leave-active {
+  transition: all 0.3s;
+}
+.#{$fdf}-enter-from,
+.#{$fdf}-leave-to {
+  opacity: 0;
+}
+.#{$fdf}-enter-to,
+.#{$fdf}-leave-from {
+  opacity: 1;
+}
+
 $mp: 'mini-popup';
 .#{$mp}-enter-active,
 .#{$mp}-leave-active {
@@ -47,4 +61,18 @@ $mp: 'mini-popup';
 .#{$mp}-enter-to,
 .#{$mp}-leave-from {
   transform: scale(1);
+}
+
+$nv: 'navigation';
+.#{$nv}-enter-active,
+.#{$nv}-leave-active {
+  transition: all 0.1s ease-in;
+}
+.#{$nv}-enter-from,
+.#{$nv}-leave-to {
+  transform: translateX(-100%);
+}
+.#{$nv}-enter-to,
+.#{$nv}-leave-from {
+  transform: translateX(0);
 }
