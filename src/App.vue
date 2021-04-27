@@ -36,6 +36,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, onBeforeMount, watch, readonly } from 'vue'
+import { useRouter } from 'vue-router'
 import PageHeader from '/@/components/PageHeader/PageHeader.vue'
 import Navigation from '/@/components/Navigation/Navigation.vue'
 import ToastContainer from '/@/components/UI/ToastContainer.vue'
@@ -44,12 +45,16 @@ import useOpener from '/@/use/opener'
 import useIsMobile from './use/isMobile'
 
 const useNavigationShown = () => {
+  const router = useRouter()
   const { isOpen, toggle: toggleNavigationShown } = useOpener()
   const { isMobile } = useIsMobile()
 
   const isNavigationShown = computed(() => !isMobile.value || isOpen.value)
   watch(isMobile, isMobile => {
     isOpen.value = !isMobile
+  })
+  router.afterEach(() => {
+    isOpen.value = false
   })
 
   return {
