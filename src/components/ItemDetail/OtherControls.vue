@@ -96,9 +96,14 @@ export default defineComponent({
     const router = useRouter()
     const { deleteItem } = useDeleteItem()
     const onDeleteClick = async () => {
-      await deleteItem({ itemID: props.item.id, itemName: props.item.name })
+      const deleted = await deleteItem({
+        itemID: props.item.id,
+        itemName: props.item.name
+      })
       togglePopup()
-      router.push('/')
+      if (deleted) {
+        router.push('/')
+      }
     }
 
     return {
