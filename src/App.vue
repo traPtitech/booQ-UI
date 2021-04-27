@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="$style.container"
-    :data-can-toggle-navigation-shown="canToggleNavigationShown"
-  >
+  <div :class="$style.container">
     <page-header
       :class="$style.header"
       :can-toggle-navigation-shown="canToggleNavigationShown"
@@ -13,27 +10,11 @@
         <router-view v-if="fetchedMe" />
         <div v-else>Loading...</div>
       </main>
-      <transition name="navigation">
-        <navigation
-          v-if="!canToggleNavigationShown"
-          :class="$style.desktopNavigation"
-        />
-      </transition>
-      <template v-if="canToggleNavigationShown">
-        <transition name="fade-fast">
-          <div
-            v-show="isNavigationShown"
-            :class="$style.mobileNavigationDim"
-            @click="toggleNavigationShown"
-          ></div>
-        </transition>
-        <transition name="navigation">
-          <navigation
-            v-show="isNavigationShown"
-            :class="$style.mobileNavigation"
-          />
-        </transition>
-      </template>
+      <navigation
+        :can-toggle-navigation-shown="canToggleNavigationShown"
+        :is-navigation-shown="isNavigationShown"
+        @toggleNavigationShown="toggleNavigationShown"
+      />
     </div>
   </div>
   <div id="dialog" />
@@ -117,28 +98,6 @@ export default defineComponent({
   flex-direction: row-reverse;
   flex: 1;
   min-height: 0;
-}
-.desktopNavigation {
-  flex-shrink: 0;
-  width: 260px;
-}
-.mobileNavigation {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 260px;
-  z-index: 1;
-}
-.mobileNavigationDim {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  background: $color-background-dim;
 }
 .content {
   flex: 1;
