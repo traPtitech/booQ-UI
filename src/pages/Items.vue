@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
     <div :class="$style.header">
-      <h3>{{ title }}</h3>
+      <h3 :class="$style.title">{{ title }}</h3>
       <search-input v-model="searchQuery" :class="$style.search" />
     </div>
     <item-grid :items="filteredItems" />
@@ -83,8 +83,12 @@ export default defineComponent({
 }
 .header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+}
+.title {
+  word-break: keep-all;
 }
 .search {
   width: 12em;
