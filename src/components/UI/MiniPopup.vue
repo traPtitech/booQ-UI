@@ -131,5 +131,6 @@ export default defineComponent({
   background: $color-background;
   border: 1px solid $color-text-secondary;
   border-radius: 1rem;
+  z-index: 1;
 }
 </style>
