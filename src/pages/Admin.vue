@@ -27,5 +27,9 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   padding: 3rem;
+
+  @media (max-width: 450px) {
+    padding: 2rem;
+  }
 }
 </style>

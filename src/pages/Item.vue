@@ -52,6 +52,10 @@ export default defineComponent({
   display: flex;
   flex-wrap: wrap;
   padding: 3rem;
+
+  @media (max-width: 450px) {
+    padding: 2rem;
+  }
 }
 
 .control {
