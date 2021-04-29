@@ -12,7 +12,8 @@
       </div>
       <div :class="$style.main">
         <div :class="$style.likeCount">
-          <icon :class="$style.icon" name="mdi:heart" :size="20" />
+          <icon v-if="!item.isLiked" name="mdi:heart-outline" :size="20" />
+          <icon v-else name="mdi:heart" :size="20" :class="$style.liked" />
           {{ likeCount }}
         </div>
         <div :class="$style.owners">
@@ -151,5 +152,8 @@ $border-radius: 2px;
 }
 .icon {
   vertical-align: bottom;
+}
+.liked {
+  color: #ef4c4c;
 }
 </style>
