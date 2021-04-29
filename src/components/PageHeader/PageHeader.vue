@@ -1,6 +1,10 @@
 <template>
   <header :class="$style.container">
-    <logo-and-title :class="$style.title" />
+    <logo-and-title
+      :class="$style.title"
+      :data-can-toggle-navigation-shown="canToggleNavigationShown"
+      @click="emit('toggleNavigation')"
+    />
     <div v-if="fetchedMe" :class="$style.right">
       <admin-page-link />
       <my-icon :class="$style.myIcon" />
@@ -22,10 +26,19 @@ export default defineComponent({
     AdminPageLink,
     MyIcon
   },
-  setup() {
+  props: {
+    canToggleNavigationShown: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: {
+    toggleNavigation: () => true
+  },
+  setup(_, { emit }) {
     const store = useStore()
     const fetchedMe = computed(() => store.state.me !== null)
-    return { fetchedMe }
+    return { fetchedMe, emit }
   }
 })
 </script>
@@ -38,6 +51,9 @@ export default defineComponent({
 }
 .title {
   flex: 1;
+  &[data-can-toggle-navigation-shown='true'] {
+    cursor: pointer;
+  }
 }
 .right {
   display: flex;

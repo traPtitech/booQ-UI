@@ -45,7 +45,7 @@ export default defineComponent({
 <style lang="scss" module>
 .list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(25rem, 100%), 1fr));
   gap: 1rem;
   margin: 1rem;
 }

@@ -53,7 +53,7 @@
 import { defineComponent, PropType } from 'vue'
 import { ItemDetail } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
-import useOpener from '/@/components/UI/use/opener'
+import useOpener from '/@/use/opener'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import EditDialog from './EditDialog.vue'
 import AddOwnerDialog from './AddOwnerDialog.vue'
@@ -96,9 +96,14 @@ export default defineComponent({
     const router = useRouter()
     const { deleteItem } = useDeleteItem()
     const onDeleteClick = async () => {
-      await deleteItem({ itemID: props.item.id, itemName: props.item.name })
+      const deleted = await deleteItem({
+        itemID: props.item.id,
+        itemName: props.item.name
+      })
       togglePopup()
-      router.push('/')
+      if (deleted) {
+        router.push('/')
+      }
     }
 
     return {

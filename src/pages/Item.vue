@@ -50,16 +50,23 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   display: flex;
+  flex-wrap: wrap;
   padding: 3rem;
+
+  @media (max-width: 450px) {
+    padding: 2rem;
+  }
 }
 
 .control {
-  width: 40%;
+  min-width: min(280px, 100%);
+  flex: 4;
   max-width: 480px;
 }
 
 .information {
-  flex: 1;
+  min-width: min(430px, 100%);
+  flex: 6;
   padding: 16px;
 }
 </style>

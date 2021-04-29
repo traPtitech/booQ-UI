@@ -39,6 +39,7 @@ export default defineComponent({
   z-index: 1;
   width: 100%;
   height: 100%;
+  padding: 1rem;
   background-color: rgb(0, 0, 0, 0.5);
   top: 0;
   left: 0;
@@ -54,7 +55,7 @@ export default defineComponent({
   background-color: $color-background;
   padding: 2.5rem 3rem;
   border-radius: 8px;
-  min-width: 400px;
+  min-width: min(400px, 100%);
   margin: auto;
 }
 .title {

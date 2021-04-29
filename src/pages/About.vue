@@ -98,6 +98,10 @@ export default defineComponent({
     list-style: initial;
     margin-left: 1em;
   }
+
+  @media (max-width: 450px) {
+    padding: 2rem;
+  }
 }
 .code {
   display: inline-block;

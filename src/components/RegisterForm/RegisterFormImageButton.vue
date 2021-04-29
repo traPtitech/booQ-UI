@@ -41,7 +41,7 @@ import { defineComponent } from 'vue'
 import Icon from '/@/components/UI/Icon.vue'
 import MiniPopup from '/@/components/UI/MiniPopup.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
-import useOpener from '/@/components/UI/use/opener'
+import useOpener from '/@/use/opener'
 
 export default defineComponent({
   name: 'RegisterFormImageButton',

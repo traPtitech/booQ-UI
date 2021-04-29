@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
     <div :class="$style.titleWrapper">
-      <h2>{{ item.name }}</h2>
+      <h2 :class="$style.title">{{ item.name }}</h2>
       <like-button
         :likes="item.likes"
         :item-id="item.id"
@@ -68,6 +68,12 @@ export default defineComponent({
 
 .titleWrapper {
   display: flex;
+}
+
+.title {
+  word-break: normal;
+  overflow-wrap: break-word; // for Safari
+  overflow-wrap: anywhere;
 }
 
 .description {

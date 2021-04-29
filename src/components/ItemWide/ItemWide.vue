@@ -52,5 +52,6 @@ export default defineComponent({
   margin: 0;
   margin-bottom: 1rem;
   font-weight: bold;
+  word-break: break-all;
 }
 </style>
