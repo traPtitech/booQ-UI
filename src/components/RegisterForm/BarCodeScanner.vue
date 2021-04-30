@@ -13,7 +13,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, watchEffect, shallowRef } from 'vue'
+import {
+  defineComponent,
+  ref,
+  onMounted,
+  watchEffect,
+  shallowRef,
+  onUnmounted
+} from 'vue'
 import {
   BrowserBarcodeReader,
   VideoInputDevice,
@@ -38,15 +45,16 @@ const checkISBN = (isbn: string) =>
 export default defineComponent({
   name: 'BarCodeScanner',
   emits: {
-    search: null,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    changeCode: (code: string) => true
+    changeCode: (_code: string) => true
   },
   setup(_, context) {
     const store = useStore()
+
     const codeReader = new BrowserBarcodeReader()
     const inputs = ref<VideoInputDevice[]>([])
     const input = ref<VideoInputDevice>()
+    const videoEle = shallowRef<HTMLVideoElement>()
 
     const initialize = async () => {
       try {
@@ -65,12 +73,6 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      initialize()
-    })
-
-    const videoEle = shallowRef<HTMLVideoElement>()
-
     const start = async () => {
       const device = input.value
       if (!device || !videoEle.value) return
@@ -88,8 +90,7 @@ export default defineComponent({
             }
             const text = result.getText()
             if (!checkDigit(text) || !checkISBN(text)) return
-            context.emit('changeCode', result.getText())
-            context.emit('search')
+            context.emit('changeCode', text)
           }
         )
       } catch (e) {
@@ -112,6 +113,12 @@ export default defineComponent({
       }
     }
 
+    onMounted(() => {
+      initialize()
+    })
+    onUnmounted(() => {
+      stop()
+    })
     watchEffect(() => {
       stop()
       start()

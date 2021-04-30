@@ -13,7 +13,7 @@
         title="バーコードを読み取る"
         @close="toggleDialog"
       >
-        <bar-code-scanner />
+        <bar-code-scanner @changeCode="changeCode" />
         <button @click="toggleDialog">閉じる</button>
       </dialog-template>
     </div>
@@ -64,13 +64,21 @@ export default defineComponent({
     const { isCompleting, isValidCode, completeFromCode } = useCompleteFromCode(
       formState
     )
+
+    const changeCode = (code: string) => {
+      formState.code = code
+      toggleDialog()
+      completeFromCode()
+    }
+
     return {
       formState,
       isDialogShown,
       toggleDialog,
       isCompleting,
       isValidCode,
-      completeFromCode
+      completeFromCode,
+      changeCode
     }
   }
 })
