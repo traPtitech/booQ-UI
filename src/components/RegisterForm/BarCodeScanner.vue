@@ -1,20 +1,31 @@
 <template>
   <div :class="$style.container">
-    <video ref="$video" @play="onResume" />
+    <video ref="videoEle" @play="onResume" />
     <div v-if="inputs.length > 0">
       <select v-model="input">
-        <option v-for="input in inputs" :key="input.deviceId">
+        <option v-for="input in inputs" :key="input.deviceId" :value="input">
           {{ input.label }}
         </option>
       </select>
     </div>
-    <p>使用できるカメラが存在しません</p>
+    <p v-else>使用できるカメラが存在しません</p>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, watchEffect, shallowRef } from 'vue'
-import { BrowserBarcodeReader, VideoInputDevice } from '@zxing/library'
+import {
+  defineComponent,
+  ref,
+  onMounted,
+  watchEffect,
+  shallowRef,
+  onUnmounted
+} from 'vue'
+import {
+  BrowserBarcodeReader,
+  VideoInputDevice,
+  NotFoundException
+} from '@zxing/library'
 import { useStore } from '/@/store'
 
 const checkDigit = (isbn: string) => {
@@ -34,15 +45,16 @@ const checkISBN = (isbn: string) =>
 export default defineComponent({
   name: 'BarCodeScanner',
   emits: {
-    search: null,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    changeCode: (code: string) => true
+    changeCode: (_code: string) => true
   },
   setup(_, context) {
     const store = useStore()
+
     const codeReader = new BrowserBarcodeReader()
     const inputs = ref<VideoInputDevice[]>([])
     const input = ref<VideoInputDevice>()
+    const videoEle = shallowRef<HTMLVideoElement>()
 
     const initialize = async () => {
       try {
@@ -61,12 +73,6 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      initialize()
-    })
-
-    const videoEle = shallowRef<HTMLVideoElement>()
-
     const start = async () => {
       const device = input.value
       if (!device || !videoEle.value) return
@@ -76,14 +82,15 @@ export default defineComponent({
           videoEle.value,
           (result, err) => {
             if (!result) {
-              // eslint-disable-next-line no-console
-              console.error(err)
+              if (!(err instanceof NotFoundException)) {
+                // eslint-disable-next-line no-console
+                console.error(err)
+              }
               return
             }
             const text = result.getText()
             if (!checkDigit(text) || !checkISBN(text)) return
-            context.emit('changeCode', result.getText())
-            context.emit('search')
+            context.emit('changeCode', text)
           }
         )
       } catch (e) {
@@ -106,6 +113,12 @@ export default defineComponent({
       }
     }
 
+    onMounted(() => {
+      initialize()
+    })
+    onUnmounted(() => {
+      stop()
+    })
     watchEffect(() => {
       stop()
       start()

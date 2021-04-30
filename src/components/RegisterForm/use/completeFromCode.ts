@@ -69,6 +69,7 @@ const useCompleteFromCode = (
 
   const completeFromCode = async () => {
     if (!isValidCode.value) return
+    if (isCompleting.value) return
 
     isCompleting.value = true
     const res = await fetchFromCodeFromAny(formState.code)
