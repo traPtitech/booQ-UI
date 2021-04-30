@@ -10,7 +10,7 @@
     </div>
     <div>
       <h2>コメント</h2>
-      <item-wide-grid :items="commentedItems" :texts="comments" />
+      <comment-grid :items="commentedItems" :texts="comments" />
     </div>
   </div>
 </template>
@@ -23,14 +23,14 @@ import apis, { ItemSummary, ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import ItemFlexList from '/@/components/Item/ItemFlexList.vue'
-import ItemWideGrid from '/@/components/ItemWide/ItemWideGrid.vue'
+import CommentGrid from '/@/components/Comment/CommentGrid.vue'
 
 export default defineComponent({
   name: 'User',
   components: {
     UserIcon,
     ItemFlexList,
-    ItemWideGrid
+    CommentGrid
   },
   setup() {
     const route = useRoute()
