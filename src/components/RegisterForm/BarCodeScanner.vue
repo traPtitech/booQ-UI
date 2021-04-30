@@ -14,7 +14,11 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, watchEffect, shallowRef } from 'vue'
-import { BrowserBarcodeReader, VideoInputDevice } from '@zxing/library'
+import {
+  BrowserBarcodeReader,
+  VideoInputDevice,
+  NotFoundException
+} from '@zxing/library'
 import { useStore } from '/@/store'
 
 const checkDigit = (isbn: string) => {
@@ -76,8 +80,10 @@ export default defineComponent({
           videoEle.value,
           (result, err) => {
             if (!result) {
-              // eslint-disable-next-line no-console
-              console.error(err)
+              if (!(err instanceof NotFoundException)) {
+                // eslint-disable-next-line no-console
+                console.error(err)
+              }
               return
             }
             const text = result.getText()
