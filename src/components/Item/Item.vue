@@ -11,13 +11,13 @@
         {{ item.name }}
       </div>
       <div :class="$style.main">
+        <div :class="$style.owners">
+          {{ item.owners.map(owner => `@${owner.user.name}`).join() }}
+        </div>
         <div :class="$style.likeCount">
           <icon v-if="!item.isLiked" name="mdi:heart-outline" :size="20" />
           <icon v-else name="mdi:heart" :size="20" :class="$style.liked" />
           {{ likeCount }}
-        </div>
-        <div :class="$style.owners">
-          {{ item.owners.map(owner => `@${owner.user.name}`).join() }}
         </div>
         <slot name="controls" />
       </div>
@@ -110,8 +110,8 @@ $border-radius: 2px;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 8px;
-  background: rgba(255, 255, 255, 0.5);
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(2px);
   border-bottom-left-radius: $border-radius;
   border-bottom-right-radius: $border-radius;
@@ -129,6 +129,7 @@ $border-radius: 2px;
 .main {
   display: flex;
   align-items: center;
+  margin-top: 12px;
 }
 .name {
   display: -webkit-box;
@@ -142,13 +143,15 @@ $border-radius: 2px;
 .likeCount {
   min-width: max-content;
   margin-right: 4px;
+  display: flex;
+  margin-left: auto;
+  align-items: center;
 }
 .owners {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
   text-align: right;
-  margin-left: auto;
 }
 .icon {
   vertical-align: bottom;
