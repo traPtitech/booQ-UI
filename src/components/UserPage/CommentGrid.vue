@@ -1,7 +1,7 @@
 <template>
   <ul :class="$style.list">
-    <li v-for="(item, index) in items" :key="item.id">
-      <comment :item="item">{{ texts[index] }}</comment>
+    <li v-for="{ text, item } in comments" :key="item.id">
+      <comment :item="item">{{ text }}</comment>
     </li>
   </ul>
 </template>
@@ -17,12 +17,8 @@ export default defineComponent({
     Comment
   },
   props: {
-    items: {
-      type: Array as PropType<ItemSummary[]>,
-      required: true
-    },
-    texts: {
-      type: Array as PropType<string[]>,
+    comments: {
+      type: Array as PropType<{ text: string; item: ItemSummary }[]>,
       required: true
     }
   }

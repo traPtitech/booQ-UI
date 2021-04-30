@@ -10,7 +10,7 @@
     </div>
     <div>
       <h2>コメント</h2>
-      <comment-grid :items="commentedItems" :texts="comments" />
+      <comment-grid :comments="comments" />
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ import apis, { ItemSummary, ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import ItemFlexList from '/@/components/Item/ItemFlexList.vue'
-import CommentGrid from '/@/components/Comment/CommentGrid.vue'
+import CommentGrid from '../components/UserPage/CommentGrid.vue'
 
 export default defineComponent({
   name: 'User',
@@ -38,27 +38,30 @@ export default defineComponent({
     const state = reactive({
       username: computed(() => getFirstParam(route.params.name)),
       items: [] as ItemSummary[],
-      commentedItems: [] as ItemDetail[],
-      comments: [] as string[]
+      comments: [] as { text: string; item: ItemDetail }[]
     })
     watchEffect(async () => {
-      const { data } = await apis.getItems(state.username)
-      state.items = data
-      const { data: commentObjects } = await apis.getComments(state.username)
-      const comments = commentObjects.map(({ text }) => text)
-      const items = await Promise.all(
-        commentObjects.map(({ itemId }) =>
+      const [{ data: items }, { data: commentObjs }] = await Promise.all([
+        apis.getItems(state.username),
+        apis.getComments(state.username)
+      ])
+      const comments = await Promise.all(
+        commentObjs.map(({ itemId, text }) =>
           apis
             .getItem(itemId)
-            .then(({ data }) => data)
+            .then(({ data }) => {
+              return { text, item: data }
+            })
             // eslint-disable-next-line no-console
             .catch(error => console.error(error))
         )
       )
-      state.comments = comments.filter((_, index) => items[index])
-      state.commentedItems = items.filter<ItemDetail>(
-        (item): item is ItemDetail => !!item
-      )
+
+      state.items = items
+      state.comments = comments.filter<{
+        text: string
+        item: ItemDetail
+      }>((data): data is { text: string; item: ItemDetail } => !!data)
     })
 
     useTitle(computed(() => state.username))
