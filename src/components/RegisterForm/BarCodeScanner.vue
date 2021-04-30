@@ -8,7 +8,7 @@
         </option>
       </select>
     </div>
-    <p>使用できるカメラが存在しません</p>
+    <p v-else>使用できるカメラが存在しません</p>
   </div>
 </template>
 
