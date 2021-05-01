@@ -129,7 +129,7 @@ $border-radius: 2px;
 .main {
   display: flex;
   align-items: center;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 .name {
   display: -webkit-box;
