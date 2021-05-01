@@ -11,8 +11,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive, computed, watchEffect, toRef } from 'vue'
-import { useRoute } from 'vue-router'
-import { getFirstParam } from '/@/lib/params'
 import apis, { ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
 import Controls from '/@/components/ItemDetail/Controls.vue'
@@ -24,11 +22,15 @@ export default defineComponent({
     Controls,
     Information
   },
-  setup() {
-    const route = useRoute()
-
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props) {
     const state = reactive({
-      id: computed(() => +(getFirstParam(route.params.id) ?? '')),
+      id: computed(() => +props.id),
       item: undefined as ItemDetail | undefined
     })
     const updateItem = (item: ItemDetail) => {
