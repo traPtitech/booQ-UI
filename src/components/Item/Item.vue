@@ -142,7 +142,6 @@ $border-radius: 2px;
 }
 .likeCount {
   min-width: max-content;
-  margin-right: 4px;
   display: flex;
   margin-left: auto;
   align-items: center;
@@ -157,6 +156,6 @@ $border-radius: 2px;
   vertical-align: bottom;
 }
 .liked {
-  color: #ef4c4c;
+  color: $color-liked;
 }
 </style>
