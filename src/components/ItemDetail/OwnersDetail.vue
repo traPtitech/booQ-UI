@@ -1,9 +1,9 @@
 <template>
   <div :class="$style.container">
-    <user-icon :user-name="detail.userName" />
+    <user-icon :user-name="ownerDetail.userName" />
     <div :class="$style.numContainer">
-      <div :class="$style.remain">{{ detail.count }}</div>
-      <div :class="$style.all">{{ detail.all }}</div>
+      <div :class="$style.remain">{{ ownerDetail.count }}</div>
+      <div :class="$style.all">{{ ownerDetail.all }}</div>
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default defineComponent({
   name: 'OwnersDetail',
   components: { UserIcon },
   props: {
-    detail: {
+    ownerDetail: {
       type: Object as PropType<OwnerDetail>,
       required: true
     }

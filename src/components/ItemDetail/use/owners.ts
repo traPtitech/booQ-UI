@@ -13,6 +13,7 @@ export interface OwnerWithCount extends OwnerMayWithCount {
 
 export interface OwnerDetail extends OwnerWithCount {
   all: number
+  rentalable: boolean
 }
 
 const useOwners = (props: {
@@ -29,7 +30,8 @@ const useOwners = (props: {
       return {
         userName: owner.user.name,
         count: count,
-        all: all
+        all: all,
+        rentalable: owner.rentalable
       }
     })
   )
