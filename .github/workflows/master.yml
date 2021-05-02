@@ -10,7 +10,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
           node-version: 14.x
       - uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
       - run: npm run build
         env:
           NODE_ENV: production
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         with:
           name: dist
           path: ./dist
@@ -33,7 +33,7 @@ jobs:
         with:
           key: ${{ secrets.STAGING_SSH_KEY }}
           known_hosts: ${{ secrets.STAGING_KNOWN_HOSTS }}
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v2
         with:
           name: dist
           path: ./dist
