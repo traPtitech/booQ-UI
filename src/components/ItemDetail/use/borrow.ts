@@ -20,15 +20,17 @@ const useBorrow = (props: {
   const { admin } = useMe()
   const store = useStore()
 
-  const selectedOwnerName = ref(ownerDetails.value[0]?.userName ?? '')
+  const rentalableOwnerDetails = computed(() =>
+    ownerDetails.value.filter(o => o.rentalable)
+  )
+  const selectedOwnerName = ref(
+    rentalableOwnerDetails.value.find(o => o.count > 0)?.userName ?? ''
+  )
   const purpose = ref('')
   const dueDate = ref(new Date())
   const count = ref(1)
   const owner = computed(() =>
     props.item.owners.find(v => v.user.name === selectedOwnerName.value)
-  )
-  const rentalableOwnerDetails = computed(() =>
-    ownerDetails.value.filter(o => o.rentalable)
   )
 
   watch(
