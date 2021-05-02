@@ -22,8 +22,9 @@
         required
       />
       <input-number
-        v-if="owner && owner.count !== 1"
+        v-if="owner"
         v-model="count"
+        :disabled="owner.count === 1"
         :class="$style.item"
         label="個数"
         :max="owner.count"

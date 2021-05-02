@@ -9,6 +9,7 @@
           :value="modelValue"
           :min="min"
           :max="max"
+          :disabled="disabled"
           @input="onInput"
         />
         <slot />
@@ -42,6 +43,10 @@ export default defineComponent({
     max: {
       type: Number,
       default: undefined
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   emits: {
@@ -83,6 +88,10 @@ export default defineComponent({
   border: none;
   &:focus {
     outline: none;
+  }
+  &:disabled {
+    color: $color-text-secondary-disabled;
+    cursor: not-allowed;
   }
 }
 </style>

@@ -7,12 +7,13 @@
         :owner-details="details"
       />
       <input-number
-        v-if="owner && owner.count !== 1"
+        v-if="owner"
         v-model="count"
         :class="$style.item"
         label="個数"
         :max="owner.count"
         :min="1"
+        :disabled="owner.count === 1"
       />
       <wide-icon-button
         icon="mdi:arrow-up-bold-circle"
