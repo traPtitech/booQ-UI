@@ -5,11 +5,11 @@
       <div :class="$style.username">@{{ username }}</div>
     </h1>
     <div>
-      <h2>所有物</h2>
+      <h2 :class="$style.subtitle">所有物</h2>
       <item-flex-list :items="items" />
     </div>
     <div>
-      <h2>コメント</h2>
+      <h2 :class="$style.subtitle">コメント</h2>
       <comment-grid :comments="comments" />
     </div>
   </div>
@@ -36,7 +36,7 @@ export default defineComponent({
     const route = useRoute()
 
     const state = reactive({
-      username: computed(() => getFirstParam(route.params.name)),
+      username: computed(() => getFirstParam(route.params.name) ?? ''),
       items: [] as ItemSummary[],
       comments: [] as { text: string; item: ItemDetail }[]
     })
@@ -45,23 +45,27 @@ export default defineComponent({
         apis.getItems(state.username),
         apis.getComments(state.username)
       ])
-      const comments = await Promise.all(
-        commentObjs.map(({ itemId, text }) =>
-          apis
-            .getItem(itemId)
-            .then(({ data }) => {
-              return { text, item: data }
-            })
-            // eslint-disable-next-line no-console
-            .catch(error => console.error(error))
-        )
+      const comments = await Promise.allSettled(
+        commentObjs.map(async ({ itemId, text }) => ({
+          text,
+          item: (await apis.getItem(itemId)).data
+        }))
       )
 
       state.items = items
-      state.comments = comments.filter<{
-        text: string
-        item: ItemDetail
-      }>((data): data is { text: string; item: ItemDetail } => !!data)
+      state.comments = comments
+        .filter((res): res is PromiseFulfilledResult<{
+          text: string
+          item: ItemDetail
+        }> => {
+          if (res.status === 'rejected') {
+            // eslint-disable-next-line no-console
+            console.error(res.reason)
+            return false
+          }
+          return true
+        })
+        .map(res => res.value)
     })
 
     useTitle(computed(() => state.username))
@@ -82,7 +86,7 @@ export default defineComponent({
 .username {
   padding: 1rem;
 }
-h2 {
+.subtitle {
   padding: 2rem 0 0.5rem 0;
 }
 </style>
