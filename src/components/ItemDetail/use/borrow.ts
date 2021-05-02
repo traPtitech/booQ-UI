@@ -8,7 +8,7 @@ import { useStore } from '/@/store'
 const useBorrow = (props: {
   item: ItemDetail
 }): {
-  details: ComputedRef<OwnerDetail[]>
+  rentalableOwnerDetails: ComputedRef<OwnerDetail[]>
   selectedOwnerName: Ref<string>
   purpose: Ref<string>
   dueDate: Ref<Date>
@@ -16,20 +16,23 @@ const useBorrow = (props: {
   owner: ComputedRef<Owner | undefined>
   borrow: () => Promise<Log | undefined>
 } => {
-  const { details } = useOwners(props)
+  const { ownerDetails } = useOwners(props)
   const { admin } = useMe()
   const store = useStore()
 
-  const selectedOwnerName = ref(details.value[0]?.userName ?? '')
+  const selectedOwnerName = ref(ownerDetails.value[0]?.userName ?? '')
   const purpose = ref('')
   const dueDate = ref(new Date())
   const count = ref(1)
   const owner = computed(() =>
     props.item.owners.find(v => v.user.name === selectedOwnerName.value)
   )
+  const rentalableOwnerDetails = computed(() =>
+    ownerDetails.value.filter(o => o.rentalable)
+  )
 
   watch(
-    details,
+    ownerDetails,
     (newDetails, oldDetails) => {
       if ((!oldDetails || oldDetails.length === 0) && newDetails.length > 0) {
         return
@@ -85,7 +88,7 @@ const useBorrow = (props: {
     }
   }
   return {
-    details,
+    rentalableOwnerDetails,
     selectedOwnerName,
     purpose,
     dueDate,
