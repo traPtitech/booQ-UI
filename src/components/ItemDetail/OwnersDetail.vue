@@ -1,6 +1,13 @@
 <template>
   <div :class="$style.container">
-    <user-icon :user-name="ownerDetail.userName" />
+    <div :class="$style.userIconWrapper">
+      <icon
+        v-if="!ownerDetail.rentalable"
+        :class="$style.icon"
+        name="mdi:cancel"
+      />
+      <user-icon :user-name="ownerDetail.userName" />
+    </div>
     <div :class="$style.numContainer">
       <div :class="$style.remain">{{ ownerDetail.count }}</div>
       <div :class="$style.all">{{ ownerDetail.all }}</div>
@@ -12,10 +19,14 @@
 import { defineComponent, PropType } from 'vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import { OwnerDetail } from './use/owners'
+import Icon from '/@/components/UI/Icon.vue'
 
 export default defineComponent({
   name: 'OwnersDetail',
-  components: { UserIcon },
+  components: {
+    Icon,
+    UserIcon
+  },
   props: {
     ownerDetail: {
       type: Object as PropType<OwnerDetail>,
@@ -31,6 +42,18 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   display: flex;
+}
+
+.userIconWrapper {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: $color-text-secondary;
+  pointer-events: none;
 }
 
 .numContainer {
