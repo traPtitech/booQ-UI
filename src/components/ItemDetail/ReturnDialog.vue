@@ -4,7 +4,7 @@
       <owner-selector
         v-model="selectedOwnerName"
         :class="$style.item"
-        :details="details"
+        :owner-details="details"
       />
       <input-number
         v-if="owner && owner.count !== 1"

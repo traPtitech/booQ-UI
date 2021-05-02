@@ -4,7 +4,7 @@
       <owner-selector
         v-model="selectedOwnerName"
         :class="$style.item"
-        :details="details"
+        :owner-details="ownerDetails"
       />
       <input-text
         v-model="purpose"
@@ -72,7 +72,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const {
-      details,
+      ownerDetails,
       selectedOwnerName,
       purpose,
       dueDate,
@@ -92,7 +92,7 @@ export default defineComponent({
     }
     return {
       close,
-      details,
+      ownerDetails,
       selectedOwnerName,
       purpose,
       dueDate,

@@ -1,5 +1,5 @@
 import { computed, ComputedRef } from 'vue'
-import { ItemDetail } from '/@/lib/apis'
+import { ItemDetail, ItemSummary } from '/@/lib/apis'
 import { getRemainByOwnerID } from '/@/lib/item'
 
 export interface OwnerMayWithCount {
@@ -16,9 +16,9 @@ export interface OwnerDetail extends OwnerWithCount {
 }
 
 const useOwners = (props: {
-  item: ItemDetail
-}): { details: ComputedRef<OwnerDetail[]> } => {
-  const details = computed(() =>
+  item: ItemSummary | ItemDetail
+}): { ownerDetails: ComputedRef<OwnerDetail[]> } => {
+  const ownerDetails = computed(() =>
     props.item.owners.map(owner => {
       const count = getRemainByOwnerID(
         owner.ownerId,
@@ -33,7 +33,7 @@ const useOwners = (props: {
       }
     })
   )
-  return { details }
+  return { ownerDetails }
 }
 
 export default useOwners
