@@ -13,7 +13,7 @@ const useDeleteItem = (): {
     itemID: number
     itemName: string
   }): Promise<boolean> => {
-    if (!window.confirm('本当に削除しますか？')) {
+    if (!window.confirm('本当にこの物品を削除しますか？')) {
       return false
     }
 
