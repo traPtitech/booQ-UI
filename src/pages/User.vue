@@ -19,7 +19,7 @@
 import { defineComponent, reactive, computed, watchEffect, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
-import apis, { ItemSummary, ItemDetail } from '/@/lib/apis'
+import apis, { ItemSummary } from '/@/lib/apis'
 import useTitle from './use/title'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import ItemFlexList from '/@/components/Item/ItemFlexList.vue'
@@ -38,34 +38,18 @@ export default defineComponent({
     const state = reactive({
       username: computed(() => getFirstParam(route.params.name) ?? ''),
       items: [] as ItemSummary[],
-      comments: [] as { text: string; item: ItemDetail }[]
+      comments: [] as { text: string; item: ItemSummary }[]
     })
     watchEffect(async () => {
-      const [{ data: items }, { data: commentObjs }] = await Promise.all([
+      const [{ data: items }, { data: comments }] = await Promise.all([
         apis.getItems(state.username),
         apis.getComments(state.username)
       ])
-      const comments = await Promise.allSettled(
-        commentObjs.map(async ({ itemId, text }) => ({
-          text,
-          item: (await apis.getItem(itemId)).data
-        }))
-      )
-
       state.items = items
-      state.comments = comments
-        .filter((res): res is PromiseFulfilledResult<{
-          text: string
-          item: ItemDetail
-        }> => {
-          if (res.status === 'rejected') {
-            // eslint-disable-next-line no-console
-            console.error(res.reason)
-            return false
-          }
-          return true
-        })
-        .map(res => res.value)
+      state.comments = comments.map(({ text, item }) => ({
+        text,
+        item
+      }))
     })
 
     useTitle(computed(() => state.username))
