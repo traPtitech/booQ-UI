@@ -1,7 +1,7 @@
 <template>
   <ul :class="$style.list">
     <li v-for="{ text, item } in comments" :key="item.id">
-      <comment :item="item">{{ text }}</comment>
+      <comment :text="text" :item="item" />
     </li>
   </ul>
 </template>
@@ -28,7 +28,7 @@ export default defineComponent({
 <style lang="scss" module>
 .list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   gap: 16px;
 }
 </style>

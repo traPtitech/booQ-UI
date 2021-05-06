@@ -1,11 +1,11 @@
 <template>
-  <div :class="$style.container" @click="onClick">
-    <div :class="$style.header">
+  <div :class="$style.container">
+    <div :class="$style.header" @click="onClick">
       <img :class="$style.img" :src="imgUrl" />
       <h4 :class="$style.title">{{ item.name }}</h4>
     </div>
     <div :class="$style.content">
-      <slot />
+      {{ text }}
     </div>
   </div>
 </template>
@@ -19,6 +19,10 @@ import NoImg from '/@/assets/img/no-image.svg'
 export default defineComponent({
   name: 'ItemWide',
   props: {
+    text: {
+      type: String,
+      required: true
+    },
     item: {
       type: Object as PropType<ItemSummary>,
       required: true
@@ -45,6 +49,7 @@ export default defineComponent({
 .img {
   width: 2rem;
   height: auto;
+  margin-bottom: auto;
 }
 .content {
   text-align: left;
@@ -54,6 +59,11 @@ export default defineComponent({
   margin-bottom: 0.5rem;
 }
 .title {
-  margin: 0.5rem 0 0 0.5rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  margin: 0.2rem 0 0 0.5rem;
+  word-break: break-all;
+  overflow: hidden;
 }
 </style>
