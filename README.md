@@ -1,6 +1,5 @@
 # booQ-UI
 ![CI](https://github.com/traPtitech/booQ-UI/workflows/CI/badge.svg)
-[![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=traPtitech/booQ-UI)](https://dependabot.com)
 
 booQ Frontend
 

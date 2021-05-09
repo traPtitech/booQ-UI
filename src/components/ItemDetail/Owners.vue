@@ -2,10 +2,10 @@
   <detail-summary title="所有者">
     <div :class="$style.detailContainer">
       <owners-detail
-        v-for="detail in details"
-        :key="detail.userName"
+        v-for="ownerDetail in ownerDetails"
+        :key="ownerDetail.userName"
         :class="$style.detail"
-        :detail="detail"
+        :owner-detail="ownerDetail"
       />
     </div>
   </detail-summary>
@@ -31,8 +31,8 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { details } = useOwners(props)
-    return { details }
+    const { ownerDetails } = useOwners(props)
+    return { ownerDetails }
   }
 })
 </script>

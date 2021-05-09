@@ -5,7 +5,7 @@
         v-if="isAdmin"
         v-model="ownerName"
         :class="$style.item"
-        :details="details"
+        :owner-details="details"
       />
       <input-checkbox
         v-model="rentalable"

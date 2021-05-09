@@ -4,7 +4,7 @@
       <owner-selector
         v-model="selectedOwnerName"
         :class="$style.item"
-        :details="details"
+        :owner-details="rentalableOwnerDetails"
       />
       <input-text
         v-model="purpose"
@@ -22,8 +22,9 @@
         required
       />
       <input-number
-        v-if="owner && owner.count !== 1"
+        v-if="owner"
         v-model="count"
+        :disabled="owner.count === 1"
         :class="$style.item"
         label="個数"
         :max="owner.count"
@@ -72,7 +73,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const {
-      details,
+      rentalableOwnerDetails,
       selectedOwnerName,
       purpose,
       dueDate,
@@ -92,7 +93,7 @@ export default defineComponent({
     }
     return {
       close,
-      details,
+      rentalableOwnerDetails,
       selectedOwnerName,
       purpose,
       dueDate,

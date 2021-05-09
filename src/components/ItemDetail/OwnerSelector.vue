@@ -13,7 +13,7 @@ export default defineComponent({
     Selector
   },
   props: {
-    details: {
+    ownerDetails: {
       type: Object as PropType<OwnerMayWithCount[]>,
       required: true
     },
@@ -36,7 +36,7 @@ export default defineComponent({
       }
     })
     const options = computed(() =>
-      props.details.map(d => ({
+      props.ownerDetails.map(d => ({
         key: d.userName,
         label: `${d.userName} ${d.count ? `(${d.count})` : ''}`,
         disabled: d.count === 0

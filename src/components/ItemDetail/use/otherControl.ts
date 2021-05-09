@@ -1,5 +1,5 @@
 import { Ref, computed, ComputedRef } from 'vue'
-import { ItemDetail } from '/@/lib/apis'
+import { ItemDetail, ItemType } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import useNonOwnerTypes from './nonOwnerTypes'
 import { isOwner } from '/@/lib/item'
@@ -16,7 +16,10 @@ const useOtherControl = (props: {
 
   const isMeOwner = computed(() => isOwner(id.value, props.item.owners))
   const isDisabledAddOwnerButton = computed(
-    () => (!isAdmin.value && !!isMeOwner.value) || firstNonOwnType.value === -1
+    () =>
+      props.item.type === ItemType.equipment ||
+      (!isAdmin.value && !!isMeOwner.value) ||
+      firstNonOwnType.value === -1
   )
 
   return {

@@ -5,7 +5,7 @@
         v-if="isAdmin"
         v-model="ownerName"
         :class="$style.item"
-        :details="details"
+        :owner-details="ownerDetails"
       />
       <input-checkbox
         v-model="rentalable"
@@ -42,8 +42,9 @@ import useEditItem from './use/editItem'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 
-const getInitialOwner = (details: OwnerWithCount[], name: string) => {
-  const initialOwner = details.find(v => v.userName === name) ?? details[0]
+const getInitialOwner = (ownerDetails: OwnerWithCount[], name: string) => {
+  const initialOwner =
+    ownerDetails.find(v => v.userName === name) ?? ownerDetails[0]
   return initialOwner?.userName ?? ''
 }
 
@@ -69,9 +70,9 @@ export default defineComponent({
   setup(props, context) {
     const { editItem } = useEditItem()
     const { name: meName, admin: isAdmin } = useMe()
-    const { details } = useOwners(props)
+    const { ownerDetails } = useOwners(props)
 
-    const ownerName = ref(getInitialOwner(details.value, meName.value))
+    const ownerName = ref(getInitialOwner(ownerDetails.value, meName.value))
     const ownInfo = computed(() =>
       props.item.owners.find(v => v.user.name === ownerName.value)
     )
@@ -90,7 +91,8 @@ export default defineComponent({
         ownInfo.value?.count === count.value
     )
     const remain = computed(
-      () => details.value.find(v => v.userName === ownerName.value)?.count ?? 0
+      () =>
+        ownerDetails.value.find(v => v.userName === ownerName.value)?.count ?? 0
     )
 
     const close = () => {
@@ -118,7 +120,7 @@ export default defineComponent({
       submit,
       initCount,
       remain,
-      details
+      ownerDetails
     }
   }
 })

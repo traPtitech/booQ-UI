@@ -17,8 +17,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive, computed, watchEffect, toRefs } from 'vue'
-import { useRoute } from 'vue-router'
-import { getFirstParam } from '/@/lib/params'
 import apis, { ItemSummary, Comment } from '/@/lib/apis'
 import useTitle from './use/title'
 import UserIcon from '/@/components/UI/UserIcon.vue'
@@ -32,11 +30,15 @@ export default defineComponent({
     ItemFlexList,
     CommentGrid
   },
-  setup() {
-    const route = useRoute()
-
+  props: {
+    name: {
+      type: String,
+      required: true
+    }
+  },
+  setup(props) {
     const state = reactive({
-      username: computed(() => getFirstParam(route.params.name) ?? ''),
+      username: computed(() => props.name),
       items: [] as ItemSummary[],
       comments: [] as Comment[]
     })

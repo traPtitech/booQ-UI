@@ -11,7 +11,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/users/:name',
     name: 'User Page',
-    component: () => import('/@/pages/User.vue')
+    component: () => import('/@/pages/User.vue'),
+    props: true
   },
   {
     path: '/items',
@@ -39,7 +40,8 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/items/:id',
     name: 'Item',
-    component: () => import('/@/pages/Item.vue')
+    component: () => import('/@/pages/Item.vue'),
+    props: true
   },
   {
     path: '/admin',
