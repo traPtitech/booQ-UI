@@ -1,9 +1,7 @@
 <template>
   <ul :class="$style.list">
-    <li v-for="item in items" :key="item.id">
-      <div :class="$style.item">
-        <item :item="item" />
-      </div>
+    <li v-for="item in items" :key="item.id" :class="$style.item">
+      <item :item="item" />
     </li>
   </ul>
 </template>
@@ -39,11 +37,12 @@ export default defineComponent({
 }
 
 .list::-webkit-scrollbar-thumb {
-  background-color: rgba(84, 110, 122, 1);
+  background-color: $color-text-secondary;
   border-radius: 10px;
 }
 
 .item {
   width: 14rem;
+  flex-shrink: 0;
 }
 </style>

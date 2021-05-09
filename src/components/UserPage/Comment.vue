@@ -48,21 +48,21 @@ export default defineComponent({
 }
 .img {
   width: 2rem;
-  height: auto;
-  margin-bottom: auto;
 }
 .content {
   text-align: left;
 }
 .header {
   display: flex;
+  align-items: center;
   margin-bottom: 0.5rem;
 }
 .title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  margin: 0.2rem 0 0 0.5rem;
+  margin: 0;
+  margin-left: 0.5rem;
   word-break: break-all;
   overflow: hidden;
 }

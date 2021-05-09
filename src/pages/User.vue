@@ -19,7 +19,7 @@
 import { defineComponent, reactive, computed, watchEffect, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
-import apis, { ItemSummary } from '/@/lib/apis'
+import apis, { ItemSummary, Comment } from '/@/lib/apis'
 import useTitle from './use/title'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import ItemFlexList from '/@/components/Item/ItemFlexList.vue'
@@ -38,18 +38,15 @@ export default defineComponent({
     const state = reactive({
       username: computed(() => getFirstParam(route.params.name) ?? ''),
       items: [] as ItemSummary[],
-      comments: [] as { text: string; item: ItemSummary }[]
+      comments: [] as Comment[]
     })
     watchEffect(async () => {
-      const [{ data: items }, { data: comments }] = await Promise.all([
-        apis.getItems(state.username),
-        apis.getComments(state.username)
-      ])
-      state.items = items
-      state.comments = comments.map(({ text, item }) => ({
-        text,
-        item
-      }))
+      const { data } = await apis.getItems(state.username)
+      state.items = data
+    })
+    watchEffect(async () => {
+      const { data } = await apis.getComments(state.username)
+      state.comments = data
     })
 
     useTitle(computed(() => state.username))
@@ -66,6 +63,7 @@ export default defineComponent({
 }
 .header {
   display: flex;
+  align-items: center;
 }
 .username {
   padding: 1rem;

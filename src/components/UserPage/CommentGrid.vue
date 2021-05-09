@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import { Comment as CommentType } from '/@/lib/apis'
 import Comment from './Comment.vue'
 
 export default defineComponent({
@@ -18,7 +18,7 @@ export default defineComponent({
   },
   props: {
     comments: {
-      type: Array as PropType<{ text: string; item: ItemSummary }[]>,
+      type: Array as PropType<CommentType[]>,
       required: true
     }
   }
