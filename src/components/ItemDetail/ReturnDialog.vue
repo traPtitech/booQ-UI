@@ -53,9 +53,8 @@ export default defineComponent({
     updateItem: () => true
   },
   setup(props, context) {
-    const { details, selectedOwnerName, count, owner, returnItem } = useReturn(
-      props
-    )
+    const { details, selectedOwnerName, count, owner, returnItem } =
+      useReturn(props)
     const close = () => {
       context.emit('close')
     }

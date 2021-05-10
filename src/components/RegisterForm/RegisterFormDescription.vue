@@ -61,9 +61,8 @@ export default defineComponent({
   setup() {
     const { formState } = useFormState()
     const { isOpen: isDialogShown, toggle: toggleDialog } = useOpener()
-    const { isCompleting, isValidCode, completeFromCode } = useCompleteFromCode(
-      formState
-    )
+    const { isCompleting, isValidCode, completeFromCode } =
+      useCompleteFromCode(formState)
 
     const changeCode = (code: string) => {
       formState.code = code

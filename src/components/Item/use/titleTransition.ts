@@ -5,7 +5,7 @@ const lines = '3'
 const getLineClampedHeight = ($ref: HTMLElement) => {
   const width = $ref.clientWidth
   const $ninja = $ref.cloneNode(true) as HTMLElement
-  $ninja.style.height = (null as unknown) as string
+  $ninja.style.height = null as unknown as string
   $ninja.style.width = `${width}px`
   $ninja.style.webkitLineClamp = lines
   $ninja.style.position = 'fixed'

@@ -44,7 +44,7 @@ export default defineComponent({
 
       // 型変換しているのはreadOnlyのopenapiの生成がうまくいかないため
       try {
-        const res = await apis.postItem((formState as unknown) as ItemPosted)
+        const res = await apis.postItem(formState as unknown as ItemPosted)
         await addOwner({
           itemID: res.data.id,
           ownerType: formState.type,

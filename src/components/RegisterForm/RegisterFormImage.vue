@@ -46,10 +46,8 @@ export default defineComponent({
     'update:modelValue': (_v: string) => true
   },
   setup(props, context) {
-    const {
-      isOpen: isUrlInputDialogOpen,
-      toggle: toggleUrlInputDialog
-    } = useOpener()
+    const { isOpen: isUrlInputDialogOpen, toggle: toggleUrlInputDialog } =
+      useOpener()
     const { isUploading, startUpload } = useImageUpload(url => {
       context.emit('update:modelValue', url)
     })
