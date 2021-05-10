@@ -1,14 +1,14 @@
 <template>
   <div :class="$style.container">
     <h1 :class="$style.header">
-      <user-icon :user-name="username" :size="64" />
-      <div :class="$style.username">@{{ username }}</div>
+      <user-icon :user-name="name" :size="64" />
+      <div :class="$style.username">@{{ name }}</div>
     </h1>
-    <div>
+    <div :class="$style.item">
       <h2 :class="$style.subtitle">所有物</h2>
       <item-flex-list :items="items" />
     </div>
-    <div>
+    <div :class="$style.item">
       <h2 :class="$style.subtitle">コメント</h2>
       <comment-grid :comments="comments" />
     </div>
@@ -16,12 +16,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, watchEffect, toRefs } from 'vue'
+import { defineComponent, watchEffect, toRef, ref } from 'vue'
 import apis, { ItemSummary, Comment } from '/@/lib/apis'
 import useTitle from './use/title'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import ItemFlexList from '/@/components/Item/ItemFlexList.vue'
-import CommentGrid from '../components/UserPage/CommentGrid.vue'
+import CommentGrid from '/@/components/UserPage/CommentGrid.vue'
 
 export default defineComponent({
   name: 'User',
@@ -37,23 +37,21 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const state = reactive({
-      username: computed(() => props.name),
-      items: [] as ItemSummary[],
-      comments: [] as Comment[]
-    })
+    useTitle(toRef(props, 'name'))
+
+    const items = ref<ItemSummary[]>([])
     watchEffect(async () => {
-      const { data } = await apis.getItems(state.username)
-      state.items = data
-    })
-    watchEffect(async () => {
-      const { data } = await apis.getComments(state.username)
-      state.comments = data
+      const { data } = await apis.getItems(props.name)
+      items.value = data
     })
 
-    useTitle(computed(() => state.username))
+    const comments = ref<Comment[]>([])
+    watchEffect(async () => {
+      const { data } = await apis.getComments(props.name)
+      comments.value = data
+    })
 
-    return { ...toRefs(state) }
+    return { items, comments }
   }
 })
 </script>
@@ -66,11 +64,22 @@ export default defineComponent({
 .header {
   display: flex;
   align-items: center;
+  margin: 0;
+}
+.item {
+  margin: 3rem 0;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 .username {
   padding: 1rem;
 }
 .subtitle {
-  padding: 2rem 0 0.5rem 0;
+  margin: 0;
+  padding-bottom: 0.5rem;
 }
 </style>

@@ -1,16 +1,11 @@
 <template>
-  <img
-    :src="iconUri"
-    :width="size"
-    :height="size"
-    :class="$style.icon"
-    @click="onClick"
-  />
+  <router-link :class="$style.container" :to="`/users/${userName}`">
+    <img :src="iconUri" :width="size" :height="size" />
+  </router-link>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'UserIcon',
@@ -25,24 +20,22 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const router = useRouter()
     const iconUri = computed(
       () => `https://q.trap.jp/api/v3/public/icon/${props.userName}`
     )
-
-    const onClick = () => {
-      router.push(`/users/${props.userName}`)
-    }
-
-    return { iconUri, onClick }
+    return { iconUri }
   }
 })
 </script>
 
 <style lang="scss" module>
-.icon {
+.container {
+  display: flex;
+  justify-content: center;
+  align-content: center;
   border-radius: 50%;
   cursor: pointer;
+  overflow: hidden;
 
   box-shadow: 0 0 0px 2px transparent;
   &:hover {

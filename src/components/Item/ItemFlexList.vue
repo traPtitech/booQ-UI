@@ -30,15 +30,7 @@ export default defineComponent({
   display: flex;
   overflow-x: scroll;
   gap: 16px;
-}
-
-.list::-webkit-scrollbar {
-  height: 10px;
-}
-
-.list::-webkit-scrollbar-thumb {
-  background-color: $color-text-secondary;
-  border-radius: 10px;
+  padding: 4px;
 }
 
 .item {

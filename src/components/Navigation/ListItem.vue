@@ -1,8 +1,10 @@
 <template>
-  <li :class="$style.container" :data-is-selected="isActive" @click="navigate">
-    <icon :class="$style.icon" :name="icon" />
-    <div :class="$style.title">{{ name }}</div>
-  </li>
+  <router-link :to="route" :class="$style.wrapper">
+    <li :class="$style.container" :data-is-selected="isActive">
+      <icon :class="$style.icon" :name="icon" />
+      <div :class="$style.title">{{ name }}</div>
+    </li>
+  </router-link>
 </template>
 
 <script lang="ts">
@@ -30,16 +32,19 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { isActive, navigate } = useLink({
+    const { isActive, route, navigate } = useLink({
       to: toRef(props, 'path')
     })
 
-    return { isActive, navigate }
+    return { isActive, route, navigate }
   }
 })
 </script>
 
 <style lang="scss" module>
+.wrapper {
+  display: block;
+}
 .container {
   display: flex;
   align-items: center;

@@ -1,15 +1,11 @@
 <template>
-  <icon
-    v-if="isAdmin"
-    name="mdi:cogs"
-    :class="$style.container"
-    @click="onClick"
-  />
+  <router-link v-if="isAdmin" to="/admin">
+    <icon name="mdi:cogs" :class="$style.container" />
+  </router-link>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useRouter } from 'vue-router'
 import Icon from '/@/components/UI/Icon.vue'
 import useMe from '/@/use/me'
 
@@ -20,13 +16,7 @@ export default defineComponent({
   },
   setup() {
     const { admin: isAdmin } = useMe()
-    const router = useRouter()
-
-    const onClick = () => {
-      router.push('/admin')
-    }
-
-    return { isAdmin, onClick }
+    return { isAdmin }
   }
 })
 </script>

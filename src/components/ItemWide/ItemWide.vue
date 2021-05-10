@@ -1,16 +1,15 @@
 <template>
-  <div :class="$style.container" @click="onClick">
+  <router-link :class="$style.container" :to="`/items/${item.id}`">
     <img :class="$style.img" :src="imgUrl" />
     <div :class="$style.content">
       <h3 :class="$style.title">{{ item.name }}</h3>
       <slot />
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
 
@@ -23,15 +22,8 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const router = useRouter()
-
-    const imgUrl = computed(() =>
-      props.item.imgUrl ? props.item.imgUrl : NoImg
-    )
-    const onClick = () => {
-      router.push(`/items/${props.item.id}`)
-    }
-    return { imgUrl, onClick }
+    const imgUrl = computed(() => props.item.imgUrl || NoImg)
+    return { imgUrl }
   }
 })
 </script>

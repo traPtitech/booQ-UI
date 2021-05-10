@@ -1,9 +1,11 @@
 <template>
-  <div :class="$style.container">
-    <div :class="$style.header" @click="onClick">
-      <img :class="$style.img" :src="imgUrl" />
-      <h4 :class="$style.title">{{ item.name }}</h4>
-    </div>
+  <div>
+    <router-link :to="`/items/${item.id}`">
+      <div :class="$style.header">
+        <img :class="$style.img" :src="imgUrl" />
+        <h4 :class="$style.title">{{ item.name }}</h4>
+      </div>
+    </router-link>
     <div :class="$style.content">
       {{ text }}
     </div>
@@ -12,7 +14,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
 
@@ -29,23 +30,13 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const router = useRouter()
-
-    const imgUrl = computed(() =>
-      props.item.imgUrl ? props.item.imgUrl : NoImg
-    )
-    const onClick = () => {
-      router.push(`/items/${props.item.id}`)
-    }
-    return { imgUrl, onClick }
+    const imgUrl = computed(() => props.item.imgUrl || NoImg)
+    return { imgUrl }
   }
 })
 </script>
 
 <style lang="scss" module>
-.container {
-  cursor: pointer;
-}
 .img {
   width: 2rem;
 }
@@ -56,6 +47,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
+  cursor: pointer;
 }
 .title {
   display: -webkit-box;

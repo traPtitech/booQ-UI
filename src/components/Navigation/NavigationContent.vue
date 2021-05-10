@@ -4,14 +4,12 @@
     <list :class="$style.list" />
     <div :class="$style.footer">
       <span :class="$style.version">booQ Project v{{ version }}</span>
-      <button :class="$style.aboutButton" @click="onClickAbout">?</button>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useRouter } from 'vue-router'
 import version from '/@/lib/version'
 import Search from './Search.vue'
 import List from './List.vue'
@@ -23,13 +21,7 @@ export default defineComponent({
     List
   },
   setup() {
-    const router = useRouter()
-
-    const onClickAbout = () => {
-      router.push('/about')
-    }
-
-    return { onClickAbout, version }
+    return { version }
   }
 })
 </script>
@@ -64,10 +56,5 @@ export default defineComponent({
 .version {
   flex: 1;
   margin-right: 1rem;
-}
-.aboutButton {
-  width: 2em;
-  height: 2em;
-  cursor: pointer;
 }
 </style>

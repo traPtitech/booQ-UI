@@ -1,0 +1,38 @@
+@import "./common";
+
+$scrollbar-color: $color-text-secondary-pale;
+$scrollbar-hover-color: $color-text-secondary;
+$scrollbar-width: 10px;
+
+* {
+  scrollbar-color: $scrollbar-color transparent;
+  transition: scrollbar-color .3s;
+  &:hover, &:active {
+    scrollbar-color: $scrollbar-hover-color transparent;
+  }
+
+  &::-webkit-scrollbar {
+    width: $scrollbar-width;
+    height: $scrollbar-width;
+  }
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar-track {
+    &:hover {
+      background: transparent
+    }
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $scrollbar-color;
+    transition: background .3s;
+    border-radius: $scrollbar-width;
+    &:hover {
+      background: $scrollbar-hover-color;
+    }
+  }
+  &::-webkit-scrollbar-corner {
+    visibility: hidden;
+    display: none;
+  }
+}
