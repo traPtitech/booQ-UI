@@ -31,9 +31,7 @@ export default defineComponent({
   setup(props) {
     const router = useRouter()
 
-    const imgUrl = computed(() =>
-      props.item.imgUrl ? props.item.imgUrl : NoImg
-    )
+    const imgUrl = computed(() => props.item.imgUrl || NoImg)
     const onClick = () => {
       router.push(`/items/${props.item.id}`)
     }
