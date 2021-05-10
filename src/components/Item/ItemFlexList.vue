@@ -30,6 +30,7 @@ export default defineComponent({
   display: flex;
   overflow-x: scroll;
   gap: 16px;
+  padding: 4px;
 }
 
 .item {
