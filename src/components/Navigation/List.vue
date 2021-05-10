@@ -39,7 +39,8 @@ export default defineComponent({
         icon: 'mdi:book-open-page-variant',
         path: '/items/property'
       },
-      { name: 'Register Item', icon: 'mdi:plus-box', path: '/items/new' }
+      { name: 'Register Item', icon: 'mdi:plus-box', path: '/items/new' },
+      { name: 'About', icon: 'mdi:help-box', path: '/about' }
     ]
     return { items }
   }

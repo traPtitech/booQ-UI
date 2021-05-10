@@ -4,9 +4,6 @@
     <list :class="$style.list" />
     <div :class="$style.footer">
       <span :class="$style.version">booQ Project v{{ version }}</span>
-      <router-link to="/about">
-        <button :class="$style.aboutButton">?</button>
-      </router-link>
     </div>
   </nav>
 </template>
@@ -59,10 +56,5 @@ export default defineComponent({
 .version {
   flex: 1;
   margin-right: 1rem;
-}
-.aboutButton {
-  width: 2em;
-  height: 2em;
-  cursor: pointer;
 }
 </style>
