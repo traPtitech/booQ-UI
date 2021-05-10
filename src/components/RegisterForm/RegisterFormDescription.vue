@@ -89,9 +89,12 @@ export default defineComponent({
   cursor: pointer;
 }
 .completeButton {
-  height: 36px;
+  $height: 36px;
+
+  height: $height;
   width: max-content;
   margin: 1.5rem 0;
+  border-radius: $height / 2;
 }
 .item {
   margin: 1.5rem 0;
