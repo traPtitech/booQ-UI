@@ -32,15 +32,6 @@ export default defineComponent({
   gap: 16px;
 }
 
-.list::-webkit-scrollbar {
-  height: 10px;
-}
-
-.list::-webkit-scrollbar-thumb {
-  background-color: $color-text-secondary;
-  border-radius: 10px;
-}
-
 .item {
   width: 14rem;
   flex-shrink: 0;
