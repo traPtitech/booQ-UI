@@ -84,14 +84,11 @@ export default defineComponent({
     const { isOpen: isPopupOpen, toggle: togglePopup } = useOpener()
 
     const { isOpen: isOpenEditDialog, toggle: toggleEditDialog } = useOpener()
-    const {
-      isOpen: isOpenAddOwnerDialog,
-      toggle: toggleAddOwnerDialog
-    } = useOpener()
+    const { isOpen: isOpenAddOwnerDialog, toggle: toggleAddOwnerDialog } =
+      useOpener()
 
-    const { isMeOwner, isAdmin, isDisabledAddOwnerButton } = useOtherControl(
-      props
-    )
+    const { isMeOwner, isAdmin, isDisabledAddOwnerButton } =
+      useOtherControl(props)
 
     const router = useRouter()
     const { deleteItem } = useDeleteItem()

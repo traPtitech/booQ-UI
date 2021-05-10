@@ -73,14 +73,10 @@ export default defineComponent({
       context.emit('updateItem', (await apis.getItem(props.item.id)).data)
     const imgUrl = computed(() => props.item.imgUrl || NoImg)
 
-    const {
-      isOpen: isOpenBorrowDialog,
-      toggle: toggleBorrowDialog
-    } = useOpener()
-    const {
-      isOpen: isOpenReturnDialog,
-      toggle: toggleReturnDialog
-    } = useOpener()
+    const { isOpen: isOpenBorrowDialog, toggle: toggleBorrowDialog } =
+      useOpener()
+    const { isOpen: isOpenReturnDialog, toggle: toggleReturnDialog } =
+      useOpener()
 
     const { id: myId } = useMe()
     const isBorrowDisabled = computed(
