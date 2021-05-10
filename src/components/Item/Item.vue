@@ -1,7 +1,7 @@
 <template>
-  <div
+  <router-link
     :class="$style.wrapper"
-    @click="onClick"
+    :to="`/items/${item.id}`"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
@@ -22,12 +22,11 @@
         <slot name="controls" />
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, computed, ref, shallowRef } from 'vue'
-import { useRouter } from 'vue-router'
 import { ItemSummary } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import NoImg from '/@/assets/img/no-image.svg'
@@ -56,15 +55,10 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const router = useRouter()
-
     const imgUrl = computed(() => props.item.imgUrl || NoImg)
     const likeCount = computed(() =>
       props.item.likeCounts > 0 ? props.item.likeCounts : ''
     )
-    const onClick = () => {
-      router.push(`/items/${props.item.id}`)
-    }
 
     const titleEle = shallowRef<HTMLElement | null>(null)
     const { isHovered, onMouseEnter, onMouseLeave } = useHover()
@@ -73,7 +67,6 @@ export default defineComponent({
     return {
       imgUrl,
       likeCount,
-      onClick,
       onMouseEnter,
       onMouseLeave,
       onTransitionEnd,
@@ -88,6 +81,7 @@ $border-radius: 2px;
 
 .wrapper {
   position: relative;
+  display: block;
   width: 100%;
   &::before {
     content: '';

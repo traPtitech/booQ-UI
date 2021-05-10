@@ -4,14 +4,15 @@
     <list :class="$style.list" />
     <div :class="$style.footer">
       <span :class="$style.version">booQ Project v{{ version }}</span>
-      <button :class="$style.aboutButton" @click="onClickAbout">?</button>
+      <router-link to="/about">
+        <button :class="$style.aboutButton">?</button>
+      </router-link>
     </div>
   </nav>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useRouter } from 'vue-router'
 import version from '/@/lib/version'
 import Search from './Search.vue'
 import List from './List.vue'
@@ -23,13 +24,7 @@ export default defineComponent({
     List
   },
   setup() {
-    const router = useRouter()
-
-    const onClickAbout = () => {
-      router.push('/about')
-    }
-
-    return { onClickAbout, version }
+    return { version }
   }
 })
 </script>
