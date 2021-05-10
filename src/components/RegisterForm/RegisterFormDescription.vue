@@ -17,7 +17,7 @@
         <button @click="toggleDialog">閉じる</button>
       </dialog-template>
     </div>
-    <normal-icon-button
+    <icon-button
       :class="$style.completeButton"
       icon="mdi:auto-fix"
       label="コードを元に情報を自動入力"
@@ -45,7 +45,7 @@ import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import useOpener from '/@/use/opener'
 import Icon from '/@/components/UI/Icon.vue'
 import RegisterFormImage from './RegisterFormImage.vue'
-import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
+import IconButton from '/@/components/UI/IconButton.vue'
 import useCompleteFromCode from './use/completeFromCode'
 
 export default defineComponent({
@@ -56,7 +56,7 @@ export default defineComponent({
     DialogTemplate,
     BarCodeScanner,
     RegisterFormImage,
-    NormalIconButton
+    IconButton
   },
   setup() {
     const { formState } = useFormState()
@@ -89,6 +89,7 @@ export default defineComponent({
   cursor: pointer;
 }
 .completeButton {
+  height: 36px;
   width: max-content;
   margin: 1.5rem 0;
 }
