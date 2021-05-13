@@ -41,7 +41,7 @@
     "sass": "^1.32.12",
     "ts-morph": "^10.0.2",
     "typescript": "^4.2.4",
-    "vite": "^2.3.0",
+    "vite": "^2.3.2",
     "vite-plugin-purge-icons": "^0.7.0"
   },
   "private": true
