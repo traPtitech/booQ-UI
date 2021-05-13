@@ -6,6 +6,7 @@ export interface LogSummary {
   id: number
   userName: string
   text: string
+  date: string
 }
 
 const useLogs = (props: {
@@ -28,7 +29,8 @@ const useLogs = (props: {
       return {
         id: v.id,
         userName: userName,
-        text: `${userName}さんが${ownerWord}物品を${logType} - ${logTime}`
+        text: `${ownerWord}物品を${logType}`,
+        date: logTime
       }
     })
   )

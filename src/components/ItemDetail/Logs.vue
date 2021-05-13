@@ -1,8 +1,11 @@
 <template>
   <detail-summary title="ログ">
     <div v-for="log in logSummaries" :key="log.id" :class="$style.item">
-      <user-icon :user-name="log.userName" />
-      <div :class="$style.text">{{ log.text }}</div>
+      <user-icon :user-name="log.userName" :class="$style.icon" />
+      <div :class="$style.text">
+        <div>{{ log.text }}</div>
+        <div :class="$style.meta">@{{ log.userName }} {{ log.date }}</div>
+      </div>
     </div>
   </detail-summary>
 </template>
@@ -36,10 +39,21 @@ export default defineComponent({
 <style lang="scss" module>
 .item {
   display: flex;
+  padding: 0.5rem;
+}
+
+.icon {
+  flex-shrink: 0;
 }
 
 .text {
   margin-left: 8px;
   align-self: center;
+  word-break: break-all;
+}
+
+.meta {
+  opacity: 0.7;
+  font-size: 0.85rem;
 }
 </style>
