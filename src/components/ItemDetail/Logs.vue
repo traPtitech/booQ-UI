@@ -39,7 +39,7 @@ export default defineComponent({
 <style lang="scss" module>
 .item {
   display: flex;
-  padding: 0.5rem;
+  margin: 1rem 0.5rem;
 }
 
 .icon {

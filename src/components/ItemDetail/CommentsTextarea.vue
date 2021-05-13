@@ -71,6 +71,7 @@ export default defineComponent({
 
 .container {
   display: flex;
+  align-items: flex-start;
   margin-bottom: 0.5rem;
   position: relative;
 }
@@ -110,5 +111,6 @@ export default defineComponent({
 .icon {
   pointer-events: none;
   margin: 0.2rem;
+  flex-shrink: 0;
 }
 </style>

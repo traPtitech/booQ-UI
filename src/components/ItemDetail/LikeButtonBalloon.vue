@@ -77,6 +77,7 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   position: absolute;
+  z-index: 1;
 }
 
 .balloon {
