@@ -1,10 +1,10 @@
 <template>
   <detail-summary title="ログ">
     <div v-for="log in logSummaries" :key="log.id" :class="$style.item">
-      <user-icon :user-name="log.userName" />
+      <user-icon :user-name="log.userName" :class="$style.icon" />
       <div :class="$style.text">
         <div>{{ log.text }}</div>
-        <div>@{{ log.userName }} {{ log.date }}</div>
+        <div :class="$style.meta">@{{ log.userName }} {{ log.date }}</div>
       </div>
     </div>
   </detail-summary>
@@ -42,8 +42,17 @@ export default defineComponent({
   padding: 0.5rem;
 }
 
+.icon {
+  flex-shrink: 0;
+}
+
 .text {
   margin-left: 8px;
   align-self: center;
+  word-break: break-all;
+}
+
+.meta {
+  opacity: 0.7;
 }
 </style>
