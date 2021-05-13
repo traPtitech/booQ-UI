@@ -54,5 +54,6 @@ export default defineComponent({
 
 .meta {
   opacity: 0.7;
+  font-size: 0.85rem;
 }
 </style>
