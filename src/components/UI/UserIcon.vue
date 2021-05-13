@@ -1,6 +1,6 @@
 <template>
   <router-link :class="$style.container" :to="`/users/${userName}`">
-    <img :src="iconUri" :width="size" :height="size" />
+    <img :src="iconUri" :width="size" :height="size" :class="$style.icon" />
   </router-link>
 </template>
 

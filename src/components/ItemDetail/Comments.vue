@@ -75,6 +75,7 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   display: flex;
+  align-items: flex-start;
   margin-bottom: 0.5rem;
 }
 
@@ -88,6 +89,7 @@ export default defineComponent({
 }
 
 .icon {
+  flex-shrink: 0;
   margin: 0.2rem;
 }
 </style>
