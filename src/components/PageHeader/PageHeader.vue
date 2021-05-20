@@ -6,8 +6,9 @@
       @click="emit('toggleNavigation')"
     />
     <div v-if="fetchedMe" :class="$style.right">
-      <admin-page-link />
-      <my-icon :class="$style.myIcon" />
+      <cart-icon />
+      <admin-page-link :class="$style.item" />
+      <my-icon :class="$style.item" />
     </div>
   </header>
 </template>
@@ -17,6 +18,7 @@ import { defineComponent, computed } from 'vue'
 import LogoAndTitle from './LogoAndTitle.vue'
 import AdminPageLink from './AdminPageLink.vue'
 import MyIcon from './MyIcon.vue'
+import CartIcon from './CartIcon.vue'
 import { useStore } from '/@/store'
 
 export default defineComponent({
@@ -24,7 +26,8 @@ export default defineComponent({
   components: {
     LogoAndTitle,
     AdminPageLink,
-    MyIcon
+    MyIcon,
+    CartIcon
   },
   props: {
     canToggleNavigationShown: {
@@ -59,7 +62,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
 }
-.myIcon {
+.item {
   margin-left: 1rem;
 }
 </style>
