@@ -7,7 +7,8 @@ let toastID = 0
 const { store, rootActionContext } = createDirectStore({
   state: {
     me: null as User | null,
-    toasts: [] as Toast[]
+    toasts: [] as Toast[],
+    itemInCart: [] as { id: number, count: number }[]
   },
   getters: {},
   mutations: {
@@ -33,6 +34,17 @@ const { store, rootActionContext } = createDirectStore({
         state.toasts.findIndex(v => v.id === id),
         1
       )
+    },
+    addItemToCart(state, payload: { id: number, count: number }) {
+      state.itemInCart.push(payload)
+    },
+    removeItemFromCart(state, id: number) {
+      const index = state.itemInCart.findIndex(v => v.id === id)
+      if (index === -1) return
+      state.itemInCart.splice(index, 1)
+    },
+    removeAllItemFromCart(state) {
+      state.itemInCart.splice(0, state.itemInCart.length)
     }
   },
   actions: {
