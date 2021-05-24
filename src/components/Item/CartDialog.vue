@@ -20,6 +20,7 @@
           :variant="button.variant"
           type="submit"
           :class="$style.button"
+          :disabled="maxCount === 0"
         />
       </form>
     </div>
@@ -53,6 +54,7 @@ export default defineComponent({
   },
   emits: {
     close: () => true,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     add: (_: { id: number, count: number }) => true
   },
   setup(props, context) {
@@ -63,6 +65,9 @@ export default defineComponent({
       1
     const count = ref(props.cartCount || 1)
     const button = computed(() => {
+      if (maxCount === 0) {
+        return { icon: 'mdi:cancel', label: '在庫がありません', variant: 'caution' }
+      }
       if (!props.cartCount) {
         return { icon: 'mdi:cart', label: 'カートに入れる' }
       }
