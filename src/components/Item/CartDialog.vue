@@ -1,8 +1,8 @@
 <template>
-  <dialog-template title="一括で借りる物品に追加" @close="close">
+  <dialog-template :title="title" @close="close">
     <div :class="$style.container">
       <h3 :class="$style.title">{{ item.name }}</h3>
-      <form @submit.prevent="() => {}">
+      <form @submit.prevent="click">
         <div :class="$style.flex">
           <img :src="imgUrl" :class="$style.img" />
           <div :class="$style.inputContainer">
@@ -10,16 +10,16 @@
               v-model="count"
               label="個数"
               :max="maxCount"
-              :min="1"
+              :min="cartCount ? 0 : 1"
             />
           </div>
         </div>
         <wide-icon-button
-          icon="mdi:arrow-down-bold-circle"
-          label="追加する"
+          :icon="button.icon"
+          :label="button.label"
+          :variant="button.variant"
           type="submit"
           :class="$style.button"
-          @click="click"
         />
       </form>
     </div>
@@ -45,6 +45,10 @@ export default defineComponent({
     item: {
       type: Object as PropType<ItemSummary>,
       required: true
+    },
+    cartCount: {
+      type: Number,
+      required: true
     }
   },
   emits: {
@@ -52,11 +56,21 @@ export default defineComponent({
     add: (_: { id: number, count: number }) => true
   },
   setup(props, context) {
+    const title = computed(() => props.cartCount ? '個数を変更' : '物品を借りる')
     const imgUrl = computed(() => props.item.imgUrl || NoImg)
     const maxCount = props.item.latestLogs?.find(v => v.ownerId === traP_ID)?.count ??
       props.item.owners.find(v => v.ownerId === traP_ID)?.count ??
       1
-    const count = ref(1)
+    const count = ref(props.cartCount || 1)
+    const button = computed(() => {
+      if (!props.cartCount) {
+        return { icon: 'mdi:cart', label: 'カートに入れる' }
+      }
+      if (count.value !== 0) {
+        return { icon: 'mdi:arrow-right-bold-circle', label: 'OK' }
+      }
+      return { icon: 'mdi:arrow-right-bold-circle', label: '削除', variant: 'caution' }
+    })
 
     const close = () => {
       context.emit('close')
@@ -66,7 +80,7 @@ export default defineComponent({
       context.emit('add', { id: props.item.id, count: count.value })
       close()
     }
-    return { count, close, imgUrl, maxCount, click }
+    return { title, count, button, close, imgUrl, maxCount, click }
   }
 })
 </script>

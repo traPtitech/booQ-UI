@@ -8,6 +8,7 @@
     <cart-dialog
       v-if="isOpenAddDialog"
       :item="items[addDialogItemIndex]"
+      :cart-count="cartCounts[addDialogItemIndex]"
       @close="toggleAddDialog"
       @add="addItemToCart"
     />
