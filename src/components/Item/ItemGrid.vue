@@ -5,7 +5,7 @@
       <div v-if="isCartMode" :class="$style.cartMode" @click="() => clickAddDialog(i)" />
       <cart-tip :cart-count="cartCounts[i]" />
     </li>
-    <cart-dialog
+    <cart-add-dialog
       v-if="isOpenAddDialog"
       :item="items[addDialogItemIndex]"
       :cart-count="cartCounts[addDialogItemIndex]"
@@ -20,7 +20,7 @@ import { defineComponent, PropType } from 'vue'
 import { ItemSummary, ItemType } from '/@/lib/apis'
 import Item from './Item.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import CartDialog from './CartDialog.vue'
+import CartAddDialog from '../Cart/CartAddDialog.vue'
 import CartTip from './CartTip.vue'
 import useCart from './use/cart'
 
@@ -29,7 +29,7 @@ export default defineComponent({
   components: {
     Item,
     WideIconButton,
-    CartDialog,
+    CartAddDialog,
     CartTip
   },
   props: {
