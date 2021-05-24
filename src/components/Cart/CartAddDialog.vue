@@ -70,6 +70,7 @@ export default defineComponent({
   },
   emits: {
     close: () => true,
+    openConfirm: () => true
   },
   setup(props, context) {
     const title = computed(() => props.cartCount ? '個数を変更' : '物品を借りる')
@@ -107,7 +108,7 @@ export default defineComponent({
         store.commit.addItemToCart({ id: props.item.id, count: count.value })
       }
       if (!e.submitter.value) {
-        // isCartModeがfalseなら目的とか入力させるように
+        context.emit('openConfirm')
         close()
       } else {
         if (props.isCartMode) {

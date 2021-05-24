@@ -44,12 +44,6 @@ export default defineComponent({
     InputDate,
     WideIconButton
   },
-  props: {
-    items: {
-      type: Array as PropType<{ id: number, count: number }[]>,
-      required: true
-    }
-  },
   emits: {
     close: () => true,
     updateItem: () => true
@@ -63,7 +57,8 @@ export default defineComponent({
     }
     const borrowItems = async () => {
       const promises = []
-      for (const iic of props.items) {
+      const itemsInCart = store.state.itemInCart
+      for (const iic of itemsInCart) {
         promises.push(new Promise<void>(async (resolve, reject) => {
           try {
             const log = {
@@ -84,7 +79,7 @@ export default defineComponent({
         await Promise.all(promises)
         store.commit.addToast({
           type: 'success',
-          text: `まとめて借りました。`
+          text: `物品を${itemsInCart.length ? 'まとめて' : ''}借りました。`
         })
         store.commit.removeAllItemFromCart()
         context.emit('close')
@@ -92,7 +87,7 @@ export default defineComponent({
       } catch {
         store.commit.addToast({
           type: 'error',
-          text: `まとめて借りられませんでした。`
+          text: `物品を${itemsInCart.length ? 'まとめて' : ''}借りられませんでした。`
         })
       }
     }

@@ -34,6 +34,11 @@
       :item="item"
       :cart-count="cartCount"
       @close="toggleBorrowDialog"
+      @openConfirm="toggleCartConfirmDialog"
+    />
+    <cart-confirm-dialog
+      v-if="isOpenCartConfirmDialog"
+      @close="toggleCartConfirmDialog"
     />
     <return-dialog
       v-if="isOpenReturnDialog"
@@ -53,6 +58,7 @@ import useOpener from '/@/use/opener'
 import BorrowDialog from './BorrowDialog.vue'
 import ReturnDialog from './ReturnDialog.vue'
 import CartAddDialog from '/@/components/Cart/CartAddDialog.vue'
+import CartConfirmDialog from '/@/components/Cart/CartConfirmDialog.vue'
 import useMe from '/@/use/me'
 import NoImg from '/@/assets/img/no-image.svg'
 import OtherControls from './OtherControls.vue'
@@ -65,7 +71,8 @@ export default defineComponent({
     OtherControls,
     BorrowDialog,
     ReturnDialog,
-    CartAddDialog
+    CartAddDialog,
+    CartConfirmDialog
   },
   props: {
     item: {
@@ -99,6 +106,8 @@ export default defineComponent({
 
     const cartCount = computed(() => store.state.itemInCart.find(v => v.id === props.item.id)?.count ?? 0)
     const isEquipment = computed(() => props.item.type === ItemType.equipment)
+    const { isOpen: isOpenCartConfirmDialog, toggle: toggleCartConfirmDialog } =
+      useOpener()
     return {
       updateItem,
       imgUrl,
@@ -109,7 +118,9 @@ export default defineComponent({
       isBorrowDisabled,
       isReturnDisabled,
       cartCount,
-      isEquipment
+      isEquipment,
+      isOpenCartConfirmDialog,
+      toggleCartConfirmDialog
     }
   }
 })

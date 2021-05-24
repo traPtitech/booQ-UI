@@ -5,7 +5,7 @@
     @click="toggle"
   >
     <icon name="mdi:cart" />
-    <cart-confirm-dialog v-if="isOpen" @close="toggle" :items="itemInCart" />
+    <cart-confirm-dialog v-if="isOpen" @close="toggle" />
   </button>
 </template>
 
