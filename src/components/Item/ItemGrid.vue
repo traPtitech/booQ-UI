@@ -5,7 +5,12 @@
       <div :class="$style.cartMode" v-if="isCartMode" @click="() => clickAddDialog(i)"></div>
       <cart-tip :cart-count="cartCounts[i]" />
     </li>
-    <cart-dialog :item="addDialogItem" @close="toggleAddDialog" @add="addItemToCart" v-if="isOpenAddDialog" />
+    <cart-dialog
+      v-if="isOpenAddDialog"
+      :item="items[addDialogItemIndex]"
+      @close="toggleAddDialog"
+      @add="addItemToCart"
+    />
   </ul>
 </template>
 
@@ -41,11 +46,11 @@ export default defineComponent({
       isOpenAddDialog,
       toggleAddDialog,
       clickAddDialog,
-      addDialogItem,
+      addDialogItemIndex,
       cartCounts,
       addItemToCart
     } = useCart(props)
-    return { isOpenAddDialog, toggleAddDialog, clickAddDialog, addDialogItem, cartCounts, ItemType, addItemToCart }
+    return { isOpenAddDialog, toggleAddDialog, clickAddDialog, addDialogItemIndex, cartCounts, ItemType, addItemToCart }
   }
 })
 </script>

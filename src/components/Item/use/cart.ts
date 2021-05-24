@@ -8,25 +8,23 @@ const useCart = (props: { items: ItemSummary[] }) => {
 	const cartCounts = computed(() => props.items.map(item => store.state.itemInCart.find(iic => iic.id === item.id )?.count ?? 0))
 
 	const addItemToCart = (payload: { id: number, count: number }) => {
-		store.commit.addItemToCart(payload)
-		console.log(store.state.itemInCart)
+    if (payload.count === 0) {
+      store.commit.removeItemFromCart(payload.id)
+    } else {
+      store.commit.addItemToCart(payload)
+    }
 	}
 	const removeItemFromCart = (id: number) => {
 		store.commit.removeItemFromCart(id)
 	}
 
-	const addDialogItem = ref<ItemSummary | null>(null)
+	const addDialogItemIndex = ref<number>(-1)
 	const { isOpen: isOpenAddDialog, toggle: toggleAddDialog } = useOpener()
 	const clickAddDialog = (i: number) => {
-		addDialogItem.value = props.items[i] || null
-		if (!addDialogItem.value) return
-		if (cartCounts.value[i]) {
-			removeItemFromCart(addDialogItem.value.id)
-		} else {
-			toggleAddDialog()
-		}
+    addDialogItemIndex.value = i
+    toggleAddDialog()
 	}
-	return { cartCounts, addItemToCart, removeItemFromCart, isOpenAddDialog, toggleAddDialog, clickAddDialog, addDialogItem }
+	return { cartCounts, addItemToCart, removeItemFromCart, isOpenAddDialog, toggleAddDialog, clickAddDialog, addDialogItemIndex }
 }
 
 export default useCart
