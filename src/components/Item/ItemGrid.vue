@@ -11,14 +11,13 @@
       :cart-count="cartCounts[addDialogItemIndex]"
       :is-cart-mode="isCartMode"
       @close="toggleAddDialog"
-      @add="addItemToCart"
     />
   </ul>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ItemSummary, ItemType } from '/@/lib/apis'
+import { ItemSummary } from '/@/lib/apis'
 import Item from './Item.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import CartAddDialog from '../Cart/CartAddDialog.vue'
@@ -49,10 +48,9 @@ export default defineComponent({
       toggleAddDialog,
       clickAddDialog,
       addDialogItemIndex,
-      cartCounts,
-      addItemToCart
+      cartCounts
     } = useCart(props)
-    return { isOpenAddDialog, toggleAddDialog, clickAddDialog, addDialogItemIndex, cartCounts, ItemType, addItemToCart }
+    return { isOpenAddDialog, toggleAddDialog, clickAddDialog, addDialogItemIndex, cartCounts }
   }
 })
 </script>

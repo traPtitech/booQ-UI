@@ -45,6 +45,7 @@ import InputNumber from '/@/components/UI/InputNumber.vue'
 import { ItemSummary, traP_ID } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
 import { useRouter } from 'vue-router'
+import { useStore } from '/@/store'
 
 export default defineComponent({
   name: 'AddOwnerDialog',
@@ -69,8 +70,6 @@ export default defineComponent({
   },
   emits: {
     close: () => true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    add: (_: { id: number, count: number }) => true
   },
   setup(props, context) {
     const title = computed(() => props.cartCount ? '個数を変更' : '物品を借りる')
@@ -99,9 +98,14 @@ export default defineComponent({
       context.emit('close')
     }
 
+    const store = useStore()
     const router = useRouter()
     const submit = (e: { submitter: HTMLButtonElement }) => {
-      context.emit('add', { id: props.item.id, count: count.value })
+      if (count.value === 0) {
+        store.commit.removeItemFromCart(props.item.id)
+      } else {
+        store.commit.addItemToCart({ id: props.item.id, count: count.value })
+      }
       if (!e.submitter.value) {
         // isCartModeがfalseなら目的とか入力させるように
         close()

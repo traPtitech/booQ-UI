@@ -88,6 +88,7 @@ export default defineComponent({
         })
         store.commit.removeAllItemFromCart()
         context.emit('close')
+        context.emit('updateItem')
       } catch {
         store.commit.addToast({
           type: 'error',
