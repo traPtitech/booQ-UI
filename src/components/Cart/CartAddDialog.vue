@@ -127,6 +127,7 @@ export default defineComponent({
 }
 .content {
   display: flex;
+  margin-bottom: 2rem;
 }
 .img {
   max-width: 50%;
@@ -136,7 +137,8 @@ export default defineComponent({
   width: 100%;
 }
 .or {
-  margin-top: 1.5rem;
+  margin: 0.75rem 0;
+  color: $color-text-secondary;
 }
 .continue {
   display: flex;
@@ -145,6 +147,5 @@ export default defineComponent({
 }
 .button {
   margin: auto;
-  margin-top: 1.5rem;
 }
 </style>
