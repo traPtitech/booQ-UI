@@ -2,8 +2,8 @@
   <dialog-template :title="title" @close="close">
     <div :class="$style.container">
       <h3 :class="$style.title">{{ item.name }}</h3>
-      <form @submit.prevent="click">
-        <div :class="$style.flex">
+      <form @submit.prevent="submit">
+        <div :class="$style.content">
           <img :src="imgUrl" :class="$style.img" />
           <div :class="$style.inputContainer">
             <input-number
@@ -22,6 +22,16 @@
           :class="$style.button"
           :disabled="maxCount === 0"
         />
+        <div v-if="!isCartMode" :class="$style.continue">
+          <div :class="$style.or">または</div>
+          <wide-icon-button
+            icon="mdi:cart"
+            label="まだ借りる"
+            type="submit"
+            :value="true"
+            :class="$style.button"
+          />
+        </div>
       </form>
     </div>
   </dialog-template>
@@ -34,6 +44,7 @@ import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 import { ItemSummary, traP_ID } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'AddOwnerDialog',
@@ -50,6 +61,10 @@ export default defineComponent({
     cartCount: {
       type: Number,
       required: true
+    },
+    isCartMode: {
+      type: Boolean,
+      default: false
     }
   },
   emits: {
@@ -68,6 +83,9 @@ export default defineComponent({
       if (maxCount === 0) {
         return { icon: 'mdi:cancel', label: '在庫がありません', variant: 'caution' }
       }
+      if (!props.isCartMode) {
+        return { icon: 'mdi:arrow-right-bold-circle', label: '次にすすむ' }
+      }
       if (!props.cartCount) {
         return { icon: 'mdi:cart', label: 'カートに入れる' }
       }
@@ -81,11 +99,21 @@ export default defineComponent({
       context.emit('close')
     }
 
-    const click = () => {
+    const router = useRouter()
+    const submit = (e: { submitter: HTMLButtonElement }) => {
       context.emit('add', { id: props.item.id, count: count.value })
-      close()
+      if (!e.submitter.value) {
+        // isCartModeがfalseなら目的とか入力させるように
+        close()
+      } else {
+        if (props.isCartMode) {
+          close()
+        } else {
+          router.push('/items/equipment')
+        }
+      }
     }
-    return { title, count, button, close, imgUrl, maxCount, click }
+    return { title, count, button, close, imgUrl, maxCount, submit }
   }
 })
 </script>
@@ -97,7 +125,7 @@ export default defineComponent({
 .title {
   word-break: break-all;
 }
-.flex {
+.content {
   display: flex;
 }
 .img {
@@ -107,8 +135,16 @@ export default defineComponent({
   margin-left: 1rem;
   width: 100%;
 }
+.or {
+  margin-top: 1.5rem;
+}
+.continue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .button {
   margin: auto;
-  margin-top: 32px;
+  margin-top: 1.5rem;
 }
 </style>
