@@ -5,14 +5,14 @@
     @click="toggle"
   >
     <icon name="mdi:cart" />
-    <cart-dialog v-if="isOpen" @close="toggle" :items="itemInCart" />
+    <cart-confirm-dialog v-if="isOpen" @close="toggle" :items="itemInCart" />
   </button>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import Icon from '/@/components/UI/Icon.vue'
-import CartDialog from './CartDialog.vue'
+import CartConfirmDialog from '/@/components/Cart/CartConfirmDialog.vue'
 import useOpener from '/@/use/opener'
 import { useStore } from '/@/store'
 
@@ -20,7 +20,7 @@ export default defineComponent({
   name: 'CartIcon',
   components: {
     Icon,
-    CartDialog
+    CartConfirmDialog
   },
   setup() {
     const store = useStore()
