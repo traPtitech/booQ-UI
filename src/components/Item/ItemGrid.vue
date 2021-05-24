@@ -2,7 +2,11 @@
   <ul :class="$style.list">
     <li v-for="(item, i) in items" :key="item.id" :class="$style.item">
       <item :item="item" />
-      <div v-if="isCartMode" :class="$style.cartMode" @click="() => clickAddDialog(i)" />
+      <div
+        v-if="isCartMode"
+        :class="$style.cartMode"
+        @click="() => clickAddDialog(i)"
+      />
       <cart-tip :cart-count="cartCounts[i]" />
     </li>
     <cart-add-dialog
@@ -19,7 +23,6 @@
 import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import Item from './Item.vue'
-import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import CartAddDialog from '../Cart/CartAddDialog.vue'
 import CartTip from './CartTip.vue'
 import useCart from './use/cart'
@@ -28,7 +31,6 @@ export default defineComponent({
   name: 'ItemGrid',
   components: {
     Item,
-    WideIconButton,
     CartAddDialog,
     CartTip
   },
@@ -50,7 +52,13 @@ export default defineComponent({
       addDialogItemIndex,
       cartCounts
     } = useCart(props)
-    return { isOpenAddDialog, toggleAddDialog, clickAddDialog, addDialogItemIndex, cartCounts }
+    return {
+      isOpenAddDialog,
+      toggleAddDialog,
+      clickAddDialog,
+      addDialogItemIndex,
+      cartCounts
+    }
   }
 })
 </script>

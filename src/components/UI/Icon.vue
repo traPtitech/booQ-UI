@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.icon" :style="styles" :key="key">
+  <div :key="key" :class="$style.icon" :style="styles">
     <span class="iconify" :data-icon="name" :style="styles" />
   </div>
 </template>

@@ -73,15 +73,22 @@ export default defineComponent({
     openConfirm: () => true
   },
   setup(props, context) {
-    const title = computed(() => props.cartCount ? '個数を変更' : '物品を借りる')
+    const title = computed(() =>
+      props.cartCount ? '個数を変更' : '物品を借りる'
+    )
     const imgUrl = computed(() => props.item.imgUrl || NoImg)
-    const maxCount = props.item.latestLogs?.find(v => v.ownerId === traP_ID)?.count ??
+    const maxCount =
+      props.item.latestLogs?.find(v => v.ownerId === traP_ID)?.count ??
       props.item.owners.find(v => v.ownerId === traP_ID)?.count ??
       1
     const count = ref(props.cartCount || 1)
     const button = computed(() => {
       if (maxCount === 0) {
-        return { icon: 'mdi:cancel', label: '在庫がありません', variant: 'caution' }
+        return {
+          icon: 'mdi:cancel',
+          label: '在庫がありません',
+          variant: 'caution'
+        }
       }
       if (!props.isCartMode) {
         return { icon: 'mdi:arrow-right-bold-circle', label: '次にすすむ' }
@@ -92,7 +99,11 @@ export default defineComponent({
       if (count.value !== 0) {
         return { icon: 'mdi:arrow-right-bold-circle', label: 'OK' }
       }
-      return { icon: 'mdi:arrow-right-bold-circle', label: '削除', variant: 'caution' }
+      return {
+        icon: 'mdi:arrow-right-bold-circle',
+        label: '削除',
+        variant: 'caution'
+      }
     })
 
     const close = () => {

@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import InputText from '/@/components/UI/InputText.vue'
@@ -48,7 +48,7 @@ export default defineComponent({
     close: () => true,
     updateItem: () => true
   },
-  setup(props, context) {
+  setup(_, context) {
     const store = useStore()
     const dueDate = ref(new Date())
     const purpose = ref('')
@@ -59,21 +59,22 @@ export default defineComponent({
       const promises = []
       const itemsInCart = store.state.itemInCart
       for (const iic of itemsInCart) {
-        promises.push(new Promise<void>(async (resolve, reject) => {
-          try {
-            const log = {
-              ownerId: traP_ID,
-              type: LogType.borrow,
-              purpose: purpose.value,
-              dueDate: stringifyDate(dueDate.value, '-'),
-              count: iic.count
+        promises.push(
+          new Promise<void>((resolve, reject) => {
+            try {
+              const log = {
+                ownerId: traP_ID,
+                type: LogType.borrow,
+                purpose: purpose.value,
+                dueDate: stringifyDate(dueDate.value, '-'),
+                count: iic.count
+              }
+              apis.postLog(iic.id, log).then(() => resolve())
+            } catch (e) {
+              reject(e)
             }
-            await apis.postLog(iic.id, log)
-            resolve()
-          } catch (e) {
-            reject(e)
-          }
-        }))
+          })
+        )
       }
       try {
         await Promise.all(promises)
@@ -87,7 +88,9 @@ export default defineComponent({
       } catch {
         store.commit.addToast({
           type: 'error',
-          text: `物品を${itemsInCart.length ? 'まとめて' : ''}借りられませんでした。`
+          text: `物品を${
+            itemsInCart.length ? 'まとめて' : ''
+          }借りられませんでした。`
         })
       }
     }

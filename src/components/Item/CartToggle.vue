@@ -25,11 +25,12 @@ export default defineComponent({
     'update:modelValue': (_: boolean) => true
   },
   setup(props, context) {
-    console.log(props, props.modelValue)
     const toggleCartMode = () => {
       context.emit('update:modelValue', !props.modelValue)
     }
-    const text = computed(() => props.modelValue ? 'おわる' : 'まとめて借りる')
+    const text = computed(() =>
+      props.modelValue ? 'おわる' : 'まとめて借りる'
+    )
     return { toggleCartMode, text }
   }
 })

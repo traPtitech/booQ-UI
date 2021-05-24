@@ -104,7 +104,9 @@ export default defineComponent({
       () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
     )
 
-    const cartCount = computed(() => store.state.itemInCart.find(v => v.id === props.item.id)?.count ?? 0)
+    const cartCount = computed(
+      () => store.state.itemInCart.find(v => v.id === props.item.id)?.count ?? 0
+    )
     const isEquipment = computed(() => props.item.type === ItemType.equipment)
     const { isOpen: isOpenCartConfirmDialog, toggle: toggleCartConfirmDialog } =
       useOpener()

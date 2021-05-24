@@ -14,10 +14,7 @@
         <div :class="$style.owners">
           {{ item.owners.map(owner => `@${owner.user.name}`).join() }}
         </div>
-        <div
-          :class="$style.like"
-          @click.prevent="toggleLike"
-        >
+        <div :class="$style.like" @click.prevent="toggleLike">
           <icon v-if="!isLiked" name="mdi:heart-outline" :size="20" />
           <icon v-else name="mdi:heart" :size="20" :class="$style.liked" />
           {{ likeCount }}
@@ -49,10 +46,13 @@ const useHover = () => {
 const useLike = (props: { item: ItemSummary }) => {
   const isLiked = ref(props.item.isLiked)
   // 自分がいいねしたときのlikeCount
-  const maxCount = computed(() => props.item.likeCounts + Number(!props.item.isLiked))
-  const likeCount = computed(() => maxCount.value - Number(!isLiked.value) || '')
+  const maxCount = computed(
+    () => props.item.likeCounts + Number(!props.item.isLiked)
+  )
+  const likeCount = computed(
+    () => maxCount.value - Number(!isLiked.value) || ''
+  )
   const toggleLike = async () => {
-    console.log('toggleLike')
     if (isLiked.value) {
       await apis.removeLike(props.item.id)
       isLiked.value = false
