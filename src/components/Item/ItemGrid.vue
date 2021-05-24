@@ -1,15 +1,8 @@
 <template>
   <ul :class="$style.list">
-    <li v-for="(item, i) in items" :key="item.id">
+    <li v-for="(item, i) in items" :key="item.id" :class="$style.item">
       <item :item="item" />
-      <wide-icon-button
-        v-if="item.type === ItemType.equipment"
-        :variant="itemStatus[i] ? 'caution': 'primary'"
-        :class="$style.button"
-        @click="() => clickAddDialog(i)"
-        :label="itemStatus[i] ? 'まとめて借りない' : 'まとめて借りる'"
-        icon="mdi:cart"
-      />
+      <cart-tip :cartCount="cartCounts[i]" />
     </li>
     <cart-dialog :item="addDialogItem" @close="toggleAddDialog" @add="addItemToCart" v-if="isOpenAddDialog" />
   </ul>
@@ -21,6 +14,7 @@ import { ItemSummary, ItemType } from '/@/lib/apis'
 import Item from './Item.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import CartDialog from './CartDialog.vue'
+import CartTip from './CartTip.vue'
 import useCart from './use/cart'
 
 export default defineComponent({
@@ -28,7 +22,8 @@ export default defineComponent({
   components: {
     Item,
     WideIconButton,
-    CartDialog
+    CartDialog,
+    CartTip
   },
   props: {
     items: {
@@ -42,10 +37,10 @@ export default defineComponent({
       toggleAddDialog,
       clickAddDialog,
       addDialogItem,
-      itemStatus,
+      cartCounts,
       addItemToCart
     } = useCart(props)
-    return { isOpenAddDialog, toggleAddDialog, clickAddDialog, addDialogItem, itemStatus, ItemType, addItemToCart }
+    return { isOpenAddDialog, toggleAddDialog, clickAddDialog, addDialogItem, cartCounts, ItemType, addItemToCart }
   }
 })
 </script>
@@ -55,6 +50,10 @@ export default defineComponent({
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
   gap: 16px;
+}
+
+.item {
+  position: relative;
 }
 
 .button {
