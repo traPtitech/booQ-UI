@@ -24,10 +24,16 @@
       />
     </div>
     <borrow-dialog
-      v-if="isOpenBorrowDialog"
+      v-if="isOpenBorrowDialog && !isEquipment"
       :item="item"
       @close="toggleBorrowDialog"
       @updateItem="updateItem"
+    />
+    <cart-add-dialog
+      v-if="isOpenBorrowDialog && isEquipment"
+      :item="item"
+      :cart-count="cartCount"
+      @close="toggleBorrowDialog"
     />
     <return-dialog
       v-if="isOpenReturnDialog"
@@ -40,15 +46,17 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
-import apis, { ItemDetail } from '/@/lib/apis'
+import apis, { ItemDetail, ItemType } from '/@/lib/apis'
 import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/use/opener'
 import BorrowDialog from './BorrowDialog.vue'
 import ReturnDialog from './ReturnDialog.vue'
+import CartAddDialog from '/@/components/Cart/CartAddDialog.vue'
 import useMe from '/@/use/me'
 import NoImg from '/@/assets/img/no-image.svg'
 import OtherControls from './OtherControls.vue'
+import { useStore } from '/@/store'
 
 export default defineComponent({
   name: 'Controls',
@@ -56,7 +64,8 @@ export default defineComponent({
     NormalIconButton,
     OtherControls,
     BorrowDialog,
-    ReturnDialog
+    ReturnDialog,
+    CartAddDialog
   },
   props: {
     item: {
@@ -69,6 +78,8 @@ export default defineComponent({
     updateItem: (item: ItemDetail) => true
   },
   setup(props, context) {
+    const store = useStore()
+
     const updateItem = async () =>
       context.emit('updateItem', (await apis.getItem(props.item.id)).data)
     const imgUrl = computed(() => props.item.imgUrl || NoImg)
@@ -86,6 +97,8 @@ export default defineComponent({
       () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
     )
 
+    const cartCount = computed(() => store.state.itemInCart.find(v => v.id === props.item.id)?.count ?? 0)
+    const isEquipment = computed(() => props.item.type === ItemType.equipment)
     return {
       updateItem,
       imgUrl,
@@ -94,7 +107,9 @@ export default defineComponent({
       isOpenReturnDialog,
       toggleReturnDialog,
       isBorrowDisabled,
-      isReturnDisabled
+      isReturnDisabled,
+      cartCount,
+      isEquipment
     }
   }
 })
