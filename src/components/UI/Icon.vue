@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.icon" :style="styles">
+  <div :class="$style.icon" :style="styles" :key="key">
     <span class="iconify" :data-icon="name" :style="styles" />
   </div>
 </template>
@@ -24,7 +24,8 @@ export default defineComponent({
       height: `${props.size}px`,
       width: `${props.size}px`
     }))
-    return { styles }
+    const key = computed(() => props.name)
+    return { styles, key }
   }
 })
 </script>
