@@ -2,7 +2,8 @@
   <ul :class="$style.list">
     <li v-for="(item, i) in items" :key="item.id" :class="$style.item">
       <item :item="item" />
-      <cart-tip :cartCount="cartCounts[i]" />
+      <div :class="$style.cartMode" v-if="isCartMode" @click="() => clickAddDialog(i)"></div>
+      <cart-tip :cart-count="cartCounts[i]" />
     </li>
     <cart-dialog :item="addDialogItem" @close="toggleAddDialog" @add="addItemToCart" v-if="isOpenAddDialog" />
   </ul>
@@ -28,6 +29,10 @@ export default defineComponent({
   props: {
     items: {
       type: Array as PropType<ItemSummary[]>,
+      required: true
+    },
+    isCartMode: {
+      type: Boolean,
       required: true
     }
   },
@@ -59,5 +64,20 @@ export default defineComponent({
 .button {
   margin-top: 0.5rem;
   width: 100%;
+}
+
+.cartMode {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  cursor: pointer;
+  border-radius: 2px;
+  transition: 0.2s all ease-in-out;
+  &:hover {
+    box-shadow: 0 0 0px 2px $color-primary;
+  }
 }
 </style>
