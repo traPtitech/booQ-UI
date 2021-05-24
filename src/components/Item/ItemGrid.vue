@@ -2,7 +2,7 @@
   <ul :class="$style.list">
     <li v-for="(item, i) in items" :key="item.id" :class="$style.item">
       <item :item="item" />
-      <div :class="$style.cartMode" v-if="isCartMode" @click="() => clickAddDialog(i)"></div>
+      <div v-if="isCartMode" :class="$style.cartMode" @click="() => clickAddDialog(i)" />
       <cart-tip :cart-count="cartCounts[i]" />
     </li>
     <cart-dialog

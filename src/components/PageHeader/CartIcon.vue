@@ -37,6 +37,7 @@ export default defineComponent({
   padding: 0;
   background-color: transparent;
   appearance: none;
+  cursor: pointer;
   &:not(:disabled) {
     color: $color-primary;
   }

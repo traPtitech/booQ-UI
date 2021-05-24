@@ -36,6 +36,10 @@ const { store, rootActionContext } = createDirectStore({
       )
     },
     addItemToCart(state, payload: { id: number, count: number }) {
+      const oldIndex = state.itemInCart.findIndex(v => v.id === payload.id)
+      if (oldIndex !== -1) {
+        state.itemInCart.splice(oldIndex, 1)
+      }
       state.itemInCart.push(payload)
     },
     removeItemFromCart(state, id: number) {
