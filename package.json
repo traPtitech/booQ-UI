@@ -19,7 +19,7 @@
     "v-calendar": "^3.0.0-alpha.4",
     "vue": "^3.0.11",
     "vue-router": "^4.0.8",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.1"
   },
   "devDependencies": {
     "@iconify/json": "^1.1.348",
