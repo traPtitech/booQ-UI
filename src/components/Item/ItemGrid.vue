@@ -7,7 +7,7 @@
         :class="$style.cartMode"
         @click="() => clickAddDialog(i)"
       />
-      <cart-tip :cart-count="cartCounts[i]" />
+      <cart-tip :cart-count="cartCounts[i]" :is-cart-mode="isCartMode" />
     </li>
     <cart-add-dialog
       v-if="isOpenAddDialog"

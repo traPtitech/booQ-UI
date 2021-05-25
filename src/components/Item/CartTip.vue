@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cartCount" :class="$style.container">
+  <div v-if="cartCount || isCartMode" :class="$style.container">
     <icon name="mdi:cart" :class="$style.content" />
     <div :class="$style.content">{{ cartCount }}</div>
   </div>
@@ -18,6 +18,10 @@ export default defineComponent({
     cartCount: {
       type: Number,
       required: true
+    },
+    isCartMode: {
+      type: Boolean,
+      default: false
     }
   },
   setup() {
