@@ -37,7 +37,7 @@ import { stringifyDate } from '/@/lib/date'
 import { useStore } from '/@/store'
 
 export default defineComponent({
-  name: 'BorrowDialog',
+  name: 'CartConfirmDialog',
   components: {
     DialogTemplate,
     InputText,
@@ -56,31 +56,21 @@ export default defineComponent({
       context.emit('close')
     }
     const borrowItems = async () => {
-      const promises = []
-      const itemsInCart = store.state.itemInCart
-      for (const iic of itemsInCart) {
-        promises.push(
-          new Promise<void>((resolve, reject) => {
-            try {
-              const log = {
-                ownerId: traP_ID,
-                type: LogType.borrow,
-                purpose: purpose.value,
-                dueDate: stringifyDate(dueDate.value, '-'),
-                count: iic.count
-              }
-              apis.postLog(iic.id, log).then(() => resolve())
-            } catch (e) {
-              reject(e)
-            }
-          })
-        )
-      }
+      const promises = store.state.itemInCart.map(async iic => {
+        const log = {
+          ownerId: traP_ID,
+          type: LogType.borrow,
+          purpose: purpose.value,
+          dueDate: stringifyDate(dueDate.value, '-'),
+          count: iic.count
+        }
+        await apis.postLog(iic.id, log)
+      })
       try {
         await Promise.all(promises)
         store.commit.addToast({
           type: 'success',
-          text: `物品を${itemsInCart.length ? 'まとめて' : ''}借りました。`
+          text: `物品を${promises.length > 0 ? 'まとめて' : ''}借りました。`
         })
         store.commit.removeAllItemFromCart()
         context.emit('close')
@@ -89,7 +79,7 @@ export default defineComponent({
         store.commit.addToast({
           type: 'error',
           text: `物品を${
-            itemsInCart.length ? 'まとめて' : ''
+            promises.length ? 'まとめて' : ''
           }借りられませんでした。`
         })
       }
