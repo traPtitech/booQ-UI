@@ -62,7 +62,7 @@ import CartConfirmDialog from '/@/components/Cart/CartConfirmDialog.vue'
 import useMe from '/@/use/me'
 import NoImg from '/@/assets/img/no-image.svg'
 import OtherControls from './OtherControls.vue'
-import { useRouter } from 'node_modules/vue-router/dist/vue-router'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Controls',
