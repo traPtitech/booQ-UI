@@ -1,19 +1,14 @@
 <template>
   <dialog-template :title="title" @close="close">
     <div :class="$style.container">
-      <h3 :class="$style.title">{{ item.name }}</h3>
       <form @submit.prevent="submit">
-        <div :class="$style.content">
-          <img :src="imgUrl" :class="$style.img" />
-          <div :class="$style.inputContainer">
-            <input-number
-              v-model="count"
-              label="個数"
-              :max="maxCount"
-              :min="cartCount ? 0 : 1"
-            />
-          </div>
-        </div>
+        <input-number
+          v-model="count"
+          :class="$style.input"
+          label="個数"
+          :max="maxCount"
+          :min="cartCount ? 0 : 1"
+        />
         <wide-icon-button
           :icon="button.icon"
           :label="button.label"
@@ -31,6 +26,9 @@
             :value="true"
             :class="$style.button"
           />
+          <div :class="$style.description">
+            「まだ借りる」でまとめて目的や返却日を入力できます
+          </div>
         </div>
       </form>
     </div>
@@ -43,12 +41,10 @@ import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 import { ItemSummary, traP_ID } from '/@/lib/apis'
-import NoImg from '/@/assets/img/no-image.svg'
-import { useRouter } from 'vue-router'
 import { useStore } from '/@/store'
 
 export default defineComponent({
-  name: 'AddOwnerDialog',
+  name: 'CartAddDialog',
   components: {
     DialogTemplate,
     WideIconButton,
@@ -59,10 +55,6 @@ export default defineComponent({
       type: Object as PropType<ItemSummary>,
       required: true
     },
-    cartCount: {
-      type: Number,
-      required: true
-    },
     isCartMode: {
       type: Boolean,
       default: false
@@ -70,20 +62,29 @@ export default defineComponent({
   },
   emits: {
     close: () => true,
-    openConfirm: () => true
+    openConfirm: () => true,
+    jumpPage: () => true
   },
   setup(props, context) {
-    const title = computed(() =>
-      props.cartCount ? '個数を変更' : '物品を借りる'
+    const store = useStore()
+
+    const cartCount = computed(
+      () =>
+        store.state.itemInCart.find(iic => iic.id === props.item.id)?.count ?? 0
     )
-    const imgUrl = computed(() => props.item.imgUrl || NoImg)
-    const maxCount =
-      props.item.latestLogs?.find(v => v.ownerId === traP_ID)?.count ??
-      props.item.owners.find(v => v.ownerId === traP_ID)?.count ??
-      1
-    const count = ref(props.cartCount || 1)
+
+    const title = computed(() =>
+      cartCount.value ? '個数を変更する' : '物品を借りる'
+    )
+    const maxCount = computed(
+      () =>
+        props.item.latestLogs?.find(v => v.ownerId === traP_ID)?.count ??
+        props.item.owners.find(v => v.ownerId === traP_ID)?.count ??
+        1
+    )
+    const count = ref(cartCount.value || 1)
     const button = computed(() => {
-      if (maxCount === 0) {
+      if (maxCount.value === 0) {
         return {
           icon: 'mdi:cancel',
           label: '在庫がありません',
@@ -93,11 +94,11 @@ export default defineComponent({
       if (!props.isCartMode) {
         return { icon: 'mdi:arrow-right-bold-circle', label: '次にすすむ' }
       }
-      if (!props.cartCount) {
+      if (!cartCount.value) {
         return { icon: 'mdi:cart', label: 'カートに入れる' }
       }
       if (count.value !== 0) {
-        return { icon: 'mdi:arrow-right-bold-circle', label: 'OK' }
+        return { icon: 'mdi:arrow-right-bold-circle', label: '変更する' }
       }
       return {
         icon: 'mdi:arrow-right-bold-circle',
@@ -110,8 +111,6 @@ export default defineComponent({
       context.emit('close')
     }
 
-    const store = useStore()
-    const router = useRouter()
     const submit = (e: { submitter: HTMLButtonElement }) => {
       if (count.value === 0) {
         store.commit.removeItemFromCart(props.item.id)
@@ -120,16 +119,12 @@ export default defineComponent({
       }
       if (!e.submitter.value) {
         context.emit('openConfirm')
-        close()
-      } else {
-        if (props.isCartMode) {
-          close()
-        } else {
-          router.push('/items/equipment')
-        }
+      } else if (!props.isCartMode) {
+        context.emit('jumpPage')
       }
+      close()
     }
-    return { title, count, button, close, imgUrl, maxCount, submit }
+    return { title, count, button, close, cartCount, maxCount, submit }
   }
 })
 </script>
@@ -138,28 +133,27 @@ export default defineComponent({
 .container {
   max-width: 360px;
 }
-.title {
-  word-break: break-all;
-}
-.content {
-  display: flex;
+.input {
   margin-bottom: 2rem;
+  width: 100%;
 }
-.img {
-  max-width: 50%;
-}
-.inputContainer {
-  margin-left: 1rem;
+.button {
   width: 100%;
 }
 .or {
   margin: 0.75rem 0;
   color: $color-text-secondary;
+  font-size: 0.75rem;
 }
 .continue {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.description {
+  opacity: 0.5;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
 }
 .button {
   margin: auto;

@@ -12,7 +12,6 @@
     <cart-add-dialog
       v-if="isOpenAddDialog"
       :item="items[addDialogItemIndex]"
-      :cart-count="cartCounts[addDialogItemIndex]"
       :is-cart-mode="isCartMode"
       @close="toggleAddDialog"
     />

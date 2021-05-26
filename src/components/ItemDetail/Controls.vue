@@ -32,9 +32,9 @@
     <cart-add-dialog
       v-if="isOpenBorrowDialog && isEquipment"
       :item="item"
-      :cart-count="cartCount"
       @close="toggleBorrowDialog"
       @openConfirm="toggleCartConfirmDialog"
+      @jumpPage="jumpEquipments"
     />
     <cart-confirm-dialog
       v-if="isOpenCartConfirmDialog"
@@ -62,7 +62,7 @@ import CartConfirmDialog from '/@/components/Cart/CartConfirmDialog.vue'
 import useMe from '/@/use/me'
 import NoImg from '/@/assets/img/no-image.svg'
 import OtherControls from './OtherControls.vue'
-import { useStore } from '/@/store'
+import { useRouter } from 'node_modules/vue-router/dist/vue-router'
 
 export default defineComponent({
   name: 'Controls',
@@ -85,8 +85,6 @@ export default defineComponent({
     updateItem: (item: ItemDetail) => true
   },
   setup(props, context) {
-    const store = useStore()
-
     const updateItem = async () =>
       context.emit('updateItem', (await apis.getItem(props.item.id)).data)
     const imgUrl = computed(() => props.item.imgUrl || NoImg)
@@ -104,12 +102,14 @@ export default defineComponent({
       () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
     )
 
-    const cartCount = computed(
-      () => store.state.itemInCart.find(v => v.id === props.item.id)?.count ?? 0
-    )
     const isEquipment = computed(() => props.item.type === ItemType.equipment)
     const { isOpen: isOpenCartConfirmDialog, toggle: toggleCartConfirmDialog } =
       useOpener()
+
+    const router = useRouter()
+    const jumpEquipments = () => {
+      router.push('/items/equipment')
+    }
     return {
       updateItem,
       imgUrl,
@@ -119,10 +119,10 @@ export default defineComponent({
       toggleReturnDialog,
       isBorrowDisabled,
       isReturnDisabled,
-      cartCount,
       isEquipment,
       isOpenCartConfirmDialog,
-      toggleCartConfirmDialog
+      toggleCartConfirmDialog,
+      jumpEquipments
     }
   }
 })
