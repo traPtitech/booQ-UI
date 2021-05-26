@@ -1,5 +1,6 @@
 <template>
-  <div :key="key" :class="$style.icon" :style="styles">
+  <!-- nameが変わってもre-rendorされないのでkeyを当てて明示的に再描画してる -->
+  <div :key="name" :class="$style.icon" :style="styles">
     <span class="iconify" :data-icon="name" :style="styles" />
   </div>
 </template>
@@ -24,8 +25,7 @@ export default defineComponent({
       height: `${props.size}px`,
       width: `${props.size}px`
     }))
-    const key = computed(() => props.name)
-    return { styles, key }
+    return { styles }
   }
 })
 </script>

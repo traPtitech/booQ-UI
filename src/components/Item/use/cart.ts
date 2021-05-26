@@ -5,29 +5,30 @@ import useOpener from '/@/use/opener'
 
 const useCart = (props: { items: ItemSummary[] }) => {
   const store = useStore()
-  const cartCounts = computed(() =>
-    props.items.map(
-      item => store.state.itemInCart.find(iic => iic.id === item.id)?.count ?? 0
-    )
+  const itemWithCartCounts = computed(() =>
+    props.items.map(item => ({
+      item,
+      count: store.state.itemInCart.find(iic => iic.id === item.id)?.count ?? 0
+    }))
   )
 
   const removeItemFromCart = (id: number) => {
     store.commit.removeItemFromCart(id)
   }
 
-  const addDialogItemIndex = ref<number>(-1)
+  const addDialogItem = ref<ItemSummary | null>(null)
   const { isOpen: isOpenAddDialog, toggle: toggleAddDialog } = useOpener()
-  const clickAddDialog = (i: number) => {
-    addDialogItemIndex.value = i
+  const clickAddDialog = (item: ItemSummary) => {
+    addDialogItem.value = item
     toggleAddDialog()
   }
   return {
-    cartCounts,
+    itemWithCartCounts,
     removeItemFromCart,
     isOpenAddDialog,
     toggleAddDialog,
     clickAddDialog,
-    addDialogItemIndex
+    addDialogItem
   }
 }
 

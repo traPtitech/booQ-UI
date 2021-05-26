@@ -115,7 +115,7 @@ export default defineComponent({
       if (count.value === 0) {
         store.commit.removeItemFromCart(props.item.id)
       } else {
-        store.commit.addItemToCart({ id: props.item.id, count: count.value })
+        store.commit.upsertItemToCart({ id: props.item.id, count: count.value })
       }
       if (!e.submitter.value) {
         context.emit('openConfirm')

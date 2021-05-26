@@ -1,17 +1,21 @@
 <template>
   <ul :class="$style.list">
-    <li v-for="(item, i) in items" :key="item.id" :class="$style.item">
-      <item :item="item" />
+    <li
+      v-for="iwcc in itemWithCartCounts"
+      :key="iwcc.item.id"
+      :class="$style.item"
+    >
+      <item :item="iwcc.item" />
       <div
         v-if="isCartMode"
         :class="$style.cartMode"
-        @click="() => clickAddDialog(i)"
+        @click="() => clickAddDialog(iwcc.item)"
       />
-      <cart-tip :cart-count="cartCounts[i]" :is-cart-mode="isCartMode" />
+      <cart-tip :cart-count="iwcc.count" :is-cart-mode="isCartMode" />
     </li>
     <cart-add-dialog
       v-if="isOpenAddDialog"
-      :item="items[addDialogItemIndex]"
+      :item="addDialogItem"
       :is-cart-mode="isCartMode"
       @close="toggleAddDialog"
     />
@@ -48,15 +52,15 @@ export default defineComponent({
       isOpenAddDialog,
       toggleAddDialog,
       clickAddDialog,
-      addDialogItemIndex,
-      cartCounts
+      addDialogItem,
+      itemWithCartCounts
     } = useCart(props)
     return {
       isOpenAddDialog,
       toggleAddDialog,
       clickAddDialog,
-      addDialogItemIndex,
-      cartCounts
+      addDialogItem,
+      itemWithCartCounts
     }
   }
 })

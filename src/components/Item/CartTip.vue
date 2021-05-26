@@ -40,7 +40,7 @@ export default defineComponent({
   padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
-  background-color: mix($color-primary-disabled, $color-text-white);
+  background-color: lighten($color-primary, 35%);
 }
 
 .content {

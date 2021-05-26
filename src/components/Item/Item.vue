@@ -17,7 +17,7 @@
         <div :class="$style.like" @click.prevent="toggleLike">
           <icon v-if="!isLiked" name="mdi:heart-outline" :size="20" />
           <icon v-else name="mdi:heart" :size="20" :class="$style.liked" />
-          {{ likeCount }}
+          <div v-show="likeCount">{{ likeCount }}</div>
         </div>
         <slot name="controls" />
       </div>
@@ -49,9 +49,7 @@ const useLike = (props: { item: ItemSummary }) => {
   const maxCount = computed(
     () => props.item.likeCounts + Number(!props.item.isLiked)
   )
-  const likeCount = computed(
-    () => maxCount.value - Number(!isLiked.value) || ''
-  )
+  const likeCount = computed(() => maxCount.value - Number(!isLiked.value))
   const toggleLike = async () => {
     if (isLiked.value) {
       await apis.removeLike(props.item.id)
