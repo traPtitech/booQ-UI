@@ -1,34 +1,31 @@
 <template>
-  <dialog-template title="物品を借りる" @close="close">
-    <form @submit.prevent="borrowItems">
-      <input-text
-        v-model="purpose"
-        :class="$style.item"
-        label="目的"
-        multiline
-        rows="10"
-        required
-      />
-      <input-date
-        v-model="dueDate"
-        :class="$style.item"
-        label="返却日"
-        :min-date="new Date()"
-        required
-      />
-      <wide-icon-button
-        icon="mdi:arrow-down-bold-circle"
-        label="借りる"
-        type="submit"
-        :class="$style.button"
-      />
-    </form>
-  </dialog-template>
+  <form @submit.prevent="borrowItems">
+    <input-text
+      v-model="purpose"
+      :class="$style.item"
+      label="目的"
+      multiline
+      rows="10"
+      required
+    />
+    <input-date
+      v-model="dueDate"
+      :class="$style.item"
+      label="返却日"
+      :min-date="new Date()"
+      required
+    />
+    <wide-icon-button
+      icon="mdi:arrow-down-bold-circle"
+      label="借りる"
+      type="submit"
+      :class="$style.button"
+    />
+  </form>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import InputText from '/@/components/UI/InputText.vue'
 import InputDate from '/@/components/UI/InputDate.vue'
@@ -39,7 +36,6 @@ import { useStore } from '/@/store'
 export default defineComponent({
   name: 'CartConfirmDialog',
   components: {
-    DialogTemplate,
     InputText,
     InputDate,
     WideIconButton
@@ -64,7 +60,7 @@ export default defineComponent({
           dueDate: stringifyDate(dueDate.value, '-'),
           count: iic.count
         }
-        return apis.postLog(iic.id, log)
+        return apis.postLog(iic.item.id, log)
       })
       try {
         await Promise.all(promises)
