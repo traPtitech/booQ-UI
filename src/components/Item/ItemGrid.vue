@@ -16,7 +16,6 @@
     <cart-add-dialog
       v-if="isOpenAddDialog"
       :item="addDialogItem"
-      :is-cart-mode="isCartMode"
       @close="toggleAddDialog"
     />
   </ul>

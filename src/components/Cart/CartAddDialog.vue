@@ -13,7 +13,7 @@
           :class="$style.input"
           label="個数"
           :max="maxCount"
-          :min="cartCount ? 0 : 1"
+          :min="isEdit ? 0 : 1"
         />
         <wide-icon-button
           :icon="button.icon"
@@ -23,19 +23,7 @@
           :class="$style.button"
           :disabled="maxCount === 0"
         />
-        <template v-if="!isCartMode" :class="$style.continue">
-          <div :class="$style.or">または</div>
-          <wide-icon-button
-            icon="mdi:cart"
-            label="まだ借りる"
-            type="submit"
-            :value="true"
-            :class="$style.button"
-          />
-          <div :class="$style.description">
-            「まだ借りる」でまとめて目的や返却日を入力できます
-          </div>
-        </template>
+        <slot name="continue" />
       </form>
     </div>
   </dialog-template>
@@ -63,15 +51,14 @@ export default defineComponent({
       type: Object as PropType<ItemSummary>,
       required: true
     },
-    isCartMode: {
-      type: Boolean,
-      default: false
+    btn: {
+      type: Object as PropType<{ icon: string; label: string } | null>,
+      default: null
     }
   },
   emits: {
     close: () => true,
-    openConfirm: () => true,
-    jumpPage: () => true
+    submit: () => true
   },
   setup(props, context) {
     const store = useStore()
@@ -79,9 +66,15 @@ export default defineComponent({
     const cartCount = computed(
       () => store.state.cart.find(iic => iic.id === props.item.id)?.count ?? 0
     )
+    const isEdit = computed(() => cartCount.value !== 0)
 
     const title = computed(() =>
-      cartCount.value ? '個数を変更する' : '物品を借りる'
+      isEdit.value ? '個数を変更する' : '物品を借りる'
+    )
+    const ownerDetails = computed(() =>
+      props.item.owners
+        .filter(v => v.rentalable)
+        .map(v => ({ userName: v.user.name }))
     )
     const ownerName = ref(
       (() => {
@@ -90,17 +83,12 @@ export default defineComponent({
             props.item.owners.find(v => v.ownerId === traP_ID)?.user.name ?? ''
           )
         } else {
-          return props.item.owners[0]?.user.name ?? ''
+          return ownerDetails.value[0]?.userName ?? ''
         }
       })()
     )
     const owner = computed(() =>
       props.item.owners.find(v => v.user.name === ownerName.value)
-    )
-    const ownerDetails = computed(() =>
-      props.item.owners
-        .filter(v => v.rentalable)
-        .map(v => ({ userName: v.user.name }))
     )
     const maxCount = computed(
       () =>
@@ -110,6 +98,9 @@ export default defineComponent({
     )
     const count = ref(cartCount.value || 1)
     const button = computed(() => {
+      if (props.btn) {
+        return props.btn as { icon: string; label: string; variant: undefined }
+      }
       if (maxCount.value === 0) {
         return {
           icon: 'mdi:cancel',
@@ -117,10 +108,7 @@ export default defineComponent({
           variant: 'caution'
         }
       }
-      if (!props.isCartMode) {
-        return { icon: 'mdi:arrow-right-bold-circle', label: '次にすすむ' }
-      }
-      if (!cartCount.value) {
+      if (!isEdit.value) {
         return { icon: 'mdi:cart', label: 'カートに入れる' }
       }
       if (count.value !== 0) {
@@ -137,7 +125,7 @@ export default defineComponent({
       context.emit('close')
     }
 
-    const submit = (e: { submitter: HTMLButtonElement }) => {
+    const submit = () => {
       if (!owner.value) {
         close()
         return
@@ -151,11 +139,7 @@ export default defineComponent({
           ownerId: owner.value.ownerId
         })
       }
-      if (!e.submitter.value) {
-        context.emit('openConfirm')
-      } else if (!props.isCartMode) {
-        context.emit('jumpPage')
-      }
+      context.emit('submit')
       close()
     }
     return {
@@ -164,6 +148,7 @@ export default defineComponent({
       button,
       close,
       cartCount,
+      isEdit,
       ownerName,
       ownerDetails,
       maxCount,
@@ -184,23 +169,6 @@ export default defineComponent({
 }
 .button {
   width: 100%;
-}
-.or {
-  margin: 0.75rem 0;
-  color: $color-text-secondary;
-  font-size: 0.75rem;
-}
-.continue {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.description {
-  opacity: 0.5;
-  margin-top: 0.5rem;
-  font-size: 0.75rem;
-}
-.button {
   margin: auto;
 }
 </style>

@@ -23,18 +23,11 @@
         @updateItem="updateItem"
       />
     </div>
-    <borrow-dialog
-      v-if="isOpenBorrowDialog && !isEquipment"
-      :item="item"
-      @close="toggleBorrowDialog"
-      @updateItem="updateItem"
-    />
-    <cart-add-dialog
-      v-if="isOpenBorrowDialog && isEquipment"
+    <cart-add-dialog-with-continue
+      v-if="isOpenBorrowDialog"
       :item="item"
       @close="toggleBorrowDialog"
       @openConfirm="toggleCartConfirmDialog"
-      @jumpPage="jumpEquipments"
     />
     <cart-confirm-dialog
       v-if="isOpenCartConfirmDialog"
@@ -51,27 +44,24 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from 'vue'
-import apis, { ItemDetail, ItemType } from '/@/lib/apis'
+import apis, { ItemDetail } from '/@/lib/apis'
 import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/use/opener'
-import BorrowDialog from './BorrowDialog.vue'
 import ReturnDialog from './ReturnDialog.vue'
-import CartAddDialog from '/@/components/Cart/CartAddDialog.vue'
+import CartAddDialogWithContinue from '/@/components/Cart/CartAddDialogWithContinue.vue'
 import CartConfirmDialog from '/@/components/Cart/CartConfirmDialog.vue'
 import useMe from '/@/use/me'
 import NoImg from '/@/assets/img/no-image.svg'
 import OtherControls from './OtherControls.vue'
-import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Controls',
   components: {
     NormalIconButton,
     OtherControls,
-    BorrowDialog,
     ReturnDialog,
-    CartAddDialog,
+    CartAddDialogWithContinue,
     CartConfirmDialog
   },
   props: {
@@ -102,14 +92,8 @@ export default defineComponent({
       () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
     )
 
-    const isEquipment = computed(() => props.item.type === ItemType.equipment)
     const { isOpen: isOpenCartConfirmDialog, toggle: toggleCartConfirmDialog } =
       useOpener()
-
-    const router = useRouter()
-    const jumpEquipments = () => {
-      router.push('/items/equipment')
-    }
     return {
       updateItem,
       imgUrl,
@@ -119,10 +103,8 @@ export default defineComponent({
       toggleReturnDialog,
       isBorrowDisabled,
       isReturnDisabled,
-      isEquipment,
       isOpenCartConfirmDialog,
-      toggleCartConfirmDialog,
-      jumpEquipments
+      toggleCartConfirmDialog
     }
   }
 })
