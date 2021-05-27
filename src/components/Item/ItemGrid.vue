@@ -5,13 +5,12 @@
       :key="iwcc.item.id"
       :class="$style.item"
     >
-      <item :item="iwcc.item" />
-      <div
-        v-if="isCartMode"
-        :class="$style.cartMode"
-        @click="() => clickAddDialog(iwcc.item)"
+      <item-with-cart-mode
+        :cart-count="iwcc.count"
+        :item="iwcc.item"
+        :is-cart-mode="isCartMode"
+        @clickOverlay="() => clickAddDialog(iwcc.item)"
       />
-      <cart-tip :cart-count="iwcc.count" :is-cart-mode="isCartMode" />
     </li>
     <cart-add-dialog
       v-if="isOpenAddDialog"
@@ -24,17 +23,15 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
-import Item from './Item.vue'
+import ItemWithCartMode from './ItemWithCartMode.vue'
 import CartAddDialog from '../Cart/CartAddDialog.vue'
-import CartTip from './CartTip.vue'
 import useCart from './use/cart'
 
 export default defineComponent({
   name: 'ItemGrid',
   components: {
-    Item,
-    CartAddDialog,
-    CartTip
+    ItemWithCartMode,
+    CartAddDialog
   },
   props: {
     items: {
@@ -43,7 +40,7 @@ export default defineComponent({
     },
     isCartMode: {
       type: Boolean,
-      required: true
+      default: false
     }
   },
   setup(props) {
@@ -79,20 +76,5 @@ export default defineComponent({
 .button {
   margin-top: 0.5rem;
   width: 100%;
-}
-
-.cartMode {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-
-  cursor: pointer;
-  border-radius: 2px;
-  transition: 0.2s all ease-in-out;
-  &:hover {
-    box-shadow: 0 0 0px 2px $color-primary;
-  }
 }
 </style>
