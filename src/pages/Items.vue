@@ -4,11 +4,7 @@
       <h3 :class="$style.title">{{ title }}</h3>
       <search-input v-model="searchQuery" :class="$style.search" />
     </div>
-    <cart-toggle
-      v-if="type === 'equipment'"
-      v-model="isCartMode"
-      :class="$style.cartToggle"
-    />
+    <cart-toggle v-model="isCartMode" :class="$style.cartToggle" />
     <item-grid :items="filteredItems" :is-cart-mode="isCartMode" />
   </div>
 </template>

@@ -2,6 +2,12 @@
   <dialog-template :title="title" @close="close">
     <div :class="$style.container">
       <form @submit.prevent="submit">
+        <owner-selector
+          v-if="item.type !== ItemType.equipment"
+          v-model="ownerName"
+          :owner-details="ownerDetails"
+          :class="$style.input"
+        />
         <input-number
           v-model="count"
           :class="$style.input"
@@ -17,7 +23,7 @@
           :class="$style.button"
           :disabled="maxCount === 0"
         />
-        <div v-if="!isCartMode" :class="$style.continue">
+        <template v-if="!isCartMode" :class="$style.continue">
           <div :class="$style.or">または</div>
           <wide-icon-button
             icon="mdi:cart"
@@ -29,7 +35,7 @@
           <div :class="$style.description">
             「まだ借りる」でまとめて目的や返却日を入力できます
           </div>
-        </div>
+        </template>
       </form>
     </div>
   </dialog-template>
@@ -39,8 +45,9 @@
 import { computed, defineComponent, PropType, ref } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
+import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
-import { ItemSummary, traP_ID } from '/@/lib/apis'
+import { ItemSummary, ItemType, traP_ID } from '/@/lib/apis'
 import { useStore } from '/@/store'
 
 export default defineComponent({
@@ -48,7 +55,8 @@ export default defineComponent({
   components: {
     DialogTemplate,
     WideIconButton,
-    InputNumber
+    InputNumber,
+    OwnerSelector
   },
   props: {
     item: {
@@ -75,10 +83,29 @@ export default defineComponent({
     const title = computed(() =>
       cartCount.value ? '個数を変更する' : '物品を借りる'
     )
+    const ownerName = ref(
+      (() => {
+        if (props.item.type === ItemType.equipment) {
+          return (
+            props.item.owners.find(v => v.ownerId === traP_ID)?.user.name ?? ''
+          )
+        } else {
+          return props.item.owners[0]?.user.name ?? ''
+        }
+      })()
+    )
+    const owner = computed(() =>
+      props.item.owners.find(v => v.user.name === ownerName.value)
+    )
+    const ownerDetails = computed(() =>
+      props.item.owners
+        .filter(v => v.rentalable)
+        .map(v => ({ userName: v.user.name }))
+    )
     const maxCount = computed(
       () =>
-        props.item.latestLogs?.find(v => v.ownerId === traP_ID)?.count ??
-        props.item.owners.find(v => v.ownerId === traP_ID)?.count ??
+        props.item.latestLogs?.find(v => v.id === owner.value?.id)?.count ??
+        props.item.owners.find(v => v.id === owner.value?.id)?.count ??
         1
     )
     const count = ref(cartCount.value || 1)
@@ -111,10 +138,18 @@ export default defineComponent({
     }
 
     const submit = (e: { submitter: HTMLButtonElement }) => {
+      if (!owner.value) {
+        close()
+        return
+      }
       if (count.value === 0) {
         store.commit.removeItemFromCart(props.item.id)
       } else {
-        store.commit.upsertItemToCart({ id: props.item.id, count: count.value })
+        store.commit.upsertItemToCart({
+          id: props.item.id,
+          count: count.value,
+          ownerId: owner.value.ownerId
+        })
       }
       if (!e.submitter.value) {
         context.emit('openConfirm')
@@ -123,7 +158,18 @@ export default defineComponent({
       }
       close()
     }
-    return { title, count, button, close, cartCount, maxCount, submit }
+    return {
+      title,
+      count,
+      button,
+      close,
+      cartCount,
+      ownerName,
+      ownerDetails,
+      maxCount,
+      submit,
+      ItemType
+    }
   }
 })
 </script>

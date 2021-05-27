@@ -32,7 +32,7 @@ import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import InputText from '/@/components/UI/InputText.vue'
 import InputDate from '/@/components/UI/InputDate.vue'
-import apis, { LogType, traP_ID } from '/@/lib/apis'
+import apis, { LogType } from '/@/lib/apis'
 import { stringifyDate } from '/@/lib/date'
 import { useStore } from '/@/store'
 
@@ -58,13 +58,13 @@ export default defineComponent({
     const borrowItems = async () => {
       const promises = store.state.cart.map(async iic => {
         const log = {
-          ownerId: traP_ID,
+          ownerId: iic.ownerId,
           type: LogType.borrow,
           purpose: purpose.value,
           dueDate: stringifyDate(dueDate.value, '-'),
           count: iic.count
         }
-        await apis.postLog(iic.id, log)
+        return apis.postLog(iic.id, log)
       })
       try {
         await Promise.all(promises)

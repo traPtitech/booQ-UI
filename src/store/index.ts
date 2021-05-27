@@ -8,7 +8,7 @@ const { store, rootActionContext } = createDirectStore({
   state: {
     me: null as User | null,
     toasts: [] as Toast[],
-    cart: [] as { id: number; count: number }[]
+    cart: [] as { id: number; count: number; ownerId: number }[]
   },
   getters: {},
   mutations: {
@@ -35,7 +35,10 @@ const { store, rootActionContext } = createDirectStore({
         1
       )
     },
-    upsertItemToCart(state, payload: { id: number; count: number }) {
+    upsertItemToCart(
+      state,
+      payload: { id: number; count: number; ownerId: number }
+    ) {
       const oldIndex = state.cart.findIndex(v => v.id === payload.id)
       if (oldIndex !== -1) {
         state.cart.splice(oldIndex, 1)
