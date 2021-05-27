@@ -30,13 +30,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
-import { ItemSummary, ItemType, traP_ID } from '/@/lib/apis'
-import { useStore } from '/@/store'
+import { ItemSummary, ItemType } from '/@/lib/apis'
+import useAddCart from './use/addCart'
 
 export default defineComponent({
   name: 'CartAddDialog',
@@ -60,88 +60,18 @@ export default defineComponent({
     close: () => true,
     submit: () => true
   },
-  setup(props, context) {
-    const store = useStore()
-
-    const cartCount = computed(
-      () => store.state.cart.find(iic => iic.id === props.item.id)?.count ?? 0
-    )
-    const isEdit = computed(() => cartCount.value !== 0)
-
-    const title = computed(() =>
-      isEdit.value ? '個数を変更する' : '物品を借りる'
-    )
-    const ownerDetails = computed(() =>
-      props.item.owners
-        .filter(v => v.rentalable)
-        .map(v => ({ userName: v.user.name }))
-    )
-    const ownerName = ref(
-      (() => {
-        if (props.item.type === ItemType.equipment) {
-          return (
-            props.item.owners.find(v => v.ownerId === traP_ID)?.user.name ?? ''
-          )
-        } else {
-          return ownerDetails.value[0]?.userName ?? ''
-        }
-      })()
-    )
-    const owner = computed(() =>
-      props.item.owners.find(v => v.user.name === ownerName.value)
-    )
-    const maxCount = computed(
-      () =>
-        props.item.latestLogs?.find(v => v.id === owner.value?.id)?.count ??
-        props.item.owners.find(v => v.id === owner.value?.id)?.count ??
-        1
-    )
-    const count = ref(cartCount.value || 1)
-    const button = computed(() => {
-      if (props.btn) {
-        return props.btn as { icon: string; label: string; variant: undefined }
-      }
-      if (maxCount.value === 0) {
-        return {
-          icon: 'mdi:cancel',
-          label: '在庫がありません',
-          variant: 'caution'
-        }
-      }
-      if (!isEdit.value) {
-        return { icon: 'mdi:cart', label: 'カートに入れる' }
-      }
-      if (count.value !== 0) {
-        return { icon: 'mdi:arrow-right-bold-circle', label: '変更する' }
-      }
-      return {
-        icon: 'mdi:arrow-right-bold-circle',
-        label: '削除',
-        variant: 'caution'
-      }
-    })
-
-    const close = () => {
-      context.emit('close')
-    }
-
-    const submit = () => {
-      if (!owner.value) {
-        close()
-        return
-      }
-      if (count.value === 0) {
-        store.commit.removeItemFromCart(props.item.id)
-      } else {
-        store.commit.upsertItemToCart({
-          id: props.item.id,
-          count: count.value,
-          ownerId: owner.value.ownerId
-        })
-      }
-      context.emit('submit')
-      close()
-    }
+  setup(props, { emit }) {
+    const {
+      title,
+      count,
+      button,
+      isEdit,
+      submit,
+      ownerName,
+      ownerDetails,
+      cartCount,
+      maxCount
+    } = useAddCart(props, emit)
     return {
       title,
       count,
