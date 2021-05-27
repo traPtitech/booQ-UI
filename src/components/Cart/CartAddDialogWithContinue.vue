@@ -46,13 +46,18 @@ export default defineComponent({
       context.emit('close')
     }
 
-    const router = useRouter()
+    // submitよりbuttonのonclickのほうがはやく発火するため記録しておく
+    let isJump = false
     const jumpPage = () => {
-      router.push('/items/equipment')
+      isJump = true
     }
 
+    const router = useRouter()
     const openConfirm = () => {
-      context.emit('openConfirm')
+      if (isJump) {
+        router.push('/items/equipment')
+        isJump = false
+      }
     }
 
     const btn = { icon: 'mdi:arrow-right-bold-circle', label: '次にすすむ' }

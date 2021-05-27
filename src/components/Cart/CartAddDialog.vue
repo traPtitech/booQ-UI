@@ -67,6 +67,7 @@ export default defineComponent({
       button,
       isEdit,
       submit,
+      close,
       ownerName,
       ownerDetails,
       cartCount,
