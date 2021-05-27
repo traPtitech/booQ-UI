@@ -69,8 +69,7 @@ export default defineComponent({
     const store = useStore()
 
     const cartCount = computed(
-      () =>
-        store.state.itemInCart.find(iic => iic.id === props.item.id)?.count ?? 0
+      () => store.state.cart.find(iic => iic.id === props.item.id)?.count ?? 0
     )
 
     const title = computed(() =>

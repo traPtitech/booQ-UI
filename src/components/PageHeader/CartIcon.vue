@@ -1,9 +1,5 @@
 <template>
-  <button
-    :class="$style.button"
-    :disabled="itemInCart.length === 0"
-    @click="toggle"
-  >
+  <button :class="$style.button" :disabled="cart.length === 0" @click="toggle">
     <icon name="mdi:cart" />
     <cart-confirm-dialog v-if="isOpen" @close="toggle" />
   </button>
@@ -24,9 +20,9 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const itemInCart = computed(() => store.state.itemInCart)
+    const cart = computed(() => store.state.cart)
     const { isOpen, toggle } = useOpener()
-    return { isOpen, toggle, itemInCart }
+    return { isOpen, toggle, cart }
   }
 })
 </script>

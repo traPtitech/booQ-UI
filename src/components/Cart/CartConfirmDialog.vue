@@ -56,7 +56,7 @@ export default defineComponent({
       context.emit('close')
     }
     const borrowItems = async () => {
-      const promises = store.state.itemInCart.map(async iic => {
+      const promises = store.state.cart.map(async iic => {
         const log = {
           ownerId: traP_ID,
           type: LogType.borrow,
