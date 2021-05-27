@@ -8,7 +8,7 @@ const useCart = (props: { items: ItemSummary[] }) => {
   const itemWithCartCounts = computed(() =>
     props.items.map(item => ({
       item,
-      count: store.state.cart.find(iic => iic.id === item.id)?.count ?? 0
+      count: store.state.cart.find(iic => iic.item.id === item.id)?.count ?? 0
     }))
   )
 

@@ -18,11 +18,13 @@ const useAddCart = (
   isEdit: ComputedRef<boolean>
   button: ComputedRef<{ icon: string; label: string; variant?: string }>
   submit: () => void
+  close: () => void
 } => {
   const store = useStore()
 
   const cartCount = computed(
-    () => store.state.cart.find(iic => iic.id === props.item.id)?.count ?? 0
+    () =>
+      store.state.cart.find(iic => iic.item.id === props.item.id)?.count ?? 0
   )
   const isEdit = computed(() => cartCount.value !== 0)
 
@@ -81,22 +83,26 @@ const useAddCart = (
     }
   )
 
+  const close = () => {
+    emit('close')
+  }
+
   const submit = () => {
     if (!owner.value) {
-      close()
+      emit('close')
       return
     }
     if (count.value === 0) {
       store.commit.removeItemFromCart(props.item.id)
     } else {
       store.commit.upsertItemToCart({
-        id: props.item.id,
+        item: props.item,
         count: count.value,
         ownerId: owner.value.ownerId
       })
     }
     emit('submit')
-    close()
+    emit('close')
   }
   return {
     cartCount,
@@ -107,7 +113,8 @@ const useAddCart = (
     title,
     count,
     button,
-    submit
+    submit,
+    close
   }
 }
 
