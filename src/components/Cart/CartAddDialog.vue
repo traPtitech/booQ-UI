@@ -15,15 +15,12 @@
           :max="maxCount"
           :min="isEdit ? 0 : 1"
         />
-        <wide-icon-button
-          :icon="button.icon"
-          :label="button.label"
-          :variant="button.variant"
-          type="submit"
-          :class="$style.button"
+        <submit-button
+          :is-edit="isEdit"
+          :count="count"
           :disabled="maxCount === 0"
+          type="submit"
         />
-        <slot name="continue" />
       </form>
     </div>
   </dialog-template>
@@ -32,53 +29,44 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
-import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 import { ItemSummary, ItemType } from '/@/lib/apis'
 import useAddCart from './use/addCart'
+import SubmitButton from './SubmitButton.vue'
 
 export default defineComponent({
   name: 'CartAddDialog',
   components: {
     DialogTemplate,
-    WideIconButton,
     InputNumber,
-    OwnerSelector
+    OwnerSelector,
+    SubmitButton
   },
   props: {
     item: {
       type: Object as PropType<ItemSummary>,
       required: true
-    },
-    btn: {
-      type: Object as PropType<{ icon: string; label: string } | null>,
-      default: null
     }
   },
   emits: {
-    close: () => true,
-    submit: () => true
+    close: () => true
   },
   setup(props, { emit }) {
     const {
       title,
       count,
-      button,
       isEdit,
       submit,
       close,
       ownerName,
       ownerDetails,
-      cartCount,
       maxCount
     } = useAddCart(props, emit)
     return {
       title,
       count,
-      button,
       close,
-      cartCount,
       isEdit,
       ownerName,
       ownerDetails,
