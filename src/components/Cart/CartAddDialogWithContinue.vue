@@ -38,8 +38,7 @@ export default defineComponent({
     }
   },
   emits: {
-    close: () => true,
-    openConfirm: () => true
+    close: () => true
   },
   setup(_, context) {
     const close = () => {
@@ -56,6 +55,9 @@ export default defineComponent({
     const openConfirm = () => {
       if (isJump) {
         router.push('/items/equipment')
+        isJump = false
+      } else {
+        router.push('/cart')
         isJump = false
       }
     }

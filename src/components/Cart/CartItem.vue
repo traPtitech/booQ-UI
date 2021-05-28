@@ -10,12 +10,8 @@
         <img :src="iwcc.item.imgUrl || NoImg" :class="$style.img" />
       </div>
       <div>
-        <h4>{{ iwcc.item.name }}</h4>
-        <div>
-          カートに入れた数:{{
-            itemWithCartCounts.find(v => v.item.id === iwcc.item.id)?.count
-          }}
-        </div>
+        <h4 :class="$style.title">{{ iwcc.item.name }}</h4>
+        <div>カートに入れた数:{{ iwcc.count }}</div>
       </div>
     </li>
     <cart-add-dialog
@@ -74,13 +70,13 @@ export default defineComponent({
   display: flex;
   margin-top: 1rem;
   cursor: pointer;
-  height: 20%;
+  height: 6rem;
 }
 
 .imageContainer {
   position: relative;
   height: 100%;
-  width: 15%;
+  width: 11%;
   margin-right: 0.5rem;
   min-width: 6rem;
   flex-shrink: 0;
@@ -90,6 +86,10 @@ export default defineComponent({
   height: 100%;
   width: 100%;
   object-fit: contain;
+}
+
+.title {
+  margin: 0.5rem 0;
 }
 
 .button {

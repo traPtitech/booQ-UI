@@ -27,11 +27,6 @@
       v-if="isOpenBorrowDialog"
       :item="item"
       @close="toggleBorrowDialog"
-      @openConfirm="toggleCartConfirmDialog"
-    />
-    <cart-confirm-dialog
-      v-if="isOpenCartConfirmDialog"
-      @close="toggleCartConfirmDialog"
     />
     <return-dialog
       v-if="isOpenReturnDialog"
@@ -50,7 +45,6 @@ import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/use/opener'
 import ReturnDialog from './ReturnDialog.vue'
 import CartAddDialogWithContinue from '/@/components/Cart/CartAddDialogWithContinue.vue'
-import CartConfirmDialog from '../Cart/CartConfirm.vue'
 import useMe from '/@/use/me'
 import NoImg from '/@/assets/img/no-image.svg'
 import OtherControls from './OtherControls.vue'
@@ -61,8 +55,7 @@ export default defineComponent({
     NormalIconButton,
     OtherControls,
     ReturnDialog,
-    CartAddDialogWithContinue,
-    CartConfirmDialog
+    CartAddDialogWithContinue
   },
   props: {
     item: {
@@ -91,9 +84,6 @@ export default defineComponent({
     const isReturnDisabled = computed(
       () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
     )
-
-    const { isOpen: isOpenCartConfirmDialog, toggle: toggleCartConfirmDialog } =
-      useOpener()
     return {
       updateItem,
       imgUrl,
@@ -102,9 +92,7 @@ export default defineComponent({
       isOpenReturnDialog,
       toggleReturnDialog,
       isBorrowDisabled,
-      isReturnDisabled,
-      isOpenCartConfirmDialog,
-      toggleCartConfirmDialog
+      isReturnDisabled
     }
   }
 })

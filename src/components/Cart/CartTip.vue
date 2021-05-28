@@ -41,6 +41,7 @@ export default defineComponent({
   display: flex;
   align-items: center;
   background-color: lighten($color-primary, 35%);
+  pointer-events: none;
 }
 
 .content {

@@ -1,5 +1,5 @@
 <template>
-  <icon v-if="cart.length === 0" name="mdi:cart" />
+  <icon v-if="cartLength === 0" name="mdi:cart" :class="$style.disable" />
   <router-link v-else to="/cart">
     <icon name="mdi:cart" :class="$style.enable" />
   </router-link>
@@ -17,8 +17,8 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
-    const cart = computed(() => store.state.cart)
-    return { cart }
+    const cartLength = computed(() => store.state.cart.length)
+    return { cartLength }
   }
 })
 </script>
@@ -26,5 +26,8 @@ export default defineComponent({
 <style lang="scss" module>
 .enable {
   color: $color-primary;
+}
+.disable {
+  opacity: 0.5;
 }
 </style>

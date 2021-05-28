@@ -3,11 +3,13 @@
     <h1 :class="$style.header">まとめて借りる</h1>
     <div :class="$style.flex">
       <div :class="$style.item">
-        <h3 :class="$style.subtitle">カートに入れたもの({{ items.length }})</h3>
+        <h3 :class="$style.subtitle">
+          カートに入れたもの ({{ items.length }})
+        </h3>
         <cart-item :items="items" />
       </div>
-      <h3 :class="$style.subtitle">目的等を入力する</h3>
       <div :class="$style.item">
+        <h3 :class="$style.subtitle">目的等を入力する</h3>
         <cart-confirm />
       </div>
     </div>
