@@ -5,18 +5,15 @@ import { useStore } from '/@/store'
 const useAddCart = (
   props: {
     item: ItemSummary
-    btn: { icon: string; label: string } | null
   },
-  emit: ((event: 'close') => void) & ((event: 'submit') => void)
+  emit: (event: 'close') => void
 ): {
-  cartCount: ComputedRef<number>
   maxCount: ComputedRef<number>
   ownerDetails: ComputedRef<{ userName: string }[]>
   ownerName: Ref<string>
   title: Ref<string>
   count: Ref<number>
   isEdit: ComputedRef<boolean>
-  button: ComputedRef<{ icon: string; label: string; variant?: string }>
   submit: () => void
   close: () => void
 } => {
@@ -57,31 +54,6 @@ const useAddCart = (
       1
   )
   const count = ref(cartCount.value || 1)
-  const button = computed<{ icon: string; label: string; variant?: string }>(
-    () => {
-      if (props.btn) {
-        return props.btn
-      }
-      if (maxCount.value === 0) {
-        return {
-          icon: 'mdi:cancel',
-          label: '在庫がありません',
-          variant: 'caution'
-        }
-      }
-      if (!isEdit.value) {
-        return { icon: 'mdi:cart', label: 'カートに入れる' }
-      }
-      if (count.value !== 0) {
-        return { icon: 'mdi:arrow-right-bold-circle', label: '変更する' }
-      }
-      return {
-        icon: 'mdi:arrow-right-bold-circle',
-        label: '削除',
-        variant: 'caution'
-      }
-    }
-  )
 
   const close = () => {
     emit('close')
@@ -101,18 +73,15 @@ const useAddCart = (
         ownerId: owner.value.ownerId
       })
     }
-    emit('submit')
     emit('close')
   }
   return {
-    cartCount,
     maxCount,
     ownerDetails,
     ownerName,
     isEdit,
     title,
     count,
-    button,
     submit,
     close
   }
