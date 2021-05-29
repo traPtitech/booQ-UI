@@ -45,11 +45,12 @@ const { store, rootActionContext } = createDirectStore({
       )
     },
     upsertItemToCart(state, payload: CartItem) {
-      const oldIndex = state.cart.findIndex(v => v.item.id === payload.item.id)
-      if (oldIndex !== -1) {
-        state.cart.splice(oldIndex, 1)
+      const index = state.cart.findIndex(v => v.item.id === payload.item.id)
+      if (index !== -1) {
+        state.cart[index] = payload
+      } else {
+        state.cart.push(payload)
       }
-      state.cart.push(payload)
     },
     removeItemFromCart(state, id: number) {
       const index = state.cart.findIndex(v => v.item.id === id)
