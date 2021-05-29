@@ -1,20 +1,24 @@
 <template>
-  <item :item="item" />
-  <div v-if="isCartMode" :class="$style.cartMode" @click="click" />
+  <item :item="item" @click.capture="openDialog" />
   <cart-tip :cart-count="cartCount" :is-cart-mode="isCartMode" />
+  <cart-add-dialog v-if="isDialogOpen" :item="item" @close="toggleDialog" />
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import Item from './Item.vue'
 import CartTip from '../Cart/CartTip.vue'
+import CartAddDialog from '../Cart/CartAddDialog.vue'
+import useOpener from '/@/use/opener'
+import { useStore } from '/@/store'
 
 export default defineComponent({
   name: 'ItemWithCartMode',
   components: {
     Item,
-    CartTip
+    CartTip,
+    CartAddDialog
   },
   props: {
     item: {
@@ -24,40 +28,23 @@ export default defineComponent({
     isCartMode: {
       type: Boolean,
       required: true
-    },
-    cartCount: {
-      type: Number,
-      default: 0
     }
   },
-  emits: {
-    clickOverlay: () => true
-  },
-  setup(_, context) {
-    const click = () => context.emit('clickOverlay')
-    return { click }
+  setup(props) {
+    const store = useStore()
+    const { isOpen: isDialogOpen, toggle: toggleDialog } = useOpener()
+
+    const cartCount = computed(
+      () => store.getters.cartItems.get(props.item.id) ?? 0
+    )
+    const openDialog = (e: MouseEvent) => {
+      if (!props.isCartMode) return
+
+      e.preventDefault()
+      toggleDialog()
+    }
+
+    return { isDialogOpen, toggleDialog, cartCount, openDialog }
   }
 })
 </script>
-
-<style lang="scss" module>
-.button {
-  margin-top: 0.5rem;
-  width: 100%;
-}
-
-.cartMode {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-
-  cursor: pointer;
-  border-radius: 2px;
-  transition: 0.2s all ease-in-out;
-  &:hover {
-    box-shadow: 0 0 0px 2px $color-primary;
-  }
-}
-</style>
