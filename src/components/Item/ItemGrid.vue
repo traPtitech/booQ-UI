@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import ItemWithCartMode from './ItemWithCartMode.vue'
 import CartAddDialog from '../Cart/CartAddDialog.vue'
@@ -50,7 +50,7 @@ export default defineComponent({
       clickAddDialog,
       addDialogItem,
       itemWithCartCounts
-    } = useCart(props)
+    } = useCart(computed(() => props.items))
     return {
       isOpenAddDialog,
       toggleAddDialog,

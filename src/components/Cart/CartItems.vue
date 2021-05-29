@@ -1,17 +1,17 @@
 <template>
   <ul :class="$style.list">
     <li
-      v-for="iwcc in itemWithCartCounts"
-      :key="iwcc.item.id"
+      v-for="item in items"
+      :key="item.item.id"
       :class="$style.item"
-      @click="() => clickAddDialog(iwcc.item)"
+      @click="() => clickAddDialog(item.item)"
     >
       <div :class="$style.imageContainer">
-        <img :src="iwcc.item.imgUrl || NoImg" :class="$style.img" />
+        <img :src="item.item.imgUrl || NoImg" :class="$style.img" />
       </div>
       <div>
-        <h4 :class="$style.title">{{ iwcc.item.name }}</h4>
-        <div>カートに入れた数:{{ iwcc.count }}</div>
+        <h4 :class="$style.title">{{ item.item.name }}</h4>
+        <div>カートに入れた数:{{ item.count }}</div>
       </div>
     </li>
     <cart-add-dialog
@@ -23,37 +23,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import { computed, defineComponent } from 'vue'
 import CartAddDialog from './CartAddDialog.vue'
 import useCart from '../Item/use/cart'
 import NoImg from '/@/assets/img/no-image.svg'
+import { useStore } from '/@/store'
 
 export default defineComponent({
-  name: 'CartItem',
+  name: 'CartItems',
   components: {
     CartAddDialog
   },
-  props: {
-    items: {
-      type: Array as PropType<ItemSummary[]>,
-      required: true
-    }
-  },
-  setup(props) {
-    const {
-      isOpenAddDialog,
-      toggleAddDialog,
-      clickAddDialog,
-      addDialogItem,
-      itemWithCartCounts
-    } = useCart(props)
+  setup() {
+    const store = useStore()
+    const items = computed(() => store.state.cart)
+    const { isOpenAddDialog, clickAddDialog, addDialogItem, toggleAddDialog } =
+      useCart(computed(() => items.value.map(i => i.item)))
     return {
+      items,
       isOpenAddDialog,
-      toggleAddDialog,
       clickAddDialog,
       addDialogItem,
-      itemWithCartCounts,
+      toggleAddDialog,
       NoImg
     }
   }

@@ -1,14 +1,15 @@
-import { computed, ref } from 'vue'
+import { computed, ComputedRef, ref } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import { useStore } from '/@/store'
 import useOpener from '/@/use/opener'
 
-const useCart = (props: { items: ItemSummary[] }) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const useCart = (items: ComputedRef<ItemSummary[]>) => {
   const store = useStore()
   const itemWithCartCounts = computed(() =>
-    props.items.map(item => ({
+    items.value.map(item => ({
       item,
-      count: store.state.cart.find(iic => iic.item.id === item.id)?.count ?? 0
+      count: store.getters.cartItems.get(item.id) ?? 0
     }))
   )
 

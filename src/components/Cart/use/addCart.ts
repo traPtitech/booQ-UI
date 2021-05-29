@@ -20,8 +20,7 @@ const useAddCart = (
   const store = useStore()
 
   const cartCount = computed(
-    () =>
-      store.state.cart.find(iic => iic.item.id === props.item.id)?.count ?? 0
+    () => store.getters.cartItems.get(props.item.id) ?? 0
   )
   const isEdit = computed(() => cartCount.value !== 0)
 

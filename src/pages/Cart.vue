@@ -3,10 +3,8 @@
     <h1 :class="$style.header">まとめて借りる</h1>
     <div :class="$style.flex">
       <div :class="$style.item">
-        <h3 :class="$style.subtitle">
-          カートに入れたもの ({{ items.length }})
-        </h3>
-        <cart-item :items="items" />
+        <h3 :class="$style.subtitle">カートに入れたもの ({{ itemCount }})</h3>
+        <cart-items />
       </div>
       <div :class="$style.item">
         <h3 :class="$style.subtitle">目的等を入力する</h3>
@@ -19,7 +17,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
 import useTitle from './use/title'
-import CartItem from '/@/components/Cart/CartItem.vue'
+import CartItems from '/@/components/Cart/CartItems.vue'
 import { useStore } from '../store'
 import CartConfirm from '/@/components/Cart/CartConfirm.vue'
 
@@ -27,14 +25,14 @@ export default defineComponent({
   name: 'Cart',
   components: {
     CartConfirm,
-    CartItem
+    CartItems
   },
   setup() {
     useTitle(ref('まとめて借りる'))
 
     const store = useStore()
-    const items = computed(() => store.state.cart.map(v => v.item))
-    return { items }
+    const itemCount = computed(() => store.state.cart.length)
+    return { itemCount }
   }
 })
 </script>

@@ -10,7 +10,11 @@ const { store, rootActionContext } = createDirectStore({
     toasts: [] as Toast[],
     cart: [] as Cart[]
   },
-  getters: {},
+  getters: {
+    cartItems(state) {
+      return new Map(state.cart.map(c => [c.item.id, c.count]))
+    }
+  },
   mutations: {
     setMe(state, me: User) {
       state.me = me
