@@ -40,7 +40,7 @@ const useAddCart = (props: {
     () =>
       props.item.latestLogs?.find(v => v.id === owner.value?.id)?.count ??
       props.item.owners.find(v => v.id === owner.value?.id)?.count ??
-      1
+      0
   )
   const count = ref(cartCount.value || 1)
 
