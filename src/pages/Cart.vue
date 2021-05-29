@@ -8,7 +8,7 @@
       </div>
       <div :class="$style.item">
         <h3 :class="$style.subtitle">目的等を入力する</h3>
-        <cart-confirm />
+        <cart-confirm @borrowed="onBorrowed" />
       </div>
     </div>
   </div>
@@ -20,6 +20,7 @@ import useTitle from './use/title'
 import CartItems from '/@/components/Cart/CartItems.vue'
 import { useStore } from '../store'
 import CartConfirm from '/@/components/Cart/CartConfirm.vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'Cart',
@@ -28,11 +29,17 @@ export default defineComponent({
     CartItems
   },
   setup() {
+    const store = useStore()
+    const router = useRouter()
     useTitle(ref('まとめて借りる'))
 
-    const store = useStore()
     const itemCount = computed(() => store.state.cart.length)
-    return { itemCount }
+
+    const onBorrowed = () => {
+      router.push('/')
+    }
+
+    return { itemCount, onBorrowed }
   }
 })
 </script>

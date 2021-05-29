@@ -29,9 +29,10 @@ import { defineComponent, ref } from 'vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import InputText from '/@/components/UI/InputText.vue'
 import InputDate from '/@/components/UI/InputDate.vue'
-import apis, { LogType } from '/@/lib/apis'
+import apis, { ItemType, LogType } from '/@/lib/apis'
 import { stringifyDate } from '/@/lib/date'
 import { useStore } from '/@/store'
+import useMe from '/@/use/me'
 
 export default defineComponent({
   name: 'CartConfirmDialog',
@@ -41,27 +42,38 @@ export default defineComponent({
     WideIconButton
   },
   emits: {
-    close: () => true,
-    updateItem: () => true
+    borrowed: () => true
   },
-  setup(_, context) {
+  setup(props, { emit }) {
     const store = useStore()
+    const { admin } = useMe()
+
     const dueDate = ref(new Date())
     const purpose = ref('')
-    const close = () => {
-      context.emit('close')
-    }
+
     const borrowItems = async () => {
-      const promises = store.state.cart.map(async iic => {
-        const log = {
+      const hasEquipment = store.state.cart.some(
+        c => c.item.type === ItemType.equipment
+      )
+      if (!admin.value && hasEquipment) {
+        // TODO: これリンクあっても押せないからモーダルかなんかにする
+        const res = window.confirm(
+          '備品を借りようとしていますが役員には確認しましたか？\n倉庫に関してはこちら→https://wiki.trap.jp/general/%E5%80%89%E5%BA%AB'
+        )
+        if (!res) {
+          return
+        }
+      }
+
+      const promises = store.state.cart.map(async iic =>
+        apis.postLog(iic.item.id, {
           ownerId: iic.ownerId,
           type: LogType.borrow,
           purpose: purpose.value,
           dueDate: stringifyDate(dueDate.value, '-'),
           count: iic.count
-        }
-        return apis.postLog(iic.item.id, log)
-      })
+        })
+      )
       try {
         await Promise.all(promises)
         store.commit.addToast({
@@ -69,8 +81,7 @@ export default defineComponent({
           text: `物品を${promises.length > 0 ? 'まとめて' : ''}借りました。`
         })
         store.commit.removeAllItemFromCart()
-        context.emit('close')
-        context.emit('updateItem')
+        emit('borrowed')
       } catch {
         store.commit.addToast({
           type: 'error',
@@ -80,6 +91,7 @@ export default defineComponent({
         })
       }
     }
+
     return {
       close,
       purpose,
