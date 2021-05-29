@@ -18,7 +18,7 @@
         <submit-button
           :is-edit="isEdit"
           :count="count"
-          :disabled="maxCount === 0"
+          :max-count="maxCount"
           type="submit"
         />
       </form>
@@ -85,9 +85,5 @@ export default defineComponent({
 .input {
   margin-bottom: 2rem;
   width: 100%;
-}
-.button {
-  width: 100%;
-  margin: auto;
 }
 </style>

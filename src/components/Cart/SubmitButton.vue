@@ -1,13 +1,10 @@
 <template>
-  <wide-icon-button
-    v-if="disabled"
-    icon="mdi:cancel"
-    label="在庫がありません"
-    variant="caution"
+  <submit-button-no-stock v-if="maxCount === 0" :class="$style.button" />
+  <editing-submit-button
+    v-else-if="isEdit"
+    :is-delete="count === 0"
     :class="$style.button"
-    :disabled="true"
   />
-  <editing-submit-button v-else-if="isEdit" :count="count" />
   <wide-icon-button
     v-else
     icon="mdi:cart"
@@ -18,20 +15,18 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import SubmitButtonNoStock from './SubmitButtonNoStock.vue'
+import EditingSubmitButton from './SubmitButtonEdit.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import EditingSubmitButton from './EditingSubmitButton.vue'
 
 export default defineComponent({
   name: 'SubmitButton',
   components: {
-    WideIconButton,
-    EditingSubmitButton
+    SubmitButtonNoStock,
+    EditingSubmitButton,
+    WideIconButton
   },
   props: {
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     isEdit: {
       type: Boolean,
       required: true
@@ -39,10 +34,11 @@ export default defineComponent({
     count: {
       type: Number,
       required: true
+    },
+    maxCount: {
+      type: Number,
+      required: true
     }
-  },
-  setup() {
-    return {}
   }
 })
 </script>

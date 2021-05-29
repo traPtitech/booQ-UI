@@ -1,16 +1,14 @@
 <template>
   <wide-icon-button
-    v-if="count !== 0"
+    v-if="!isDelete"
     icon="mdi:arrow-right-bold-circle"
     label="変更する"
-    :class="$style.button"
   />
   <wide-icon-button
     v-else
     icon="mdi:arrow-right-bold-circle"
     label="削除する"
     variant="caution"
-    :class="$style.button"
   />
 </template>
 
@@ -19,25 +17,15 @@ import { defineComponent } from 'vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 
 export default defineComponent({
-  name: 'EditingSubmitButton',
+  name: 'SubmitButtonEdit',
   components: {
     WideIconButton
   },
   props: {
-    count: {
-      type: Number,
-      required: true
+    isDelete: {
+      type: Boolean,
+      default: false
     }
-  },
-  setup() {
-    return {}
   }
 })
 </script>
-
-<style lang="scss" module>
-.button {
-  width: 100%;
-  margin: auto;
-}
-</style>
