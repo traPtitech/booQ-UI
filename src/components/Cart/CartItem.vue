@@ -6,6 +6,7 @@
     <div>
       <h4 :class="$style.title">{{ cartItem.item.name }}</h4>
       <div>カートに入れた数:{{ cartItem.count }}</div>
+      <div>所有者: @{{ owner?.user.name ?? '' }}</div>
     </div>
     <cart-add-dialog
       v-if="isDialogOpen"
@@ -37,8 +38,13 @@ export default defineComponent({
     const { isOpen: isDialogOpen, toggle: toggleDialog } = useOpener()
 
     const imgUrl = computed(() => props.cartItem.item.imgUrl || NoImg)
+    const owner = computed(() =>
+      props.cartItem.item.owners.find(
+        owner => props.cartItem.ownerId === owner.ownerId
+      )
+    )
 
-    return { isDialogOpen, toggleDialog, imgUrl }
+    return { isDialogOpen, toggleDialog, imgUrl, owner }
   }
 })
 </script>
@@ -46,8 +52,8 @@ export default defineComponent({
 <style lang="scss" module>
 .container {
   display: flex;
+  align-items: center;
   cursor: pointer;
-  height: 6rem;
 }
 
 .imgContainer {
