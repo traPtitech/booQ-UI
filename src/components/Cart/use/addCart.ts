@@ -1,13 +1,11 @@
 import { ref, Ref, ComputedRef, computed } from 'vue'
-import { ItemType, ItemSummary, traP_ID } from '/@/lib/apis'
+import { ItemSummary } from '/@/lib/apis'
 import { useStore } from '/@/store'
+import useOwners from '/@/components/ItemDetail/use/owners'
 
-const useAddCart = (
-  props: {
-    item: ItemSummary
-  },
-  emit: (event: 'close') => void
-): {
+const useAddCart = (props: {
+  item: ItemSummary
+}): {
   maxCount: ComputedRef<number>
   ownerDetails: ComputedRef<{ userName: string }[]>
   ownerName: Ref<string>
@@ -15,34 +13,26 @@ const useAddCart = (
   count: Ref<number>
   isEdit: ComputedRef<boolean>
   submit: () => void
-  close: () => void
 } => {
   const store = useStore()
+  const { ownerDetails } = useOwners(props)
 
   const cartCount = computed(
     () => store.getters.cartItems.get(props.item.id) ?? 0
   )
-  const isEdit = computed(() => cartCount.value !== 0)
+  const isEdit = computed(() => cartCount.value > 0)
 
   const title = computed(() =>
     isEdit.value ? '個数を変更する' : '物品を借りる'
   )
-  const ownerDetails = computed(() =>
-    props.item.owners
-      .filter(v => v.rentalable)
-      .map(v => ({ userName: v.user.name }))
+
+  const rentalableOwnerDetails = computed(() =>
+    ownerDetails.value.filter(o => o.rentalable)
   )
   const ownerName = ref(
-    (() => {
-      if (props.item.type === ItemType.equipment) {
-        return (
-          props.item.owners.find(v => v.ownerId === traP_ID)?.user.name ?? ''
-        )
-      } else {
-        return ownerDetails.value[0]?.userName ?? ''
-      }
-    })()
+    rentalableOwnerDetails.value.find(o => o.count > 0)?.userName ?? ''
   )
+
   const owner = computed(() =>
     props.item.owners.find(v => v.user.name === ownerName.value)
   )
@@ -54,15 +44,9 @@ const useAddCart = (
   )
   const count = ref(cartCount.value || 1)
 
-  const close = () => {
-    emit('close')
-  }
-
   const submit = () => {
-    if (!owner.value) {
-      emit('close')
-      return
-    }
+    if (!owner.value) return
+
     if (count.value === 0) {
       store.commit.removeItemFromCart(props.item.id)
     } else {
@@ -72,7 +56,6 @@ const useAddCart = (
         ownerId: owner.value.ownerId
       })
     }
-    emit('close')
   }
   return {
     maxCount,
@@ -81,8 +64,7 @@ const useAddCart = (
     isEdit,
     title,
     count,
-    submit,
-    close
+    submit
   }
 }
 

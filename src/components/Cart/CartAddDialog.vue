@@ -1,7 +1,7 @@
 <template>
   <dialog-template :title="title" @close="close">
     <div :class="$style.container">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="doSubmit">
         <owner-selector
           v-if="item.type !== ItemType.equipment"
           v-model="ownerName"
@@ -53,26 +53,27 @@ export default defineComponent({
     close: () => true
   },
   setup(props, { emit }) {
-    const {
-      title,
-      count,
-      isEdit,
-      submit,
-      close,
-      ownerName,
-      ownerDetails,
-      maxCount
-    } = useAddCart(props, emit)
+    const { title, count, isEdit, submit, ownerName, ownerDetails, maxCount } =
+      useAddCart(props)
+
+    const doSubmit = () => {
+      submit()
+      emit('close')
+    }
+    const close = () => {
+      emit('close')
+    }
+
     return {
       title,
       count,
-      close,
       isEdit,
       ownerName,
       ownerDetails,
       maxCount,
-      submit,
-      ItemType
+      doSubmit,
+      ItemType,
+      close
     }
   }
 })

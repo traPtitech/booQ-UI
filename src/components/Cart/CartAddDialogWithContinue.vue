@@ -53,36 +53,35 @@ export default defineComponent({
     close: () => true
   },
   setup(props, { emit }) {
-    const {
-      title,
-      count,
-      isEdit,
-      submit,
-      close,
-      ownerName,
-      ownerDetails,
-      maxCount
-    } = useAddCart(props, emit)
+    const { title, count, isEdit, submit, ownerName, ownerDetails, maxCount } =
+      useAddCart(props)
 
     const router = useRouter()
     const goCart = () => {
       submit()
+      emit('close')
       router.push('/cart')
     }
     const goBack = () => {
       submit()
+      emit('close')
     }
+
+    const close = () => {
+      emit('close')
+    }
+
     return {
       title,
       count,
-      close,
       isEdit,
       ownerName,
       ownerDetails,
       maxCount,
       ItemType,
       goBack,
-      goCart
+      goCart,
+      close
     }
   }
 })
