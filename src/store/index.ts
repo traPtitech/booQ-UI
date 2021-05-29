@@ -1,6 +1,11 @@
 import { createDirectStore } from 'direct-vuex'
 import apis, { User } from '/@/lib/apis'
-import { Toast, DEFAULT_TOAST_TIMEOUT, MAX_TOAST_COUNT, Cart } from './types'
+import {
+  Toast,
+  DEFAULT_TOAST_TIMEOUT,
+  MAX_TOAST_COUNT,
+  CartItem
+} from './types'
 
 let toastID = 0
 
@@ -8,7 +13,7 @@ const { store, rootActionContext } = createDirectStore({
   state: {
     me: null as User | null,
     toasts: [] as Toast[],
-    cart: [] as Cart[]
+    cart: [] as CartItem[]
   },
   getters: {
     cartItems(state) {
@@ -39,7 +44,7 @@ const { store, rootActionContext } = createDirectStore({
         1
       )
     },
-    upsertItemToCart(state, payload: Cart) {
+    upsertItemToCart(state, payload: CartItem) {
       const oldIndex = state.cart.findIndex(v => v.item.id === payload.item.id)
       if (oldIndex !== -1) {
         state.cart.splice(oldIndex, 1)

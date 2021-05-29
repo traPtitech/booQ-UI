@@ -22,7 +22,7 @@ export interface Toast {
   id: number
 }
 
-export interface Cart {
+export interface CartItem {
   item: ItemSummary
   ownerId: number
   count: number
