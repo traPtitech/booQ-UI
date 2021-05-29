@@ -23,18 +23,12 @@ export default defineComponent({
       type: Boolean,
       default: false
     }
-  },
-  setup() {
-    return {}
   }
 })
 </script>
 
 <style lang="scss" module>
 .container {
-  position: absolute;
-  top: 1rem;
-  right: 0.5rem;
   height: 2rem;
   border-radius: 1rem;
   padding: 0.5rem 1rem;

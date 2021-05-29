@@ -1,15 +1,21 @@
 <template>
-  <item :item="item" @click.capture="openDialog" />
-  <cart-tip :cart-count="cartCount" :is-cart-mode="isCartMode" />
-  <cart-add-dialog v-if="isDialogOpen" :item="item" @close="toggleDialog" />
+  <div :class="$style.container">
+    <item :item="item" @click.capture="openDialog" />
+    <cart-tip
+      :class="$style.tip"
+      :cart-count="cartCount"
+      :is-cart-mode="isCartMode"
+    />
+    <cart-add-dialog v-if="isDialogOpen" :item="item" @close="toggleDialog" />
+  </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import Item from './Item.vue'
-import CartTip from '../Cart/CartTip.vue'
 import CartAddDialog from '../Cart/CartAddDialog.vue'
+import CartTip from './CartTip.vue'
 import useOpener from '/@/use/opener'
 import { useStore } from '/@/store'
 
@@ -48,3 +54,15 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss" module>
+.container {
+  position: relative;
+}
+
+.tip {
+  position: absolute;
+  top: 1rem;
+  right: 0.5rem;
+}
+</style>
