@@ -14,10 +14,10 @@
         <div :class="$style.owners">
           {{ item.owners.map(owner => `@${owner.user.name}`).join() }}
         </div>
-        <div :class="$style.likeCount">
-          <icon v-if="!item.isLiked" name="mdi:heart-outline" :size="20" />
+        <div :class="$style.like" @click.prevent="toggleLike">
+          <icon v-if="!isLiked" name="mdi:heart-outline" :size="20" />
           <icon v-else name="mdi:heart" :size="20" :class="$style.liked" />
-          {{ likeCount }}
+          <div v-show="likeCount">{{ likeCount }}</div>
         </div>
         <slot name="controls" />
       </div>
@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed, ref, shallowRef } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import apis, { ItemSummary } from '/@/lib/apis'
 import Icon from '/@/components/UI/Icon.vue'
 import NoImg from '/@/assets/img/no-image.svg'
 import useTitleTransition from './use/titleTransition'
@@ -43,6 +43,25 @@ const useHover = () => {
   return { isHovered, onMouseEnter, onMouseLeave }
 }
 
+const useLike = (props: { item: ItemSummary }) => {
+  const isLiked = ref(props.item.isLiked)
+  // 自分がいいねしたときのlikeCount
+  const maxCount = computed(
+    () => props.item.likeCounts + Number(!props.item.isLiked)
+  )
+  const likeCount = computed(() => maxCount.value - Number(!isLiked.value))
+  const toggleLike = async () => {
+    if (isLiked.value) {
+      await apis.removeLike(props.item.id)
+      isLiked.value = false
+    } else {
+      await apis.addLike(props.item.id)
+      isLiked.value = true
+    }
+  }
+  return { isLiked, likeCount, toggleLike }
+}
+
 export default defineComponent({
   name: 'Item',
   components: {
@@ -56,9 +75,7 @@ export default defineComponent({
   },
   setup(props) {
     const imgUrl = computed(() => props.item.imgUrl || NoImg)
-    const likeCount = computed(() =>
-      props.item.likeCounts > 0 ? props.item.likeCounts : ''
-    )
+    const { isLiked, likeCount, toggleLike } = useLike(props)
 
     const titleEle = shallowRef<HTMLElement | null>(null)
     const { isHovered, onMouseEnter, onMouseLeave } = useHover()
@@ -66,7 +83,9 @@ export default defineComponent({
 
     return {
       imgUrl,
+      isLiked,
       likeCount,
+      toggleLike,
       onMouseEnter,
       onMouseLeave,
       onTransitionEnd,
@@ -132,7 +151,7 @@ $border-radius: 2px;
   font-weight: bold;
   transition: 0.2s all ease-in-out;
 }
-.likeCount {
+.like {
   min-width: max-content;
   display: flex;
   margin-left: auto;

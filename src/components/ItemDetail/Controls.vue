@@ -23,11 +23,10 @@
         @updateItem="updateItem"
       />
     </div>
-    <borrow-dialog
+    <cart-add-dialog-with-continue
       v-if="isOpenBorrowDialog"
       :item="item"
       @close="toggleBorrowDialog"
-      @updateItem="updateItem"
     />
     <return-dialog
       v-if="isOpenReturnDialog"
@@ -44,8 +43,8 @@ import apis, { ItemDetail } from '/@/lib/apis'
 import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/use/opener'
-import BorrowDialog from './BorrowDialog.vue'
 import ReturnDialog from './ReturnDialog.vue'
+import CartAddDialogWithContinue from '/@/components/Cart/CartAddDialogWithContinue.vue'
 import useMe from '/@/use/me'
 import NoImg from '/@/assets/img/no-image.svg'
 import OtherControls from './OtherControls.vue'
@@ -55,8 +54,8 @@ export default defineComponent({
   components: {
     NormalIconButton,
     OtherControls,
-    BorrowDialog,
-    ReturnDialog
+    ReturnDialog,
+    CartAddDialogWithContinue
   },
   props: {
     item: {
@@ -85,7 +84,6 @@ export default defineComponent({
     const isReturnDisabled = computed(
       () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
     )
-
     return {
       updateItem,
       imgUrl,

@@ -1,3 +1,5 @@
+import { ItemSummary } from '../lib/apis'
+
 export const DEFAULT_TOAST_TIMEOUT = 1500
 export const MAX_TOAST_COUNT = 5
 
@@ -18,4 +20,10 @@ export interface Toast {
    * 自動付与されるid
    */
   id: number
+}
+
+export interface CartItem {
+  item: ItemSummary
+  ownerId: number
+  count: number
 }

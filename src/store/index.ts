@@ -1,15 +1,25 @@
 import { createDirectStore } from 'direct-vuex'
 import apis, { User } from '/@/lib/apis'
-import { Toast, DEFAULT_TOAST_TIMEOUT, MAX_TOAST_COUNT } from './types'
+import {
+  Toast,
+  DEFAULT_TOAST_TIMEOUT,
+  MAX_TOAST_COUNT,
+  CartItem
+} from './types'
 
 let toastID = 0
 
 const { store, rootActionContext } = createDirectStore({
   state: {
     me: null as User | null,
-    toasts: [] as Toast[]
+    toasts: [] as Toast[],
+    cart: [] as CartItem[]
   },
-  getters: {},
+  getters: {
+    cartItems(state) {
+      return new Map(state.cart.map(c => [c.item.id, c.count]))
+    }
+  },
   mutations: {
     setMe(state, me: User) {
       state.me = me
@@ -33,6 +43,22 @@ const { store, rootActionContext } = createDirectStore({
         state.toasts.findIndex(v => v.id === id),
         1
       )
+    },
+    upsertItemToCart(state, payload: CartItem) {
+      const index = state.cart.findIndex(v => v.item.id === payload.item.id)
+      if (index !== -1) {
+        state.cart[index] = payload
+      } else {
+        state.cart.push(payload)
+      }
+    },
+    removeItemFromCart(state, id: number) {
+      const index = state.cart.findIndex(v => v.item.id === id)
+      if (index === -1) return
+      state.cart.splice(index, 1)
+    },
+    removeAllItemFromCart(state) {
+      state.cart.splice(0, state.cart.length)
     }
   },
   actions: {

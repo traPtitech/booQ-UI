@@ -1,5 +1,6 @@
 <template>
-  <div :class="$style.icon" :style="styles">
+  <!-- nameが変わってもre-rendorされないのでkeyを当てて明示的に再描画してる -->
+  <div :key="name" :class="$style.icon" :style="styles">
     <span class="iconify" :data-icon="name" :style="styles" />
   </div>
 </template>

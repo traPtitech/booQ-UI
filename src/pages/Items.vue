@@ -4,7 +4,8 @@
       <h3 :class="$style.title">{{ title }}</h3>
       <search-input v-model="searchQuery" :class="$style.search" />
     </div>
-    <item-grid :items="filteredItems" />
+    <cart-toggle v-model="isCartMode" :class="$style.cartToggle" />
+    <item-grid :items="filteredItems" :is-cart-mode="isCartMode" />
   </div>
 </template>
 
@@ -13,6 +14,7 @@ import { defineComponent, ref, computed, PropType, watch } from 'vue'
 import apis, { ItemSummary, ItemType } from '/@/lib/apis'
 import useTitle from './use/title'
 import ItemGrid from '/@/components/Item/ItemGrid.vue'
+import CartToggle from '/@/components/Item/CartToggle.vue'
 import useDebouncedRef from '/@/use/debouncedRef'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
@@ -25,7 +27,8 @@ export default defineComponent({
   name: 'Items',
   components: {
     ItemGrid,
-    SearchInput
+    SearchInput,
+    CartToggle
   },
   props: {
     type: {
@@ -72,7 +75,8 @@ export default defineComponent({
       return items.value
     })
 
-    return { title, searchQuery, filteredItems }
+    const isCartMode = ref(false)
+    return { title, searchQuery, filteredItems, isCartMode }
   }
 })
 </script>
@@ -96,5 +100,8 @@ export default defineComponent({
 }
 .search {
   width: 12em;
+}
+.cartToggle {
+  margin-bottom: 1.5rem;
 }
 </style>
