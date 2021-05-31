@@ -27,6 +27,7 @@ module.exports = {
         message: 'Please use /@/lib/apis instead.'
       }
     ],
-    'vue/custom-event-name-casing': ['error', 'camelCase']
+    'vue/custom-event-name-casing': ['error', 'camelCase'],
+    'vue/require-emit-validator': 'error'
   }
 }
