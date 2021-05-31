@@ -37,6 +37,6 @@ $height: 36px;
 .button {
   height: $height;
   width: 80%;
-  border-radius: $height / 2;
+  border-radius: math.div($height, 2);
 }
 </style>
