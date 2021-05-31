@@ -25,7 +25,10 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "${srcPath}/styles/common.scss";`
+        additionalData: `
+          @use "sass:math";
+          @import "${srcPath}/styles/common.scss";
+        `
       }
     }
   },

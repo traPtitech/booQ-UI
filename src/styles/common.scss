@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $color-primary: #5CB860;
 $color-primary-hover: #7FC782;
 $color-primary-disabled: #A9D0AB;
@@ -20,4 +22,4 @@ $color-background-dim: #2B2B2BAA;
 
 $color-liked: #ef4c4c;
 
-$b6-padding-top: (182 / 128) * 100%;
+$b6-padding-top: math.div(182, 128) * 100%;

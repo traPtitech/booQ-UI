@@ -94,7 +94,7 @@ export default defineComponent({
   height: $height;
   width: max-content;
   margin: 1.5rem 0;
-  border-radius: $height / 2;
+  border-radius: math.div($height, 2);
 }
 .item {
   margin: 1.5rem 0;
