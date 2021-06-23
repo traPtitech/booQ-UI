@@ -17,7 +17,7 @@
     "axios": "^0.21.1",
     "direct-vuex": "^0.12.1",
     "v-calendar": "^3.0.0-alpha.4",
-    "vue": "^3.1.1",
+    "vue": "^3.1.2",
     "vue-router": "^4.0.10",
     "vuex": "^4.0.2"
   },
@@ -29,7 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
     "@vitejs/plugin-vue": "^1.2.3",
-    "@vue/compiler-sfc": "^3.1.1",
+    "@vue/compiler-sfc": "^3.1.2",
     "autoprefixer": "^10.2.6",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
