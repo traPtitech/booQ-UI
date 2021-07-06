@@ -32,24 +32,22 @@ const useImageUpload = (
 ): {
   isUploading: Ref<boolean>
   startUpload: () => void
+  destroy: () => void
 } => {
+  const { startSelect, destroy } = useImageSelect(async file => {
+    isUploading.value = true
+
+    try {
+      const res = await apis.postFile(file)
+      onUpload(location.origin + (res.data as ModelFile).url)
+    } finally {
+      isUploading.value = false
+    }
+  })
+
   const isUploading = ref(false)
 
-  const startUpload = () => {
-    const { startSelect, destroy } = useImageSelect(async file => {
-      isUploading.value = true
-
-      try {
-        const res = await apis.postFile(file)
-        onUpload(location.origin + (res.data as ModelFile).url)
-        destroy()
-      } finally {
-        isUploading.value = false
-      }
-    })
-    startSelect()
-  }
-  return { isUploading, startUpload }
+  return { isUploading, startUpload: startSelect, destroy }
 }
 
 export default useImageUpload
