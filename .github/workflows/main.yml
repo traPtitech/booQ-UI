@@ -11,19 +11,21 @@ jobs:
     name: Packages
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - uses: actions/checkout@v2
+          cache: npm
       - run: npm ci
   genApi:
     name: Generate APIs
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - uses: actions/checkout@v2
+          cache: npm
       - run: npm ci
       - run: npm run gen-api
       - uses: actions/upload-artifact@v2
@@ -35,10 +37,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [packages, genApi]
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - uses: actions/checkout@v2
+          cache: npm
       - run: npm ci
       - uses: actions/download-artifact@v2
         with:
@@ -52,10 +55,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [packages, genApi]
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - uses: actions/checkout@v2
+          cache: npm
       - run: npm ci
       - uses: actions/download-artifact@v2
         with:
@@ -67,10 +71,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: [packages, genApi]
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - uses: actions/checkout@v2
+          cache: npm
       - run: npm ci
       - uses: actions/download-artifact@v2
         with:
