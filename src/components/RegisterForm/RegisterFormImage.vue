@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onUnmounted } from 'vue'
+import { computed, defineComponent } from 'vue'
 import noImg from '/@/assets/img/no-image.svg'
 import RegisterFormImageButton from './RegisterFormImageButton.vue'
 import useOpener from '/@/use/opener'
@@ -48,7 +48,7 @@ export default defineComponent({
   setup(props, context) {
     const { isOpen: isUrlInputDialogOpen, toggle: toggleUrlInputDialog } =
       useOpener()
-    const { isUploading, startUpload, destroy } = useImageUpload(url => {
+    const { isUploading, startUpload } = useImageUpload(url => {
       context.emit('update:modelValue', url)
     })
 
@@ -66,8 +66,6 @@ export default defineComponent({
     const imgUrl = computed(() =>
       props.modelValue !== '' ? props.modelValue : noImg
     )
-
-    onUnmounted(destroy)
 
     return {
       imgUrl,

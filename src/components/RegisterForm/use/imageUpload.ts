@@ -1,4 +1,4 @@
-import { Ref, ref } from 'vue'
+import { Ref, ref, onUnmounted } from 'vue'
 import apis, { ModelFile } from '/@/lib/apis'
 
 const acceptImageType = ['image/jpeg', 'image/png'].join()
@@ -32,8 +32,9 @@ const useImageUpload = (
 ): {
   isUploading: Ref<boolean>
   startUpload: () => void
-  destroy: () => void
 } => {
+  const isUploading = ref(false)
+
   const { startSelect, destroy } = useImageSelect(async file => {
     isUploading.value = true
 
@@ -45,9 +46,11 @@ const useImageUpload = (
     }
   })
 
-  const isUploading = ref(false)
+  onUnmounted(() => {
+    destroy()
+  })
 
-  return { isUploading, startUpload: startSelect, destroy }
+  return { isUploading, startUpload: startSelect }
 }
 
 export default useImageUpload
