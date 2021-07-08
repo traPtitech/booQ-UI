@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@iconify/json": "^1.1.368",
-    "@openapitools/openapi-generator-cli": "^2.3.5",
+    "@openapitools/openapi-generator-cli": "^2.3.6",
     "@traptitech/vite-plugin-trap-auth": "^0.1.1",
     "@types/node": "^14.17.4",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
