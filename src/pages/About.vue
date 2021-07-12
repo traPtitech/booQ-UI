@@ -26,8 +26,7 @@
             <li>
               備品の所持者は
               <code :class="$style.code">traP</code>、
-              <code :class="$style.code">個人</code>（管理者のみ）、
-              <code :class="$style.code">支援課</code>
+              <code :class="$style.code">個人</code>（管理者のみ）
               から選択します。
             </li>
             <li>備品の名前、説明、画像を登録、変更できます。</li>

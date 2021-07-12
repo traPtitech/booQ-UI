@@ -2,8 +2,7 @@ import { ItemType } from '/@/lib/apis'
 
 export const itemTypeMap: ReadonlyArray<[ItemType, string]> = [
   [ItemType.individual, '自身'],
-  [ItemType.equipment, 'traP'],
-  [ItemType.sienka, '支援課']
+  [ItemType.equipment, 'traP']
 ]
 
 interface ReadonlyRequiredMap<K, V> extends ReadonlyMap<K, V> {
