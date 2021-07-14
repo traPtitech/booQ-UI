@@ -1,4 +1,4 @@
-import { computed, ComputedRef } from 'vue'
+import { computed, ComputedRef } from 'vue'S
 import { ItemDetail, ItemType } from '/@/lib/apis'
 import useMe from '/@/use/me'
 
@@ -8,9 +8,6 @@ const getFirstNotOwn = (nonOwnerTypes: Set<ItemType>): ItemType | -1 => {
   }
   if (nonOwnerTypes.has(ItemType.equipment)) {
     return ItemType.equipment
-  }
-  if (nonOwnerTypes.has(ItemType.sienka)) {
-    return ItemType.sienka
   }
   return -1
 }
@@ -29,9 +26,7 @@ const useNonOwnerTypes = (props: {
       arr.push(ItemType.individual)
     } else if (props.item.owners.every(o => o.ownerId !== ItemType.equipment)) {
       arr.push(ItemType.equipment)
-    } else if (props.item.owners.every(o => o.ownerId !== ItemType.sienka)) {
-      arr.push(ItemType.sienka)
-    }
+    } 
     return new Set(arr)
   })
   const firstNonOwnType = computed(() => getFirstNotOwn(nonOwnerTypes.value))
