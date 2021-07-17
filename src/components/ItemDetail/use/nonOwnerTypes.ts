@@ -1,3 +1,5 @@
+export default useNonOwnerTypes
+
 import { computed, ComputedRef } from 'vue'S
 import { ItemDetail, ItemType } from '/@/lib/apis'
 import useMe from '/@/use/me'
