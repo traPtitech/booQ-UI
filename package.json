@@ -35,7 +35,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.14.0",
-    "postcss": "^8.3.5",
+    "postcss": "^8.3.6",
     "postcss-normalize": "^10.0.0",
     "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
