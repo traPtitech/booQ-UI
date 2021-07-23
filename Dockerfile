@@ -12,7 +12,7 @@ COPY . .
 RUN NODE_ENV=production npm run build
 
 
-FROM caddy:2.4.1-alpine
+FROM caddy:2.4.3-alpine
 EXPOSE 80
 COPY build/Caddyfile /etc/caddy/Caddyfile
 COPY --from=build /app/dist /usr/share/caddy
