@@ -28,6 +28,13 @@ module.exports = {
       }
     ],
     'vue/custom-event-name-casing': ['error', 'camelCase'],
-    'vue/require-emit-validator': 'error'
+    'vue/require-emit-validator': 'error',
+    'vue/block-lang': [
+      'error',
+      {
+        script: { lang: 'ts' },
+        style: { lang: 'scss' }
+      }
+    ]
   }
 }
