@@ -25,7 +25,7 @@
     "@iconify/json": "^1.1.386",
     "@openapitools/openapi-generator-cli": "^2.3.10",
     "@traptitech/vite-plugin-trap-auth": "^0.2.0",
-    "@types/node": "^16.4.13",
+    "@types/node": "^16.6.0",
     "@typescript-eslint/eslint-plugin": "^4.29.0",
     "@typescript-eslint/parser": "^4.29.0",
     "@vitejs/plugin-vue": "^1.4.0",
