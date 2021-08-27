@@ -5,6 +5,7 @@ import { stringifyDate } from '/@/lib/date'
 import useMe from '/@/use/me'
 import { useStore } from '/@/store'
 import { getRentalUserBorrowedFrom } from '/@/lib/item'
+import { AxiosError } from 'axios'
 
 const useReturn = (props: {
   item: ItemSummary
@@ -58,10 +59,11 @@ const useReturn = (props: {
         text: `あなたは「${props.item.name}」を${count.value}個返却しました。`
       })
       return newLog
-    } catch (e) {
+    } catch (e: unknown) {
+      const err = e as AxiosError
       store.commit.addToast({
         type: 'error',
-        text: e.toString()
+        text: err.toString()
       })
     }
   }
