@@ -2,7 +2,12 @@
   <div v-if="items.length > 0">
     <h2>あなたが借りている備品</h2>
     <ul :class="$style.list">
-      <borrowed-item v-for="item in items" :key="item.id" :item="item" />
+      <borrowed-item
+        v-for="item in items"
+        :key="item.id"
+        :item="item"
+        :borrower="myName"
+      />
     </ul>
   </div>
   <div v-else>借りてるアイテムはありません</div>
@@ -16,12 +21,6 @@ import useTitle from './use/title'
 import BorrowedItem from '/@/components/BorrowedItem.vue'
 import useMe from '/@/use/me'
 
-const getSortedItemsByDue = (items: readonly ItemSummary[]) => {
-  const is = [...items]
-  is.sort((a, b) => getDue(a) - getDue(b))
-  return is
-}
-
 export default defineComponent({
   name: 'DashBoard',
   components: {
@@ -30,14 +29,21 @@ export default defineComponent({
   setup() {
     useTitle(computed(() => 'ダッシュボード'))
 
-    const { name: myName } = useMe()
     const items = ref<ItemSummary[]>([])
+    const { name: myName } = useMe()
+
+    const getSortedItemsByDue = (items: readonly ItemSummary[]) => {
+      const is = [...items]
+      is.sort((a, b) => getDue(a, myName.value) - getDue(b, myName.value))
+      return is
+    }
+
     onMounted(async () => {
       const { data } = await apis.getItems(undefined, undefined, myName.value)
       items.value = getSortedItemsByDue(data)
     })
 
-    return { items }
+    return { items, myName }
   }
 })
 </script>

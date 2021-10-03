@@ -24,10 +24,14 @@ export default defineComponent({
     item: {
       type: Object as PropType<ItemSummary>,
       required: true
+    },
+    borrower: {
+      type: String,
+      default: ''
     }
   },
   setup(props) {
-    const due = computed(() => getDue(props.item))
+    const due = computed(() => getDue(props.item, props.borrower))
     const dueString = computed(() => {
       const str = stringifyDateFromNumber(due.value)
       const diff = toNow(due.value)
