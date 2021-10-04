@@ -33,9 +33,11 @@ export default defineComponent({
     const { name: myName } = useMe()
 
     const getSortedItemsByDue = (items: readonly ItemSummary[]) => {
-      const is = [...items]
-      is.sort((a, b) => getDue(a, myName.value) - getDue(b, myName.value))
-      return is
+      const sortItems = [...items]
+      sortItems.sort(
+        (a, b) => getDue(a, myName.value) - getDue(b, myName.value)
+      )
+      return sortItems
     }
 
     onMounted(async () => {

@@ -27,7 +27,7 @@ export default defineComponent({
     },
     borrower: {
       type: String,
-      default: ''
+      required: true
     }
   },
   setup(props) {

@@ -1,10 +1,17 @@
-import { ItemSummary, Owner, Log, RentalUser, ItemDetail } from '/@/lib/apis'
+import {
+  ItemSummary,
+  Owner,
+  Log,
+  RentalUser,
+  ItemDetail,
+  LogType
+} from '/@/lib/apis'
 
-export const getDue = (item: ItemSummary, borrower?: string): number => {
+export const getDue = (item: ItemSummary, borrower: string): number => {
   if (!item.latestLogs) return Infinity
   const due = Math.max(
     ...item.latestLogs.map(log => {
-      if (log.type !== 0) {
+      if (log.type !== LogType.borrow) {
         return 0
       } else if (!borrower || log.user.name === borrower) {
         return Date.parse(log.dueDate)
