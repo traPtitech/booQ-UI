@@ -2,7 +2,7 @@
   <router-link :to="route" :class="$style.wrapper">
     <li :class="$style.container" :data-is-selected="isActive">
       <icon :class="$style.icon" :name="icon" />
-      <div :class="$style.title">{{ name }}</div>
+      <div>{{ name }}</div>
     </li>
   </router-link>
 </template>

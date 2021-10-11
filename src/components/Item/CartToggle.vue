@@ -1,7 +1,7 @@
 <template>
   <button :class="$style.container" @click="toggleCartMode">
-    <icon name="mdi:cart" :class="$style.content" />
-    <div :class="$style.content">{{ text }}</div>
+    <icon name="mdi:cart" />
+    <div>{{ text }}</div>
   </button>
 </template>
 

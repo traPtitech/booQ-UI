@@ -38,13 +38,13 @@
       v-if="isOpenEditDialog"
       :item="item"
       @close="toggleEditDialog"
-      @updateItem="() => emit('updateItem')"
+      @update-item="() => emit('updateItem')"
     />
     <add-owner-dialog
       v-if="isOpenAddOwnerDialog"
       :item="item"
       @close="toggleAddOwnerDialog"
-      @updateItem="() => emit('updateItem')"
+      @update-item="() => emit('updateItem')"
     />
   </div>
 </template>

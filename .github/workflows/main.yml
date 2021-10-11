@@ -65,7 +65,7 @@ jobs:
         with:
           name: apis
           path: ./src/lib/apis/generated
-      - run: npm run lint
+      - run: npm run lint -- --max-warnings=0
   typeCheck:
     name: Type Check
     runs-on: ubuntu-latest

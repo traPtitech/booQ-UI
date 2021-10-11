@@ -3,7 +3,7 @@
     <page-header
       :class="$style.header"
       :can-toggle-navigation-shown="canToggleNavigationShown"
-      @toggleNavigation="toggleNavigationShown"
+      @toggle-navigation="toggleNavigationShown"
     />
     <div :class="$style.innerContainer">
       <main :class="$style.content">
@@ -13,7 +13,7 @@
       <navigation
         :can-toggle-navigation-shown="canToggleNavigationShown"
         :is-navigation-shown="isNavigationShown"
-        @toggleNavigationShown="toggleNavigationShown"
+        @toggle-navigation-shown="toggleNavigationShown"
       />
     </div>
   </div>

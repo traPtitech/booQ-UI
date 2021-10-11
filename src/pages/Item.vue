@@ -1,10 +1,10 @@
 <template>
   <div v-if="item" :class="$style.container">
-    <controls :item="item" :class="$style.control" @updateItem="updateItem" />
+    <controls :item="item" :class="$style.control" @update-item="updateItem" />
     <information
       :item="item"
       :class="$style.information"
-      @updateItem="updateItem"
+      @update-item="updateItem"
     />
   </div>
 </template>

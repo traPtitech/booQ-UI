@@ -41,7 +41,7 @@ export default defineComponent({
       inputEle.value?.focus()
     }
 
-    const onInput = (e: InputEvent) => {
+    const onInput = (e: Event) => {
       const v = (e.target as HTMLInputElement).value
       context.emit('update:modelValue', v)
     }

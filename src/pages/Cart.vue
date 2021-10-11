@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
     <h1 :class="$style.header">まとめて借りる</h1>
-    <div :class="$style.flex">
+    <div>
       <div :class="$style.item">
         <h3 :class="$style.subtitle">カートに入れたもの ({{ itemCount }})</h3>
         <cart-items />

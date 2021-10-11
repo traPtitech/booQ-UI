@@ -21,7 +21,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 
-type Option = { key: string; label?: string; disabled?: true }
+type Option = { key: string; label?: string; disabled?: boolean }
 
 export default defineComponent({
   name: 'Selector',

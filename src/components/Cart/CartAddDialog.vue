@@ -31,7 +31,7 @@ import { defineComponent, PropType } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
-import { ItemSummary, ItemType } from '/@/lib/apis'
+import { ItemDetail, ItemSummary, ItemType } from '/@/lib/apis'
 import useAddCart from './use/addCart'
 import SubmitButton from './SubmitButton.vue'
 
@@ -45,7 +45,7 @@ export default defineComponent({
   },
   props: {
     item: {
-      type: Object as PropType<ItemSummary>,
+      type: Object as PropType<ItemSummary | ItemDetail>,
       required: true
     }
   },

@@ -7,7 +7,7 @@
         <input-checkbox
           :label="`@${user.name}`"
           :model-value="user.admin"
-          @update:modelValue="toggleAdmin(user.id)"
+          @update:model-value="toggleAdmin(user.id)"
         />
       </label>
     </div>
