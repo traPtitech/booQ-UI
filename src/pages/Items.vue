@@ -48,7 +48,7 @@ export default defineComponent({
     const items = ref<ItemSummary[]>([])
 
     const searchQuery = useDebouncedRef(
-      getFirstParam(route.query?.search) ?? ''
+      getFirstParam(route.query?.['search']) ?? ''
     )
     watch(
       searchQuery,

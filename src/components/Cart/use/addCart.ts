@@ -1,10 +1,10 @@
 import { ref, Ref, ComputedRef, computed } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import { ItemDetail, ItemSummary } from '/@/lib/apis'
 import { useStore } from '/@/store'
 import useOwners from '/@/components/ItemDetail/use/owners'
 
 const useAddCart = (props: {
-  item: ItemSummary
+  item: ItemSummary | ItemDetail
 }): {
   maxCount: ComputedRef<number>
   ownerDetails: ComputedRef<{ userName: string }[]>

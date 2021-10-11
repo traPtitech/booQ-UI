@@ -1,4 +1,4 @@
-import { ItemSummary } from '../lib/apis'
+import { ItemDetail, ItemSummary } from '/@/lib/apis'
 
 export const DEFAULT_TOAST_TIMEOUT = 1500
 export const MAX_TOAST_COUNT = 5
@@ -23,7 +23,7 @@ export interface Toast {
 }
 
 export interface CartItem {
-  item: ItemSummary
+  item: ItemSummary | ItemDetail
   ownerId: number
   count: number
 }

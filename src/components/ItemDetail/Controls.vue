@@ -17,11 +17,7 @@
         :disabled="isReturnDisabled"
         @click="toggleReturnDialog"
       />
-      <other-controls
-        :item="item"
-        :class="$style.otherControl"
-        @updateItem="updateItem"
-      />
+      <other-controls :item="item" @updateItem="updateItem" />
     </div>
     <cart-add-dialog-with-continue
       v-if="isOpenBorrowDialog"

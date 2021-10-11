@@ -6,7 +6,7 @@
       transition-transform-origin="bottom right"
     >
       <template #opener>
-        <icon name="mdi:plus-box" :class="$style.icon" :size="36" />
+        <icon name="mdi:plus-box" :size="36" />
       </template>
       <template #content>
         <normal-icon-button

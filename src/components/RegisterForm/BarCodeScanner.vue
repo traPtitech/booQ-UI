@@ -68,7 +68,8 @@ export default defineComponent({
         console.error(e)
         store.commit.addToast({
           type: 'error',
-          text: e.toString()
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          text: (e as any).toString()
         })
       }
     }
@@ -98,7 +99,8 @@ export default defineComponent({
         console.error(e)
         store.commit.addToast({
           type: 'error',
-          text: e.toString()
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          text: (e as any).toString()
         })
       }
     }
