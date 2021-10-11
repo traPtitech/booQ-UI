@@ -2,7 +2,7 @@
   <div :class="$style.container">
     <video ref="videoEle" @play="onResume" />
     <div v-if="inputs.length > 0">
-      <select v-model="input">
+      <select v-model="selectInput">
         <option v-for="input in inputs" :key="input.deviceId" :value="input">
           {{ input.label }}
         </option>
@@ -53,7 +53,7 @@ export default defineComponent({
 
     const codeReader = new BrowserBarcodeReader()
     const inputs = ref<VideoInputDevice[]>([])
-    const input = ref<VideoInputDevice>()
+    const selectInput = ref<VideoInputDevice>()
     const videoEle = shallowRef<HTMLVideoElement>()
 
     const initialize = async () => {
@@ -61,7 +61,7 @@ export default defineComponent({
         const videoInputDevices = await codeReader.getVideoInputDevices()
         inputs.value = videoInputDevices
         if (videoInputDevices.length > 0) {
-          input.value = videoInputDevices[0]
+          selectInput.value = videoInputDevices[0]
         }
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -75,7 +75,7 @@ export default defineComponent({
     }
 
     const start = async () => {
-      const device = input.value
+      const device = selectInput.value
       if (!device || !videoEle.value) return
       try {
         await codeReader.decodeFromVideoDevice(
@@ -109,7 +109,10 @@ export default defineComponent({
     }
 
     const onResume = (e: Event) => {
-      if (!(e.target as HTMLVideoElement).paused && input.value !== undefined) {
+      if (
+        !(e.target as HTMLVideoElement).paused &&
+        selectInput.value !== undefined
+      ) {
         // https://github.com/zxing-js/library/issues/336
         // initialize()
       }
@@ -126,7 +129,7 @@ export default defineComponent({
       start()
     })
 
-    return { inputs, input, videoEle, onResume }
+    return { inputs, selectInput, videoEle, onResume }
   }
 })
 </script>

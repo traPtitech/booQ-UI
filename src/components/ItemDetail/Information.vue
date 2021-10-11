@@ -5,7 +5,7 @@
       <like-button
         :likes="item.likes"
         :item-id="item.id"
-        @updateLikes="updateLikes"
+        @update-likes="updateLikes"
       />
     </div>
     <div :class="$style.description">{{ item.description }}</div>
@@ -13,7 +13,7 @@
     <comments
       :item-id="item.id"
       :comments="item.comments"
-      @postComment="postComment"
+      @post-comment="postComment"
     />
     <logs :logs="item.logs" />
   </div>

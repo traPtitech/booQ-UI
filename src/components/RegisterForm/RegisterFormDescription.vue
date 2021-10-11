@@ -13,7 +13,7 @@
         title="バーコードを読み取る"
         @close="toggleDialog"
       >
-        <bar-code-scanner @changeCode="changeCode" />
+        <bar-code-scanner @change-code="changeCode" />
         <button @click="toggleDialog">閉じる</button>
       </dialog-template>
     </div>
