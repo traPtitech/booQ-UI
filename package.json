@@ -16,7 +16,7 @@
     "@zxing/library": "^0.18.6",
     "axios": "^0.24.0",
     "direct-vuex": "^0.12.1",
-    "v-calendar": "^3.0.0-alpha.5",
+    "v-calendar": "^3.0.0-alpha.6",
     "vue": "^3.2.20",
     "vue-router": "^4.0.11",
     "vuex": "^4.0.2"
