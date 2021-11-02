@@ -1,19 +1,19 @@
 <template>
-  <icon v-if="cartLength === 0" name="mdi:cart" :class="$style.disable" />
+  <a-icon v-if="cartLength === 0" name="mdi:cart" :class="$style.disable" />
   <router-link v-else to="/cart">
-    <icon name="mdi:cart" :class="$style.enable" />
+    <a-icon name="mdi:cart" :class="$style.enable" />
   </router-link>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 import { useStore } from '/@/store'
 
 export default defineComponent({
   name: 'CartIcon',
   components: {
-    Icon
+    AIcon
   },
   setup() {
     const store = useStore()

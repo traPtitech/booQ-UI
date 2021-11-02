@@ -23,7 +23,7 @@ import apis from '/@/lib/apis'
 import { useStore } from '/@/store'
 
 export default defineComponent({
-  name: 'Comments',
+  name: 'CommentList',
   components: {
     DetailSummary,
     UserIcon,

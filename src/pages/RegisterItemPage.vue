@@ -8,7 +8,7 @@ import useTitle from './use/title'
 import RegisterForm from '/@/components/RegisterForm/RegisterForm.vue'
 
 export default defineComponent({
-  name: 'RegisterItem',
+  name: 'RegisterItemPage',
   components: {
     RegisterForm
   },

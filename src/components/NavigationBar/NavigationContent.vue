@@ -1,7 +1,7 @@
 <template>
   <nav :class="$style.nav">
-    <search :class="$style.search" />
-    <list :class="$style.list" />
+    <navigation-search :class="$style.search" />
+    <navigation-links :class="$style.list" />
     <div :class="$style.footer">
       <span :class="$style.version">booQ Project v{{ version }}</span>
     </div>
@@ -11,14 +11,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import version from '/@/lib/version'
-import Search from './Search.vue'
-import List from './List.vue'
+import NavigationSearch from './NavigationSearch.vue'
+import NavigationLinks from './NavigationLinks.vue'
 
 export default defineComponent({
   name: 'NavigationContent',
   components: {
-    Search,
-    List
+    NavigationSearch,
+    NavigationLinks
   },
   setup() {
     return { version }

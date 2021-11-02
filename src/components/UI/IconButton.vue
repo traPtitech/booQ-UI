@@ -1,19 +1,19 @@
 <template>
   <button :class="$style.container" :data-variant="variant">
-    <icon :class="$style.icon" :name="icon" />
+    <a-icon :class="$style.icon" :name="icon" />
     <div>{{ label }}</div>
   </button>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 
 export type Variant = 'primary' | 'secondary' | 'caution'
 
 export default defineComponent({
   name: 'IconButton',
-  components: { Icon },
+  components: { AIcon },
   props: {
     icon: {
       type: String,

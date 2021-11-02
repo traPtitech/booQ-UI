@@ -1,6 +1,6 @@
 <template>
   <div>
-    <selector
+    <a-selector
       v-model="type"
       :class="$style.item"
       :options="typeOptions"
@@ -21,14 +21,14 @@ import {
   itemTypeToName,
   itemTypeNameToType
 } from '/@/lib/itemType'
-import Selector from '/@/components/UI/Selector.vue'
+import ASelector from '/@/components/UI/ASelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 
 export default defineComponent({
   name: 'RegisterFormOwner',
   components: {
-    Selector,
+    ASelector,
     InputNumber,
     InputCheckbox
   },

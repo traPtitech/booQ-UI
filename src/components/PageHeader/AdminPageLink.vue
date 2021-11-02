@@ -1,18 +1,18 @@
 <template>
   <router-link v-if="isAdmin" to="/admin">
-    <icon name="mdi:cogs" :class="$style.container" />
+    <a-icon name="mdi:cogs" :class="$style.container" />
   </router-link>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 import useMe from '/@/use/me'
 
 export default defineComponent({
   name: 'AdminPageLink',
   components: {
-    Icon
+    AIcon
   },
   setup() {
     const { admin: isAdmin } = useMe()

@@ -10,7 +10,7 @@ import useTitle from './use/title'
 import useMe from '/@/use/me'
 
 export default defineComponent({
-  name: 'Admin',
+  name: 'AdminPage',
   components: {
     AdminManager
   },

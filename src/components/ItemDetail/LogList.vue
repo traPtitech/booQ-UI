@@ -18,7 +18,7 @@ import UserIcon from '/@/components/UI/UserIcon.vue'
 import useLogs from './use/logs'
 
 export default defineComponent({
-  name: 'Logs',
+  name: 'LogList',
   components: {
     DetailSummary,
     UserIcon

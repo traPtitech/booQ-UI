@@ -23,7 +23,7 @@ import CartConfirm from '/@/components/Cart/CartConfirm.vue'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: 'Cart',
+  name: 'CartPage',
   components: {
     CartConfirm,
     CartItems

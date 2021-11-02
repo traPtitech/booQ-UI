@@ -8,7 +8,7 @@
     />
     <transition name="fade">
       <div v-if="modelValue" :class="$style.button">
-        <icon name="mdi:send" @click="submit" />
+        <a-icon name="mdi:send" @click="submit" />
       </div>
     </transition>
   </div>
@@ -17,14 +17,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 import useMe from '/@/use/me'
 
 export default defineComponent({
   name: 'CommentsTextarea',
   components: {
     UserIcon,
-    Icon
+    AIcon
   },
   props: {
     modelValue: {

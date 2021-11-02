@@ -1,18 +1,18 @@
 <template>
   <div v-if="cartCount || isCartMode" :class="$style.container">
-    <icon name="mdi:cart" :class="$style.content" />
+    <a-icon name="mdi:cart" :class="$style.content" />
     <div :class="$style.content">{{ cartCount }}</div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 
 export default defineComponent({
   name: 'CartTip',
   components: {
-    Icon
+    AIcon
   },
   props: {
     cartCount: {

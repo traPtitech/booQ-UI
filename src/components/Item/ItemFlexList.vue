@@ -1,7 +1,7 @@
 <template>
   <ul :class="$style.list">
     <li v-for="item in items" :key="item.id" :class="$style.item">
-      <item :item="item" />
+      <item-panel :item="item" />
     </li>
   </ul>
 </template>
@@ -9,12 +9,12 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
-import Item from './Item.vue'
+import ItemPanel from './ItemPanel.vue'
 
 export default defineComponent({
   name: 'ItemFlexList',
   components: {
-    Item
+    ItemPanel
   },
   props: {
     items: {

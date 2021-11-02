@@ -2,8 +2,8 @@
   <div :class="$style.container" @mouseenter="enter" @mouseleave="leave">
     <div :class="$style.btnContainer">
       <button :class="$style.button" @click="toggleLike">
-        <icon v-show="!isLiked" name="mdi:heart-outline" :size="32" />
-        <icon
+        <a-icon v-show="!isLiked" name="mdi:heart-outline" :size="32" />
+        <a-icon
           v-show="isLiked"
           name="mdi:heart"
           :size="32"
@@ -32,7 +32,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { User } from '/@/lib/apis'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 import LikeButtonBalloon from './LikeButtonBalloon.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import useLike from './use/like'
@@ -44,7 +44,7 @@ const HAMIDASHI_RIGHT = 36 / 2 + 20
 
 export default defineComponent({
   name: 'LikeButton',
-  components: { Icon, LikeButtonBalloon, UserIcon },
+  components: { AIcon, LikeButtonBalloon, UserIcon },
   props: {
     itemId: {
       type: Number,
