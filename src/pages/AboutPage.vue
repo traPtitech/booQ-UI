@@ -81,7 +81,7 @@ import { defineComponent, computed } from 'vue'
 import useTitle from './use/title'
 
 export default defineComponent({
-  name: 'About',
+  name: 'AboutPage',
   setup() {
     useTitle(computed(() => 'booQについて'))
     return {}

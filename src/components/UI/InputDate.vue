@@ -13,7 +13,7 @@
           readonly
           @click="togglePopover"
         >
-          <icon
+          <a-icon
             name="mdi:calendar"
             :class="$style.toggleCalender"
             @click.prevent.stop="togglePopover"
@@ -27,14 +27,14 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { DatePicker } from 'v-calendar'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 import InputText from '/@/components/UI/InputText.vue'
 
 export default defineComponent({
   name: 'InputDate',
   components: {
     DatePicker,
-    Icon,
+    AIcon,
     InputText
   },
   props: {

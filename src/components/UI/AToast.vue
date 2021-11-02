@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container" :data-type="toast.type" @click="remove">
-    <icon :class="$style.icon" :name="iconName" mdi :size="32" />
+    <a-icon :class="$style.icon" :name="iconName" mdi :size="32" />
     <div :class="$style.text">{{ toast.text }}</div>
   </div>
 </template>
@@ -14,7 +14,7 @@ import {
   onUnmounted
 } from 'vue'
 import { Toast } from '/@/store/types'
-import Icon from './Icon.vue'
+import AIcon from './AIcon.vue'
 import { useStore } from '/@/store'
 
 const iconNameMap: Record<Toast['type'], string> = {
@@ -44,9 +44,9 @@ const useAutoHide = (props: { toast: Toast }) => {
 }
 
 export default defineComponent({
-  name: 'Toast',
+  name: 'AToast',
   components: {
-    Icon
+    AIcon
   },
   props: {
     toast: {

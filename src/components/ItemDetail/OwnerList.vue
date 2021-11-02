@@ -19,7 +19,7 @@ import OwnersDetail from './OwnersDetail.vue'
 import useOwners from './use/owners'
 
 export default defineComponent({
-  name: 'Owners',
+  name: 'OwnerList',
   components: {
     DetailSummary,
     OwnersDetail

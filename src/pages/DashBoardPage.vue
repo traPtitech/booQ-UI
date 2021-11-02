@@ -22,7 +22,7 @@ import BorrowedItem from '/@/components/BorrowedItem.vue'
 import useMe from '/@/use/me'
 
 export default defineComponent({
-  name: 'DashBoard',
+  name: 'DashBoardPage',
   components: {
     BorrowedItem
   },

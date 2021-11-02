@@ -6,7 +6,7 @@
       transition-transform-origin="bottom right"
     >
       <template #opener>
-        <icon name="mdi:plus-box" :size="36" />
+        <a-icon name="mdi:plus-box" :size="36" />
       </template>
       <template #content>
         <normal-icon-button
@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 import MiniPopup from '/@/components/UI/MiniPopup.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/use/opener'
@@ -46,7 +46,7 @@ import useOpener from '/@/use/opener'
 export default defineComponent({
   name: 'RegisterFormImageButton',
   components: {
-    Icon,
+    AIcon,
     MiniPopup,
     NormalIconButton
   },

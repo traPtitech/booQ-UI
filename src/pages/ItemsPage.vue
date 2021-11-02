@@ -24,7 +24,7 @@ import SearchInput from '/@/components/UI/SearchInput.vue'
 type ItemsPageType = 'all' | 'equipment' | 'property'
 
 export default defineComponent({
-  name: 'Items',
+  name: 'ItemsPage',
   components: {
     ItemGrid,
     SearchInput,

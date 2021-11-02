@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
     <div :class="$style.userIconWrapper">
-      <icon
+      <a-icon
         v-if="!ownerDetail.rentalable"
         :class="$style.icon"
         name="mdi:cancel"
@@ -19,12 +19,12 @@
 import { defineComponent, PropType } from 'vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import { OwnerDetail } from './use/owners'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 
 export default defineComponent({
   name: 'OwnersDetail',
   components: {
-    Icon,
+    AIcon,
     UserIcon
   },
   props: {

@@ -1,6 +1,6 @@
 <template>
   <ul :class="$style.list">
-    <list-item
+    <navigation-links-item
       v-for="item in items"
       :key="item.name"
       :class="$style.item"
@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import ListItem from './ListItem.vue'
+import NavigationLinksItem from './NavigationLinksItem.vue'
 
 interface Item {
   name: string
@@ -22,9 +22,9 @@ interface Item {
 }
 
 export default defineComponent({
-  name: 'List',
+  name: 'NavigationLinks',
   components: {
-    ListItem
+    NavigationLinksItem
   },
   setup() {
     const items: Item[] = [

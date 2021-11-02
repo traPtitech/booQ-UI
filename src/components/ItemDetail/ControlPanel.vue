@@ -46,7 +46,7 @@ import NoImg from '/@/assets/img/no-image.svg'
 import OtherControls from './OtherControls.vue'
 
 export default defineComponent({
-  name: 'Controls',
+  name: 'ControlPanel',
   components: {
     NormalIconButton,
     OtherControls,

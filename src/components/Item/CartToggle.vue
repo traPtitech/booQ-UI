@@ -1,18 +1,18 @@
 <template>
   <button :class="$style.container" @click="toggleCartMode">
-    <icon name="mdi:cart" />
+    <a-icon name="mdi:cart" />
     <div>{{ text }}</div>
   </button>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 
 export default defineComponent({
   name: 'CartToggle',
   components: {
-    Icon
+    AIcon
   },
   props: {
     modelValue: {
