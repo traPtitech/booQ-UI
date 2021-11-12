@@ -6,3 +6,5 @@ dist
 !.vscode/extensions.json
 
 /src/lib/apis/generated
+
+.eslintcache

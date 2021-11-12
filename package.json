@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint --ext .ts,.vue src",
+    "lint": "eslint --cache .",
     "type-check": "vue-tsc --noEmit",
     "gen-api": "node ./scripts/generate-apis.js",
     "clean": "rimraf ./src/lib/apis/generated"
