@@ -1,15 +1,11 @@
-// eslint-disable-next-line no-undef
 module.exports = {
   root: true,
   parserOptions: {
     parser: '@typescript-eslint/parser'
   },
-  env: {
-    browser: true,
-    es2017: true
-  },
   extends: [
     'eslint:recommended',
+    './eslint-vue-ts-recommended.js',
     'plugin:@typescript-eslint/recommended',
     'plugin:vue/vue3-recommended',
     'plugin:prettier/recommended'
@@ -52,7 +48,20 @@ module.exports = {
     'vue/match-component-file-name': ['error', { extensions: ['vue'] }],
     'vue/v-on-function-call': 'error',
     'vue/require-emit-validator': 'error',
-    'vue/no-template-target-blank': 'error',
-    'vue/valid-next-tick': 'error'
-  }
+    'vue/no-template-target-blank': 'error'
+  },
+  overrides: [
+    {
+      // 直下のファイル
+      files: ['*.{js,mjs}'],
+      excludedFiles: ['*/**/*.{js,mjs}'],
+      env: {
+        node: true
+      },
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off'
+      }
+    }
+  ],
+  reportUnusedDisableDirectives: true
 }
