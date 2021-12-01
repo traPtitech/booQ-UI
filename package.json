@@ -22,7 +22,7 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@iconify/json": "^1.1.422",
+    "@iconify/json": "^1.1.436",
     "@openapitools/openapi-generator-cli": "^2.4.13",
     "@traptitech/vite-plugin-trap-auth": "^0.2.1",
     "@types/node": "^16.10.2",
