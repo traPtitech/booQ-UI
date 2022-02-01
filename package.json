@@ -10,7 +10,7 @@
     "clean": "rimraf ./src/lib/apis/generated"
   },
   "dependencies": {
-    "@iconify/iconify": "^2.1.0",
+    "@iconify/iconify": "^2.1.2",
     "@popperjs/core": "^2.11.0",
     "@ungap/promise-any": "^1.1.1",
     "@zxing/library": "^0.18.6",
