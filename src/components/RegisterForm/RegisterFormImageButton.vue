@@ -13,6 +13,7 @@
           icon="mdi:file-upload"
           label="画像をアップロード"
           variant="primary"
+          custom-width
           :class="$style.btn"
           @click="onUploadClick"
         />
@@ -20,6 +21,7 @@
           icon="mdi:link-plus"
           label="画像をURLで指定"
           variant="secondary"
+          custom-width
           :class="$style.btn"
           @click="onInputUrlClick"
         />
@@ -28,6 +30,7 @@
           icon="mdi:link-off"
           label="画像の指定を解除"
           variant="caution"
+          custom-width
           :class="$style.btn"
           @click="onClearUrlClick"
         />
