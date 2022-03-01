@@ -27,7 +27,7 @@ import { defineComponent } from 'vue'
 import NavigationContent from './NavigationContent.vue'
 
 export default defineComponent({
-  name: 'Navigation',
+  name: 'NavigationBar',
   components: {
     NavigationContent
   },

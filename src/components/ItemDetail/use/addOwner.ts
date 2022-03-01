@@ -2,6 +2,7 @@ import apis, { ItemType } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import { useStore } from '/@/store'
 import { itemTypeToOwnerId, itemTypeToOwnerName } from '/@/lib/itemType'
+import { AxiosError } from 'axios'
 
 const useAddOwner = (
   showSuccessToast = true
@@ -41,10 +42,11 @@ const useAddOwner = (
           text: `所有者に ${ownerName} を追加しました。`
         })
       }
-    } catch (e) {
+    } catch (e: unknown) {
+      const err = e as AxiosError
       store.commit.addToast({
         type: 'error',
-        text: e.toString()
+        text: err.toString()
       })
     }
   }

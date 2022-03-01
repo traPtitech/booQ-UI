@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router'
 import SearchInput from '/@/components/UI/SearchInput.vue'
 
 export default defineComponent({
-  name: 'Search',
+  name: 'NavigationSearch',
   components: {
     SearchInput
   },

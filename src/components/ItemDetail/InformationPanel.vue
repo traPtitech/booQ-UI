@@ -5,34 +5,34 @@
       <like-button
         :likes="item.likes"
         :item-id="item.id"
-        @updateLikes="updateLikes"
+        @update-likes="updateLikes"
       />
     </div>
     <div :class="$style.description">{{ item.description }}</div>
-    <owners :item="item" />
-    <comments
+    <owner-list :item="item" />
+    <comment-list
       :item-id="item.id"
       :comments="item.comments"
-      @postComment="postComment"
+      @post-comment="postComment"
     />
-    <logs :logs="item.logs" />
+    <log-list :logs="item.logs" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { ItemDetail, Comment, User } from '/@/lib/apis'
-import Owners from './Owners.vue'
-import Comments from './Comments.vue'
-import Logs from './Logs.vue'
+import OwnerList from './OwnerList.vue'
+import CommentList from './CommentList.vue'
+import LogList from './LogList.vue'
 import LikeButton from './LikeButton.vue'
 
 export default defineComponent({
-  name: 'Information',
+  name: 'InformationPanel',
   components: {
-    Owners,
-    Comments,
-    Logs,
+    OwnerList,
+    CommentList,
+    LogList,
     LikeButton
   },
   props: {

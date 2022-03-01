@@ -1,6 +1,6 @@
 <template>
   <with-focus-underline :class="$style.container" @click="focus">
-    <icon name="mdi:search" :class="$style.icon" />
+    <a-icon name="mdi:search" :class="$style.icon" />
     <input
       ref="inputEle"
       :class="$style.input"
@@ -15,13 +15,13 @@
 
 <script lang="ts">
 import { defineComponent, shallowRef } from 'vue'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 import WithFocusUnderline from './WithFocusUnderline.vue'
 
 export default defineComponent({
   name: 'SearchInput',
   components: {
-    Icon,
+    AIcon,
     WithFocusUnderline
   },
   props: {
@@ -41,7 +41,7 @@ export default defineComponent({
       inputEle.value?.focus()
     }
 
-    const onInput = (e: InputEvent) => {
+    const onInput = (e: Event) => {
       const v = (e.target as HTMLInputElement).value
       context.emit('update:modelValue', v)
     }

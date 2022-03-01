@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import apis, { Owner } from '/@/lib/apis'
 import { useStore } from '/@/store'
 
@@ -48,10 +49,11 @@ const useEditItem = (): {
         type: 'success',
         text: message
       })
-    } catch (e) {
+    } catch (e: unknown) {
+      const err = e as AxiosError
       store.commit.addToast({
         type: 'error',
-        text: e.toString()
+        text: err.toString()
       })
     }
   }

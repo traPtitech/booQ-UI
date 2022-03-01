@@ -3,17 +3,17 @@
     <page-header
       :class="$style.header"
       :can-toggle-navigation-shown="canToggleNavigationShown"
-      @toggleNavigation="toggleNavigationShown"
+      @toggle-navigation="toggleNavigationShown"
     />
     <div :class="$style.innerContainer">
       <main :class="$style.content">
         <router-view v-if="fetchedMe" />
         <div v-else>Loading...</div>
       </main>
-      <navigation
+      <navigation-bar
         :can-toggle-navigation-shown="canToggleNavigationShown"
         :is-navigation-shown="isNavigationShown"
-        @toggleNavigationShown="toggleNavigationShown"
+        @toggle-navigation-shown="toggleNavigationShown"
       />
     </div>
   </div>
@@ -25,7 +25,7 @@
 import { defineComponent, computed, onBeforeMount, watch, readonly } from 'vue'
 import { useRouter } from 'vue-router'
 import PageHeader from '/@/components/PageHeader/PageHeader.vue'
-import Navigation from '/@/components/Navigation/Navigation.vue'
+import NavigationBar from '/@/components/NavigationBar/NavigationBar.vue'
 import ToastContainer from '/@/components/UI/ToastContainer.vue'
 import { useStore } from '/@/store'
 import useOpener from '/@/use/opener'
@@ -55,7 +55,7 @@ export default defineComponent({
   name: 'App',
   components: {
     PageHeader,
-    Navigation,
+    NavigationBar,
     ToastContainer
   },
   setup() {

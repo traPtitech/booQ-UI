@@ -17,11 +17,7 @@
         :disabled="isReturnDisabled"
         @click="toggleReturnDialog"
       />
-      <other-controls
-        :item="item"
-        :class="$style.otherControl"
-        @updateItem="updateItem"
-      />
+      <other-controls :item="item" @update-item="updateItem" />
     </div>
     <cart-add-dialog-with-continue
       v-if="isOpenBorrowDialog"
@@ -32,7 +28,7 @@
       v-if="isOpenReturnDialog"
       :item="item"
       @close="toggleReturnDialog"
-      @updateItem="updateItem"
+      @update-item="updateItem"
     />
   </div>
 </template>
@@ -50,7 +46,7 @@ import NoImg from '/@/assets/img/no-image.svg'
 import OtherControls from './OtherControls.vue'
 
 export default defineComponent({
-  name: 'Controls',
+  name: 'ControlPanel',
   components: {
     NormalIconButton,
     OtherControls,

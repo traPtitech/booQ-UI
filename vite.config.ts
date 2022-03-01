@@ -6,12 +6,10 @@ import PurgeIcons from 'vite-plugin-purge-icons'
 import brotli from 'rollup-plugin-brotli'
 import { PluginTrapAuth } from '@traptitech/vite-plugin-trap-auth'
 
-const srcPath = path.resolve(__dirname, 'src').replace(/\\/g, '/')
-
 export default defineConfig({
   resolve: {
     alias: {
-      '/@': srcPath
+      '/@': path.resolve(__dirname, 'src')
     }
   },
   server: {
@@ -27,7 +25,7 @@ export default defineConfig({
       scss: {
         additionalData: `
           @use "sass:math";
-          @import "${srcPath}/styles/common.scss";
+          @import "/@/styles/common.scss";
         `
       }
     }

@@ -15,8 +15,8 @@
           {{ item.owners.map(owner => `@${owner.user.name}`).join() }}
         </div>
         <div :class="$style.like" @click.prevent="toggleLike">
-          <icon v-if="!isLiked" name="mdi:heart-outline" :size="20" />
-          <icon v-else name="mdi:heart" :size="20" :class="$style.liked" />
+          <a-icon v-if="!isLiked" name="mdi:heart-outline" :size="20" />
+          <a-icon v-else name="mdi:heart" :size="20" :class="$style.liked" />
           <div v-show="likeCount">{{ likeCount }}</div>
         </div>
         <slot name="controls" />
@@ -28,7 +28,7 @@
 <script lang="ts">
 import { defineComponent, PropType, computed, ref, shallowRef } from 'vue'
 import apis, { ItemSummary } from '/@/lib/apis'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 import NoImg from '/@/assets/img/no-image.svg'
 import useTitleTransition from './use/titleTransition'
 
@@ -63,9 +63,9 @@ const useLike = (props: { item: ItemSummary }) => {
 }
 
 export default defineComponent({
-  name: 'Item',
+  name: 'ItemPanel',
   components: {
-    Icon
+    AIcon
   },
   props: {
     item: {

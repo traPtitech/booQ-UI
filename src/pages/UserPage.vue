@@ -24,7 +24,7 @@ import ItemFlexList from '/@/components/Item/ItemFlexList.vue'
 import CommentGrid from '/@/components/UserPage/CommentGrid.vue'
 
 export default defineComponent({
-  name: 'User',
+  name: 'UserPage',
   components: {
     UserIcon,
     ItemFlexList,

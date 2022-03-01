@@ -1,10 +1,14 @@
 <template>
   <div v-if="item" :class="$style.container">
-    <controls :item="item" :class="$style.control" @updateItem="updateItem" />
-    <information
+    <control-panel
+      :item="item"
+      :class="$style.control"
+      @update-item="updateItem"
+    />
+    <information-panel
       :item="item"
       :class="$style.information"
-      @updateItem="updateItem"
+      @update-item="updateItem"
     />
   </div>
 </template>
@@ -13,14 +17,14 @@
 import { defineComponent, reactive, computed, watchEffect, toRef } from 'vue'
 import apis, { ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
-import Controls from '/@/components/ItemDetail/Controls.vue'
-import Information from '/@/components/ItemDetail/Information.vue'
+import ControlPanel from '/@/components/ItemDetail/ControlPanel.vue'
+import InformationPanel from '/@/components/ItemDetail/InformationPanel.vue'
 
 export default defineComponent({
-  name: 'Item',
+  name: 'ItemPage',
   components: {
-    Controls,
-    Information
+    ControlPanel,
+    InformationPanel
   },
   props: {
     id: {

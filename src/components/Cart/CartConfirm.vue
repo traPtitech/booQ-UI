@@ -35,7 +35,7 @@ import { useStore } from '/@/store'
 import useMe from '/@/use/me'
 
 export default defineComponent({
-  name: 'CartConfirmDialog',
+  name: 'CartConfirm',
   components: {
     InputText,
     InputDate,

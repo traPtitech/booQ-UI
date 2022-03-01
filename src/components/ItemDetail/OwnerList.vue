@@ -13,20 +13,20 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import { ItemDetail, ItemSummary } from '/@/lib/apis'
 import DetailSummary from './DetailSummary.vue'
 import OwnersDetail from './OwnersDetail.vue'
 import useOwners from './use/owners'
 
 export default defineComponent({
-  name: 'Owners',
+  name: 'OwnerList',
   components: {
     DetailSummary,
     OwnersDetail
   },
   props: {
     item: {
-      type: Object as PropType<ItemSummary>,
+      type: Object as PropType<ItemSummary | ItemDetail>,
       required: true
     }
   },

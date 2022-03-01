@@ -6,57 +6,57 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Dashboard',
-    component: () => import('/@/pages/DashBoard.vue')
+    component: () => import('/@/pages/DashBoardPage.vue')
   },
   {
     path: '/users/:name',
     name: 'User Page',
-    component: () => import('/@/pages/User.vue'),
+    component: () => import('/@/pages/UserPage.vue'),
     props: true
   },
   {
     path: '/items',
     name: 'All Items',
-    component: () => import('/@/pages/Items.vue'),
+    component: () => import('/@/pages/ItemsPage.vue'),
     props: { type: 'all' }
   },
   {
     path: '/items/new',
     name: 'Register Item',
-    component: () => import('/@/pages/RegisterItem.vue')
+    component: () => import('/@/pages/RegisterItemPage.vue')
   },
   {
     path: '/items/equipment',
     name: 'Equipments',
-    component: () => import('/@/pages/Items.vue'),
+    component: () => import('/@/pages/ItemsPage.vue'),
     props: { type: 'equipment' }
   },
   {
     path: '/items/property',
     name: 'Personal Property Items',
-    component: () => import('/@/pages/Items.vue'),
+    component: () => import('/@/pages/ItemsPage.vue'),
     props: { type: 'property' }
   },
   {
     path: '/items/:id',
     name: 'Item',
-    component: () => import('/@/pages/Item.vue'),
+    component: () => import('/@/pages/ItemPage.vue'),
     props: true
   },
   {
     path: '/admin',
     name: 'Admin Page',
-    component: () => import('/@/pages/Admin.vue')
+    component: () => import('/@/pages/AdminPage.vue')
   },
   {
     path: '/about',
     name: 'About',
-    component: () => import('/@/pages/About.vue')
+    component: () => import('/@/pages/AboutPage.vue')
   },
   {
     path: '/cart',
     name: 'Cart',
-    component: () => import('/@/pages/Cart.vue')
+    component: () => import('/@/pages/CartPage.vue')
   }
 ]
 

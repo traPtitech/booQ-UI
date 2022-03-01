@@ -1,4 +1,4 @@
-import { Ref, ref } from 'vue'
+import { Ref, ref, onUnmounted } from 'vue'
 import apis, { ModelFile } from '/@/lib/apis'
 
 const acceptImageType = ['image/jpeg', 'image/png'].join()
@@ -41,11 +41,15 @@ const useImageUpload = (
     try {
       const res = await apis.postFile(file)
       onUpload(location.origin + (res.data as ModelFile).url)
-      destroy()
     } finally {
       isUploading.value = false
     }
   })
+
+  onUnmounted(() => {
+    destroy()
+  })
+
   return { isUploading, startUpload: startSelect }
 }
 

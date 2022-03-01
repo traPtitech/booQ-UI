@@ -18,7 +18,7 @@ import { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
 
 export default defineComponent({
-  name: 'ItemWide',
+  name: 'CommentPanel',
   props: {
     text: {
       type: String,

@@ -24,7 +24,7 @@ import SearchInput from '/@/components/UI/SearchInput.vue'
 type ItemsPageType = 'all' | 'equipment' | 'property'
 
 export default defineComponent({
-  name: 'Items',
+  name: 'ItemsPage',
   components: {
     ItemGrid,
     SearchInput,
@@ -48,7 +48,7 @@ export default defineComponent({
     const items = ref<ItemSummary[]>([])
 
     const searchQuery = useDebouncedRef(
-      getFirstParam(route.query?.search) ?? ''
+      getFirstParam(route.query?.['search']) ?? ''
     )
     watch(
       searchQuery,

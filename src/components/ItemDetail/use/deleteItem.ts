@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import apis from '/@/lib/apis'
 import { useStore } from '/@/store'
 
@@ -24,10 +25,11 @@ const useDeleteItem = (): {
         text: `「${payload.itemName}」を削除しました。`
       })
       return true
-    } catch (e) {
+    } catch (e: unknown) {
+      const err = e as AxiosError
       store.commit.addToast({
         type: 'error',
-        text: e.toString()
+        text: err.toString()
       })
     }
     return false

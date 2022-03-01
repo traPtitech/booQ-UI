@@ -11,7 +11,7 @@
 import { defineComponent, PropType, ref, watch } from 'vue'
 
 export default defineComponent({
-  name: 'Radios',
+  name: 'RadioButtons',
   props: {
     options: {
       type: Array as PropType<string[]>,

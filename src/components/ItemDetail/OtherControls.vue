@@ -5,7 +5,7 @@
       transition-transform-origin="top right"
     >
       <template #opener>
-        <icon name="mdi:dots-horizontal" :size="32" :class="$style.icon" />
+        <a-icon name="mdi:dots-horizontal" :size="32" :class="$style.icon" />
       </template>
       <template #content>
         <normal-icon-button
@@ -38,13 +38,13 @@
       v-if="isOpenEditDialog"
       :item="item"
       @close="toggleEditDialog"
-      @updateItem="() => emit('updateItem')"
+      @update-item="() => emit('updateItem')"
     />
     <add-owner-dialog
       v-if="isOpenAddOwnerDialog"
       :item="item"
       @close="toggleAddOwnerDialog"
-      @updateItem="() => emit('updateItem')"
+      @update-item="() => emit('updateItem')"
     />
   </div>
 </template>
@@ -52,7 +52,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { ItemDetail } from '/@/lib/apis'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 import useOpener from '/@/use/opener'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import EditDialog from './EditDialog.vue'
@@ -65,7 +65,7 @@ import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'OtherControls',
   components: {
-    Icon,
+    AIcon,
     NormalIconButton,
     EditDialog,
     AddOwnerDialog,

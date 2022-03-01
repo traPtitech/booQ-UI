@@ -1,8 +1,8 @@
 <template>
   <router-link :to="route" :class="$style.wrapper">
     <li :class="$style.container" :data-is-selected="isActive">
-      <icon :class="$style.icon" :name="icon" />
-      <div :class="$style.title">{{ name }}</div>
+      <a-icon :class="$style.icon" :name="icon" />
+      <div>{{ name }}</div>
     </li>
   </router-link>
 </template>
@@ -10,12 +10,12 @@
 <script lang="ts">
 import { defineComponent, toRef } from 'vue'
 import { useLink } from 'vue-router'
-import Icon from '/@/components/UI/Icon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 
 export default defineComponent({
-  name: 'ListItem',
+  name: 'NavigationLinksItem',
   components: {
-    Icon
+    AIcon
   },
   props: {
     name: {

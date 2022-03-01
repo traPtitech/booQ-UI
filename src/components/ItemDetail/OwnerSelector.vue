@@ -1,16 +1,16 @@
 <template>
-  <selector v-model="value" label="所有者" :options="options" />
+  <a-selector v-model="value" label="所有者" :options="options" />
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import { OwnerMayWithCount } from './use/owners'
-import Selector from '/@/components/UI/Selector.vue'
+import ASelector from '/@/components/UI/ASelector.vue'
 
 export default defineComponent({
   userName: 'OwnerSelector',
   components: {
-    Selector
+    ASelector
   },
   props: {
     ownerDetails: {
