@@ -27,6 +27,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { DatePicker } from 'v-calendar'
+import 'v-calendar/dist/style.css'
 import AIcon from '/@/components/UI/AIcon.vue'
 import InputText from '/@/components/UI/InputText.vue'
 
