@@ -2,7 +2,7 @@
   <div>
     <router-link :to="`/items/${item.id}`">
       <div :class="$style.header">
-        <img :class="$style.img" :src="imgUrl" />
+        <img :class="$style.img" :src="imgUrl" loading="lazy" />
         <h4 :class="$style.title">{{ item.name }}</h4>
       </div>
     </router-link>
