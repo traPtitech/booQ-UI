@@ -1,7 +1,6 @@
 import { computed, Ref, ref } from 'vue'
 import { FormState } from './formState'
 import axios from 'axios'
-import any from '@ungap/promise-any'
 
 interface BookData {
   name: string
@@ -45,7 +44,7 @@ const fetchFromCodeFromAny = async (code: string): Promise<BookData | null> => {
   const fetchFuncs = [fetchFromOpenBd, fetchFromGoogleBooks]
 
   try {
-    const ress = await any(fetchFuncs.map(fetchFunc => fetchFunc(code)))
+    const ress = await Promise.any(fetchFuncs.map(fetchFunc => fetchFunc(code)))
     return ress
   } catch (e) {
     // eslint-disable-next-line no-console
