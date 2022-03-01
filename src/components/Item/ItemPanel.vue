@@ -5,7 +5,7 @@
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
-    <img :class="$style.img" :src="imgUrl" />
+    <img :class="$style.img" :src="imgUrl" loading="lazy" />
     <div :class="$style.container">
       <div ref="titleEle" :class="$style.name" @transitionend="onTransitionEnd">
         {{ item.name }}
