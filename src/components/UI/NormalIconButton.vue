@@ -4,6 +4,7 @@
     :label="label"
     :variant="variant"
     :class="$style.button"
+    :data-custom-width="customWidth"
   />
 </template>
 
@@ -26,6 +27,10 @@ export default defineComponent({
     variant: {
       type: String as PropType<Variant>,
       default: 'primary' as const
+    },
+    customWidth: {
+      type: Boolean,
+      default: false
     }
   }
 })
@@ -36,7 +41,9 @@ $height: 36px;
 
 .button {
   height: $height;
-  width: 96px;
   border-radius: math.div($height, 2);
+  &:not([data-custom-width='true']) {
+    width: 96px;
+  }
 }
 </style>
