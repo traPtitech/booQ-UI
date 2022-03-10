@@ -20,7 +20,7 @@ import UserIcon from '/@/components/UI/UserIcon.vue'
 import CommentsTextarea from './CommentsTextarea.vue'
 import useMe from '/@/use/me'
 import apis from '/@/lib/apis'
-import { useStore } from '/@/store'
+import { useToast } from '/@/store/toast'
 
 export default defineComponent({
   name: 'CommentList',
@@ -44,7 +44,7 @@ export default defineComponent({
     postComment: (comment: Comment) => true
   },
   setup(props, context) {
-    const store = useStore()
+    const toastStore = useToast()
 
     const inputComment = ref('')
     const { name } = useMe()
@@ -54,14 +54,14 @@ export default defineComponent({
         const { data: comment } = await apis.postComment(props.itemId, {
           text: inputComment.value
         })
-        store.commit.addToast({
+        toastStore.addToast({
           type: 'success',
           text: `コメントを投稿しました。`
         })
         context.emit('postComment', comment)
         inputComment.value = ''
       } catch {
-        store.commit.addToast({
+        toastStore.addToast({
           type: 'error',
           text: 'コメントの投稿に失敗しました'
         })

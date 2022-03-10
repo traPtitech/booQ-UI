@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, PropType } from 'vue'
-import { CartItem } from '/@/store/types'
+import { CartItem } from '/@/store/cart'
 import NoImg from '/@/assets/img/no-image.svg'
 import useOpener from '/@/use/opener'
 import CartAddDialog from './CartAddDialog.vue'

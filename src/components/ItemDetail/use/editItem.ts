@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios'
 import apis, { Owner } from '/@/lib/apis'
-import { useStore } from '/@/store'
+import { useToast } from '/@/store/toast'
 
 const useEditItem = (): {
   editItem: (payload: {
@@ -11,7 +11,7 @@ const useEditItem = (): {
     count: number
   }) => Promise<void>
 } => {
-  const store = useStore()
+  const toastStore = useToast()
 
   const editItem = async (payload: {
     itemID: number
@@ -22,7 +22,7 @@ const useEditItem = (): {
   }): Promise<void> => {
     // countに空文字が入ってるときcheckValidity()をすり抜ける
     if (typeof payload.count === 'string') {
-      store.commit.addToast({
+      toastStore.addToast({
         type: 'error',
         text: '個数が入力されていません'
       })
@@ -45,13 +45,13 @@ const useEditItem = (): {
         const diff = payload.count - payload.ownInfo.count
         message = `${Math.abs(diff)}個 ${diff > 0 ? '追加' : '減ら'}しました。`
       }
-      store.commit.addToast({
+      toastStore.addToast({
         type: 'success',
         text: message
       })
     } catch (e: unknown) {
       const err = e as AxiosError
-      store.commit.addToast({
+      toastStore.addToast({
         type: 'error',
         text: err.toString()
       })

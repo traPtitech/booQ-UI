@@ -17,7 +17,7 @@ import ItemPanel from './ItemPanel.vue'
 import CartAddDialog from '../Cart/CartAddDialog.vue'
 import CartTip from './CartTip.vue'
 import useOpener from '/@/use/opener'
-import { useStore } from '/@/store'
+import { useCart } from '/@/store/cart'
 
 export default defineComponent({
   name: 'ItemWithCartMode',
@@ -37,11 +37,11 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const store = useStore()
+    const cartStore = useCart()
     const { isOpen: isDialogOpen, toggle: toggleDialog } = useOpener()
 
     const cartCount = computed(
-      () => store.getters.cartItems.get(props.item.id) ?? 0
+      () => cartStore.cartItems.get(props.item.id) ?? 0
     )
     const openDialog = (e: MouseEvent) => {
       if (!props.isCartMode) return

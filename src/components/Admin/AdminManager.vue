@@ -17,7 +17,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
 import apis, { User } from '/@/lib/apis'
-import { useStore } from '/@/store'
+import { useToast } from '/@/store/toast'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 
 export default defineComponent({
@@ -26,7 +26,7 @@ export default defineComponent({
     InputCheckbox
   },
   setup() {
-    const store = useStore()
+    const toastStore = useToast()
 
     const users = ref<User[]>([])
 
@@ -50,7 +50,7 @@ export default defineComponent({
         )
         users.value[userIndex] = updatedUser
       } catch (e) {
-        store.commit.addToast({
+        toastStore.addToast({
           type: 'error',
           text: `ユーザーの変更に失敗しました: ${e}`
         })

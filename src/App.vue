@@ -7,7 +7,7 @@
     />
     <div :class="$style.innerContainer">
       <main :class="$style.content">
-        <router-view v-if="fetchedMe" />
+        <router-view v-if="meStore.me" />
         <div v-else>Loading...</div>
       </main>
       <navigation-bar
@@ -27,7 +27,7 @@ import { useRouter } from 'vue-router'
 import PageHeader from '/@/components/PageHeader/PageHeader.vue'
 import NavigationBar from '/@/components/NavigationBar/NavigationBar.vue'
 import ToastContainer from '/@/components/UI/ToastContainer.vue'
-import { useStore } from '/@/store'
+import { useMeStore } from '/@/store/me'
 import useOpener from '/@/use/opener'
 import useIsMobile from './use/isMobile'
 
@@ -64,19 +64,18 @@ export default defineComponent({
       canToggleNavigationShown,
       toggleNavigationShown
     } = useNavigationShown()
-    const store = useStore()
-    const fetchedMe = computed(() => store.state.me !== null)
+    const meStore = useMeStore()
 
     onBeforeMount(() => {
-      if (fetchedMe.value) return
-      store.dispatch.fetchMe()
+      if (meStore.me) return
+      meStore.fetchMe()
     })
 
     return {
       isNavigationShown,
       canToggleNavigationShown,
       toggleNavigationShown,
-      fetchedMe
+      meStore
     }
   }
 })

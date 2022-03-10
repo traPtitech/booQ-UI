@@ -26,7 +26,7 @@ import {
   VideoInputDevice,
   NotFoundException
 } from '@zxing/library'
-import { useStore } from '/@/store'
+import { useToast } from '/@/store/toast'
 
 const checkDigit = (isbn: string) => {
   const digits = isbn.split('').map(n => +n)
@@ -49,7 +49,7 @@ export default defineComponent({
     changeCode: (_code: string) => true
   },
   setup(_, context) {
-    const store = useStore()
+    const toastStore = useToast()
 
     const codeReader = new BrowserBarcodeReader()
     const inputs = ref<VideoInputDevice[]>([])
@@ -66,7 +66,7 @@ export default defineComponent({
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e)
-        store.commit.addToast({
+        toastStore.addToast({
           type: 'error',
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           text: (e as any).toString()
@@ -97,7 +97,7 @@ export default defineComponent({
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error(e)
-        store.commit.addToast({
+        toastStore.addToast({
           type: 'error',
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           text: (e as any).toString()

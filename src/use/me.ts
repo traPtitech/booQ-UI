@@ -1,12 +1,12 @@
 import { computed, reactive, ToRefs, toRefs } from 'vue'
-import { useStore } from '/@/store'
+import { useMeStore } from '../store/me'
 import { User } from '/@/lib/apis'
 
 // meがnullのときは呼ばれない仮定
 const useMe = (): ToRefs<User> => {
-  const store = useStore()
+  const meStore = useMeStore()
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const me = computed(() => store.state.me!)
+  const me = computed(() => meStore.me!)
   return toRefs(reactive(me.value))
 }
 

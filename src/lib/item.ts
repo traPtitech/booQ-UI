@@ -51,7 +51,7 @@ export const getOwnersCanLend = (item: ItemDetail): Owner[] =>
 export const getRemainByOwnerID = (
   id: number,
   initialRemain: number,
-  latestLogs: Log[]
+  latestLogs: readonly Log[]
 ): number => {
   // そのownerの最後のログを取得
   const latestLog = latestLogs.find(v => v.ownerId === id)
