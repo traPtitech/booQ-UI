@@ -1,7 +1,8 @@
 import { computed, ComputedRef, Ref, ref } from 'vue'
 import useMeasure from './measure'
 import apis, { User } from '/@/lib/apis'
-import { useStore } from '/@/store'
+import { useMeStore } from '/@/store/me'
+import { useToast } from '/@/store/toast'
 import useMe from '/@/use/me'
 
 const useLike = (
@@ -16,7 +17,8 @@ const useLike = (
   balloonWidth: ComputedRef<number>
 } => {
   const { id: meID } = useMe()
-  const store = useStore()
+  const meStore = useMeStore()
+  const toastStore = useToast()
   const { measureText, measureGrid } = useMeasure()
 
   const isLiked = ref(props.likes.some(v => meID.value === v.id))
@@ -25,7 +27,7 @@ const useLike = (
     try {
       if (isLiked.value) {
         await apis.removeLike(props.itemId)
-        if (store.state.me) {
+        if (meID.value) {
           emit(
             'updateLikes',
             props.likes.filter(v => v.id !== meID.value)
@@ -33,13 +35,13 @@ const useLike = (
         }
       } else {
         await apis.addLike(props.itemId)
-        if (store.state.me) {
-          emit('updateLikes', [...props.likes, store.state.me])
+        if (meStore.me) {
+          emit('updateLikes', [...props.likes, meStore.me])
         }
       }
       isLiked.value = !isLiked.value
     } catch (e) {
-      store.commit.addToast({
+      toastStore.addToast({
         type: 'error',
         text: '「いいね」に失敗しました'
       })

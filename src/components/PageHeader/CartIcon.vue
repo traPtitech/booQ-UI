@@ -8,7 +8,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import AIcon from '/@/components/UI/AIcon.vue'
-import { useStore } from '/@/store'
+import { useCart } from '/@/store/cart'
 
 export default defineComponent({
   name: 'CartIcon',
@@ -16,8 +16,8 @@ export default defineComponent({
     AIcon
   },
   setup() {
-    const store = useStore()
-    const cartLength = computed(() => store.state.cart.length)
+    const cartStore = useCart()
+    const cartLength = computed(() => cartStore.cart.length)
     return { cartLength }
   }
 })

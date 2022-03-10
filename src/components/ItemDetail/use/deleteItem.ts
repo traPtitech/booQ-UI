@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios'
 import apis from '/@/lib/apis'
-import { useStore } from '/@/store'
+import { useToast } from '/@/store/toast'
 
 const useDeleteItem = (): {
   deleteItem: (payload: {
@@ -8,7 +8,7 @@ const useDeleteItem = (): {
     itemName: string
   }) => Promise<boolean>
 } => {
-  const store = useStore()
+  const toastStore = useToast()
 
   const deleteItem = async (payload: {
     itemID: number
@@ -20,14 +20,14 @@ const useDeleteItem = (): {
 
     try {
       await apis.deleteItem(payload.itemID)
-      store.commit.addToast({
+      toastStore.addToast({
         type: 'success',
         text: `「${payload.itemName}」を削除しました。`
       })
       return true
     } catch (e: unknown) {
       const err = e as AxiosError
-      store.commit.addToast({
+      toastStore.addToast({
         type: 'error',
         text: err.toString()
       })

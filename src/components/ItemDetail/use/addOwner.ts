@@ -1,6 +1,6 @@
 import apis, { ItemType } from '/@/lib/apis'
 import useMe from '/@/use/me'
-import { useStore } from '/@/store'
+import { useToast } from '/@/store/toast'
 import { itemTypeToOwnerId, itemTypeToOwnerName } from '/@/lib/itemType'
 import { AxiosError } from 'axios'
 
@@ -14,7 +14,7 @@ const useAddOwner = (
     count: number
   }) => Promise<void>
 } => {
-  const store = useStore()
+  const toastStore = useToast()
   const { id, displayName } = useMe()
 
   const addOwner = async (payload: {
@@ -37,14 +37,14 @@ const useAddOwner = (
           payload.ownerType,
           displayName.value
         )
-        store.commit.addToast({
+        toastStore.addToast({
           type: 'success',
           text: `所有者に ${ownerName} を追加しました。`
         })
       }
     } catch (e: unknown) {
       const err = e as AxiosError
-      store.commit.addToast({
+      toastStore.addToast({
         type: 'error',
         text: err.toString()
       })

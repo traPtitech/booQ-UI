@@ -13,9 +13,8 @@ import {
   onMounted,
   onUnmounted
 } from 'vue'
-import { Toast } from '/@/store/types'
 import AIcon from './AIcon.vue'
-import { useStore } from '/@/store'
+import { useToast, Toast } from '/@/store/toast'
 
 const iconNameMap: Record<Toast['type'], string> = {
   success: 'mdi:information',
@@ -24,11 +23,11 @@ const iconNameMap: Record<Toast['type'], string> = {
 }
 
 const useAutoHide = (props: { toast: Toast }) => {
-  const store = useStore()
+  const toastStore = useToast()
   let timer: number | undefined
 
   const remove = () => {
-    store.commit.removeToast(props.toast.id)
+    toastStore.removeToast(props.toast.id)
   }
 
   onMounted(() => {

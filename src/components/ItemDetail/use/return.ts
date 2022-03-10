@@ -3,7 +3,7 @@ import apis, { ItemSummary, Owner, LogType, Log, ItemDetail } from '/@/lib/apis'
 import { OwnerWithCount } from './owners'
 import { stringifyDate } from '/@/lib/date'
 import useMe from '/@/use/me'
-import { useStore } from '/@/store'
+import { useToast } from '/@/store/toast'
 import { getRentalUserBorrowedFrom } from '/@/lib/item'
 import { AxiosError } from 'axios'
 
@@ -29,7 +29,7 @@ const useReturn = (props: {
   const owner = computed(() =>
     props.item.owners.find(v => v.user.name === selectedOwnerName.value)
   )
-  const store = useStore()
+  const toastStore = useToast()
 
   const returnItem = async () => {
     const ownerId = owner.value?.user.id
@@ -39,7 +39,7 @@ const useReturn = (props: {
     }
     // countに空文字が入ってるときcheckValidity()をすり抜ける
     if (typeof count.value === 'string') {
-      store.commit.addToast({
+      toastStore.addToast({
         type: 'error',
         text: '個数が入力されていません'
       })
@@ -54,14 +54,14 @@ const useReturn = (props: {
     }
     try {
       const { data: newLog } = await apis.postLog(props.item.id, log)
-      store.commit.addToast({
+      toastStore.addToast({
         type: 'success',
         text: `あなたは「${props.item.name}」を${count.value}個返却しました。`
       })
       return newLog
     } catch (e: unknown) {
       const err = e as AxiosError
-      store.commit.addToast({
+      toastStore.addToast({
         type: 'error',
         text: err.toString()
       })

@@ -1,14 +1,18 @@
 <template>
   <div :class="$style.container">
     <transition-group name="toast-slide">
-      <a-toast v-for="toast in toasts" :key="toast.id" :toast="toast" />
+      <a-toast
+        v-for="toast in toastStore.toasts"
+        :key="toast.id"
+        :toast="toast"
+      />
     </transition-group>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useStore } from '/@/store'
+import { defineComponent } from 'vue'
+import { useToast } from '/@/store/toast'
 import AToast from './AToast.vue'
 
 export default defineComponent({
@@ -17,9 +21,8 @@ export default defineComponent({
     AToast
   },
   setup() {
-    const store = useStore()
-    const toasts = computed(() => store.state.toasts)
-    return { toasts }
+    const toastStore = useToast()
+    return { toastStore }
   }
 })
 </script>

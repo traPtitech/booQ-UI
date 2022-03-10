@@ -1,6 +1,6 @@
 import { ref, Ref, ComputedRef, computed } from 'vue'
 import { ItemDetail, ItemSummary } from '/@/lib/apis'
-import { useStore } from '/@/store'
+import { useCart } from '/@/store/cart'
 import useOwners from '/@/components/ItemDetail/use/owners'
 
 const useAddCart = (props: {
@@ -14,12 +14,10 @@ const useAddCart = (props: {
   isEdit: ComputedRef<boolean>
   submit: () => void
 } => {
-  const store = useStore()
+  const cartStore = useCart()
   const { ownerDetails } = useOwners(props)
 
-  const cartCount = computed(
-    () => store.getters.cartItems.get(props.item.id) ?? 0
-  )
+  const cartCount = computed(() => cartStore.cartItems.get(props.item.id) ?? 0)
   const isEdit = computed(() => cartCount.value > 0)
 
   const title = computed(() =>
@@ -48,9 +46,9 @@ const useAddCart = (props: {
     if (!owner.value) return
 
     if (count.value === 0) {
-      store.commit.removeItemFromCart(props.item.id)
+      cartStore.removeItemFromCart(props.item.id)
     } else {
-      store.commit.upsertItemToCart({
+      cartStore.upsertItemToCart({
         item: props.item,
         count: count.value,
         ownerId: owner.value.ownerId

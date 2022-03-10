@@ -19,7 +19,7 @@ import LogoAndTitle from './LogoAndTitle.vue'
 import AdminPageLink from './AdminPageLink.vue'
 import MyIcon from './MyIcon.vue'
 import CartIcon from './CartIcon.vue'
-import { useStore } from '/@/store'
+import { useMeStore } from '/@/store/me'
 
 export default defineComponent({
   name: 'PageHeader',
@@ -39,8 +39,8 @@ export default defineComponent({
     toggleNavigation: () => true
   },
   setup(_, { emit }) {
-    const store = useStore()
-    const fetchedMe = computed(() => store.state.me !== null)
+    const meStore = useMeStore()
+    const fetchedMe = computed(() => meStore.me !== null)
     return { fetchedMe, emit }
   }
 })

@@ -18,7 +18,7 @@
 import { defineComponent, ref, computed } from 'vue'
 import useTitle from './use/title'
 import CartItems from '/@/components/Cart/CartItems.vue'
-import { useStore } from '../store'
+import { useCart } from '../store/cart'
 import CartConfirm from '/@/components/Cart/CartConfirm.vue'
 import { useRouter } from 'vue-router'
 
@@ -29,11 +29,11 @@ export default defineComponent({
     CartItems
   },
   setup() {
-    const store = useStore()
+    const cartStore = useCart()
     const router = useRouter()
     useTitle(ref('まとめて借りる'))
 
-    const itemCount = computed(() => store.state.cart.length)
+    const itemCount = computed(() => cartStore.cart.length)
 
     const onBorrowed = () => {
       router.push('/')

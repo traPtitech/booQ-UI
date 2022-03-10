@@ -1,14 +1,14 @@
 <template>
   <ul :class="$style.list">
-    <li v-for="item in items" :key="item.item.id" :class="$style.item">
+    <li v-for="item in cartStore.cart" :key="item.item.id" :class="$style.item">
       <cart-item :cart-item="item" />
     </li>
   </ul>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-import { useStore } from '/@/store'
+import { defineComponent } from 'vue'
+import { useCart } from '/@/store/cart'
 import CartItem from './CartItem.vue'
 
 export default defineComponent({
@@ -17,9 +17,8 @@ export default defineComponent({
     CartItem
   },
   setup() {
-    const store = useStore()
-    const items = computed(() => store.state.cart)
-    return { items }
+    const cartStore = useCart()
+    return { cartStore }
   }
 })
 </script>

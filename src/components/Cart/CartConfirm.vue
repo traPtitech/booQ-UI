@@ -31,7 +31,8 @@ import InputText from '/@/components/UI/InputText.vue'
 import InputDate from '/@/components/UI/InputDate.vue'
 import apis, { ItemType, LogType } from '/@/lib/apis'
 import { stringifyDate } from '/@/lib/date'
-import { useStore } from '/@/store'
+import { useToast } from '/@/store/toast'
+import { useCart } from '/@/store/cart'
 import useMe from '/@/use/me'
 
 export default defineComponent({
@@ -45,14 +46,15 @@ export default defineComponent({
     borrowed: () => true
   },
   setup(props, { emit }) {
-    const store = useStore()
+    const toastStore = useToast()
+    const cartStore = useCart()
     const { admin } = useMe()
 
     const dueDate = ref(new Date())
     const purpose = ref('')
 
     const borrowItems = async () => {
-      const hasEquipment = store.state.cart.some(
+      const hasEquipment = cartStore.cart.some(
         c => c.item.type === ItemType.equipment
       )
       if (!admin.value && hasEquipment) {
@@ -65,7 +67,7 @@ export default defineComponent({
         }
       }
 
-      const promises = store.state.cart.map(async iic =>
+      const promises = cartStore.cart.map(async iic =>
         apis.postLog(iic.item.id, {
           ownerId: iic.ownerId,
           type: LogType.borrow,
@@ -76,14 +78,14 @@ export default defineComponent({
       )
       try {
         await Promise.all(promises)
-        store.commit.addToast({
+        toastStore.addToast({
           type: 'success',
           text: `物品を${promises.length > 0 ? 'まとめて' : ''}借りました。`
         })
-        store.commit.removeAllItemFromCart()
+        cartStore.removeAllItemFromCart()
         emit('borrowed')
       } catch {
-        store.commit.addToast({
+        toastStore.addToast({
           type: 'error',
           text: `物品を${
             promises.length ? 'まとめて' : ''
