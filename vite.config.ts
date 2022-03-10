@@ -33,5 +33,8 @@ export default defineConfig({
   define: {
     __VERSION__: `"${packageJson.version}"`
   },
-  plugins: [VuePlugin(), PurgeIcons(), brotli(), PluginTrapAuth()]
+  plugins: [VuePlugin(), PurgeIcons(), brotli(), PluginTrapAuth()],
+  optimizeDeps: {
+    include: ['@iconify/iconify']
+  }
 })
