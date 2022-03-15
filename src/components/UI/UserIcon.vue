@@ -5,18 +5,19 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 </script>
 
 <script lang="ts" setup>
-
-
-const props = withDefaults(defineProps<{
-    userName: string,
+const props = withDefaults(
+  defineProps<{
+    userName: string
     size?: number
-}>(), {
+  }>(),
+  {
     size: 36
-});
+  }
+)
 
 const iconUri = computed(
   () => `https://q.trap.jp/api/v3/public/icon/${props.userName}`

@@ -20,7 +20,7 @@ interface Item {
 </script>
 
 <script lang="ts" setup>
-import NavigationLinksItem from './NavigationLinksItem.vue';
+import NavigationLinksItem from './NavigationLinksItem.vue'
 
 const items: Item[] = [
   { name: 'Dashboard', icon: 'mdi:view-dashboard', path: '/' },

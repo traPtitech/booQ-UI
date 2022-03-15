@@ -10,15 +10,13 @@
 </template>
 
 <script lang="ts" setup>
-
-
 const props = defineProps<{
-    title: string
-}>();
+  title: string
+}>()
 
 const emit = defineEmits<{
-    (e: "close"): void
-}>();
+  (e: 'close'): void
+}>()
 
 const close = () => {
   context.emit('close')

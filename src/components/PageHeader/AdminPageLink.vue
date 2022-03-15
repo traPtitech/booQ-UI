@@ -9,7 +9,7 @@ import useMe from '/@/use/me'
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
 
 const { admin: isAdmin } = useMe()
 </script>

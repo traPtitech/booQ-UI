@@ -16,19 +16,19 @@
 </template>
 
 <script lang="ts">
-import { watchEffect, toRef, ref } from 'vue';
+import { watchEffect, toRef, ref } from 'vue'
 import apis, { ItemSummary, Comment } from '/@/lib/apis'
 import useTitle from './use/title'
 </script>
 
 <script lang="ts" setup>
-import UserIcon from '/@/components/UI/UserIcon.vue';
-import ItemFlexList from '/@/components/Item/ItemFlexList.vue';
-import CommentGrid from '/@/components/UserPage/CommentGrid.vue';
+import UserIcon from '/@/components/UI/UserIcon.vue'
+import ItemFlexList from '/@/components/Item/ItemFlexList.vue'
+import CommentGrid from '/@/components/UserPage/CommentGrid.vue'
 
 const props = defineProps<{
-    name: string
-}>();
+  name: string
+}>()
 
 useTitle(toRef(props, 'name'))
 

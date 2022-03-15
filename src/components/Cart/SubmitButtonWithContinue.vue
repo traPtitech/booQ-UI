@@ -21,19 +21,17 @@
 </template>
 
 <script lang="ts" setup>
-import SubmitButtonNoStock from './SubmitButtonNoStock.vue';
-import WideIconButton from '/@/components/UI/WideIconButton.vue';
+import SubmitButtonNoStock from './SubmitButtonNoStock.vue'
+import WideIconButton from '/@/components/UI/WideIconButton.vue'
 
 const props = defineProps<{
-    maxCount: number
-}>();
+  maxCount: number
+}>()
 
 const emit = defineEmits<{
-    (e: "clickGoCart"): void,
-    (e: "clickGoBack"): void
-}>();
-
-
+  (e: 'clickGoCart'): void
+  (e: 'clickGoBack'): void
+}>()
 </script>
 
 <style lang="scss" module>

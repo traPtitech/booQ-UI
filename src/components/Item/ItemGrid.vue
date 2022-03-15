@@ -11,14 +11,17 @@ import { ItemSummary } from '/@/lib/apis'
 </script>
 
 <script lang="ts" setup>
-import ItemWithCartMode from './ItemWithCartMode.vue';
+import ItemWithCartMode from './ItemWithCartMode.vue'
 
-const props = withDefaults(defineProps<{
-    items: ItemSummary[],
+const props = withDefaults(
+  defineProps<{
+    items: ItemSummary[]
     isCartMode?: boolean
-}>(), {
+  }>(),
+  {
     isCartMode: false
-});
+  }
+)
 </script>
 
 <style lang="scss" module>

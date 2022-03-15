@@ -8,5 +8,5 @@
 </template>
 
 <script lang="ts" setup>
-import WideIconButton from '/@/components/UI/WideIconButton.vue';
+import WideIconButton from '/@/components/UI/WideIconButton.vue'
 </script>

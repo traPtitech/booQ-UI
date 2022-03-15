@@ -11,7 +11,7 @@ import { useCart } from '/@/store/cart'
 </script>
 
 <script lang="ts" setup>
-import CartItem from './CartItem.vue';
+import CartItem from './CartItem.vue'
 
 const cartStore = useCart()
 </script>

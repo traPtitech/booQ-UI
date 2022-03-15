@@ -19,23 +19,21 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 type Option = { key: string; label?: string; disabled?: boolean }
 </script>
 
 <script lang="ts" setup>
-
-
 const props = defineProps<{
-    label?: string,
-    options: Option[],
-    modelValue: string
-}>();
+  label?: string
+  options: Option[]
+  modelValue: string
+}>()
 
 const emit = defineEmits<{
-    (e: "update:modelValue", _val: string): void
-}>();
+  (e: 'update:modelValue', _val: string): void
+}>()
 
 const val = computed<string>({
   get() {

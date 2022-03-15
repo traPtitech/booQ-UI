@@ -11,28 +11,26 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import useOpener from '/@/use/opener'
 import { useCart } from '/@/store/cart'
 </script>
 
 <script lang="ts" setup>
-import ItemPanel from './ItemPanel.vue';
-import CartAddDialog from '../Cart/CartAddDialog.vue';
-import CartTip from './CartTip.vue';
+import ItemPanel from './ItemPanel.vue'
+import CartAddDialog from '../Cart/CartAddDialog.vue'
+import CartTip from './CartTip.vue'
 
 const props = defineProps<{
-    item: ItemSummary,
-    isCartMode: boolean
-}>();
+  item: ItemSummary
+  isCartMode: boolean
+}>()
 
 const cartStore = useCart()
 const { isOpen: isDialogOpen, toggle: toggleDialog } = useOpener()
 
-const cartCount = computed(
-  () => cartStore.cartItems.get(props.item.id) ?? 0
-)
+const cartCount = computed(() => cartStore.cartItems.get(props.item.id) ?? 0)
 const openDialog = (e: MouseEvent) => {
   if (!props.isCartMode) return
 

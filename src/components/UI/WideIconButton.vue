@@ -8,19 +8,22 @@
 </template>
 
 <script lang="ts">
-import { Variant } from './IconButton.vue';
+import { Variant } from './IconButton.vue'
 </script>
 
 <script lang="ts" setup>
-import IconButton from './IconButton.vue';
+import IconButton from './IconButton.vue'
 
-const props = withDefaults(defineProps<{
-    icon: string,
-    label: string,
+const props = withDefaults(
+  defineProps<{
+    icon: string
+    label: string
     variant?: Variant
-}>(), {
+  }>(),
+  {
     variant: 'primary' as const
-});
+  }
+)
 </script>
 
 <style lang="scss" module>

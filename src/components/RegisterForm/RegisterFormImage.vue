@@ -22,23 +22,23 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import noImg from '/@/assets/img/no-image.svg'
 import useOpener from '/@/use/opener'
 import useImageUpload from './use/imageUpload'
 </script>
 
 <script lang="ts" setup>
-import RegisterFormImageButton from './RegisterFormImageButton.vue';
-import UrlInputDialog from './UrlInputDialog.vue';
+import RegisterFormImageButton from './RegisterFormImageButton.vue'
+import UrlInputDialog from './UrlInputDialog.vue'
 
 const props = defineProps<{
-    modelValue: string
-}>();
+  modelValue: string
+}>()
 
 const emit = defineEmits<{
-    (e: "update:modelValue", _v: string): void
-}>();
+  (e: 'update:modelValue', _v: string): void
+}>()
 
 const { isOpen: isUrlInputDialogOpen, toggle: toggleUrlInputDialog } =
   useOpener()

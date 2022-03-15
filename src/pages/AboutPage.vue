@@ -76,13 +76,11 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import useTitle from './use/title'
 </script>
 
 <script lang="ts" setup>
-
-
 useTitle(computed(() => 'booQについて'))
 </script>
 

@@ -7,7 +7,7 @@ import useMe from '/@/use/me'
 </script>
 
 <script lang="ts" setup>
-import UserIcon from '/@/components/UI/UserIcon.vue';
+import UserIcon from '/@/components/UI/UserIcon.vue'
 
 const { name: myName } = useMe()
 </script>

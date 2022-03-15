@@ -9,19 +9,19 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
 import { stringifyDateFromNumber, toNow } from '/@/lib/date'
 </script>
 
 <script lang="ts" setup>
-import ItemWide from '/@/components/ItemWide/ItemWide.vue';
+import ItemWide from '/@/components/ItemWide/ItemWide.vue'
 
 const props = defineProps<{
-    item: ItemSummary,
-    borrower: string
-}>();
+  item: ItemSummary
+  borrower: string
+}>()
 
 const due = computed(() => getDue(props.item, props.borrower))
 const dueString = computed(() => {

@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch } from 'vue'
 import apis, { ItemSummary, ItemType } from '/@/lib/apis'
 import useTitle from './use/title'
 import useDebouncedRef from '/@/use/debouncedRef'
@@ -22,13 +22,13 @@ type ItemsPageType = 'all' | 'equipment' | 'property'
 </script>
 
 <script lang="ts" setup>
-import ItemGrid from '/@/components/Item/ItemGrid.vue';
-import CartToggle from '/@/components/Item/CartToggle.vue';
-import SearchInput from '/@/components/UI/SearchInput.vue';
+import ItemGrid from '/@/components/Item/ItemGrid.vue'
+import CartToggle from '/@/components/Item/CartToggle.vue'
+import SearchInput from '/@/components/UI/SearchInput.vue'
 
 const props = defineProps<{
-    type: ItemsPageType
-}>();
+  type: ItemsPageType
+}>()
 
 const title = computed(() => {
   if (props.type === 'equipment') return '備品一覧'

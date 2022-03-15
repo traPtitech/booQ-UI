@@ -23,18 +23,16 @@
 </template>
 
 <script lang="ts" setup>
-import NavigationContent from './NavigationContent.vue';
+import NavigationContent from './NavigationContent.vue'
 
 const props = defineProps<{
-    canToggleNavigationShown: boolean,
-    isNavigationShown: boolean
-}>();
+  canToggleNavigationShown: boolean
+  isNavigationShown: boolean
+}>()
 
 const emit = defineEmits<{
-    (e: "toggleNavigationShown"): void
-}>();
-
-
+  (e: 'toggleNavigationShown'): void
+}>()
 </script>
 
 <style lang="scss" module>

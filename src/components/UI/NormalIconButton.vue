@@ -9,21 +9,24 @@
 </template>
 
 <script lang="ts">
-import { Variant } from './IconButton.vue';
+import { Variant } from './IconButton.vue'
 </script>
 
 <script lang="ts" setup>
-import IconButton from './IconButton.vue';
+import IconButton from './IconButton.vue'
 
-const props = withDefaults(defineProps<{
-    icon: string,
-    label: string,
-    variant?: Variant,
+const props = withDefaults(
+  defineProps<{
+    icon: string
+    label: string
+    variant?: Variant
     customWidth?: boolean
-}>(), {
+  }>(),
+  {
     variant: 'primary' as const,
     customWidth: false
-});
+  }
+)
 </script>
 
 <style lang="scss" module>

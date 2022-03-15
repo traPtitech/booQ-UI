@@ -14,23 +14,26 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 </script>
 
 <script lang="ts" setup>
-import DialogTemplate from '/@/components/UI/DialogTemplate.vue';
-import WideIconButton from '/@/components/UI/WideIconButton.vue';
-import InputText from '/@/components/UI/InputText.vue';
+import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
+import WideIconButton from '/@/components/UI/WideIconButton.vue'
+import InputText from '/@/components/UI/InputText.vue'
 
-const props = withDefaults(defineProps<{
+const props = withDefaults(
+  defineProps<{
     initUrl?: string
-}>(), {
+  }>(),
+  {
     initUrl: ''
-});
+  }
+)
 
 const emit = defineEmits<{
-    (e: "close", _url: string): void
-}>();
+  (e: 'close', _url: string): void
+}>()
 
 const url = ref(props.initUrl)
 

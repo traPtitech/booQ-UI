@@ -11,11 +11,11 @@ import { Comment } from '/@/lib/apis'
 </script>
 
 <script lang="ts" setup>
-import CommentPanel from './CommentPanel.vue';
+import CommentPanel from './CommentPanel.vue'
 
 const props = defineProps<{
-    comments: Comment[]
-}>();
+  comments: Comment[]
+}>()
 </script>
 
 <style lang="scss" module>

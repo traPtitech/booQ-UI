@@ -13,10 +13,8 @@ import version from '/@/lib/version'
 </script>
 
 <script lang="ts" setup>
-import NavigationSearch from './NavigationSearch.vue';
-import NavigationLinks from './NavigationLinks.vue';
-
-
+import NavigationSearch from './NavigationSearch.vue'
+import NavigationLinks from './NavigationLinks.vue'
 </script>
 
 <style lang="scss" module>

@@ -11,11 +11,11 @@ import { ItemSummary } from '/@/lib/apis'
 </script>
 
 <script lang="ts" setup>
-import ItemPanel from './ItemPanel.vue';
+import ItemPanel from './ItemPanel.vue'
 
 const props = defineProps<{
-    items: ItemSummary[]
-}>();
+  items: ItemSummary[]
+}>()
 </script>
 
 <style lang="scss" module>

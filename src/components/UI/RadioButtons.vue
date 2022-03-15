@@ -8,20 +8,18 @@
 </template>
 
 <script lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch } from 'vue'
 </script>
 
 <script lang="ts" setup>
-
-
 const props = defineProps<{
-    options: string[],
-    modelValue: string
-}>();
+  options: string[]
+  modelValue: string
+}>()
 
 const emit = defineEmits<{
-    (e: "update:modelValue", val: string): void
-}>();
+  (e: 'update:modelValue', val: string): void
+}>()
 
 const val = ref(props.options[0] ?? '')
 watch(val, newVal => {

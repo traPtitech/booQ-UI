@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { ref, onMounted, watchEffect, shallowRef, onUnmounted } from 'vue';
+import { ref, onMounted, watchEffect, shallowRef, onUnmounted } from 'vue'
 import {
   BrowserBarcodeReader,
   VideoInputDevice,
@@ -37,11 +37,9 @@ const checkISBN = (isbn: string) =>
 </script>
 
 <script lang="ts" setup>
-
-
 const emit = defineEmits<{
-    (e: "changeCode", _code: string): void
-}>();
+  (e: 'changeCode', _code: string): void
+}>()
 
 const toastStore = useToast()
 

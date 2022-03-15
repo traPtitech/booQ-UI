@@ -14,21 +14,21 @@
 </template>
 
 <script lang="ts">
-import { shallowRef } from 'vue';
+import { shallowRef } from 'vue'
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
-import WithFocusUnderline from './WithFocusUnderline.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
+import WithFocusUnderline from './WithFocusUnderline.vue'
 
 const props = defineProps<{
-    modelValue: string
-}>();
+  modelValue: string
+}>()
 
 const emit = defineEmits<{
-    (e: "search"): void,
-    (e: "update:modelValue", value: string): void
-}>();
+  (e: 'search'): void
+  (e: 'update:modelValue', value: string): void
+}>()
 
 const inputEle = shallowRef<HTMLInputElement>()
 const focus = () => {

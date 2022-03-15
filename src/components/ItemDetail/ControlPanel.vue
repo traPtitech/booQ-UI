@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import apis, { ItemDetail } from '/@/lib/apis'
 import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
 import useOpener from '/@/use/opener'
@@ -43,27 +43,25 @@ import NoImg from '/@/assets/img/no-image.svg'
 </script>
 
 <script lang="ts" setup>
-import NormalIconButton from '/@/components/UI/NormalIconButton.vue';
-import ReturnDialog from './ReturnDialog.vue';
-import CartAddDialogWithContinue from '/@/components/Cart/CartAddDialogWithContinue.vue';
-import OtherControls from './OtherControls.vue';
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
+import ReturnDialog from './ReturnDialog.vue'
+import CartAddDialogWithContinue from '/@/components/Cart/CartAddDialogWithContinue.vue'
+import OtherControls from './OtherControls.vue'
 
 const props = defineProps<{
-    item: ItemDetail
-}>();
+  item: ItemDetail
+}>()
 
 const emit = defineEmits<{
-    (e: "updateItem", item: ItemDetail): void
-}>();
+  (e: 'updateItem', item: ItemDetail): void
+}>()
 
 const updateItem = async () =>
   context.emit('updateItem', (await apis.getItem(props.item.id)).data)
 const imgUrl = computed(() => props.item.imgUrl || NoImg)
 
-const { isOpen: isOpenBorrowDialog, toggle: toggleBorrowDialog } =
-  useOpener()
-const { isOpen: isOpenReturnDialog, toggle: toggleReturnDialog } =
-  useOpener()
+const { isOpen: isOpenBorrowDialog, toggle: toggleBorrowDialog } = useOpener()
+const { isOpen: isOpenReturnDialog, toggle: toggleReturnDialog } = useOpener()
 
 const { id: myId } = useMe()
 const isBorrowDisabled = computed(

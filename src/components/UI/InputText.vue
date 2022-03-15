@@ -28,24 +28,27 @@
 </template>
 
 <script lang="ts" setup>
-import WithFocusUnderline from './WithFocusUnderline.vue';
+import WithFocusUnderline from './WithFocusUnderline.vue'
 
-const props = withDefaults(defineProps<{
-    label: string,
-    modelValue: string,
-    multiline?: boolean,
-    required?: boolean,
-    rows?: string,
+const props = withDefaults(
+  defineProps<{
+    label: string
+    modelValue: string
+    multiline?: boolean
+    required?: boolean
+    rows?: string
     readonly?: boolean
-}>(), {
+  }>(),
+  {
     multiline: false,
     required: false,
     readonly: false
-});
+  }
+)
 
 const emit = defineEmits<{
-    (e: "update:modelValue", val: string): void
-}>();
+  (e: 'update:modelValue', val: string): void
+}>()
 
 const onInput = (e: Event) => {
   const target = e.target as HTMLInputElement

@@ -9,11 +9,7 @@
 import logoMain from '/@/assets/img/logo-main.svg'
 </script>
 
-<script lang="ts" setup>
-
-
-
-</script>
+<script lang="ts" setup></script>
 
 <style lang="scss" module>
 .container {

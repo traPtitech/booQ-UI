@@ -6,12 +6,12 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { useCart } from '/@/store/cart'
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
 
 const cartStore = useCart()
 const cartLength = computed(() => cartStore.cart.length)

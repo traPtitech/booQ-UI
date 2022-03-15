@@ -4,13 +4,13 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import useTitle from './use/title'
 import useMe from '/@/use/me'
 </script>
 
 <script lang="ts" setup>
-import AdminManager from '/@/components/Admin/AdminManager.vue';
+import AdminManager from '/@/components/Admin/AdminManager.vue'
 
 useTitle(computed(() => '管理画面'))
 

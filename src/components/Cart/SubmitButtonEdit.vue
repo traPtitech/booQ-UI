@@ -13,11 +13,14 @@
 </template>
 
 <script lang="ts" setup>
-import WideIconButton from '/@/components/UI/WideIconButton.vue';
+import WideIconButton from '/@/components/UI/WideIconButton.vue'
 
-const props = withDefaults(defineProps<{
+const props = withDefaults(
+  defineProps<{
     isDelete?: boolean
-}>(), {
+  }>(),
+  {
     isDelete: false
-});
+  }
+)
 </script>

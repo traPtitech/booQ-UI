@@ -19,17 +19,17 @@ import useMe from '/@/use/me'
 </script>
 
 <script lang="ts" setup>
-import UserIcon from '/@/components/UI/UserIcon.vue';
-import AIcon from '/@/components/UI/AIcon.vue';
+import UserIcon from '/@/components/UI/UserIcon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 
 const props = defineProps<{
-    modelValue: string
-}>();
+  modelValue: string
+}>()
 
 const emit = defineEmits<{
-    (e: "update:modelValue", val: string): void,
-    (e: "submit"): void
-}>();
+  (e: 'update:modelValue', val: string): void
+  (e: 'submit'): void
+}>()
 
 const { name } = useMe()
 const onInput = (e: Event) => {

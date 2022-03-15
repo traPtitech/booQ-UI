@@ -40,20 +40,23 @@ const HAMIDASHI_RIGHT = 36 / 2 + 20
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
-import LikeButtonBalloon from './LikeButtonBalloon.vue';
-import UserIcon from '/@/components/UI/UserIcon.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
+import LikeButtonBalloon from './LikeButtonBalloon.vue'
+import UserIcon from '/@/components/UI/UserIcon.vue'
 
-const props = withDefaults(defineProps<{
-    itemId: number,
+const props = withDefaults(
+  defineProps<{
+    itemId: number
     likes?: User[]
-}>(), {
+  }>(),
+  {
     likes: () => []
-});
+  }
+)
 
 const emit = defineEmits<{
-    (e: "updateLikes", users: User[]): void
-}>();
+  (e: 'updateLikes', users: User[]): void
+}>()
 
 const { isLiked, toggleLike, balloonWidth } = useLike(props, emit)
 const { isHovered, open: enter, close: leave } = useHover()

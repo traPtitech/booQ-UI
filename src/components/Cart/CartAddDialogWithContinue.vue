@@ -32,18 +32,18 @@ import { useRouter } from 'vue-router'
 </script>
 
 <script lang="ts" setup>
-import DialogTemplate from '/@/components/UI/DialogTemplate.vue';
-import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue';
-import InputNumber from '/@/components/UI/InputNumber.vue';
-import SubmitButtonWithContinue from './SubmitButtonWithContinue.vue';
+import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
+import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue'
+import InputNumber from '/@/components/UI/InputNumber.vue'
+import SubmitButtonWithContinue from './SubmitButtonWithContinue.vue'
 
 const props = defineProps<{
-    item: ItemSummary | ItemDetail
-}>();
+  item: ItemSummary | ItemDetail
+}>()
 
 const emit = defineEmits<{
-    (e: "close"): void
-}>();
+  (e: 'close'): void
+}>()
 
 const { title, count, isEdit, submit, ownerName, ownerDetails, maxCount } =
   useAddCart(props)

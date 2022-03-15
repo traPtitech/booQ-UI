@@ -8,18 +8,18 @@
 </template>
 
 <script lang="ts">
-import { toRef } from 'vue';
+import { toRef } from 'vue'
 import { useLink } from 'vue-router'
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
 
 const props = defineProps<{
-    name: string,
-    icon: string,
-    path: string
-}>();
+  name: string
+  icon: string
+  path: string
+}>()
 
 const { isActive, route, navigate } = useLink({
   to: toRef(props, 'path')

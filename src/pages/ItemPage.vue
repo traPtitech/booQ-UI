@@ -14,18 +14,18 @@
 </template>
 
 <script lang="ts">
-import { reactive, computed, watchEffect, toRef } from 'vue';
+import { reactive, computed, watchEffect, toRef } from 'vue'
 import apis, { ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
 </script>
 
 <script lang="ts" setup>
-import ControlPanel from '/@/components/ItemDetail/ControlPanel.vue';
-import InformationPanel from '/@/components/ItemDetail/InformationPanel.vue';
+import ControlPanel from '/@/components/ItemDetail/ControlPanel.vue'
+import InformationPanel from '/@/components/ItemDetail/InformationPanel.vue'
 
 const props = defineProps<{
-    id: string
-}>();
+  id: string
+}>()
 
 const state = reactive({
   id: computed(() => +props.id),
@@ -42,7 +42,7 @@ watchEffect(async () => {
 
 useTitle(computed(() => (state.item ? `${state.item?.name}` : '物品')))
 
-const item = toRef(state, 'item');
+const item = toRef(state, 'item')
 </script>
 
 <style lang="scss" module>

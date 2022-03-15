@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed } from 'vue'
 import apis, { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
 import useTitle from './use/title'
@@ -22,7 +22,7 @@ import useMe from '/@/use/me'
 </script>
 
 <script lang="ts" setup>
-import BorrowedItem from '/@/components/BorrowedItem.vue';
+import BorrowedItem from '/@/components/BorrowedItem.vue'
 
 useTitle(computed(() => 'ダッシュボード'))
 
@@ -31,9 +31,7 @@ const { name: myName } = useMe()
 
 const getSortedItemsByDue = (items: readonly ItemSummary[]) => {
   const sortItems = [...items]
-  sortItems.sort(
-    (a, b) => getDue(a, myName.value) - getDue(b, myName.value)
-  )
+  sortItems.sort((a, b) => getDue(a, myName.value) - getDue(b, myName.value))
   return sortItems
 }
 

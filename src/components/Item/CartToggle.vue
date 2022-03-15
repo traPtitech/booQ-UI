@@ -6,26 +6,24 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
 
 const props = defineProps<{
-    modelValue: boolean
-}>();
+  modelValue: boolean
+}>()
 
 const emit = defineEmits<{
-    (e: "update:modelValue", _: boolean): void
-}>();
+  (e: 'update:modelValue', _: boolean): void
+}>()
 
 const toggleCartMode = () => {
   context.emit('update:modelValue', !props.modelValue)
 }
-const text = computed(() =>
-  props.modelValue ? 'おわる' : 'まとめて借りる'
-)
+const text = computed(() => (props.modelValue ? 'おわる' : 'まとめて借りる'))
 </script>
 
 <style lang="scss" module>

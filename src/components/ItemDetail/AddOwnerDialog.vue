@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from 'vue'
 import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
 import { ItemDetail } from '/@/lib/apis'
 import useMe from '/@/use/me'
@@ -39,20 +39,20 @@ import useNonOwnerTypes from './use/nonOwnerTypes'
 </script>
 
 <script lang="ts" setup>
-import DialogTemplate from '/@/components/UI/DialogTemplate.vue';
-import OwnerSelector from './OwnerSelector.vue';
-import WideIconButton from '/@/components/UI/WideIconButton.vue';
-import InputCheckbox from '/@/components/UI/InputCheckbox.vue';
-import InputNumber from '/@/components/UI/InputNumber.vue';
+import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
+import OwnerSelector from './OwnerSelector.vue'
+import WideIconButton from '/@/components/UI/WideIconButton.vue'
+import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
+import InputNumber from '/@/components/UI/InputNumber.vue'
 
 const props = defineProps<{
-    item: ItemDetail
-}>();
+  item: ItemDetail
+}>()
 
 const emit = defineEmits<{
-    (e: "close"): void,
-    (e: "updateItem"): void
-}>();
+  (e: 'close'): void
+  (e: 'updateItem'): void
+}>()
 
 const { admin: isAdmin } = useMe()
 const { addOwner } = useAddOwner()

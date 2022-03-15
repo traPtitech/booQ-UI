@@ -3,12 +3,12 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 </script>
 
 <script lang="ts" setup>
-import SearchInput from '/@/components/UI/SearchInput.vue';
+import SearchInput from '/@/components/UI/SearchInput.vue'
 
 const router = useRouter()
 

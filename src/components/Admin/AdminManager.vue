@@ -15,13 +15,13 @@
 </template>
 
 <script lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
 import apis, { User } from '/@/lib/apis'
 import { useToast } from '/@/store/toast'
 </script>
 
 <script lang="ts" setup>
-import InputCheckbox from '/@/components/UI/InputCheckbox.vue';
+import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 
 const toastStore = useToast()
 
@@ -42,9 +42,7 @@ const toggleAdmin = async (userId: number) => {
     const res = await apis.editUser({ ...user, admin: !user.admin })
     const updatedUser = res.data
 
-    const userIndex = users.value.findIndex(
-      user => user.id === updatedUser.id
-    )
+    const userIndex = users.value.findIndex(user => user.id === updatedUser.id)
     users.value[userIndex] = updatedUser
   } catch (e) {
     toastStore.addToast({

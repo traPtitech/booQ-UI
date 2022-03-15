@@ -16,12 +16,12 @@ import useLogs from './use/logs'
 </script>
 
 <script lang="ts" setup>
-import DetailSummary from './DetailSummary.vue';
-import UserIcon from '/@/components/UI/UserIcon.vue';
+import DetailSummary from './DetailSummary.vue'
+import UserIcon from '/@/components/UI/UserIcon.vue'
 
 const props = defineProps<{
-    logs: Log[]
-}>();
+  logs: Log[]
+}>()
 
 const { logSummaries } = useLogs(props)
 </script>

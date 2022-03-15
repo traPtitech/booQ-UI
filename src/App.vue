@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { computed, onBeforeMount, watch, readonly } from 'vue';
+import { computed, onBeforeMount, watch, readonly } from 'vue'
 import { useRouter } from 'vue-router'
 import { useMeStore } from '/@/store/me'
 import useOpener from '/@/use/opener'
@@ -50,15 +50,12 @@ const useNavigationShown = () => {
 </script>
 
 <script lang="ts" setup>
-import PageHeader from '/@/components/PageHeader/PageHeader.vue';
-import NavigationBar from '/@/components/NavigationBar/NavigationBar.vue';
-import ToastContainer from '/@/components/UI/ToastContainer.vue';
+import PageHeader from '/@/components/PageHeader/PageHeader.vue'
+import NavigationBar from '/@/components/NavigationBar/NavigationBar.vue'
+import ToastContainer from '/@/components/UI/ToastContainer.vue'
 
-const {
-  isNavigationShown,
-  canToggleNavigationShown,
-  toggleNavigationShown
-} = useNavigationShown()
+const { isNavigationShown, canToggleNavigationShown, toggleNavigationShown } =
+  useNavigationShown()
 const meStore = useMeStore()
 
 onBeforeMount(() => {

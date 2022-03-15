@@ -6,20 +6,18 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 </script>
 
 <script lang="ts" setup>
-
-
 const props = defineProps<{
-    label?: string,
-    modelValue: boolean
-}>();
+  label?: string
+  modelValue: boolean
+}>()
 
 const emit = defineEmits<{
-    (e: "update:modelValue", val: boolean): void
-}>();
+  (e: 'update:modelValue', val: boolean): void
+}>()
 
 const val = computed({
   get: () => props.modelValue,

@@ -44,12 +44,12 @@ import useCompleteFromCode from './use/completeFromCode'
 </script>
 
 <script lang="ts" setup>
-import InputText from '/@/components/UI/InputText.vue';
-import BarCodeScanner from './BarCodeScanner.vue';
-import DialogTemplate from '/@/components/UI/DialogTemplate.vue';
-import AIcon from '/@/components/UI/AIcon.vue';
-import RegisterFormImage from './RegisterFormImage.vue';
-import NormalIconButton from '/@/components/UI/NormalIconButton.vue';
+import InputText from '/@/components/UI/InputText.vue'
+import BarCodeScanner from './BarCodeScanner.vue'
+import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
+import RegisterFormImage from './RegisterFormImage.vue'
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 
 const { formState } = useFormState()
 const { isOpen: isDialogShown, toggle: toggleDialog } = useOpener()

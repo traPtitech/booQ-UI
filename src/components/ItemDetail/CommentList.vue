@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { Comment } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import apis from '/@/lib/apis'
@@ -21,20 +21,23 @@ import { useToast } from '/@/store/toast'
 </script>
 
 <script lang="ts" setup>
-import DetailSummary from './DetailSummary.vue';
-import UserIcon from '/@/components/UI/UserIcon.vue';
-import CommentsTextarea from './CommentsTextarea.vue';
+import DetailSummary from './DetailSummary.vue'
+import UserIcon from '/@/components/UI/UserIcon.vue'
+import CommentsTextarea from './CommentsTextarea.vue'
 
-const props = withDefaults(defineProps<{
-    itemId: number,
+const props = withDefaults(
+  defineProps<{
+    itemId: number
     comments?: Comment[]
-}>(), {
+  }>(),
+  {
     comments: () => []
-});
+  }
+)
 
 const emit = defineEmits<{
-    (e: "postComment", comment: Comment): void
-}>();
+  (e: 'postComment', comment: Comment): void
+}>()
 
 const toastStore = useToast()
 

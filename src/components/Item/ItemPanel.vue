@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, shallowRef } from 'vue';
+import { computed, ref, shallowRef } from 'vue'
 import apis, { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
 import useTitleTransition from './use/titleTransition'
@@ -63,11 +63,11 @@ const useLike = (props: { item: ItemSummary }) => {
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
 
 const props = defineProps<{
-    item: ItemSummary
-}>();
+  item: ItemSummary
+}>()
 
 const imgUrl = computed(() => props.item.imgUrl || NoImg)
 const { isLiked, likeCount, toggleLike } = useLike(props)

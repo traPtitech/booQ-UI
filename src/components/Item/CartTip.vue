@@ -6,14 +6,17 @@
 </template>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
 
-const props = withDefaults(defineProps<{
-    cartCount: number,
+const props = withDefaults(
+  defineProps<{
+    cartCount: number
     isCartMode?: boolean
-}>(), {
+  }>(),
+  {
     isCartMode: false
-});
+  }
+)
 </script>
 
 <style lang="scss" module>

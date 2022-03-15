@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 import apis, { ItemType, LogType } from '/@/lib/apis'
 import { stringifyDate } from '/@/lib/date'
 import { useToast } from '/@/store/toast'
@@ -34,13 +34,13 @@ import useMe from '/@/use/me'
 </script>
 
 <script lang="ts" setup>
-import WideIconButton from '/@/components/UI/WideIconButton.vue';
-import InputText from '/@/components/UI/InputText.vue';
-import InputDate from '/@/components/UI/InputDate.vue';
+import WideIconButton from '/@/components/UI/WideIconButton.vue'
+import InputText from '/@/components/UI/InputText.vue'
+import InputDate from '/@/components/UI/InputDate.vue'
 
 const emit = defineEmits<{
-    (e: "borrowed"): void
-}>();
+  (e: 'borrowed'): void
+}>()
 
 const toastStore = useToast()
 const cartStore = useCart()
@@ -83,9 +83,7 @@ const borrowItems = async () => {
   } catch {
     toastStore.addToast({
       type: 'error',
-      text: `物品を${
-        promises.length ? 'まとめて' : ''
-      }借りられませんでした。`
+      text: `物品を${promises.length ? 'まとめて' : ''}借りられませんでした。`
     })
   }
 }

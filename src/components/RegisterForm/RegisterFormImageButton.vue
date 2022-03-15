@@ -44,23 +44,26 @@ import useOpener from '/@/use/opener'
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
-import MiniPopup from '/@/components/UI/MiniPopup.vue';
-import NormalIconButton from '/@/components/UI/NormalIconButton.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
+import MiniPopup from '/@/components/UI/MiniPopup.vue'
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 
-const props = withDefaults(defineProps<{
-    isUploading?: boolean,
+const props = withDefaults(
+  defineProps<{
+    isUploading?: boolean
     isClearButtonShown?: boolean
-}>(), {
+  }>(),
+  {
     isUploading: false,
     isClearButtonShown: false
-});
+  }
+)
 
 const emit = defineEmits<{
-    (e: "upload"): void,
-    (e: "inputUrl"): void,
-    (e: "clearUrl"): void
-}>();
+  (e: 'upload'): void
+  (e: 'inputUrl'): void
+  (e: 'clearUrl'): void
+}>()
 
 const { isOpen, toggle } = useOpener()
 

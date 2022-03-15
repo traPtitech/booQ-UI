@@ -3,12 +3,12 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import useTitle from './use/title'
 </script>
 
 <script lang="ts" setup>
-import RegisterForm from '/@/components/RegisterForm/RegisterForm.vue';
+import RegisterForm from '/@/components/RegisterForm/RegisterForm.vue'
 
 useTitle(computed(() => '物品登録'))
 </script>

@@ -20,14 +20,12 @@ import { OwnerDetail } from './use/owners'
 </script>
 
 <script lang="ts" setup>
-import UserIcon from '/@/components/UI/UserIcon.vue';
-import AIcon from '/@/components/UI/AIcon.vue';
+import UserIcon from '/@/components/UI/UserIcon.vue'
+import AIcon from '/@/components/UI/AIcon.vue'
 
 const props = defineProps<{
-    ownerDetail: OwnerDetail
-}>();
-
-
+  ownerDetail: OwnerDetail
+}>()
 </script>
 
 <style lang="scss" module>

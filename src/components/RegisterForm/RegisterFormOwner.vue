@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { ref, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue'
 import { useFormState } from './use/formState'
 import {
   itemTypeMap,
@@ -24,9 +24,9 @@ import {
 </script>
 
 <script lang="ts" setup>
-import ASelector from '/@/components/UI/ASelector.vue';
-import InputNumber from '/@/components/UI/InputNumber.vue';
-import InputCheckbox from '/@/components/UI/InputCheckbox.vue';
+import ASelector from '/@/components/UI/ASelector.vue'
+import InputNumber from '/@/components/UI/InputNumber.vue'
+import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 
 const { formState } = useFormState()
 

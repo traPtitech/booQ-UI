@@ -24,18 +24,18 @@ import { ItemDetail, Comment, User } from '/@/lib/apis'
 </script>
 
 <script lang="ts" setup>
-import OwnerList from './OwnerList.vue';
-import CommentList from './CommentList.vue';
-import LogList from './LogList.vue';
-import LikeButton from './LikeButton.vue';
+import OwnerList from './OwnerList.vue'
+import CommentList from './CommentList.vue'
+import LogList from './LogList.vue'
+import LikeButton from './LikeButton.vue'
 
 const props = defineProps<{
-    item: ItemDetail
-}>();
+  item: ItemDetail
+}>()
 
 const emit = defineEmits<{
-    (e: "updateItem", item: ItemDetail): void
-}>();
+  (e: 'updateItem', item: ItemDetail): void
+}>()
 
 const postComment = (comment: Comment) => {
   const newItem = {

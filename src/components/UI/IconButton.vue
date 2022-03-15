@@ -10,17 +10,18 @@ export type Variant = 'primary' | 'secondary' | 'caution'
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
 
-const props = withDefaults(defineProps<{
-    icon: string,
-    label: string,
+const props = withDefaults(
+  defineProps<{
+    icon: string
+    label: string
     variant?: Variant
-}>(), {
+  }>(),
+  {
     variant: 'primary' as const
-});
-
-
+  }
+)
 </script>
 
 <style lang="scss" module>

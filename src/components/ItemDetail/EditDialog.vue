@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { ref, computed, watchEffect } from 'vue';
+import { ref, computed, watchEffect } from 'vue'
 import { ItemDetail } from '/@/lib/apis'
 import useOwners, { OwnerWithCount } from './use/owners'
 import useMe from '/@/use/me'
@@ -45,20 +45,20 @@ const getInitialOwner = (ownerDetails: OwnerWithCount[], name: string) => {
 </script>
 
 <script lang="ts" setup>
-import DialogTemplate from '/@/components/UI/DialogTemplate.vue';
-import OwnerSelector from './OwnerSelector.vue';
-import WideIconButton from '/@/components/UI/WideIconButton.vue';
-import InputCheckbox from '/@/components/UI/InputCheckbox.vue';
-import InputNumber from '/@/components/UI/InputNumber.vue';
+import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
+import OwnerSelector from './OwnerSelector.vue'
+import WideIconButton from '/@/components/UI/WideIconButton.vue'
+import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
+import InputNumber from '/@/components/UI/InputNumber.vue'
 
 const props = defineProps<{
-    item: ItemDetail
-}>();
+  item: ItemDetail
+}>()
 
 const emit = defineEmits<{
-    (e: "close"): void,
-    (e: "updateItem"): void
-}>();
+  (e: 'close'): void
+  (e: 'updateItem'): void
+}>()
 
 const { editItem } = useEditItem()
 const { name: meName, admin: isAdmin } = useMe()
@@ -83,8 +83,7 @@ const isDisabled = computed(
     ownInfo.value?.count === count.value
 )
 const remain = computed(
-  () =>
-    ownerDetails.value.find(v => v.userName === ownerName.value)?.count ?? 0
+  () => ownerDetails.value.find(v => v.userName === ownerName.value)?.count ?? 0
 )
 
 const close = () => {

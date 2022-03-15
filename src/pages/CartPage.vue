@@ -15,15 +15,15 @@
 </template>
 
 <script lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed } from 'vue'
 import useTitle from './use/title'
 import { useCart } from '../store/cart'
 import { useRouter } from 'vue-router'
 </script>
 
 <script lang="ts" setup>
-import CartItems from '/@/components/Cart/CartItems.vue';
-import CartConfirm from '/@/components/Cart/CartConfirm.vue';
+import CartItems from '/@/components/Cart/CartItems.vue'
+import CartConfirm from '/@/components/Cart/CartConfirm.vue'
 
 const cartStore = useCart()
 const router = useRouter()

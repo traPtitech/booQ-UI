@@ -13,18 +13,16 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
 </script>
 
 <script lang="ts" setup>
-
-
 const props = defineProps<{
-    text: string,
-    item: ItemSummary
-}>();
+  text: string
+  item: ItemSummary
+}>()
 
 const imgUrl = computed(() => props.item.imgUrl || NoImg)
 </script>

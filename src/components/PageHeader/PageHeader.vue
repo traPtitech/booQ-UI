@@ -14,25 +14,28 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { useMeStore } from '/@/store/me'
 </script>
 
 <script lang="ts" setup>
-import LogoAndTitle from './LogoAndTitle.vue';
-import AdminPageLink from './AdminPageLink.vue';
-import MyIcon from './MyIcon.vue';
-import CartIcon from './CartIcon.vue';
+import LogoAndTitle from './LogoAndTitle.vue'
+import AdminPageLink from './AdminPageLink.vue'
+import MyIcon from './MyIcon.vue'
+import CartIcon from './CartIcon.vue'
 
-const props = withDefaults(defineProps<{
+const props = withDefaults(
+  defineProps<{
     canToggleNavigationShown?: boolean
-}>(), {
+  }>(),
+  {
     canToggleNavigationShown: false
-});
+  }
+)
 
 const emit = defineEmits<{
-    (e: "toggleNavigation"): void
-}>();
+  (e: 'toggleNavigation'): void
+}>()
 
 const meStore = useMeStore()
 const fetchedMe = computed(() => meStore.me !== null)

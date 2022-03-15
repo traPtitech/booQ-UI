@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { computed, onBeforeUnmount, onMounted, Ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, Ref } from 'vue'
 
 const popupId = 'mini-popup'
 
@@ -53,19 +53,20 @@ interface Style {
 </script>
 
 <script lang="ts" setup>
-
-
-const props = withDefaults(defineProps<{
-    isOpen: boolean,
-    disabled?: boolean,
+const props = withDefaults(
+  defineProps<{
+    isOpen: boolean
+    disabled?: boolean
     transitionTransformOrigin: 'top right' | 'bottom right'
-}>(), {
+  }>(),
+  {
     disabled: false
-});
+  }
+)
 
 const emit = defineEmits<{
-    (e: "update:isOpen", _v: boolean): void
-}>();
+  (e: 'update:isOpen', _v: boolean): void
+}>()
 
 const localIsOpen = computed({
   get: () => props.isOpen,

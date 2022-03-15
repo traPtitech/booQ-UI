@@ -17,12 +17,12 @@ import useOwners from './use/owners'
 </script>
 
 <script lang="ts" setup>
-import DetailSummary from './DetailSummary.vue';
-import OwnersDetail from './OwnersDetail.vue';
+import DetailSummary from './DetailSummary.vue'
+import OwnersDetail from './OwnersDetail.vue'
 
 const props = defineProps<{
-    item: ItemSummary | ItemDetail
-}>();
+  item: ItemSummary | ItemDetail
+}>()
 
 const { ownerDetails } = useOwners(props)
 </script>

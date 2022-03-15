@@ -31,19 +31,19 @@ import useReturn from './use/return'
 </script>
 
 <script lang="ts" setup>
-import DialogTemplate from '/@/components/UI/DialogTemplate.vue';
-import OwnerSelector from './OwnerSelector.vue';
-import WideIconButton from '/@/components/UI/WideIconButton.vue';
-import InputNumber from '/@/components/UI/InputNumber.vue';
+import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
+import OwnerSelector from './OwnerSelector.vue'
+import WideIconButton from '/@/components/UI/WideIconButton.vue'
+import InputNumber from '/@/components/UI/InputNumber.vue'
 
 const props = defineProps<{
-    item: ItemSummary | ItemDetail
-}>();
+  item: ItemSummary | ItemDetail
+}>()
 
 const emit = defineEmits<{
-    (e: "close"): void,
-    (e: "updateItem"): void
-}>();
+  (e: 'close'): void
+  (e: 'updateItem'): void
+}>()
 
 const { details, selectedOwnerName, count, owner, returnItem } =
   useReturn(props)

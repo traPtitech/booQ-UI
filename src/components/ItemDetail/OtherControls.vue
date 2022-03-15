@@ -58,19 +58,19 @@ import { useRouter } from 'vue-router'
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
-import NormalIconButton from '/@/components/UI/NormalIconButton.vue';
-import EditDialog from './EditDialog.vue';
-import AddOwnerDialog from './AddOwnerDialog.vue';
-import MiniPopup from '/@/components/UI/MiniPopup.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
+import EditDialog from './EditDialog.vue'
+import AddOwnerDialog from './AddOwnerDialog.vue'
+import MiniPopup from '/@/components/UI/MiniPopup.vue'
 
 const props = defineProps<{
-    item: ItemDetail
-}>();
+  item: ItemDetail
+}>()
 
 const emit = defineEmits<{
-    (e: "updateItem"): void
-}>();
+  (e: 'updateItem'): void
+}>()
 
 const { isOpen: isPopupOpen, toggle: togglePopup } = useOpener()
 
@@ -78,8 +78,7 @@ const { isOpen: isOpenEditDialog, toggle: toggleEditDialog } = useOpener()
 const { isOpen: isOpenAddOwnerDialog, toggle: toggleAddOwnerDialog } =
   useOpener()
 
-const { isMeOwner, isAdmin, isDisabledAddOwnerButton } =
-  useOtherControl(props)
+const { isMeOwner, isAdmin, isDisabledAddOwnerButton } = useOtherControl(props)
 
 const router = useRouter()
 const { deleteItem } = useDeleteItem()

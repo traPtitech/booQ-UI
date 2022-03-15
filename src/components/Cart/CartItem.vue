@@ -17,18 +17,18 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { CartItem } from '/@/store/cart'
 import NoImg from '/@/assets/img/no-image.svg'
 import useOpener from '/@/use/opener'
 </script>
 
 <script lang="ts" setup>
-import CartAddDialog from './CartAddDialog.vue';
+import CartAddDialog from './CartAddDialog.vue'
 
 const props = defineProps<{
-    cartItem: CartItem
-}>();
+  cartItem: CartItem
+}>()
 
 const { isOpen: isDialogOpen, toggle: toggleDialog } = useOpener()
 

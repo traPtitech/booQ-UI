@@ -3,21 +3,21 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { OwnerMayWithCount } from './use/owners'
 </script>
 
 <script lang="ts" setup>
-import ASelector from '/@/components/UI/ASelector.vue';
+import ASelector from '/@/components/UI/ASelector.vue'
 
 const props = defineProps<{
-    ownerDetails: OwnerMayWithCount[],
-    modelValue: string
-}>();
+  ownerDetails: OwnerMayWithCount[]
+  modelValue: string
+}>()
 
 const emit = defineEmits<{
-    (e: "update:modelValue", _value: string): void
-}>();
+  (e: 'update:modelValue', _value: string): void
+}>()
 
 const value = computed<string>({
   get() {

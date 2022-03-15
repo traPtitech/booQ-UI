@@ -25,27 +25,30 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 import { DatePicker } from 'v-calendar'
 import 'v-calendar/dist/style.css'
 </script>
 
 <script lang="ts" setup>
-import AIcon from '/@/components/UI/AIcon.vue';
-import InputText from '/@/components/UI/InputText.vue';
+import AIcon from '/@/components/UI/AIcon.vue'
+import InputText from '/@/components/UI/InputText.vue'
 
-const props = withDefaults(defineProps<{
-    label: string,
-    modelValue: Date,
-    minDate?: Date,
+const props = withDefaults(
+  defineProps<{
+    label: string
+    modelValue: Date
+    minDate?: Date
     required?: boolean
-}>(), {
+  }>(),
+  {
     required: false
-});
+  }
+)
 
 const emit = defineEmits<{
-    (e: "update:modelValue", _v: Date): void
-}>();
+  (e: 'update:modelValue', _v: Date): void
+}>()
 
 const value = computed<Date>({
   get() {

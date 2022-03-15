@@ -6,18 +6,19 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed } from 'vue'
 </script>
 
 <script lang="ts" setup>
-
-
-const props = withDefaults(defineProps<{
-    name: string,
+const props = withDefaults(
+  defineProps<{
+    name: string
     size?: number
-}>(), {
+  }>(),
+  {
     size: 24
-});
+  }
+)
 
 const styles = computed(() => ({
   height: `${props.size}px`,
