@@ -22,11 +22,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onBeforeMount, watch, readonly } from 'vue'
+import { computed, onBeforeMount, watch, readonly } from 'vue';
 import { useRouter } from 'vue-router'
-import PageHeader from '/@/components/PageHeader/PageHeader.vue'
-import NavigationBar from '/@/components/NavigationBar/NavigationBar.vue'
-import ToastContainer from '/@/components/UI/ToastContainer.vue'
 import { useMeStore } from '/@/store/me'
 import useOpener from '/@/use/opener'
 import useIsMobile from './use/isMobile'
@@ -50,34 +47,23 @@ const useNavigationShown = () => {
     toggleNavigationShown
   }
 }
+</script>
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    PageHeader,
-    NavigationBar,
-    ToastContainer
-  },
-  setup() {
-    const {
-      isNavigationShown,
-      canToggleNavigationShown,
-      toggleNavigationShown
-    } = useNavigationShown()
-    const meStore = useMeStore()
+<script lang="ts" setup>
+import PageHeader from '/@/components/PageHeader/PageHeader.vue';
+import NavigationBar from '/@/components/NavigationBar/NavigationBar.vue';
+import ToastContainer from '/@/components/UI/ToastContainer.vue';
 
-    onBeforeMount(() => {
-      if (meStore.me) return
-      meStore.fetchMe()
-    })
+const {
+  isNavigationShown,
+  canToggleNavigationShown,
+  toggleNavigationShown
+} = useNavigationShown()
+const meStore = useMeStore()
 
-    return {
-      isNavigationShown,
-      canToggleNavigationShown,
-      toggleNavigationShown,
-      meStore
-    }
-  }
+onBeforeMount(() => {
+  if (meStore.me) return
+  meStore.fetchMe()
 })
 </script>
 

@@ -19,14 +19,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onBeforeUnmount,
-  onMounted,
-  PropType,
-  Ref
-} from 'vue'
+import { computed, onBeforeUnmount, onMounted, Ref } from 'vue';
 
 const popupId = 'mini-popup'
 
@@ -57,61 +50,52 @@ interface Style {
   right?: '0'
   transformOrigin: string
 }
+</script>
 
-export default defineComponent({
-  name: 'MiniPopup',
-  props: {
-    isOpen: {
-      type: Boolean,
-      required: true
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    transitionTransformOrigin: {
-      type: String as PropType<'top right' | 'bottom right'>,
-      required: true
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:isOpen': (_v: boolean) => true
-  },
-  setup(props, context) {
-    const localIsOpen = computed({
-      get: () => props.isOpen,
-      set: v => {
-        context.emit('update:isOpen', v)
-      }
-    })
-    const toggle = () => {
-      if (props.disabled) return
-      localIsOpen.value = !localIsOpen.value
-    }
+<script lang="ts" setup>
 
-    useHideOnClickOutside(localIsOpen, toggle)
 
-    const style = computed(() => {
-      const origin = props.transitionTransformOrigin
-      const s: Style = { transformOrigin: props.transitionTransformOrigin }
-      if (origin.includes('top')) {
-        s.top = '0'
-      }
-      if (origin.includes('left')) {
-        s.left = '0'
-      }
-      if (origin.includes('bottom')) {
-        s.bottom = '0'
-      }
-      if (origin.includes('right')) {
-        s.right = '0'
-      }
-      return s
-    })
+const props = withDefaults(defineProps<{
+    isOpen: boolean,
+    disabled?: boolean,
+    transitionTransformOrigin: 'top right' | 'bottom right'
+}>(), {
+    disabled: false
+});
 
-    return { popupId, toggle, style }
+const emit = defineEmits<{
+    (e: "update:isOpen", _v: boolean): void
+}>();
+
+const localIsOpen = computed({
+  get: () => props.isOpen,
+  set: v => {
+    context.emit('update:isOpen', v)
   }
+})
+const toggle = () => {
+  if (props.disabled) return
+  localIsOpen.value = !localIsOpen.value
+}
+
+useHideOnClickOutside(localIsOpen, toggle)
+
+const style = computed(() => {
+  const origin = props.transitionTransformOrigin
+  const s: Style = { transformOrigin: props.transitionTransformOrigin }
+  if (origin.includes('top')) {
+    s.top = '0'
+  }
+  if (origin.includes('left')) {
+    s.left = '0'
+  }
+  if (origin.includes('bottom')) {
+    s.bottom = '0'
+  }
+  if (origin.includes('right')) {
+    s.right = '0'
+  }
+  return s
 })
 </script>
 

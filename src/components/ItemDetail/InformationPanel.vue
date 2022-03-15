@@ -20,45 +20,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
 import { ItemDetail, Comment, User } from '/@/lib/apis'
-import OwnerList from './OwnerList.vue'
-import CommentList from './CommentList.vue'
-import LogList from './LogList.vue'
-import LikeButton from './LikeButton.vue'
+</script>
 
-export default defineComponent({
-  name: 'InformationPanel',
-  components: {
-    OwnerList,
-    CommentList,
-    LogList,
-    LikeButton
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemDetail>,
-      required: true
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    updateItem: (item: ItemDetail) => true
-  },
-  setup(props, context) {
-    const postComment = (comment: Comment) => {
-      const newItem = {
-        ...props.item,
-        comments: [...props.item.comments, comment]
-      }
-      context.emit('updateItem', newItem)
-    }
-    const updateLikes = (likes: User[]) => {
-      context.emit('updateItem', { ...props.item, likes: likes })
-    }
-    return { postComment, updateLikes }
+<script lang="ts" setup>
+import OwnerList from './OwnerList.vue';
+import CommentList from './CommentList.vue';
+import LogList from './LogList.vue';
+import LikeButton from './LikeButton.vue';
+
+const props = defineProps<{
+    item: ItemDetail
+}>();
+
+const emit = defineEmits<{
+    (e: "updateItem", item: ItemDetail): void
+}>();
+
+const postComment = (comment: Comment) => {
+  const newItem = {
+    ...props.item,
+    comments: [...props.item.comments, comment]
   }
-})
+  context.emit('updateItem', newItem)
+}
+const updateLikes = (likes: User[]) => {
+  context.emit('updateItem', { ...props.item, likes: likes })
+}
 </script>
 
 <style lang="scss" module>

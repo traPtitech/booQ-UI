@@ -5,27 +5,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { computed } from 'vue';
+</script>
 
-export default defineComponent({
-  name: 'UserIcon',
-  props: {
-    userName: {
-      type: String,
-      required: true
-    },
-    size: {
-      type: Number,
-      default: 36
-    }
-  },
-  setup(props) {
-    const iconUri = computed(
-      () => `https://q.trap.jp/api/v3/public/icon/${props.userName}`
-    )
-    return { iconUri }
-  }
-})
+<script lang="ts" setup>
+
+
+const props = withDefaults(defineProps<{
+    userName: string,
+    size?: number
+}>(), {
+    size: 36
+});
+
+const iconUri = computed(
+  () => `https://q.trap.jp/api/v3/public/icon/${props.userName}`
+)
 </script>
 
 <style lang="scss" module>

@@ -34,64 +34,44 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from 'vue'
+import { computed } from 'vue';
 import apis, { ItemDetail } from '/@/lib/apis'
 import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
-import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/use/opener'
-import ReturnDialog from './ReturnDialog.vue'
-import CartAddDialogWithContinue from '/@/components/Cart/CartAddDialogWithContinue.vue'
 import useMe from '/@/use/me'
 import NoImg from '/@/assets/img/no-image.svg'
-import OtherControls from './OtherControls.vue'
+</script>
 
-export default defineComponent({
-  name: 'ControlPanel',
-  components: {
-    NormalIconButton,
-    OtherControls,
-    ReturnDialog,
-    CartAddDialogWithContinue
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemDetail>,
-      required: true
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    updateItem: (item: ItemDetail) => true
-  },
-  setup(props, context) {
-    const updateItem = async () =>
-      context.emit('updateItem', (await apis.getItem(props.item.id)).data)
-    const imgUrl = computed(() => props.item.imgUrl || NoImg)
+<script lang="ts" setup>
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue';
+import ReturnDialog from './ReturnDialog.vue';
+import CartAddDialogWithContinue from '/@/components/Cart/CartAddDialogWithContinue.vue';
+import OtherControls from './OtherControls.vue';
 
-    const { isOpen: isOpenBorrowDialog, toggle: toggleBorrowDialog } =
-      useOpener()
-    const { isOpen: isOpenReturnDialog, toggle: toggleReturnDialog } =
-      useOpener()
+const props = defineProps<{
+    item: ItemDetail
+}>();
 
-    const { id: myId } = useMe()
-    const isBorrowDisabled = computed(
-      () => getOwnersCanLend(props.item).length === 0
-    )
-    const isReturnDisabled = computed(
-      () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
-    )
-    return {
-      updateItem,
-      imgUrl,
-      isOpenBorrowDialog,
-      toggleBorrowDialog,
-      isOpenReturnDialog,
-      toggleReturnDialog,
-      isBorrowDisabled,
-      isReturnDisabled
-    }
-  }
-})
+const emit = defineEmits<{
+    (e: "updateItem", item: ItemDetail): void
+}>();
+
+const updateItem = async () =>
+  context.emit('updateItem', (await apis.getItem(props.item.id)).data)
+const imgUrl = computed(() => props.item.imgUrl || NoImg)
+
+const { isOpen: isOpenBorrowDialog, toggle: toggleBorrowDialog } =
+  useOpener()
+const { isOpen: isOpenReturnDialog, toggle: toggleReturnDialog } =
+  useOpener()
+
+const { id: myId } = useMe()
+const isBorrowDisabled = computed(
+  () => getOwnersCanLend(props.item).length === 0
+)
+const isReturnDisabled = computed(
+  () => getOwnerBorrowedFrom(myId.value, props.item).length === 0
+)
 </script>
 
 <style lang="scss" module>

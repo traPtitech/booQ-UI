@@ -6,14 +6,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  PropType,
-  computed,
-  onMounted,
-  onUnmounted
-} from 'vue'
-import AIcon from './AIcon.vue'
+import { computed, onMounted, onUnmounted } from 'vue';
 import { useToast, Toast } from '/@/store/toast'
 
 const iconNameMap: Record<Toast['type'], string> = {
@@ -41,25 +34,18 @@ const useAutoHide = (props: { toast: Toast }) => {
 
   return { remove }
 }
+</script>
 
-export default defineComponent({
-  name: 'AToast',
-  components: {
-    AIcon
-  },
-  props: {
-    toast: {
-      type: Object as PropType<Toast>,
-      required: true
-    }
-  },
-  setup(props) {
-    const { remove } = useAutoHide(props)
+<script lang="ts" setup>
+import AIcon from './AIcon.vue';
 
-    const iconName = computed(() => iconNameMap[props.toast.type])
-    return { remove, iconName }
-  }
-})
+const props = defineProps<{
+    toast: Toast
+}>();
+
+const { remove } = useAutoHide(props)
+
+const iconName = computed(() => iconNameMap[props.toast.type])
 </script>
 
 <style lang="scss" module>

@@ -15,51 +15,44 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue';
 import apis, { User } from '/@/lib/apis'
 import { useToast } from '/@/store/toast'
-import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
+</script>
 
-export default defineComponent({
-  name: 'AdminManager',
-  components: {
-    InputCheckbox
-  },
-  setup() {
-    const toastStore = useToast()
+<script lang="ts" setup>
+import InputCheckbox from '/@/components/UI/InputCheckbox.vue';
 
-    const users = ref<User[]>([])
+const toastStore = useToast()
 
-    const fetchData = async () => {
-      const { data } = await apis.getUsers()
-      users.value = data
-    }
+const users = ref<User[]>([])
 
-    onMounted(fetchData)
+const fetchData = async () => {
+  const { data } = await apis.getUsers()
+  users.value = data
+}
 
-    const toggleAdmin = async (userId: number) => {
-      const user = users.value.find(u => u.id === userId)
-      if (!user) return
+onMounted(fetchData)
 
-      try {
-        const res = await apis.editUser({ ...user, admin: !user.admin })
-        const updatedUser = res.data
+const toggleAdmin = async (userId: number) => {
+  const user = users.value.find(u => u.id === userId)
+  if (!user) return
 
-        const userIndex = users.value.findIndex(
-          user => user.id === updatedUser.id
-        )
-        users.value[userIndex] = updatedUser
-      } catch (e) {
-        toastStore.addToast({
-          type: 'error',
-          text: `ユーザーの変更に失敗しました: ${e}`
-        })
-      }
-    }
+  try {
+    const res = await apis.editUser({ ...user, admin: !user.admin })
+    const updatedUser = res.data
 
-    return { users, toggleAdmin }
+    const userIndex = users.value.findIndex(
+      user => user.id === updatedUser.id
+    )
+    users.value[userIndex] = updatedUser
+  } catch (e) {
+    toastStore.addToast({
+      type: 'error',
+      text: `ユーザーの変更に失敗しました: ${e}`
+    })
   }
-})
+}
 </script>
 
 <style lang="scss" module>

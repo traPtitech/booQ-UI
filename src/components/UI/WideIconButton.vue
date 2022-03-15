@@ -8,27 +8,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import IconButton, { Variant } from './IconButton.vue'
+import { Variant } from './IconButton.vue';
+</script>
 
-export default defineComponent({
-  name: 'WideIconButton',
-  components: { IconButton },
-  props: {
-    icon: {
-      type: String,
-      required: true
-    },
-    label: {
-      type: String,
-      required: true
-    },
-    variant: {
-      type: String as PropType<Variant>,
-      default: 'primary' as const
-    }
-  }
-})
+<script lang="ts" setup>
+import IconButton from './IconButton.vue';
+
+const props = withDefaults(defineProps<{
+    icon: string,
+    label: string,
+    variant?: Variant
+}>(), {
+    variant: 'primary' as const
+});
 </script>
 
 <style lang="scss" module>

@@ -8,31 +8,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue'
+import { ref, watch } from 'vue';
+</script>
 
-export default defineComponent({
-  name: 'RadioButtons',
-  props: {
-    options: {
-      type: Array as PropType<string[]>,
-      required: true
-    },
-    modelValue: {
-      type: String,
-      required: true
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (val: string) => true
-  },
-  setup(props, context) {
-    const val = ref(props.options[0] ?? '')
-    watch(val, newVal => {
-      context.emit('update:modelValue', newVal)
-    })
-    return { val }
-  }
+<script lang="ts" setup>
+
+
+const props = defineProps<{
+    options: string[],
+    modelValue: string
+}>();
+
+const emit = defineEmits<{
+    (e: "update:modelValue", val: string): void
+}>();
+
+const val = ref(props.options[0] ?? '')
+watch(val, newVal => {
+  context.emit('update:modelValue', newVal)
 })
 </script>
 

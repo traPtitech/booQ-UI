@@ -40,52 +40,42 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import AIcon from '/@/components/UI/AIcon.vue'
-import MiniPopup from '/@/components/UI/MiniPopup.vue'
-import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useOpener from '/@/use/opener'
+</script>
 
-export default defineComponent({
-  name: 'RegisterFormImageButton',
-  components: {
-    AIcon,
-    MiniPopup,
-    NormalIconButton
-  },
-  props: {
-    isUploading: {
-      type: Boolean,
-      default: false
-    },
-    isClearButtonShown: {
-      type: Boolean,
-      default: false
-    }
-  },
-  emits: {
-    upload: () => true,
-    inputUrl: () => true,
-    clearUrl: () => true
-  },
-  setup(props, context) {
-    const { isOpen, toggle } = useOpener()
+<script lang="ts" setup>
+import AIcon from '/@/components/UI/AIcon.vue';
+import MiniPopup from '/@/components/UI/MiniPopup.vue';
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue';
 
-    const onUploadClick = () => {
-      context.emit('upload')
-      toggle()
-    }
-    const onInputUrlClick = () => {
-      context.emit('inputUrl')
-      toggle()
-    }
-    const onClearUrlClick = () => {
-      context.emit('clearUrl')
-      toggle()
-    }
-    return { isOpen, onUploadClick, onInputUrlClick, onClearUrlClick }
-  }
-})
+const props = withDefaults(defineProps<{
+    isUploading?: boolean,
+    isClearButtonShown?: boolean
+}>(), {
+    isUploading: false,
+    isClearButtonShown: false
+});
+
+const emit = defineEmits<{
+    (e: "upload"): void,
+    (e: "inputUrl"): void,
+    (e: "clearUrl"): void
+}>();
+
+const { isOpen, toggle } = useOpener()
+
+const onUploadClick = () => {
+  context.emit('upload')
+  toggle()
+}
+const onInputUrlClick = () => {
+  context.emit('inputUrl')
+  toggle()
+}
+const onClearUrlClick = () => {
+  context.emit('clearUrl')
+  toggle()
+}
 </script>
 
 <style lang="scss" module>

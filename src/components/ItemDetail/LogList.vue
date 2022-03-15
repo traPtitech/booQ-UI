@@ -11,29 +11,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
 import { Log } from '/@/lib/apis'
-import DetailSummary from './DetailSummary.vue'
-import UserIcon from '/@/components/UI/UserIcon.vue'
 import useLogs from './use/logs'
+</script>
 
-export default defineComponent({
-  name: 'LogList',
-  components: {
-    DetailSummary,
-    UserIcon
-  },
-  props: {
-    logs: {
-      type: Array as PropType<Log[]>,
-      required: true
-    }
-  },
-  setup(props) {
-    const { logSummaries } = useLogs(props)
-    return { logSummaries }
-  }
-})
+<script lang="ts" setup>
+import DetailSummary from './DetailSummary.vue';
+import UserIcon from '/@/components/UI/UserIcon.vue';
+
+const props = defineProps<{
+    logs: Log[]
+}>();
+
+const { logSummaries } = useLogs(props)
 </script>
 
 <style lang="scss" module>

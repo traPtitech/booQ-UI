@@ -5,20 +5,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import AIcon from '/@/components/UI/AIcon.vue'
 import useMe from '/@/use/me'
+</script>
 
-export default defineComponent({
-  name: 'AdminPageLink',
-  components: {
-    AIcon
-  },
-  setup() {
-    const { admin: isAdmin } = useMe()
-    return { isAdmin }
-  }
-})
+<script lang="ts" setup>
+import AIcon from '/@/components/UI/AIcon.vue';
+
+const { admin: isAdmin } = useMe()
 </script>
 
 <style lang="scss" module>

@@ -7,20 +7,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { useCart } from '/@/store/cart'
-import CartItem from './CartItem.vue'
+</script>
 
-export default defineComponent({
-  name: 'CartItems',
-  components: {
-    CartItem
-  },
-  setup() {
-    const cartStore = useCart()
-    return { cartStore }
-  }
-})
+<script lang="ts" setup>
+import CartItem from './CartItem.vue';
+
+const cartStore = useCart()
 </script>
 
 <style lang="scss" module>

@@ -20,31 +20,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import SubmitButtonNoStock from './SubmitButtonNoStock.vue'
-import WideIconButton from '/@/components/UI/WideIconButton.vue'
+<script lang="ts" setup>
+import SubmitButtonNoStock from './SubmitButtonNoStock.vue';
+import WideIconButton from '/@/components/UI/WideIconButton.vue';
 
-export default defineComponent({
-  name: 'SubmitButtonWithContinue',
-  components: {
-    SubmitButtonNoStock,
-    WideIconButton
-  },
-  props: {
-    maxCount: {
-      type: Number,
-      required: true
-    }
-  },
-  emits: {
-    clickGoCart: () => true,
-    clickGoBack: () => true
-  },
-  setup(props, { emit }) {
-    return { emit }
-  }
-})
+const props = defineProps<{
+    maxCount: number
+}>();
+
+const emit = defineEmits<{
+    (e: "clickGoCart"): void,
+    (e: "clickGoBack"): void
+}>();
+
+
 </script>
 
 <style lang="scss" module>

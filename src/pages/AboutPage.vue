@@ -76,16 +76,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { computed } from 'vue';
 import useTitle from './use/title'
+</script>
 
-export default defineComponent({
-  name: 'AboutPage',
-  setup() {
-    useTitle(computed(() => 'booQについて'))
-    return {}
-  }
-})
+<script lang="ts" setup>
+
+
+useTitle(computed(() => 'booQについて'))
 </script>
 
 <style lang="scss" module>

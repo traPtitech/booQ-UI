@@ -26,9 +26,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, ref, shallowRef } from 'vue'
+import { computed, ref, shallowRef } from 'vue';
 import apis, { ItemSummary } from '/@/lib/apis'
-import AIcon from '/@/components/UI/AIcon.vue'
 import NoImg from '/@/assets/img/no-image.svg'
 import useTitleTransition from './use/titleTransition'
 
@@ -61,38 +60,21 @@ const useLike = (props: { item: ItemSummary }) => {
   }
   return { isLiked, likeCount, toggleLike }
 }
+</script>
 
-export default defineComponent({
-  name: 'ItemPanel',
-  components: {
-    AIcon
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemSummary>,
-      required: true
-    }
-  },
-  setup(props) {
-    const imgUrl = computed(() => props.item.imgUrl || NoImg)
-    const { isLiked, likeCount, toggleLike } = useLike(props)
+<script lang="ts" setup>
+import AIcon from '/@/components/UI/AIcon.vue';
 
-    const titleEle = shallowRef<HTMLElement | null>(null)
-    const { isHovered, onMouseEnter, onMouseLeave } = useHover()
-    const { onTransitionEnd } = useTitleTransition(isHovered, titleEle)
+const props = defineProps<{
+    item: ItemSummary
+}>();
 
-    return {
-      imgUrl,
-      isLiked,
-      likeCount,
-      toggleLike,
-      onMouseEnter,
-      onMouseLeave,
-      onTransitionEnd,
-      titleEle
-    }
-  }
-})
+const imgUrl = computed(() => props.item.imgUrl || NoImg)
+const { isLiked, likeCount, toggleLike } = useLike(props)
+
+const titleEle = shallowRef<HTMLElement | null>(null)
+const { isHovered, onMouseEnter, onMouseLeave } = useHover()
+const { onTransitionEnd } = useTitleTransition(isHovered, titleEle)
 </script>
 
 <style lang="scss" module>

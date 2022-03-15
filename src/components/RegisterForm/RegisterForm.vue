@@ -15,55 +15,46 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { ref } from 'vue';
 import { provideFormState } from './use/formState'
-import RegisterFormDescription from './RegisterFormDescription.vue'
-import RegisterFormOwner from './RegisterFormOwner.vue'
 import apis, { ItemPosted } from '/@/lib/apis'
 import useAddOwner from '/@/components/ItemDetail/use/addOwner'
-import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import { useRouter } from 'vue-router'
+</script>
 
-export default defineComponent({
-  name: 'RegisterForm',
-  components: {
-    RegisterFormDescription,
-    RegisterFormOwner,
-    NormalIconButton
-  },
-  setup() {
-    const { formState, reset } = provideFormState()
-    const { addOwner } = useAddOwner(false)
-    const router = useRouter()
+<script lang="ts" setup>
+import RegisterFormDescription from './RegisterFormDescription.vue';
+import RegisterFormOwner from './RegisterFormOwner.vue';
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue';
 
-    const isRegistering = ref(false)
-    const register = async () => {
-      if (!confirm('本当に登録しますか？')) return
+const { formState, reset } = provideFormState()
+const { addOwner } = useAddOwner(false)
+const router = useRouter()
 
-      isRegistering.value = true
+const isRegistering = ref(false)
+const register = async () => {
+  if (!confirm('本当に登録しますか？')) return
 
-      // 型変換しているのはreadOnlyのopenapiの生成がうまくいかないため
-      try {
-        const res = await apis.postItem(formState as unknown as ItemPosted)
-        await addOwner({
-          itemID: res.data.id,
-          ownerType: formState.type,
-          count: formState.count,
-          rentalable: formState.rentalable
-        })
-        reset()
+  isRegistering.value = true
 
-        router.push(`/items/${res.data.id}`)
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e)
-      }
-      isRegistering.value = false
-    }
+  // 型変換しているのはreadOnlyのopenapiの生成がうまくいかないため
+  try {
+    const res = await apis.postItem(formState as unknown as ItemPosted)
+    await addOwner({
+      itemID: res.data.id,
+      ownerType: formState.type,
+      count: formState.count,
+      rentalable: formState.rentalable
+    })
+    reset()
 
-    return { formState, isRegistering, register }
+    router.push(`/items/${res.data.id}`)
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e)
   }
-})
+  isRegistering.value = false
+}
 </script>
 
 <style lang="scss" module>

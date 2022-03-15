@@ -7,21 +7,14 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 
-export default defineComponent({
-  name: 'DetailSummary',
-  props: {
-    title: {
-      type: String,
-      required: true
-    }
-  },
-  setup() {
-    return
-  }
-})
+
+const props = defineProps<{
+    title: string
+}>();
+
+
 </script>
 
 <style lang="scss" module>

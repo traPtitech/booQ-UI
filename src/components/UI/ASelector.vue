@@ -19,40 +19,30 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import { computed } from 'vue';
 
 type Option = { key: string; label?: string; disabled?: boolean }
+</script>
 
-export default defineComponent({
-  name: 'ASelector',
-  props: {
-    label: {
-      type: String,
-      default: undefined
-    },
-    options: {
-      type: Array as PropType<Option[]>,
-      required: true
-    },
-    modelValue: {
-      type: String,
-      required: true
-    }
+<script lang="ts" setup>
+
+
+const props = defineProps<{
+    label?: string,
+    options: Option[],
+    modelValue: string
+}>();
+
+const emit = defineEmits<{
+    (e: "update:modelValue", _val: string): void
+}>();
+
+const val = computed<string>({
+  get() {
+    return props.modelValue
   },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (_val: string) => true
-  },
-  setup(props, context) {
-    const val = computed<string>({
-      get() {
-        return props.modelValue
-      },
-      set(v) {
-        context.emit('update:modelValue', v)
-      }
-    })
-    return { val }
+  set(v) {
+    context.emit('update:modelValue', v)
   }
 })
 </script>

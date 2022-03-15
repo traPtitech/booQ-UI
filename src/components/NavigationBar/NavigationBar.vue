@@ -22,32 +22,19 @@
   </template>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import NavigationContent from './NavigationContent.vue'
+<script lang="ts" setup>
+import NavigationContent from './NavigationContent.vue';
 
-export default defineComponent({
-  name: 'NavigationBar',
-  components: {
-    NavigationContent
-  },
-  props: {
-    canToggleNavigationShown: {
-      type: Boolean,
-      required: true
-    },
-    isNavigationShown: {
-      type: Boolean,
-      required: true
-    }
-  },
-  emits: {
-    toggleNavigationShown: () => true
-  },
-  setup(props, { emit }) {
-    return { emit }
-  }
-})
+const props = defineProps<{
+    canToggleNavigationShown: boolean,
+    isNavigationShown: boolean
+}>();
+
+const emit = defineEmits<{
+    (e: "toggleNavigationShown"): void
+}>();
+
+
 </script>
 
 <style lang="scss" module>

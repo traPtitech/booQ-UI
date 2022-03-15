@@ -14,39 +14,32 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed } from 'vue';
 import apis, { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
 import useTitle from './use/title'
-import BorrowedItem from '/@/components/BorrowedItem.vue'
 import useMe from '/@/use/me'
+</script>
 
-export default defineComponent({
-  name: 'DashBoardPage',
-  components: {
-    BorrowedItem
-  },
-  setup() {
-    useTitle(computed(() => 'ダッシュボード'))
+<script lang="ts" setup>
+import BorrowedItem from '/@/components/BorrowedItem.vue';
 
-    const items = ref<ItemSummary[]>([])
-    const { name: myName } = useMe()
+useTitle(computed(() => 'ダッシュボード'))
 
-    const getSortedItemsByDue = (items: readonly ItemSummary[]) => {
-      const sortItems = [...items]
-      sortItems.sort(
-        (a, b) => getDue(a, myName.value) - getDue(b, myName.value)
-      )
-      return sortItems
-    }
+const items = ref<ItemSummary[]>([])
+const { name: myName } = useMe()
 
-    onMounted(async () => {
-      const { data } = await apis.getItems(undefined, undefined, myName.value)
-      items.value = getSortedItemsByDue(data)
-    })
+const getSortedItemsByDue = (items: readonly ItemSummary[]) => {
+  const sortItems = [...items]
+  sortItems.sort(
+    (a, b) => getDue(a, myName.value) - getDue(b, myName.value)
+  )
+  return sortItems
+}
 
-    return { items, myName }
-  }
+onMounted(async () => {
+  const { data } = await apis.getItems(undefined, undefined, myName.value)
+  items.value = getSortedItemsByDue(data)
 })
 </script>
 

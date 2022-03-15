@@ -22,62 +22,44 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed } from 'vue';
 import noImg from '/@/assets/img/no-image.svg'
-import RegisterFormImageButton from './RegisterFormImageButton.vue'
 import useOpener from '/@/use/opener'
-import UrlInputDialog from './UrlInputDialog.vue'
 import useImageUpload from './use/imageUpload'
+</script>
 
-export default defineComponent({
-  name: 'RegisterFormImage',
-  components: {
-    RegisterFormImageButton,
-    UrlInputDialog
-  },
-  props: {
-    modelValue: {
-      type: String,
-      required: true
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (_v: string) => true
-  },
-  setup(props, context) {
-    const { isOpen: isUrlInputDialogOpen, toggle: toggleUrlInputDialog } =
-      useOpener()
-    const { isUploading, startUpload } = useImageUpload(url => {
-      context.emit('update:modelValue', url)
-    })
+<script lang="ts" setup>
+import RegisterFormImageButton from './RegisterFormImageButton.vue';
+import UrlInputDialog from './UrlInputDialog.vue';
 
-    const uploadImage = () => {
-      startUpload()
-    }
-    const setImageUrl = (url: string) => {
-      toggleUrlInputDialog()
-      context.emit('update:modelValue', url)
-    }
-    const clearUrl = () => {
-      context.emit('update:modelValue', '')
-    }
+const props = defineProps<{
+    modelValue: string
+}>();
 
-    const imgUrl = computed(() =>
-      props.modelValue !== '' ? props.modelValue : noImg
-    )
+const emit = defineEmits<{
+    (e: "update:modelValue", _v: string): void
+}>();
 
-    return {
-      imgUrl,
-      isUploading,
-      uploadImage,
-      isUrlInputDialogOpen,
-      toggleUrlInputDialog,
-      setImageUrl,
-      clearUrl
-    }
-  }
+const { isOpen: isUrlInputDialogOpen, toggle: toggleUrlInputDialog } =
+  useOpener()
+const { isUploading, startUpload } = useImageUpload(url => {
+  context.emit('update:modelValue', url)
 })
+
+const uploadImage = () => {
+  startUpload()
+}
+const setImageUrl = (url: string) => {
+  toggleUrlInputDialog()
+  context.emit('update:modelValue', url)
+}
+const clearUrl = () => {
+  context.emit('update:modelValue', '')
+}
+
+const imgUrl = computed(() =>
+  props.modelValue !== '' ? props.modelValue : noImg
+)
 </script>
 
 <style lang="scss" module>

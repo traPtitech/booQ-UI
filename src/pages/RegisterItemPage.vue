@@ -3,20 +3,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { computed } from 'vue';
 import useTitle from './use/title'
-import RegisterForm from '/@/components/RegisterForm/RegisterForm.vue'
+</script>
 
-export default defineComponent({
-  name: 'RegisterItemPage',
-  components: {
-    RegisterForm
-  },
-  setup() {
-    useTitle(computed(() => '物品登録'))
-    return {}
-  }
-})
+<script lang="ts" setup>
+import RegisterForm from '/@/components/RegisterForm/RegisterForm.vue';
+
+useTitle(computed(() => '物品登録'))
 </script>
 
 <style lang="scss" module>

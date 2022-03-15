@@ -16,27 +16,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import UserIcon from '/@/components/UI/UserIcon.vue'
 import { OwnerDetail } from './use/owners'
-import AIcon from '/@/components/UI/AIcon.vue'
+</script>
 
-export default defineComponent({
-  name: 'OwnersDetail',
-  components: {
-    AIcon,
-    UserIcon
-  },
-  props: {
-    ownerDetail: {
-      type: Object as PropType<OwnerDetail>,
-      required: true
-    }
-  },
-  setup() {
-    return {}
-  }
-})
+<script lang="ts" setup>
+import UserIcon from '/@/components/UI/UserIcon.vue';
+import AIcon from '/@/components/UI/AIcon.vue';
+
+const props = defineProps<{
+    ownerDetail: OwnerDetail
+}>();
+
+
 </script>
 
 <style lang="scss" module>

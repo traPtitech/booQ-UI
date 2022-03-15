@@ -9,23 +9,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from 'vue'
+import { computed } from 'vue';
 import { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
+</script>
 
-export default defineComponent({
-  name: 'ItemWide',
-  props: {
-    item: {
-      type: Object as PropType<ItemSummary>,
-      required: true
-    }
-  },
-  setup(props) {
-    const imgUrl = computed(() => props.item.imgUrl || NoImg)
-    return { imgUrl }
-  }
-})
+<script lang="ts" setup>
+
+
+const props = defineProps<{
+    item: ItemSummary
+}>();
+
+const imgUrl = computed(() => props.item.imgUrl || NoImg)
 </script>
 
 <style lang="scss" module>

@@ -3,18 +3,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import UserIcon from '/@/components/UI/UserIcon.vue'
 import useMe from '/@/use/me'
+</script>
 
-export default defineComponent({
-  name: 'MyIcon',
-  components: {
-    UserIcon
-  },
-  setup() {
-    const { name: myName } = useMe()
-    return { myName }
-  }
-})
+<script lang="ts" setup>
+import UserIcon from '/@/components/UI/UserIcon.vue';
+
+const { name: myName } = useMe()
 </script>

@@ -7,14 +7,6 @@
   />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import WideIconButton from '/@/components/UI/WideIconButton.vue'
-
-export default defineComponent({
-  name: 'SubmitButtonNoStock',
-  components: {
-    WideIconButton
-  }
-})
+<script lang="ts" setup>
+import WideIconButton from '/@/components/UI/WideIconButton.vue';
 </script>

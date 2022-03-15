@@ -26,65 +26,42 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
-import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue'
-import InputNumber from '/@/components/UI/InputNumber.vue'
 import { ItemDetail, ItemSummary, ItemType } from '/@/lib/apis'
 import useAddCart from './use/addCart'
 import { useRouter } from 'vue-router'
-import SubmitButtonWithContinue from './SubmitButtonWithContinue.vue'
+</script>
 
-export default defineComponent({
-  name: 'CartAddDialogWithContinue',
-  components: {
-    DialogTemplate,
-    InputNumber,
-    OwnerSelector,
-    SubmitButtonWithContinue
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemSummary | ItemDetail>,
-      required: true
-    }
-  },
-  emits: {
-    close: () => true
-  },
-  setup(props, { emit }) {
-    const { title, count, isEdit, submit, ownerName, ownerDetails, maxCount } =
-      useAddCart(props)
+<script lang="ts" setup>
+import DialogTemplate from '/@/components/UI/DialogTemplate.vue';
+import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue';
+import InputNumber from '/@/components/UI/InputNumber.vue';
+import SubmitButtonWithContinue from './SubmitButtonWithContinue.vue';
 
-    const router = useRouter()
-    const goCart = () => {
-      submit()
-      emit('close')
-      router.push('/cart')
-    }
-    const goBack = () => {
-      submit()
-      emit('close')
-    }
+const props = defineProps<{
+    item: ItemSummary | ItemDetail
+}>();
 
-    const close = () => {
-      emit('close')
-    }
+const emit = defineEmits<{
+    (e: "close"): void
+}>();
 
-    return {
-      title,
-      count,
-      isEdit,
-      ownerName,
-      ownerDetails,
-      maxCount,
-      ItemType,
-      goBack,
-      goCart,
-      close
-    }
-  }
-})
+const { title, count, isEdit, submit, ownerName, ownerDetails, maxCount } =
+  useAddCart(props)
+
+const router = useRouter()
+const goCart = () => {
+  submit()
+  emit('close')
+  router.push('/cart')
+}
+const goBack = () => {
+  submit()
+  emit('close')
+}
+
+const close = () => {
+  emit('close')
+}
 </script>
 
 <style lang="scss" module>

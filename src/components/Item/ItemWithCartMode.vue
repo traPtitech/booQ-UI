@@ -11,48 +11,34 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
+import { computed } from 'vue';
 import { ItemSummary } from '/@/lib/apis'
-import ItemPanel from './ItemPanel.vue'
-import CartAddDialog from '../Cart/CartAddDialog.vue'
-import CartTip from './CartTip.vue'
 import useOpener from '/@/use/opener'
 import { useCart } from '/@/store/cart'
+</script>
 
-export default defineComponent({
-  name: 'ItemWithCartMode',
-  components: {
-    ItemPanel,
-    CartTip,
-    CartAddDialog
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemSummary>,
-      required: true
-    },
-    isCartMode: {
-      type: Boolean,
-      required: true
-    }
-  },
-  setup(props) {
-    const cartStore = useCart()
-    const { isOpen: isDialogOpen, toggle: toggleDialog } = useOpener()
+<script lang="ts" setup>
+import ItemPanel from './ItemPanel.vue';
+import CartAddDialog from '../Cart/CartAddDialog.vue';
+import CartTip from './CartTip.vue';
 
-    const cartCount = computed(
-      () => cartStore.cartItems.get(props.item.id) ?? 0
-    )
-    const openDialog = (e: MouseEvent) => {
-      if (!props.isCartMode) return
+const props = defineProps<{
+    item: ItemSummary,
+    isCartMode: boolean
+}>();
 
-      e.preventDefault()
-      toggleDialog()
-    }
+const cartStore = useCart()
+const { isOpen: isDialogOpen, toggle: toggleDialog } = useOpener()
 
-    return { isDialogOpen, toggleDialog, cartCount, openDialog }
-  }
-})
+const cartCount = computed(
+  () => cartStore.cartItems.get(props.item.id) ?? 0
+)
+const openDialog = (e: MouseEvent) => {
+  if (!props.isCartMode) return
+
+  e.preventDefault()
+  toggleDialog()
+}
 </script>
 
 <style lang="scss" module>

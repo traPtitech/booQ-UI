@@ -4,24 +4,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import AdminManager from '/@/components/Admin/AdminManager.vue'
+import { computed } from 'vue';
 import useTitle from './use/title'
 import useMe from '/@/use/me'
+</script>
 
-export default defineComponent({
-  name: 'AdminPage',
-  components: {
-    AdminManager
-  },
-  setup() {
-    useTitle(computed(() => '管理画面'))
+<script lang="ts" setup>
+import AdminManager from '/@/components/Admin/AdminManager.vue';
 
-    const { admin: isAdmin } = useMe()
+useTitle(computed(() => '管理画面'))
 
-    return { isAdmin }
-  }
-})
+const { admin: isAdmin } = useMe()
 </script>
 
 <style lang="scss" module>

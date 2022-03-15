@@ -15,33 +15,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
+import { ref, computed } from 'vue';
 import useTitle from './use/title'
-import CartItems from '/@/components/Cart/CartItems.vue'
 import { useCart } from '../store/cart'
-import CartConfirm from '/@/components/Cart/CartConfirm.vue'
 import { useRouter } from 'vue-router'
+</script>
 
-export default defineComponent({
-  name: 'CartPage',
-  components: {
-    CartConfirm,
-    CartItems
-  },
-  setup() {
-    const cartStore = useCart()
-    const router = useRouter()
-    useTitle(ref('まとめて借りる'))
+<script lang="ts" setup>
+import CartItems from '/@/components/Cart/CartItems.vue';
+import CartConfirm from '/@/components/Cart/CartConfirm.vue';
 
-    const itemCount = computed(() => cartStore.cart.length)
+const cartStore = useCart()
+const router = useRouter()
+useTitle(ref('まとめて借りる'))
 
-    const onBorrowed = () => {
-      router.push('/')
-    }
+const itemCount = computed(() => cartStore.cart.length)
 
-    return { itemCount, onBorrowed }
-  }
-})
+const onBorrowed = () => {
+  router.push('/')
+}
 </script>
 
 <style lang="scss" module>

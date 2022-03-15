@@ -6,32 +6,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import AIcon from '/@/components/UI/AIcon.vue'
-
 export type Variant = 'primary' | 'secondary' | 'caution'
+</script>
 
-export default defineComponent({
-  name: 'IconButton',
-  components: { AIcon },
-  props: {
-    icon: {
-      type: String,
-      required: true
-    },
-    label: {
-      type: String,
-      required: true
-    },
-    variant: {
-      type: String as PropType<Variant>,
-      default: 'primary' as const
-    }
-  },
-  setup() {
-    return {}
-  }
-})
+<script lang="ts" setup>
+import AIcon from '/@/components/UI/AIcon.vue';
+
+const props = withDefaults(defineProps<{
+    icon: string,
+    label: string,
+    variant?: Variant
+}>(), {
+    variant: 'primary' as const
+});
+
+
 </script>
 
 <style lang="scss" module>

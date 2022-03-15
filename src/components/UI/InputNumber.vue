@@ -18,49 +18,27 @@
   </with-focus-underline>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import WithFocusUnderline from './WithFocusUnderline.vue'
+<script lang="ts" setup>
+import WithFocusUnderline from './WithFocusUnderline.vue';
 
-export default defineComponent({
-  name: 'InputNumber',
-  components: {
-    WithFocusUnderline
-  },
-  props: {
-    label: {
-      type: String,
-      required: true
-    },
-    modelValue: {
-      type: Number,
-      required: true
-    },
-    min: {
-      type: Number,
-      default: undefined
-    },
-    max: {
-      type: Number,
-      default: undefined
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (val: number) => true
-  },
-  setup(props, context) {
-    const onInput = (e: Event) => {
-      const target = e.target as HTMLInputElement
-      context.emit('update:modelValue', target.valueAsNumber)
-    }
-    return { onInput }
-  }
-})
+const props = withDefaults(defineProps<{
+    label: string,
+    modelValue: number,
+    min?: number,
+    max?: number,
+    disabled?: boolean
+}>(), {
+    disabled: false
+});
+
+const emit = defineEmits<{
+    (e: "update:modelValue", val: number): void
+}>();
+
+const onInput = (e: Event) => {
+  const target = e.target as HTMLInputElement
+  context.emit('update:modelValue', target.valueAsNumber)
+}
 </script>
 
 <style lang="scss" module>

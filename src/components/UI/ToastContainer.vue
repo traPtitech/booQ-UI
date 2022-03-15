@@ -11,20 +11,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { useToast } from '/@/store/toast'
-import AToast from './AToast.vue'
+</script>
 
-export default defineComponent({
-  name: 'ToastContainer',
-  components: {
-    AToast
-  },
-  setup() {
-    const toastStore = useToast()
-    return { toastStore }
-  }
-})
+<script lang="ts" setup>
+import AToast from './AToast.vue';
+
+const toastStore = useToast()
 </script>
 
 <style lang="scss" module>

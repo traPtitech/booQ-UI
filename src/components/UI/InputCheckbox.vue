@@ -6,32 +6,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { computed } from 'vue';
+</script>
 
-export default defineComponent({
-  name: 'InputCheckbox',
-  props: {
-    label: {
-      type: String,
-      default: undefined
-    },
-    modelValue: {
-      type: Boolean,
-      required: true
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (val: boolean) => true
-  },
-  setup(props, context) {
-    const val = computed({
-      get: () => props.modelValue,
-      set: v => {
-        context.emit('update:modelValue', v)
-      }
-    })
-    return { val }
+<script lang="ts" setup>
+
+
+const props = defineProps<{
+    label?: string,
+    modelValue: boolean
+}>();
+
+const emit = defineEmits<{
+    (e: "update:modelValue", val: boolean): void
+}>();
+
+const val = computed({
+  get: () => props.modelValue,
+  set: v => {
+    context.emit('update:modelValue', v)
   }
 })
 </script>

@@ -9,31 +9,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-import IconButton, { Variant } from './IconButton.vue'
+import { Variant } from './IconButton.vue';
+</script>
 
-export default defineComponent({
-  name: 'NormalIconButton',
-  components: { IconButton },
-  props: {
-    icon: {
-      type: String,
-      required: true
-    },
-    label: {
-      type: String,
-      required: true
-    },
-    variant: {
-      type: String as PropType<Variant>,
-      default: 'primary' as const
-    },
-    customWidth: {
-      type: Boolean,
-      default: false
-    }
-  }
-})
+<script lang="ts" setup>
+import IconButton from './IconButton.vue';
+
+const props = withDefaults(defineProps<{
+    icon: string,
+    label: string,
+    variant?: Variant,
+    customWidth?: boolean
+}>(), {
+    variant: 'primary' as const,
+    customWidth: false
+});
 </script>
 
 <style lang="scss" module>

@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed } from 'vue';
 
 // 吹き出してるとこの三角形の底辺
 const OUTSIDE_TRIANGLE_BASE = 28
@@ -17,61 +17,38 @@ const INSIDE_TRIANGLE_BASE = 26
 // containerのright
 const BALLOON_PADDING = 20
 const BALLOON_BORDER = 1
+</script>
 
-export default defineComponent({
-  name: 'LikeButtonBalloon',
-  props: {
-    /** 吹き出してるところの頂点を指定するイメージ */
-    left: {
-      type: Number,
-      required: true
-    },
-    /** 内容のwidth、paddingとかを含んだ吹き出し部分のwidthではない */
-    contentWidth: {
-      type: Number,
-      required: true
-    },
-    top: {
-      type: Number,
-      required: true
-    },
-    /**
-      leftで指定したところから右にはみ出してる部分の長さを指定する
-    */
-    /*
-    -------^----
-           ↑   ↑
-            ココ
-    */
-    hamidashiRight: {
-      type: Number,
-      required: true
-    }
+<script lang="ts" setup>
+
+
+const props = defineProps<{
+    left: number,
+    contentWidth: number,
+    top: number,
+    hamidashiRight: number
+}>();
+
+const outerWidth = computed(
+  () => props.contentWidth + (BALLOON_PADDING + BALLOON_BORDER) * 2
+)
+const styles = computed(() => ({
+  outsideTriangle: {
+    left: `${
+      outerWidth.value - props.hamidashiRight - INSIDE_TRIANGLE_BASE / 2
+    }px`
   },
-  setup(props) {
-    const outerWidth = computed(
-      () => props.contentWidth + (BALLOON_PADDING + BALLOON_BORDER) * 2
-    )
-    const styles = computed(() => ({
-      outsideTriangle: {
-        left: `${
-          outerWidth.value - props.hamidashiRight - INSIDE_TRIANGLE_BASE / 2
-        }px`
-      },
-      insideTriangle: {
-        left: `${
-          outerWidth.value - props.hamidashiRight - OUTSIDE_TRIANGLE_BASE / 2
-        }px`
-      },
-      container: {
-        width: `${outerWidth.value}px`,
-        top: `${props.top}px`,
-        left: `${props.left - (outerWidth.value - props.hamidashiRight)}px`
-      }
-    }))
-    return { styles }
+  insideTriangle: {
+    left: `${
+      outerWidth.value - props.hamidashiRight - OUTSIDE_TRIANGLE_BASE / 2
+    }px`
+  },
+  container: {
+    width: `${outerWidth.value}px`,
+    top: `${props.top}px`,
+    left: `${props.left - (outerWidth.value - props.hamidashiRight)}px`
   }
-})
+}))
 </script>
 
 <style lang="scss" module>

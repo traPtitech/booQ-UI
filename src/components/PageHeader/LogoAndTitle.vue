@@ -6,15 +6,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import logoMain from '/@/assets/img/logo-main.svg'
+</script>
 
-export default defineComponent({
-  name: 'LogoAndTitle',
-  setup() {
-    return { logoMain }
-  }
-})
+<script lang="ts" setup>
+
+
+
 </script>
 
 <style lang="scss" module>

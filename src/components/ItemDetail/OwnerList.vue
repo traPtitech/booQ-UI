@@ -12,29 +12,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
 import { ItemDetail, ItemSummary } from '/@/lib/apis'
-import DetailSummary from './DetailSummary.vue'
-import OwnersDetail from './OwnersDetail.vue'
 import useOwners from './use/owners'
+</script>
 
-export default defineComponent({
-  name: 'OwnerList',
-  components: {
-    DetailSummary,
-    OwnersDetail
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemSummary | ItemDetail>,
-      required: true
-    }
-  },
-  setup(props) {
-    const { ownerDetails } = useOwners(props)
-    return { ownerDetails }
-  }
-})
+<script lang="ts" setup>
+import DetailSummary from './DetailSummary.vue';
+import OwnersDetail from './OwnersDetail.vue';
+
+const props = defineProps<{
+    item: ItemSummary | ItemDetail
+}>();
+
+const { ownerDetails } = useOwners(props)
 </script>
 
 <style lang="scss" module>

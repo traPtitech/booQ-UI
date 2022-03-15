@@ -38,50 +38,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { useFormState } from './use/formState'
-import InputText from '/@/components/UI/InputText.vue'
-import BarCodeScanner from './BarCodeScanner.vue'
-import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import useOpener from '/@/use/opener'
-import AIcon from '/@/components/UI/AIcon.vue'
-import RegisterFormImage from './RegisterFormImage.vue'
-import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import useCompleteFromCode from './use/completeFromCode'
+</script>
 
-export default defineComponent({
-  name: 'RegisterFormDescription',
-  components: {
-    InputText,
-    AIcon,
-    DialogTemplate,
-    BarCodeScanner,
-    RegisterFormImage,
-    NormalIconButton
-  },
-  setup() {
-    const { formState } = useFormState()
-    const { isOpen: isDialogShown, toggle: toggleDialog } = useOpener()
-    const { isCompleting, isValidCode, completeFromCode } =
-      useCompleteFromCode(formState)
+<script lang="ts" setup>
+import InputText from '/@/components/UI/InputText.vue';
+import BarCodeScanner from './BarCodeScanner.vue';
+import DialogTemplate from '/@/components/UI/DialogTemplate.vue';
+import AIcon from '/@/components/UI/AIcon.vue';
+import RegisterFormImage from './RegisterFormImage.vue';
+import NormalIconButton from '/@/components/UI/NormalIconButton.vue';
 
-    const changeCode = (code: string) => {
-      formState.code = code
-      toggleDialog()
-      completeFromCode()
-    }
+const { formState } = useFormState()
+const { isOpen: isDialogShown, toggle: toggleDialog } = useOpener()
+const { isCompleting, isValidCode, completeFromCode } =
+  useCompleteFromCode(formState)
 
-    return {
-      formState,
-      isDialogShown,
-      toggleDialog,
-      isCompleting,
-      isValidCode,
-      completeFromCode,
-      changeCode
-    }
-  }
-})
+const changeCode = (code: string) => {
+  formState.code = code
+  toggleDialog()
+  completeFromCode()
+}
 </script>
 
 <style lang="scss" module>

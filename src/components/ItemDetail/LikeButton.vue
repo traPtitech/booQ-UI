@@ -30,50 +30,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
 import { User } from '/@/lib/apis'
-import AIcon from '/@/components/UI/AIcon.vue'
-import LikeButtonBalloon from './LikeButtonBalloon.vue'
-import UserIcon from '/@/components/UI/UserIcon.vue'
 import useLike from './use/like'
 import useHover from '/@/components/UI/use/hover'
 
 const HEART_CONTAINER_SIZE = 32 + 8 * 2
 // ユーザーアイコンのサイズの半分 + padding、いいねが一人だったとき丁度真ん中になるように
 const HAMIDASHI_RIGHT = 36 / 2 + 20
+</script>
 
-export default defineComponent({
-  name: 'LikeButton',
-  components: { AIcon, LikeButtonBalloon, UserIcon },
-  props: {
-    itemId: {
-      type: Number,
-      required: true
-    },
-    likes: {
-      type: Array as PropType<User[]>,
-      default: () => []
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    updateLikes: (users: User[]) => true
-  },
-  setup(props, { emit }) {
-    const { isLiked, toggleLike, balloonWidth } = useLike(props, emit)
-    const { isHovered, open: enter, close: leave } = useHover()
-    return {
-      isLiked,
-      toggleLike,
-      balloonWidth,
-      isHovered,
-      enter,
-      leave,
-      HEART_CONTAINER_SIZE,
-      HAMIDASHI_RIGHT
-    }
-  }
-})
+<script lang="ts" setup>
+import AIcon from '/@/components/UI/AIcon.vue';
+import LikeButtonBalloon from './LikeButtonBalloon.vue';
+import UserIcon from '/@/components/UI/UserIcon.vue';
+
+const props = withDefaults(defineProps<{
+    itemId: number,
+    likes?: User[]
+}>(), {
+    likes: () => []
+});
+
+const emit = defineEmits<{
+    (e: "updateLikes", users: User[]): void
+}>();
+
+const { isLiked, toggleLike, balloonWidth } = useLike(props, emit)
+const { isHovered, open: enter, close: leave } = useHover()
 </script>
 
 <style lang="scss" module>

@@ -7,22 +7,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
-import ItemPanel from './ItemPanel.vue'
+</script>
 
-export default defineComponent({
-  name: 'ItemFlexList',
-  components: {
-    ItemPanel
-  },
-  props: {
-    items: {
-      type: Array as PropType<ItemSummary[]>,
-      required: true
-    }
-  }
-})
+<script lang="ts" setup>
+import ItemPanel from './ItemPanel.vue';
+
+const props = defineProps<{
+    items: ItemSummary[]
+}>();
 </script>
 
 <style lang="scss" module>
