@@ -19,11 +19,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ItemDetail, Comment, User } from '/@/lib/apis'
-</script>
-
 <script lang="ts" setup>
+import { ItemDetail, Comment, User } from '/@/lib/apis'
 import OwnerList from './OwnerList.vue'
 import CommentList from './CommentList.vue'
 import LogList from './LogList.vue'

@@ -25,13 +25,10 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ItemDetail, ItemSummary, ItemType } from '/@/lib/apis'
 import useAddCart from './use/addCart'
 import { useRouter } from 'vue-router'
-</script>
-
-<script lang="ts" setup>
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'

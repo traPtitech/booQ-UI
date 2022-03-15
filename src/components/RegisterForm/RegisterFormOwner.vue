@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref, watchEffect } from 'vue'
 import { useFormState } from './use/formState'
 import {
@@ -21,9 +21,6 @@ import {
   itemTypeToName,
   itemTypeNameToType
 } from '/@/lib/itemType'
-</script>
-
-<script lang="ts" setup>
 import ASelector from '/@/components/UI/ASelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'

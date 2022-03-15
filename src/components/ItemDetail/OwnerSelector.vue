@@ -2,12 +2,9 @@
   <a-selector v-model="value" label="所有者" :options="options" />
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { OwnerMayWithCount } from './use/owners'
-</script>
-
-<script lang="ts" setup>
 import ASelector from '/@/components/UI/ASelector.vue'
 
 const props = defineProps<{

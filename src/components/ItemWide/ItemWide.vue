@@ -8,13 +8,11 @@
   </router-link>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
-</script>
 
-<script lang="ts" setup>
 const props = defineProps<{
   item: ItemSummary
 }>()

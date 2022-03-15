@@ -75,12 +75,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import useTitle from './use/title'
-</script>
 
-<script lang="ts" setup>
 useTitle(computed(() => 'booQについて'))
 </script>
 

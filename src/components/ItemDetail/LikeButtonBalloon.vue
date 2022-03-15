@@ -8,8 +8,15 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
+
+const props = defineProps<{
+  left: number
+  contentWidth: number
+  top: number
+  hamidashiRight: number
+}>()
 
 // 吹き出してるとこの三角形の底辺
 const OUTSIDE_TRIANGLE_BASE = 28
@@ -17,15 +24,6 @@ const INSIDE_TRIANGLE_BASE = 26
 // containerのright
 const BALLOON_PADDING = 20
 const BALLOON_BORDER = 1
-</script>
-
-<script lang="ts" setup>
-const props = defineProps<{
-  left: number
-  contentWidth: number
-  top: number
-  hamidashiRight: number
-}>()
 
 const outerWidth = computed(
   () => props.contentWidth + (BALLOON_PADDING + BALLOON_BORDER) * 2

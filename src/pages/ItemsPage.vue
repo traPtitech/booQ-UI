@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref, computed, watch } from 'vue'
 import apis, { ItemSummary, ItemType } from '/@/lib/apis'
 import useTitle from './use/title'
@@ -17,14 +17,11 @@ import useDebouncedRef from '/@/use/debouncedRef'
 import { useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
 import useSyncParam from './use/syncParam'
-
-type ItemsPageType = 'all' | 'equipment' | 'property'
-</script>
-
-<script lang="ts" setup>
 import ItemGrid from '/@/components/Item/ItemGrid.vue'
 import CartToggle from '/@/components/Item/CartToggle.vue'
 import SearchInput from '/@/components/UI/SearchInput.vue'
+
+type ItemsPageType = 'all' | 'equipment' | 'property'
 
 const props = defineProps<{
   type: ItemsPageType

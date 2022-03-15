@@ -13,12 +13,9 @@
   </header>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { useMeStore } from '/@/store/me'
-</script>
-
-<script lang="ts" setup>
 import LogoAndTitle from './LogoAndTitle.vue'
 import AdminPageLink from './AdminPageLink.vue'
 import MyIcon from './MyIcon.vue'

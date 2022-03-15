@@ -13,11 +13,8 @@
   </with-focus-underline>
 </template>
 
-<script lang="ts">
-import { shallowRef } from 'vue'
-</script>
-
 <script lang="ts" setup>
+import { shallowRef } from 'vue'
 import AIcon from '/@/components/UI/AIcon.vue'
 import WithFocusUnderline from './WithFocusUnderline.vue'
 

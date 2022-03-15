@@ -25,12 +25,9 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ItemDetail, ItemSummary } from '/@/lib/apis'
 import useReturn from './use/return'
-</script>
-
-<script lang="ts" setup>
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'

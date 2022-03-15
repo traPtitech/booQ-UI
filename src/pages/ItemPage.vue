@@ -13,13 +13,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { reactive, computed, watchEffect, toRef } from 'vue'
 import apis, { ItemDetail } from '/@/lib/apis'
 import useTitle from './use/title'
-</script>
-
-<script lang="ts" setup>
 import ControlPanel from '/@/components/ItemDetail/ControlPanel.vue'
 import InformationPanel from '/@/components/ItemDetail/InformationPanel.vue'
 

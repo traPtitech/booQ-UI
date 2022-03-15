@@ -8,14 +8,11 @@
   </item-wide>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
 import { stringifyDateFromNumber, toNow } from '/@/lib/date'
-</script>
-
-<script lang="ts" setup>
 import ItemWide from '/@/components/ItemWide/ItemWide.vue'
 
 const props = defineProps<{

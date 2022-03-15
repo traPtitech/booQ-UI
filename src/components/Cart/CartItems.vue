@@ -6,11 +6,8 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { useCart } from '/@/store/cart'
-</script>
-
 <script lang="ts" setup>
+import { useCart } from '/@/store/cart'
 import CartItem from './CartItem.vue'
 
 const cartStore = useCart()

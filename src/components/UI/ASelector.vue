@@ -18,13 +18,11 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 
 type Option = { key: string; label?: string; disabled?: boolean }
-</script>
 
-<script lang="ts" setup>
 const props = defineProps<{
   label?: string
   options: Option[]

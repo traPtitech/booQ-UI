@@ -37,13 +37,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { useFormState } from './use/formState'
 import useOpener from '/@/use/opener'
 import useCompleteFromCode from './use/completeFromCode'
-</script>
-
-<script lang="ts" setup>
 import InputText from '/@/components/UI/InputText.vue'
 import BarCodeScanner from './BarCodeScanner.vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'

@@ -33,16 +33,13 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import apis, { ItemDetail } from '/@/lib/apis'
 import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
 import useOpener from '/@/use/opener'
 import useMe from '/@/use/me'
 import NoImg from '/@/assets/img/no-image.svg'
-</script>
-
-<script lang="ts" setup>
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import ReturnDialog from './ReturnDialog.vue'
 import CartAddDialogWithContinue from '/@/components/Cart/CartAddDialogWithContinue.vue'

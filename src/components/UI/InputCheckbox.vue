@@ -5,11 +5,9 @@
   </label>
 </template>
 
-<script lang="ts">
-import { computed } from 'vue'
-</script>
-
 <script lang="ts" setup>
+import { computed } from 'vue'
+
 const props = defineProps<{
   label?: string
   modelValue: boolean

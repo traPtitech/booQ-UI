@@ -10,14 +10,11 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import useOpener from '/@/use/opener'
 import { useCart } from '/@/store/cart'
-</script>
-
-<script lang="ts" setup>
 import ItemPanel from './ItemPanel.vue'
 import CartAddDialog from '../Cart/CartAddDialog.vue'
 import CartTip from './CartTip.vue'

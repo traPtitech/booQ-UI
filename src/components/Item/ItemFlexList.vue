@@ -6,11 +6,8 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { ItemSummary } from '/@/lib/apis'
-</script>
-
 <script lang="ts" setup>
+import { ItemSummary } from '/@/lib/apis'
 import ItemPanel from './ItemPanel.vue'
 
 defineProps<{

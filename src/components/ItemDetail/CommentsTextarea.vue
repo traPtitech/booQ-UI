@@ -14,11 +14,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import useMe from '/@/use/me'
-</script>
-
 <script lang="ts" setup>
+import useMe from '/@/use/me'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import AIcon from '/@/components/UI/AIcon.vue'
 

@@ -24,16 +24,13 @@
   </form>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue'
 import apis, { ItemType, LogType } from '/@/lib/apis'
 import { stringifyDate } from '/@/lib/date'
 import { useToast } from '/@/store/toast'
 import { useCart } from '/@/store/cart'
 import useMe from '/@/use/me'
-</script>
-
-<script lang="ts" setup>
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import InputText from '/@/components/UI/InputText.vue'
 import InputDate from '/@/components/UI/InputDate.vue'

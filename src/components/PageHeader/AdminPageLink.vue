@@ -4,11 +4,8 @@
   </router-link>
 </template>
 
-<script lang="ts">
-import useMe from '/@/use/me'
-</script>
-
 <script lang="ts" setup>
+import useMe from '/@/use/me'
 import AIcon from '/@/components/UI/AIcon.vue'
 
 const { admin: isAdmin } = useMe()

@@ -29,17 +29,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { User } from '/@/lib/apis'
 import useLike from './use/like'
 import useHover from '/@/components/UI/use/hover'
-
-const HEART_CONTAINER_SIZE = 32 + 8 * 2
-// ユーザーアイコンのサイズの半分 + padding、いいねが一人だったとき丁度真ん中になるように
-const HAMIDASHI_RIGHT = 36 / 2 + 20
-</script>
-
-<script lang="ts" setup>
 import AIcon from '/@/components/UI/AIcon.vue'
 import LikeButtonBalloon from './LikeButtonBalloon.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
@@ -57,6 +50,10 @@ const props = withDefaults(
 const emit = defineEmits<{
   (e: 'updateLikes', users: User[]): void
 }>()
+
+const HEART_CONTAINER_SIZE = 32 + 8 * 2
+// ユーザーアイコンのサイズの半分 + padding、いいねが一人だったとき丁度真ん中になるように
+const HAMIDASHI_RIGHT = 36 / 2 + 20
 
 const { isLiked, toggleLike, balloonWidth } = useLike(props, emit)
 const { isHovered, open: enter, close: leave } = useHover()

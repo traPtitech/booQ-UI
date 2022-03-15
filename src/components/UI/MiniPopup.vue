@@ -42,14 +42,6 @@ const useHideOnClickOutside = (isOpen: Ref<boolean>, toggle: () => void) => {
     document.body.removeEventListener('click', onClickBody)
   })
 }
-
-interface Style {
-  top?: '0'
-  left?: '0'
-  bottom?: '0'
-  right?: '0'
-  transformOrigin: string
-}
 </script>
 
 <script lang="ts" setup>
@@ -80,6 +72,14 @@ const toggle = () => {
 }
 
 useHideOnClickOutside(localIsOpen, toggle)
+
+interface Style {
+  top?: '0'
+  left?: '0'
+  bottom?: '0'
+  right?: '0'
+  transformOrigin: string
+}
 
 const style = computed(() => {
   const origin = props.transitionTransformOrigin

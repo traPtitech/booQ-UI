@@ -14,13 +14,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import apis, { User } from '/@/lib/apis'
 import { useToast } from '/@/store/toast'
-</script>
-
-<script lang="ts" setup>
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 
 const toastStore = useToast()

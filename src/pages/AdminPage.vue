@@ -3,13 +3,10 @@
   <div v-else :class="$style.container">このページは管理者のみ閲覧可能です</div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import useTitle from './use/title'
 import useMe from '/@/use/me'
-</script>
-
-<script lang="ts" setup>
 import AdminManager from '/@/components/Admin/AdminManager.vue'
 
 useTitle(computed(() => '管理画面'))

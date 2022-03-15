@@ -29,16 +29,13 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref, computed } from 'vue'
 import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
 import { ItemDetail } from '/@/lib/apis'
 import useMe from '/@/use/me'
 import useAddOwner from './use/addOwner'
 import useNonOwnerTypes from './use/nonOwnerTypes'
-</script>
-
-<script lang="ts" setup>
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'

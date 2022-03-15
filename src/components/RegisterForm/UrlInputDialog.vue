@@ -13,11 +13,8 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
-import { ref } from 'vue'
-</script>
-
 <script lang="ts" setup>
+import { ref } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import InputText from '/@/components/UI/InputText.vue'

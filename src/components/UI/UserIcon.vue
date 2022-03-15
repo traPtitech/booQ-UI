@@ -4,11 +4,9 @@
   </router-link>
 </template>
 
-<script lang="ts">
-import { computed } from 'vue'
-</script>
-
 <script lang="ts" setup>
+import { computed } from 'vue'
+
 const props = withDefaults(
   defineProps<{
     userName: string

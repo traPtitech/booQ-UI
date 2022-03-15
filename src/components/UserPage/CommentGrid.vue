@@ -6,11 +6,8 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { Comment } from '/@/lib/apis'
-</script>
-
 <script lang="ts" setup>
+import { Comment } from '/@/lib/apis'
 import CommentPanel from './CommentPanel.vue'
 
 defineProps<{

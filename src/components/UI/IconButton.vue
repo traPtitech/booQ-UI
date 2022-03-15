@@ -5,12 +5,10 @@
   </button>
 </template>
 
-<script lang="ts">
-export type Variant = 'primary' | 'secondary' | 'caution'
-</script>
-
 <script lang="ts" setup>
 import AIcon from '/@/components/UI/AIcon.vue'
+
+export type Variant = 'primary' | 'secondary' | 'caution'
 
 withDefaults(
   defineProps<{

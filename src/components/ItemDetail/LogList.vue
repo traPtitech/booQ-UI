@@ -10,12 +10,9 @@
   </detail-summary>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { Log } from '/@/lib/apis'
 import useLogs from './use/logs'
-</script>
-
-<script lang="ts" setup>
 import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 

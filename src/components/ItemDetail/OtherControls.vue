@@ -49,15 +49,12 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ItemDetail } from '/@/lib/apis'
 import useOpener from '/@/use/opener'
 import useOtherControl from './use/otherControl'
 import useDeleteItem from './use/deleteItem'
 import { useRouter } from 'vue-router'
-</script>
-
-<script lang="ts" setup>
 import AIcon from '/@/components/UI/AIcon.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import EditDialog from './EditDialog.vue'

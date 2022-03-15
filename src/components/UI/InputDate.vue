@@ -24,13 +24,9 @@
   </date-picker>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { DatePicker } from 'v-calendar'
-import 'v-calendar/dist/style.css'
-</script>
-
-<script lang="ts" setup>
 import AIcon from '/@/components/UI/AIcon.vue'
 import InputText from '/@/components/UI/InputText.vue'
 
@@ -61,6 +57,8 @@ const value = computed<Date>({
 </script>
 
 <style lang="scss" module>
+@import 'v-calendar/dist/style.css';
+
 .toggleCalender {
   flex-shrink: 0;
   cursor: pointer;

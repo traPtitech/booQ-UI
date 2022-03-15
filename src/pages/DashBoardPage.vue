@@ -13,15 +13,12 @@
   <div v-else>借りてるアイテムはありません</div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref, computed } from 'vue'
 import apis, { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
 import useTitle from './use/title'
 import useMe from '/@/use/me'
-</script>
-
-<script lang="ts" setup>
 import BorrowedItem from '/@/components/BorrowedItem.vue'
 
 useTitle(computed(() => 'ダッシュボード'))

@@ -2,12 +2,9 @@
   <register-form :class="$style.container" />
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import useTitle from './use/title'
-</script>
-
-<script lang="ts" setup>
 import RegisterForm from '/@/components/RegisterForm/RegisterForm.vue'
 
 useTitle(computed(() => '物品登録'))

@@ -12,14 +12,11 @@
   </detail-summary>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue'
 import { Comment } from '/@/lib/apis'
 import apis from '/@/lib/apis'
 import { useToast } from '/@/store/toast'
-</script>
-
-<script lang="ts" setup>
 import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import CommentsTextarea from './CommentsTextarea.vue'

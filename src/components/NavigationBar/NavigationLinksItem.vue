@@ -7,12 +7,9 @@
   </router-link>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { toRef } from 'vue'
 import { useLink } from 'vue-router'
-</script>
-
-<script lang="ts" setup>
 import AIcon from '/@/components/UI/AIcon.vue'
 
 const props = defineProps<{

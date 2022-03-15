@@ -11,16 +11,14 @@
   </ul>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import NavigationLinksItem from './NavigationLinksItem.vue'
+
 interface Item {
   name: string
   icon: string
   path: string
 }
-</script>
-
-<script lang="ts" setup>
-import NavigationLinksItem from './NavigationLinksItem.vue'
 
 const items: Item[] = [
   { name: 'Dashboard', icon: 'mdi:view-dashboard', path: '/' },

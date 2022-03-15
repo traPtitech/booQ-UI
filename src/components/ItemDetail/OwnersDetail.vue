@@ -15,11 +15,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { OwnerDetail } from './use/owners'
-</script>
-
 <script lang="ts" setup>
+import { OwnerDetail } from './use/owners'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import AIcon from '/@/components/UI/AIcon.vue'
 

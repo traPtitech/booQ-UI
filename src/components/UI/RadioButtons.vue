@@ -7,11 +7,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref, watch } from 'vue'
-</script>
-
 <script lang="ts" setup>
+import { ref, watch } from 'vue'
+
 const props = defineProps<{
   options: string[]
   modelValue: string

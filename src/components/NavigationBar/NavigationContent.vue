@@ -8,11 +8,8 @@
   </nav>
 </template>
 
-<script lang="ts">
-import version from '/@/lib/version'
-</script>
-
 <script lang="ts" setup>
+import version from '/@/lib/version'
 import NavigationSearch from './NavigationSearch.vue'
 import NavigationLinks from './NavigationLinks.vue'
 </script>

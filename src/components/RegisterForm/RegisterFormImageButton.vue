@@ -39,11 +39,8 @@
   </button>
 </template>
 
-<script lang="ts">
-import useOpener from '/@/use/opener'
-</script>
-
 <script lang="ts" setup>
+import useOpener from '/@/use/opener'
 import AIcon from '/@/components/UI/AIcon.vue'
 import MiniPopup from '/@/components/UI/MiniPopup.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'

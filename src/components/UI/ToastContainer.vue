@@ -10,11 +10,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { useToast } from '/@/store/toast'
-</script>
-
 <script lang="ts" setup>
+import { useToast } from '/@/store/toast'
 import AToast from './AToast.vue'
 
 const toastStore = useToast()

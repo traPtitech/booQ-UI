@@ -11,12 +11,9 @@
   </detail-summary>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ItemDetail, ItemSummary } from '/@/lib/apis'
 import useOwners from './use/owners'
-</script>
-
-<script lang="ts" setup>
 import DetailSummary from './DetailSummary.vue'
 import OwnersDetail from './OwnersDetail.vue'
 

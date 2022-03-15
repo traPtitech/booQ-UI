@@ -5,12 +5,9 @@
   </router-link>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import { useCart } from '/@/store/cart'
-</script>
-
-<script lang="ts" setup>
 import AIcon from '/@/components/UI/AIcon.vue'
 
 const cartStore = useCart()

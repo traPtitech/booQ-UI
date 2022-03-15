@@ -21,14 +21,11 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue'
 import noImg from '/@/assets/img/no-image.svg'
 import useOpener from '/@/use/opener'
 import useImageUpload from './use/imageUpload'
-</script>
-
-<script lang="ts" setup>
 import RegisterFormImageButton from './RegisterFormImageButton.vue'
 import UrlInputDialog from './UrlInputDialog.vue'
 

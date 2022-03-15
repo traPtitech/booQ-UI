@@ -15,13 +15,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { watchEffect, toRef, ref } from 'vue'
 import apis, { ItemSummary, Comment } from '/@/lib/apis'
 import useTitle from './use/title'
-</script>
-
-<script lang="ts" setup>
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import ItemFlexList from '/@/components/Item/ItemFlexList.vue'
 import CommentGrid from '/@/components/UserPage/CommentGrid.vue'

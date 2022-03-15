@@ -14,15 +14,12 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue'
 import { provideFormState } from './use/formState'
 import apis, { ItemPosted } from '/@/lib/apis'
 import useAddOwner from '/@/components/ItemDetail/use/addOwner'
 import { useRouter } from 'vue-router'
-</script>
-
-<script lang="ts" setup>
 import RegisterFormDescription from './RegisterFormDescription.vue'
 import RegisterFormOwner from './RegisterFormOwner.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
