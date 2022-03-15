@@ -8,7 +8,7 @@ import { OwnerMayWithCount } from './use/owners'
 import ASelector from '/@/components/UI/ASelector.vue'
 
 export default defineComponent({
-  userName: 'OwnerSelector',
+  name: 'OwnerSelector',
   components: {
     ASelector
   },
