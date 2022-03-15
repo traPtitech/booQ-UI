@@ -24,7 +24,7 @@ import AdminPageLink from './AdminPageLink.vue'
 import MyIcon from './MyIcon.vue'
 import CartIcon from './CartIcon.vue'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     canToggleNavigationShown?: boolean
   }>(),

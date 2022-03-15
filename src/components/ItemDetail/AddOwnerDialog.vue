@@ -68,7 +68,7 @@ const count = ref(1)
 const ownerName = ref(itemTypeToName(firstNonOwnType.value))
 
 const close = () => {
-  context.emit('close')
+  emit('close')
 }
 const submit = async () => {
   await addOwner({
@@ -77,7 +77,7 @@ const submit = async () => {
     count: count.value,
     itemID: props.item.id
   })
-  context.emit('updateItem')
+  emit('updateItem')
   close()
 }
 </script>

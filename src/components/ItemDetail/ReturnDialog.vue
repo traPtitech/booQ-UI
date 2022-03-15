@@ -48,12 +48,12 @@ const emit = defineEmits<{
 const { details, selectedOwnerName, count, owner, returnItem } =
   useReturn(props)
 const close = () => {
-  context.emit('close')
+  emit('close')
 }
 const returnItemAndClose = async () => {
   const log = await returnItem()
   if (log) {
-    context.emit('updateItem')
+    emit('updateItem')
   }
   close()
 }

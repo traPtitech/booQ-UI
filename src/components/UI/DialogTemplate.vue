@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps<{
+defineProps<{
   title: string
 }>()
 
@@ -19,7 +19,7 @@ const emit = defineEmits<{
 }>()
 
 const close = () => {
-  context.emit('close')
+  emit('close')
 }
 </script>
 

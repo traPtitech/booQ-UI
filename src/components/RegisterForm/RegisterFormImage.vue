@@ -43,7 +43,7 @@ const emit = defineEmits<{
 const { isOpen: isUrlInputDialogOpen, toggle: toggleUrlInputDialog } =
   useOpener()
 const { isUploading, startUpload } = useImageUpload(url => {
-  context.emit('update:modelValue', url)
+  emit('update:modelValue', url)
 })
 
 const uploadImage = () => {
@@ -51,10 +51,10 @@ const uploadImage = () => {
 }
 const setImageUrl = (url: string) => {
   toggleUrlInputDialog()
-  context.emit('update:modelValue', url)
+  emit('update:modelValue', url)
 }
 const clearUrl = () => {
-  context.emit('update:modelValue', '')
+  emit('update:modelValue', '')
 }
 
 const imgUrl = computed(() =>

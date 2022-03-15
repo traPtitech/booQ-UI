@@ -13,7 +13,7 @@ import { ItemSummary } from '/@/lib/apis'
 <script lang="ts" setup>
 import ItemWithCartMode from './ItemWithCartMode.vue'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     items: ItemSummary[]
     isCartMode?: boolean

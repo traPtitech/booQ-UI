@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     isDelete?: boolean
   }>(),

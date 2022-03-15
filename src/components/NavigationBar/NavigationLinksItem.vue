@@ -21,7 +21,7 @@ const props = defineProps<{
   path: string
 }>()
 
-const { isActive, route, navigate } = useLink({
+const { isActive, route } = useLink({
   to: toRef(props, 'path')
 })
 </script>

@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import NavigationContent from './NavigationContent.vue'
 
-const props = defineProps<{
+defineProps<{
   canToggleNavigationShown: boolean
   isNavigationShown: boolean
 }>()

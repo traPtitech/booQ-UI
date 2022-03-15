@@ -15,7 +15,6 @@
 <script lang="ts">
 import { ref } from 'vue'
 import { Comment } from '/@/lib/apis'
-import useMe from '/@/use/me'
 import apis from '/@/lib/apis'
 import { useToast } from '/@/store/toast'
 </script>
@@ -42,7 +41,6 @@ const emit = defineEmits<{
 const toastStore = useToast()
 
 const inputComment = ref('')
-const { name } = useMe()
 
 const submit = async () => {
   try {
@@ -53,7 +51,7 @@ const submit = async () => {
       type: 'success',
       text: `コメントを投稿しました。`
     })
-    context.emit('postComment', comment)
+    emit('postComment', comment)
     inputComment.value = ''
   } catch {
     toastStore.addToast({

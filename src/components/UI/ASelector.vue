@@ -40,7 +40,7 @@ const val = computed<string>({
     return props.modelValue
   },
   set(v) {
-    context.emit('update:modelValue', v)
+    emit('update:modelValue', v)
   }
 })
 </script>

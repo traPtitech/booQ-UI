@@ -57,7 +57,7 @@ const emit = defineEmits<{
 }>()
 
 const updateItem = async () =>
-  context.emit('updateItem', (await apis.getItem(props.item.id)).data)
+  emit('updateItem', (await apis.getItem(props.item.id)).data)
 const imgUrl = computed(() => props.item.imgUrl || NoImg)
 
 const { isOpen: isOpenBorrowDialog, toggle: toggleBorrowDialog } = useOpener()

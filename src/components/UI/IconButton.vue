@@ -12,7 +12,7 @@ export type Variant = 'primary' | 'secondary' | 'caution'
 <script lang="ts" setup>
 import AIcon from '/@/components/UI/AIcon.vue'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     icon: string
     label: string

@@ -21,7 +21,7 @@ const emit = defineEmits<{
 }>()
 
 const toggleCartMode = () => {
-  context.emit('update:modelValue', !props.modelValue)
+  emit('update:modelValue', !props.modelValue)
 }
 const text = computed(() => (props.modelValue ? 'おわる' : 'まとめて借りる'))
 </script>

@@ -8,7 +8,7 @@
 <script lang="ts" setup>
 import AIcon from '/@/components/UI/AIcon.vue'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     cartCount: number
     isCartMode?: boolean

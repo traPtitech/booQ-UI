@@ -87,7 +87,7 @@ const remain = computed(
 )
 
 const close = () => {
-  context.emit('close')
+  emit('close')
 }
 const submit = async () => {
   if (!ownInfo.value) return
@@ -98,7 +98,7 @@ const submit = async () => {
     itemID: props.item.id,
     ownInfo: ownInfo.value
   })
-  context.emit('updateItem')
+  emit('updateItem')
   close()
 }
 </script>

@@ -18,7 +18,7 @@ import SubmitButtonNoStock from './SubmitButtonNoStock.vue'
 import EditingSubmitButton from './SubmitButtonEdit.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 
-const props = defineProps<{
+defineProps<{
   isEdit: boolean
   count: number
   maxCount: number

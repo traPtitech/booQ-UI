@@ -13,7 +13,7 @@ import { ItemSummary } from '/@/lib/apis'
 <script lang="ts" setup>
 import ItemPanel from './ItemPanel.vue'
 
-const props = defineProps<{
+defineProps<{
   items: ItemSummary[]
 }>()
 </script>

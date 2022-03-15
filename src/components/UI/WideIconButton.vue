@@ -14,7 +14,7 @@ import { Variant } from './IconButton.vue'
 <script lang="ts" setup>
 import IconButton from './IconButton.vue'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     icon: string
     label: string

@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 import WithFocusUnderline from './WithFocusUnderline.vue'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     label: string
     modelValue: number
@@ -40,7 +40,7 @@ const emit = defineEmits<{
 
 const onInput = (e: Event) => {
   const target = e.target as HTMLInputElement
-  context.emit('update:modelValue', target.valueAsNumber)
+  emit('update:modelValue', target.valueAsNumber)
 }
 </script>
 

@@ -83,7 +83,7 @@ const start = async () => {
         }
         const text = result.getText()
         if (!checkDigit(text) || !checkISBN(text)) return
-        context.emit('changeCode', text)
+        emit('changeCode', text)
       }
     )
   } catch (e) {

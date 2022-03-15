@@ -23,7 +23,7 @@ import { OwnerDetail } from './use/owners'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import AIcon from '/@/components/UI/AIcon.vue'
 
-const props = defineProps<{
+defineProps<{
   ownerDetail: OwnerDetail
 }>()
 </script>

@@ -23,7 +23,7 @@ const emit = defineEmits<{
 
 const val = ref(props.options[0] ?? '')
 watch(val, newVal => {
-  context.emit('update:modelValue', newVal)
+  emit('update:modelValue', newVal)
 })
 </script>
 

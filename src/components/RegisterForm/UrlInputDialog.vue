@@ -38,7 +38,7 @@ const emit = defineEmits<{
 const url = ref(props.initUrl)
 
 const close = () => {
-  context.emit('close', url.value)
+  emit('close', url.value)
 }
 </script>
 

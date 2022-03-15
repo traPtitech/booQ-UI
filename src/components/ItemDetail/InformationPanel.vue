@@ -42,10 +42,10 @@ const postComment = (comment: Comment) => {
     ...props.item,
     comments: [...props.item.comments, comment]
   }
-  context.emit('updateItem', newItem)
+  emit('updateItem', newItem)
 }
 const updateLikes = (likes: User[]) => {
-  context.emit('updateItem', { ...props.item, likes: likes })
+  emit('updateItem', { ...props.item, likes: likes })
 }
 </script>
 

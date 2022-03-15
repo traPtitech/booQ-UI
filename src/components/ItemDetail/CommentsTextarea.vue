@@ -22,7 +22,7 @@ import useMe from '/@/use/me'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import AIcon from '/@/components/UI/AIcon.vue'
 
-const props = defineProps<{
+defineProps<{
   modelValue: string
 }>()
 
@@ -34,10 +34,10 @@ const emit = defineEmits<{
 const { name } = useMe()
 const onInput = (e: Event) => {
   const target = e.target as HTMLInputElement
-  context.emit('update:modelValue', target.value)
+  emit('update:modelValue', target.value)
 }
 const submit = async () => {
-  context.emit('submit')
+  emit('submit')
 }
 </script>
 

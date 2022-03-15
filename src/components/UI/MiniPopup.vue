@@ -71,7 +71,7 @@ const emit = defineEmits<{
 const localIsOpen = computed({
   get: () => props.isOpen,
   set: v => {
-    context.emit('update:isOpen', v)
+    emit('update:isOpen', v)
   }
 })
 const toggle = () => {

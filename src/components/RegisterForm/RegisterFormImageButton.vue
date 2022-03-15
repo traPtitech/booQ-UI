@@ -48,7 +48,7 @@ import AIcon from '/@/components/UI/AIcon.vue'
 import MiniPopup from '/@/components/UI/MiniPopup.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     isUploading?: boolean
     isClearButtonShown?: boolean
@@ -68,15 +68,15 @@ const emit = defineEmits<{
 const { isOpen, toggle } = useOpener()
 
 const onUploadClick = () => {
-  context.emit('upload')
+  emit('upload')
   toggle()
 }
 const onInputUrlClick = () => {
-  context.emit('inputUrl')
+  emit('inputUrl')
   toggle()
 }
 const onClearUrlClick = () => {
-  context.emit('clearUrl')
+  emit('clearUrl')
   toggle()
 }
 </script>

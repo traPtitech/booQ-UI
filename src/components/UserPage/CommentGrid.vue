@@ -13,7 +13,7 @@ import { Comment } from '/@/lib/apis'
 <script lang="ts" setup>
 import CommentPanel from './CommentPanel.vue'
 
-const props = defineProps<{
+defineProps<{
   comments: Comment[]
 }>()
 </script>

@@ -21,7 +21,7 @@ import { shallowRef } from 'vue'
 import AIcon from '/@/components/UI/AIcon.vue'
 import WithFocusUnderline from './WithFocusUnderline.vue'
 
-const props = defineProps<{
+defineProps<{
   modelValue: string
 }>()
 
@@ -37,10 +37,10 @@ const focus = () => {
 
 const onInput = (e: Event) => {
   const v = (e.target as HTMLInputElement).value
-  context.emit('update:modelValue', v)
+  emit('update:modelValue', v)
 }
 const onEnter = () => {
-  context.emit('search')
+  emit('search')
 }
 </script>
 

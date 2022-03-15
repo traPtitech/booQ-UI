@@ -24,7 +24,7 @@
 import SubmitButtonNoStock from './SubmitButtonNoStock.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 
-const props = defineProps<{
+defineProps<{
   maxCount: number
 }>()
 
