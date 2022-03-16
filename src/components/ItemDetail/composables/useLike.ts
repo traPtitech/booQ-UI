@@ -1,9 +1,9 @@
 import { computed, ComputedRef, Ref, ref } from 'vue'
-import useMeasure from './measure'
+import useMeasure from './useMeasure'
 import apis, { User } from '/@/lib/apis'
 import { useMeStore } from '/@/store/me'
 import { useToast } from '/@/store/toast'
-import useMe from '/@/use/me'
+import useMe from '/@/composables/useMe'
 
 const useLike = (
   props: {

@@ -1,6 +1,6 @@
 import { computed, ComputedRef } from 'vue'
 import { ItemDetail, ItemType } from '/@/lib/apis'
-import useMe from '/@/use/me'
+import useMe from '/@/composables/useMe'
 
 const getFirstNotOwn = (nonOwnerTypes: Set<ItemType>): ItemType | -1 => {
   if (nonOwnerTypes.has(ItemType.individual)) {

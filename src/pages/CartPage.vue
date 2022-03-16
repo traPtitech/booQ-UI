@@ -16,7 +16,7 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-import useTitle from './use/title'
+import useTitle from './composables/useTitle'
 import { useCart } from '../store/cart'
 import { useRouter } from 'vue-router'
 import CartItems from '/@/components/Cart/CartItems.vue'

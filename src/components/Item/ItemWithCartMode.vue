@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
-import useOpener from '/@/use/opener'
+import useOpener from '/@/composables/useOpener'
 import { useCart } from '/@/store/cart'
 import ItemPanel from './ItemPanel.vue'
 import CartAddDialog from '../Cart/CartAddDialog.vue'

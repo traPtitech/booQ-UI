@@ -77,7 +77,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import useTitle from './use/title'
+import useTitle from './composables/useTitle'
 
 useTitle(computed(() => 'booQについて'))
 </script>

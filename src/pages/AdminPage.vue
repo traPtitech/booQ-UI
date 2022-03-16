@@ -5,8 +5,8 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import useTitle from './use/title'
-import useMe from '/@/use/me'
+import useTitle from './composables/useTitle'
+import useMe from '/@/composables/useMe'
 import AdminManager from '/@/components/Admin/AdminManager.vue'
 
 useTitle(computed(() => '管理画面'))

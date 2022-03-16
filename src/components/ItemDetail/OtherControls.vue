@@ -51,9 +51,9 @@
 
 <script lang="ts" setup>
 import { ItemDetail } from '/@/lib/apis'
-import useOpener from '/@/use/opener'
-import useOtherControl from './use/otherControl'
-import useDeleteItem from './use/deleteItem'
+import useOpener from '/@/composables/useOpener'
+import useOtherControl from './composables/useOtherControl'
+import useDeleteItem from './composables/useDeleteItem'
 import { useRouter } from 'vue-router'
 import AIcon from '/@/components/UI/AIcon.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'

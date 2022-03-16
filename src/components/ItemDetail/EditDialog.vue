@@ -33,9 +33,9 @@
 <script lang="ts" setup>
 import { ref, computed, watchEffect } from 'vue'
 import { ItemDetail } from '/@/lib/apis'
-import useOwners, { getInitialOwner } from './use/owners'
-import useMe from '/@/use/me'
-import useEditItem from './use/editItem'
+import useOwners, { getInitialOwner } from './composables/useOwners'
+import useMe from '/@/composables/useMe'
+import useEditItem from './composables/useEditItem'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'

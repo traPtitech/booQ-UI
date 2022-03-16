@@ -9,7 +9,7 @@
 import { computed } from 'vue'
 import { Toast } from '/@/store/toast'
 import AIcon from './AIcon.vue'
-import useAutoHide from './use/autohide'
+import useAutoHide from './composables/useAutohide'
 
 const props = defineProps<{
   toast: Toast

@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import useMe from '/@/use/me'
+import useMe from '/@/composables/useMe'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import AIcon from '/@/components/UI/AIcon.vue'
 

@@ -24,8 +24,8 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import noImg from '/@/assets/img/no-image.svg'
-import useOpener from '/@/use/opener'
-import useImageUpload from './use/imageUpload'
+import useOpener from '/@/composables/useOpener'
+import useImageUpload from './composables/useImageUpload'
 import RegisterFormImageButton from './RegisterFormImageButton.vue'
 import UrlInputDialog from './UrlInputDialog.vue'
 

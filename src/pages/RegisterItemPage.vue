@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import useTitle from './use/title'
+import useTitle from './composables/useTitle'
 import RegisterForm from '/@/components/RegisterForm/RegisterForm.vue'
 
 useTitle(computed(() => '物品登録'))

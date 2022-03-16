@@ -17,8 +17,8 @@
 import { onMounted, ref, computed } from 'vue'
 import apis, { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
-import useTitle from './use/title'
-import useMe from '/@/use/me'
+import useTitle from './composables/useTitle'
+import useMe from '/@/composables/useMe'
 import BorrowedItem from '/@/components/BorrowedItem.vue'
 
 useTitle(computed(() => 'ダッシュボード'))

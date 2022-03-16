@@ -29,9 +29,9 @@
 import { computed, shallowRef } from 'vue'
 import { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
-import useTitleTransition from './use/titleTransition'
-import useHover from '/@/use/hover'
-import useLike from './use/like'
+import useTitleTransition from './composables/useTitleTransition'
+import useHover from '/@/composables/useHover'
+import useLike from './composables/useLike'
 import AIcon from '/@/components/UI/AIcon.vue'
 
 const props = defineProps<{

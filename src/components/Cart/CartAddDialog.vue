@@ -28,7 +28,7 @@
 
 <script lang="ts" setup>
 import { ItemDetail, ItemSummary, ItemType } from '/@/lib/apis'
-import useAddCart from './use/addCart'
+import useAddCart from './composables/useAddCart'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'

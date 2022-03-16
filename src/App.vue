@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import { onBeforeMount } from 'vue'
 import { useMeStore } from '/@/store/me'
-import useNavigationShown from './use/navigationShown'
+import useNavigationShown from './composables/useNavigationShown'
 import PageHeader from '/@/components/PageHeader/PageHeader.vue'
 import NavigationBar from '/@/components/NavigationBar/NavigationBar.vue'
 import ToastContainer from '/@/components/UI/ToastContainer.vue'

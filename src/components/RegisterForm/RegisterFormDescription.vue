@@ -38,9 +38,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useFormState } from './use/formState'
-import useOpener from '/@/use/opener'
-import useCompleteFromCode from './use/completeFromCode'
+import { useFormState } from './composables/useFormState'
+import useOpener from '/@/composables/useOpener'
+import useCompleteFromCode from './composables/useCompleteFromCode'
 import InputText from '/@/components/UI/InputText.vue'
 import BarCodeScanner from './BarCodeScanner.vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'

@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import useOpener from '/@/use/opener'
+import useOpener from '/@/composables/useOpener'
 import AIcon from '/@/components/UI/AIcon.vue'
 import MiniPopup from '/@/components/UI/MiniPopup.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'

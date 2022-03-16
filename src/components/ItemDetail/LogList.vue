@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import { Log } from '/@/lib/apis'
-import useLogs from './use/logs'
+import useLogs from './composables/useLogs'
 import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 

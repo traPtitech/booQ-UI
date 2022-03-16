@@ -1,7 +1,7 @@
 import { computed, watch, readonly } from 'vue'
 import { useRouter } from 'vue-router'
-import useOpener from '/@/use/opener'
-import useIsMobile from './isMobile'
+import useOpener from '/@/composables/useOpener'
+import useIsMobile from './useIsMobile'
 
 const useNavigationShown = () => {
   const router = useRouter()

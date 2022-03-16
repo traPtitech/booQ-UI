@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { OwnerMayWithCount } from './use/owners'
+import { OwnerMayWithCount } from './composables/useOwners'
 import ASelector from '/@/components/UI/ASelector.vue'
 
 const props = defineProps<{

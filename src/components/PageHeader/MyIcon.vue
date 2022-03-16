@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import useMe from '/@/use/me'
+import useMe from '/@/composables/useMe'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 
 const { name: myName } = useMe()

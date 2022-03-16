@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import useHideOnClickOutside from './use/hideOnClickOutside'
+import useHideOnClickOutside from './composables/useHideOnClickOutside'
 
 const props = withDefaults(
   defineProps<{

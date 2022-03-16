@@ -35,11 +35,11 @@
 
 <script lang="ts" setup>
 import { User } from '/@/lib/apis'
-import useLike from './use/like'
+import useLike from './composables/useLike'
 import AIcon from '/@/components/UI/AIcon.vue'
 import LikeButtonBalloon from './LikeButtonBalloon.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
-import useHover from '/@/use/hover'
+import useHover from '/@/composables/useHover'
 
 const props = withDefaults(
   defineProps<{
