@@ -18,33 +18,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, onBeforeUnmount, onMounted, Ref } from 'vue'
-
-const popupId = 'mini-popup'
-
-const useHideOnClickOutside = (isOpen: Ref<boolean>, toggle: () => void) => {
-  const onClickBody = (e: MouseEvent) => {
-    // 外側をクリックしたときは閉じる動作しかしない
-    if (!isOpen.value) return
-    if (!e.target) return
-
-    const popupElement = (e.target as Element).closest(`#${popupId}`)
-    // クリックした箇所の親にポップアップを持たないとき
-    if (!popupElement) {
-      toggle()
-    }
-  }
-  onMounted(() => {
-    document.body.addEventListener('click', onClickBody)
-  })
-  onBeforeUnmount(() => {
-    document.body.removeEventListener('click', onClickBody)
-  })
-}
-</script>
-
 <script lang="ts" setup>
+import { computed } from 'vue'
+import useHideOnClickOutside from './use/hideOnClickOutside'
+
 const props = withDefaults(
   defineProps<{
     isOpen: boolean
@@ -66,12 +43,15 @@ const localIsOpen = computed({
     emit('update:isOpen', v)
   }
 })
+
 const toggle = () => {
   if (props.disabled) return
   localIsOpen.value = !localIsOpen.value
 }
 
-useHideOnClickOutside(localIsOpen, toggle)
+const popupId = 'mini-popup'
+
+useHideOnClickOutside(popupId, localIsOpen, toggle)
 
 interface Style {
   top?: '0'

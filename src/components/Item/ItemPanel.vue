@@ -25,44 +25,13 @@
   </router-link>
 </template>
 
-<script lang="ts">
-import { computed, ref, shallowRef } from 'vue'
-import apis, { ItemSummary } from '/@/lib/apis'
+<script lang="ts" setup>
+import { computed, shallowRef } from 'vue'
+import { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
 import useTitleTransition from './use/titleTransition'
-
-const useHover = () => {
-  const isHovered = ref(false)
-  const onMouseEnter = () => {
-    isHovered.value = true
-  }
-  const onMouseLeave = () => {
-    isHovered.value = false
-  }
-  return { isHovered, onMouseEnter, onMouseLeave }
-}
-
-const useLike = (props: { item: ItemSummary }) => {
-  const isLiked = ref(props.item.isLiked)
-  // 自分がいいねしたときのlikeCount
-  const maxCount = computed(
-    () => props.item.likeCounts + Number(!props.item.isLiked)
-  )
-  const likeCount = computed(() => maxCount.value - Number(!isLiked.value))
-  const toggleLike = async () => {
-    if (isLiked.value) {
-      await apis.removeLike(props.item.id)
-      isLiked.value = false
-    } else {
-      await apis.addLike(props.item.id)
-      isLiked.value = true
-    }
-  }
-  return { isLiked, likeCount, toggleLike }
-}
-</script>
-
-<script lang="ts" setup>
+import useHover from '/@/use/hover'
+import useLike from './use/like'
 import AIcon from '/@/components/UI/AIcon.vue'
 
 const props = defineProps<{

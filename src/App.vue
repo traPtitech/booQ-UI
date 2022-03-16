@@ -21,35 +21,10 @@
   <toast-container />
 </template>
 
-<script lang="ts">
-import { computed, onBeforeMount, watch, readonly } from 'vue'
-import { useRouter } from 'vue-router'
-import { useMeStore } from '/@/store/me'
-import useOpener from '/@/use/opener'
-import useIsMobile from './use/isMobile'
-
-const useNavigationShown = () => {
-  const router = useRouter()
-  const { isOpen, toggle: toggleNavigationShown } = useOpener()
-  const { isMobile } = useIsMobile()
-
-  const isNavigationShown = computed(() => !isMobile.value || isOpen.value)
-  watch(isMobile, isMobile => {
-    isOpen.value = !isMobile
-  })
-  router.afterEach(() => {
-    isOpen.value = false
-  })
-
-  return {
-    isNavigationShown,
-    canToggleNavigationShown: readonly(isMobile),
-    toggleNavigationShown
-  }
-}
-</script>
-
 <script lang="ts" setup>
+import { onBeforeMount } from 'vue'
+import { useMeStore } from '/@/store/me'
+import useNavigationShown from './use/navigationShown'
 import PageHeader from '/@/components/PageHeader/PageHeader.vue'
 import NavigationBar from '/@/components/NavigationBar/NavigationBar.vue'
 import ToastContainer from '/@/components/UI/ToastContainer.vue'

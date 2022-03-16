@@ -30,21 +30,12 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref, computed, watchEffect } from 'vue'
 import { ItemDetail } from '/@/lib/apis'
-import useOwners, { OwnerWithCount } from './use/owners'
+import useOwners, { getInitialOwner } from './use/owners'
 import useMe from '/@/use/me'
 import useEditItem from './use/editItem'
-
-const getInitialOwner = (ownerDetails: OwnerWithCount[], name: string) => {
-  const initialOwner =
-    ownerDetails.find(v => v.userName === name) ?? ownerDetails[0]
-  return initialOwner?.userName ?? ''
-}
-</script>
-
-<script lang="ts" setup>
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'

@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref, onMounted, watchEffect, shallowRef, onUnmounted } from 'vue'
 import {
   BrowserBarcodeReader,
@@ -20,23 +20,8 @@ import {
   NotFoundException
 } from '@zxing/library'
 import { useToast } from '/@/store/toast'
+import { checkDigit, checkISBN } from '/@/lib/barCode'
 
-const checkDigit = (isbn: string) => {
-  const digits = isbn.split('').map(n => +n)
-  const lastDigit = digits.pop()
-  if (lastDigit === undefined) return false
-
-  const remainder =
-    digits.reduce((acc, digit, i) => acc + digit * (i % 2 === 0 ? 1 : 3)) % 10
-  const diff = remainder === 0 ? 0 : 10 - remainder
-  return lastDigit === diff
-}
-
-const checkISBN = (isbn: string) =>
-  isbn.slice(0, 3) === '978' || isbn.slice(0, 3) === '979'
-</script>
-
-<script lang="ts" setup>
 const emit = defineEmits<{
   (e: 'changeCode', _code: string): void
 }>()

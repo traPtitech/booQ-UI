@@ -1,5 +1,9 @@
 <template>
-  <div :class="$style.container" @mouseenter="enter" @mouseleave="leave">
+  <div
+    :class="$style.container"
+    @mouseenter="onMouseEnter"
+    @mouseleave="onMouseLeave"
+  >
     <div :class="$style.btnContainer">
       <button :class="$style.button" @click="toggleLike">
         <a-icon v-show="!isLiked" name="mdi:heart-outline" :size="32" />
@@ -32,10 +36,10 @@
 <script lang="ts" setup>
 import { User } from '/@/lib/apis'
 import useLike from './use/like'
-import useHover from '/@/components/UI/use/hover'
 import AIcon from '/@/components/UI/AIcon.vue'
 import LikeButtonBalloon from './LikeButtonBalloon.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
+import useHover from '/@/use/hover'
 
 const props = withDefaults(
   defineProps<{
@@ -56,7 +60,7 @@ const HEART_CONTAINER_SIZE = 32 + 8 * 2
 const HAMIDASHI_RIGHT = 36 / 2 + 20
 
 const { isLiked, toggleLike, balloonWidth } = useLike(props, emit)
-const { isHovered, open: enter, close: leave } = useHover()
+const { isHovered, onMouseEnter, onMouseLeave } = useHover()
 </script>
 
 <style lang="scss" module>
