@@ -6,27 +6,19 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
 import { ItemSummary } from '/@/lib/apis'
 import ItemWithCartMode from './ItemWithCartMode.vue'
 
-export default defineComponent({
-  name: 'ItemGrid',
-  components: {
-    ItemWithCartMode
-  },
-  props: {
-    items: {
-      type: Array as PropType<ItemSummary[]>,
-      required: true
-    },
-    isCartMode: {
-      type: Boolean,
-      default: false
-    }
+withDefaults(
+  defineProps<{
+    items: ItemSummary[]
+    isCartMode?: boolean
+  }>(),
+  {
+    isCartMode: false
   }
-})
+)
 </script>
 
 <style lang="scss" module>

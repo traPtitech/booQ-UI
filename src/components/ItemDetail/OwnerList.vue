@@ -11,30 +11,17 @@
   </detail-summary>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
 import { ItemDetail, ItemSummary } from '/@/lib/apis'
+import useOwners from './composables/useOwners'
 import DetailSummary from './DetailSummary.vue'
 import OwnersDetail from './OwnersDetail.vue'
-import useOwners from './use/owners'
 
-export default defineComponent({
-  name: 'OwnerList',
-  components: {
-    DetailSummary,
-    OwnersDetail
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemSummary | ItemDetail>,
-      required: true
-    }
-  },
-  setup(props) {
-    const { ownerDetails } = useOwners(props)
-    return { ownerDetails }
-  }
-})
+const props = defineProps<{
+  item: ItemSummary | ItemDetail
+}>()
+
+const { ownerDetails } = useOwners(props)
 </script>
 
 <style lang="scss" module>

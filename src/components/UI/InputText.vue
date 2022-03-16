@@ -27,53 +27,33 @@
   </with-focus-underline>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import WithFocusUnderline from './WithFocusUnderline.vue'
 
-export default defineComponent({
-  name: 'InputText',
-  components: {
-    WithFocusUnderline
-  },
-  props: {
-    label: {
-      type: String,
-      required: true
-    },
-    modelValue: {
-      type: String,
-      required: true
-    },
-    multiline: {
-      type: Boolean,
-      default: false
-    },
-    required: {
-      type: Boolean,
-      default: false
-    },
-    rows: {
-      type: String,
-      default: undefined
-    },
-    readonly: {
-      type: Boolean,
-      default: false
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (val: string) => true
-  },
-  setup(props, context) {
-    const onInput = (e: Event) => {
-      const target = e.target as HTMLInputElement
-      context.emit('update:modelValue', target.value)
-    }
-    return { onInput }
+withDefaults(
+  defineProps<{
+    label: string
+    modelValue: string
+    multiline?: boolean
+    required?: boolean
+    rows?: string
+    readonly?: boolean
+  }>(),
+  {
+    multiline: false,
+    required: false,
+    readonly: false
   }
-})
+)
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', val: string): void
+}>()
+
+const onInput = (e: Event) => {
+  const target = e.target as HTMLInputElement
+  emit('update:modelValue', target.value)
+}
 </script>
 
 <style lang="scss" module>

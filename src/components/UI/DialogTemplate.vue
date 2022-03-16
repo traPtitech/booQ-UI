@@ -9,27 +9,18 @@
   </teleport>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+defineProps<{
+  title: string
+}>()
 
-export default defineComponent({
-  name: 'DialogTemplate',
-  props: {
-    title: {
-      type: String,
-      required: true
-    }
-  },
-  emits: {
-    close: () => true
-  },
-  setup(_, context) {
-    const close = () => {
-      context.emit('close')
-    }
-    return { close }
-  }
-})
+const emit = defineEmits<{
+  (e: 'close'): void
+}>()
+
+const close = () => {
+  emit('close')
+}
 </script>
 
 <style lang="scss" module>

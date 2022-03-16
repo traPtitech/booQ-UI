@@ -14,52 +14,40 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue'
 import apis, { User } from '/@/lib/apis'
 import { useToast } from '/@/store/toast'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 
-export default defineComponent({
-  name: 'AdminManager',
-  components: {
-    InputCheckbox
-  },
-  setup() {
-    const toastStore = useToast()
+const toastStore = useToast()
 
-    const users = ref<User[]>([])
+const users = ref<User[]>([])
 
-    const fetchData = async () => {
-      const { data } = await apis.getUsers()
-      users.value = data
-    }
+const fetchData = async () => {
+  const { data } = await apis.getUsers()
+  users.value = data
+}
 
-    onMounted(fetchData)
+onMounted(fetchData)
 
-    const toggleAdmin = async (userId: number) => {
-      const user = users.value.find(u => u.id === userId)
-      if (!user) return
+const toggleAdmin = async (userId: number) => {
+  const user = users.value.find(u => u.id === userId)
+  if (!user) return
 
-      try {
-        const res = await apis.editUser({ ...user, admin: !user.admin })
-        const updatedUser = res.data
+  try {
+    const res = await apis.editUser({ ...user, admin: !user.admin })
+    const updatedUser = res.data
 
-        const userIndex = users.value.findIndex(
-          user => user.id === updatedUser.id
-        )
-        users.value[userIndex] = updatedUser
-      } catch (e) {
-        toastStore.addToast({
-          type: 'error',
-          text: `ユーザーの変更に失敗しました: ${e}`
-        })
-      }
-    }
-
-    return { users, toggleAdmin }
+    const userIndex = users.value.findIndex(user => user.id === updatedUser.id)
+    users.value[userIndex] = updatedUser
+  } catch (e) {
+    toastStore.addToast({
+      type: 'error',
+      text: `ユーザーの変更に失敗しました: ${e}`
+    })
   }
-})
+}
 </script>
 
 <style lang="scss" module>

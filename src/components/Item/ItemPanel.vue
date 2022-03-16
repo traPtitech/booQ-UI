@@ -25,74 +25,25 @@
   </router-link>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType, computed, ref, shallowRef } from 'vue'
-import apis, { ItemSummary } from '/@/lib/apis'
-import AIcon from '/@/components/UI/AIcon.vue'
+<script lang="ts" setup>
+import { computed, shallowRef } from 'vue'
+import { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
-import useTitleTransition from './use/titleTransition'
+import useTitleTransition from './composables/useTitleTransition'
+import useHover from '/@/composables/useHover'
+import useLike from './composables/useLike'
+import AIcon from '/@/components/UI/AIcon.vue'
 
-const useHover = () => {
-  const isHovered = ref(false)
-  const onMouseEnter = () => {
-    isHovered.value = true
-  }
-  const onMouseLeave = () => {
-    isHovered.value = false
-  }
-  return { isHovered, onMouseEnter, onMouseLeave }
-}
+const props = defineProps<{
+  item: ItemSummary
+}>()
 
-const useLike = (props: { item: ItemSummary }) => {
-  const isLiked = ref(props.item.isLiked)
-  // 自分がいいねしたときのlikeCount
-  const maxCount = computed(
-    () => props.item.likeCounts + Number(!props.item.isLiked)
-  )
-  const likeCount = computed(() => maxCount.value - Number(!isLiked.value))
-  const toggleLike = async () => {
-    if (isLiked.value) {
-      await apis.removeLike(props.item.id)
-      isLiked.value = false
-    } else {
-      await apis.addLike(props.item.id)
-      isLiked.value = true
-    }
-  }
-  return { isLiked, likeCount, toggleLike }
-}
+const imgUrl = computed(() => props.item.imgUrl || NoImg)
+const { isLiked, likeCount, toggleLike } = useLike(props)
 
-export default defineComponent({
-  name: 'ItemPanel',
-  components: {
-    AIcon
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemSummary>,
-      required: true
-    }
-  },
-  setup(props) {
-    const imgUrl = computed(() => props.item.imgUrl || NoImg)
-    const { isLiked, likeCount, toggleLike } = useLike(props)
-
-    const titleEle = shallowRef<HTMLElement | null>(null)
-    const { isHovered, onMouseEnter, onMouseLeave } = useHover()
-    const { onTransitionEnd } = useTitleTransition(isHovered, titleEle)
-
-    return {
-      imgUrl,
-      isLiked,
-      likeCount,
-      toggleLike,
-      onMouseEnter,
-      onMouseLeave,
-      onTransitionEnd,
-      titleEle
-    }
-  }
-})
+const titleEle = shallowRef<HTMLElement | null>(null)
+const { isHovered, onMouseEnter, onMouseLeave } = useHover()
+const { onTransitionEnd } = useTitleTransition(isHovered, titleEle)
 </script>
 
 <style lang="scss" module>

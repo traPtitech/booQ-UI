@@ -24,57 +24,41 @@
   </date-picker>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script lang="ts" setup>
+import { computed } from 'vue'
 import { DatePicker } from 'v-calendar'
-import 'v-calendar/dist/style.css'
 import AIcon from '/@/components/UI/AIcon.vue'
 import InputText from '/@/components/UI/InputText.vue'
 
-export default defineComponent({
-  name: 'InputDate',
-  components: {
-    DatePicker,
-    AIcon,
-    InputText
+const props = withDefaults(
+  defineProps<{
+    label: string
+    modelValue: Date
+    minDate?: Date
+    required?: boolean
+  }>(),
+  {
+    required: false
+  }
+)
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', _v: Date): void
+}>()
+
+const value = computed<Date>({
+  get() {
+    return props.modelValue
   },
-  props: {
-    label: {
-      type: String,
-      required: true
-    },
-    modelValue: {
-      type: Date,
-      required: true
-    },
-    minDate: {
-      type: Date,
-      default: undefined
-    },
-    required: {
-      type: Boolean,
-      default: false
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (_v: Date) => true
-  },
-  setup(props, { emit }) {
-    const value = computed<Date>({
-      get() {
-        return props.modelValue
-      },
-      set(v) {
-        emit('update:modelValue', v)
-      }
-    })
-    return { value }
+  set(v) {
+    emit('update:modelValue', v)
   }
 })
 </script>
 
 <style lang="scss" module>
+@import 'v-calendar/dist/style.css';
+
 .toggleCalender {
   flex-shrink: 0;
   cursor: pointer;

@@ -2,21 +2,12 @@
   <register-form :class="$style.container" />
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue'
-import useTitle from './use/title'
+<script lang="ts" setup>
+import { computed } from 'vue'
+import useTitle from './composables/useTitle'
 import RegisterForm from '/@/components/RegisterForm/RegisterForm.vue'
 
-export default defineComponent({
-  name: 'RegisterItemPage',
-  components: {
-    RegisterForm
-  },
-  setup() {
-    useTitle(computed(() => '物品登録'))
-    return {}
-  }
-})
+useTitle(computed(() => '物品登録'))
 </script>
 
 <style lang="scss" module>

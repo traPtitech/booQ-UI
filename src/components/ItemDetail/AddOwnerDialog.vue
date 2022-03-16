@@ -29,77 +29,54 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, PropType, computed } from 'vue'
+<script lang="ts" setup>
+import { ref, computed } from 'vue'
+import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
+import { ItemDetail } from '/@/lib/apis'
+import useMe from '/@/composables/useMe'
+import useAddOwner from './composables/useAddOwner'
+import useNonOwnerTypes from './composables/useNonOwnerTypes'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
-import { ItemDetail } from '/@/lib/apis'
-import useMe from '/@/use/me'
-import useAddOwner from './use/addOwner'
-import useNonOwnerTypes from './use/nonOwnerTypes'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 
-export default defineComponent({
-  name: 'AddOwnerDialog',
-  components: {
-    DialogTemplate,
-    OwnerSelector,
-    InputCheckbox,
-    InputNumber,
-    WideIconButton
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemDetail>,
-      required: true
-    }
-  },
-  emits: {
-    close: () => true,
-    updateItem: () => true
-  },
-  setup(props, context) {
-    const { admin: isAdmin } = useMe()
-    const { addOwner } = useAddOwner()
-    const { nonOwnerTypes, firstNonOwnType } = useNonOwnerTypes(props)
-    const details = computed(() =>
-      [...nonOwnerTypes.value].map(typ => ({
-        userName: itemTypeToName(typ)
-      }))
-    )
+const props = defineProps<{
+  item: ItemDetail
+}>()
 
-    const rentalable = ref(true)
-    const count = ref(1)
-    const ownerName = ref(itemTypeToName(firstNonOwnType.value))
+const emit = defineEmits<{
+  (e: 'close'): void
+  (e: 'updateItem'): void
+}>()
 
-    const close = () => {
-      context.emit('close')
-    }
-    const submit = async () => {
-      await addOwner({
-        ownerType: itemTypeNameToType(ownerName.value),
-        rentalable: rentalable.value,
-        count: count.value,
-        itemID: props.item.id
-      })
-      context.emit('updateItem')
-      close()
-    }
+const { admin: isAdmin } = useMe()
+const { addOwner } = useAddOwner()
+const { nonOwnerTypes, firstNonOwnType } = useNonOwnerTypes(props)
+const details = computed(() =>
+  [...nonOwnerTypes.value].map(typ => ({
+    userName: itemTypeToName(typ)
+  }))
+)
 
-    return {
-      close,
-      isAdmin,
-      rentalable,
-      count,
-      submit,
-      details,
-      ownerName
-    }
-  }
-})
+const rentalable = ref(true)
+const count = ref(1)
+const ownerName = ref(itemTypeToName(firstNonOwnType.value))
+
+const close = () => {
+  emit('close')
+}
+const submit = async () => {
+  await addOwner({
+    ownerType: itemTypeNameToType(ownerName.value),
+    rentalable: rentalable.value,
+    count: count.value,
+    itemID: props.item.id
+  })
+  emit('updateItem')
+  close()
+}
 </script>
 
 <style lang="scss" module>

@@ -8,22 +8,10 @@
   </nav>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import version from '/@/lib/version'
 import NavigationSearch from './NavigationSearch.vue'
 import NavigationLinks from './NavigationLinks.vue'
-
-export default defineComponent({
-  name: 'NavigationContent',
-  components: {
-    NavigationSearch,
-    NavigationLinks
-  },
-  setup() {
-    return { version }
-  }
-})
 </script>
 
 <style lang="scss" module>

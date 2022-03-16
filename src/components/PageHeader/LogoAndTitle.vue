@@ -5,16 +5,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import logoMain from '/@/assets/img/logo-main.svg'
-
-export default defineComponent({
-  name: 'LogoAndTitle',
-  setup() {
-    return { logoMain }
-  }
-})
 </script>
 
 <style lang="scss" module>

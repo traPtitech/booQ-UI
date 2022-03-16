@@ -16,6 +16,15 @@ export interface OwnerDetail extends OwnerWithCount {
   rentalable: boolean
 }
 
+export const getInitialOwner = (
+  ownerDetails: OwnerWithCount[],
+  name: string
+) => {
+  const initialOwner =
+    ownerDetails.find(v => v.userName === name) ?? ownerDetails[0]
+  return initialOwner?.userName ?? ''
+}
+
 const useOwners = (props: {
   item: ItemSummary | ItemDetail
 }): { ownerDetails: ComputedRef<OwnerDetail[]> } => {

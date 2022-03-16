@@ -7,37 +7,19 @@
   </router-link>
 </template>
 
-<script lang="ts">
-import { defineComponent, toRef } from 'vue'
+<script lang="ts" setup>
+import { toRef } from 'vue'
 import { useLink } from 'vue-router'
 import AIcon from '/@/components/UI/AIcon.vue'
 
-export default defineComponent({
-  name: 'NavigationLinksItem',
-  components: {
-    AIcon
-  },
-  props: {
-    name: {
-      type: String,
-      required: true
-    },
-    icon: {
-      type: String,
-      required: true
-    },
-    path: {
-      type: String,
-      required: true
-    }
-  },
-  setup(props) {
-    const { isActive, route, navigate } = useLink({
-      to: toRef(props, 'path')
-    })
+const props = defineProps<{
+  name: string
+  icon: string
+  path: string
+}>()
 
-    return { isActive, route, navigate }
-  }
+const { isActive, route } = useLink({
+  to: toRef(props, 'path')
 })
 </script>
 

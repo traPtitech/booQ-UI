@@ -1,5 +1,5 @@
 import apis, { ItemType } from '/@/lib/apis'
-import useMe from '/@/use/me'
+import useMe from '/@/composables/useMe'
 import { useToast } from '/@/store/toast'
 import { itemTypeToOwnerId, itemTypeToOwnerName } from '/@/lib/itemType'
 import { AxiosError } from 'axios'

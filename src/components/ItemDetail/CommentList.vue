@@ -12,64 +12,51 @@
   </detail-summary>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType, ref } from 'vue'
+<script lang="ts" setup>
+import { ref } from 'vue'
 import { Comment } from '/@/lib/apis'
+import apis from '/@/lib/apis'
+import { useToast } from '/@/store/toast'
 import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import CommentsTextarea from './CommentsTextarea.vue'
-import useMe from '/@/use/me'
-import apis from '/@/lib/apis'
-import { useToast } from '/@/store/toast'
 
-export default defineComponent({
-  name: 'CommentList',
-  components: {
-    DetailSummary,
-    UserIcon,
-    CommentsTextarea
-  },
-  props: {
-    itemId: {
-      type: Number,
-      required: true
-    },
-    comments: {
-      type: Array as PropType<Comment[]>,
-      default: () => []
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    postComment: (comment: Comment) => true
-  },
-  setup(props, context) {
-    const toastStore = useToast()
-
-    const inputComment = ref('')
-    const { name } = useMe()
-
-    const submit = async () => {
-      try {
-        const { data: comment } = await apis.postComment(props.itemId, {
-          text: inputComment.value
-        })
-        toastStore.addToast({
-          type: 'success',
-          text: `コメントを投稿しました。`
-        })
-        context.emit('postComment', comment)
-        inputComment.value = ''
-      } catch {
-        toastStore.addToast({
-          type: 'error',
-          text: 'コメントの投稿に失敗しました'
-        })
-      }
-    }
-    return { inputComment, name, submit }
+const props = withDefaults(
+  defineProps<{
+    itemId: number
+    comments?: Comment[]
+  }>(),
+  {
+    comments: () => []
   }
-})
+)
+
+const emit = defineEmits<{
+  (e: 'postComment', comment: Comment): void
+}>()
+
+const toastStore = useToast()
+
+const inputComment = ref('')
+
+const submit = async () => {
+  try {
+    const { data: comment } = await apis.postComment(props.itemId, {
+      text: inputComment.value
+    })
+    toastStore.addToast({
+      type: 'success',
+      text: `コメントを投稿しました。`
+    })
+    emit('postComment', comment)
+    inputComment.value = ''
+  } catch {
+    toastStore.addToast({
+      type: 'error',
+      text: 'コメントの投稿に失敗しました'
+    })
+  }
+}
 </script>
 
 <style lang="scss" module>

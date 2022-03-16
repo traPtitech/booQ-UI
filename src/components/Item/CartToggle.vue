@@ -5,35 +5,22 @@
   </button>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script lang="ts" setup>
+import { computed } from 'vue'
 import AIcon from '/@/components/UI/AIcon.vue'
 
-export default defineComponent({
-  name: 'CartToggle',
-  components: {
-    AIcon
-  },
-  props: {
-    modelValue: {
-      type: Boolean,
-      required: true
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (_: boolean) => true
-  },
-  setup(props, context) {
-    const toggleCartMode = () => {
-      context.emit('update:modelValue', !props.modelValue)
-    }
-    const text = computed(() =>
-      props.modelValue ? 'おわる' : 'まとめて借りる'
-    )
-    return { toggleCartMode, text }
-  }
-})
+const props = defineProps<{
+  modelValue: boolean
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', _: boolean): void
+}>()
+
+const toggleCartMode = () => {
+  emit('update:modelValue', !props.modelValue)
+}
+const text = computed(() => (props.modelValue ? 'おわる' : 'まとめて借りる'))
 </script>
 
 <style lang="scss" module>

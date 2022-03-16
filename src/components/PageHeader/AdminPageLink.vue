@@ -4,21 +4,11 @@
   </router-link>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import useMe from '/@/composables/useMe'
 import AIcon from '/@/components/UI/AIcon.vue'
-import useMe from '/@/use/me'
 
-export default defineComponent({
-  name: 'AdminPageLink',
-  components: {
-    AIcon
-  },
-  setup() {
-    const { admin: isAdmin } = useMe()
-    return { isAdmin }
-  }
-})
+const { admin: isAdmin } = useMe()
 </script>
 
 <style lang="scss" module>

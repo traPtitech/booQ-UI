@@ -13,44 +13,33 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, computed, watchEffect, toRef } from 'vue'
+<script lang="ts" setup>
+import { reactive, computed, watchEffect, toRef } from 'vue'
 import apis, { ItemDetail } from '/@/lib/apis'
-import useTitle from './use/title'
+import useTitle from './composables/useTitle'
 import ControlPanel from '/@/components/ItemDetail/ControlPanel.vue'
 import InformationPanel from '/@/components/ItemDetail/InformationPanel.vue'
 
-export default defineComponent({
-  name: 'ItemPage',
-  components: {
-    ControlPanel,
-    InformationPanel
-  },
-  props: {
-    id: {
-      type: String,
-      required: true
-    }
-  },
-  setup(props) {
-    const state = reactive({
-      id: computed(() => +props.id),
-      item: undefined as ItemDetail | undefined
-    })
-    const updateItem = (item: ItemDetail) => {
-      state.item = item
-    }
-    watchEffect(async () => {
-      if (!Number.isFinite(state.id)) return
-      const { data } = await apis.getItem(state.id)
-      updateItem(data)
-    })
+const props = defineProps<{
+  id: string
+}>()
 
-    useTitle(computed(() => (state.item ? `${state.item?.name}` : '物品')))
-
-    return { item: toRef(state, 'item'), updateItem }
-  }
+const state = reactive({
+  id: computed(() => +props.id),
+  item: undefined as ItemDetail | undefined
 })
+const updateItem = (item: ItemDetail) => {
+  state.item = item
+}
+watchEffect(async () => {
+  if (!Number.isFinite(state.id)) return
+  const { data } = await apis.getItem(state.id)
+  updateItem(data)
+})
+
+useTitle(computed(() => (state.item ? `${state.item?.name}` : '物品')))
+
+const item = toRef(state, 'item')
 </script>
 
 <style lang="scss" module>

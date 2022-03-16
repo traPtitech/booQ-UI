@@ -25,56 +25,35 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
 import { ItemDetail, ItemSummary } from '/@/lib/apis'
+import useReturn from './composables/useReturn'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import useReturn from './use/return'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 
-export default defineComponent({
-  name: 'ReturnDialog',
-  components: {
-    DialogTemplate,
-    OwnerSelector,
-    InputNumber,
-    WideIconButton
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemSummary | ItemDetail>,
-      required: true
-    }
-  },
-  emits: {
-    close: () => true,
-    updateItem: () => true
-  },
-  setup(props, context) {
-    const { details, selectedOwnerName, count, owner, returnItem } =
-      useReturn(props)
-    const close = () => {
-      context.emit('close')
-    }
-    const returnItemAndClose = async () => {
-      const log = await returnItem()
-      if (log) {
-        context.emit('updateItem')
-      }
-      close()
-    }
-    return {
-      close,
-      details,
-      selectedOwnerName,
-      count,
-      owner,
-      returnItemAndClose
-    }
+const props = defineProps<{
+  item: ItemSummary | ItemDetail
+}>()
+
+const emit = defineEmits<{
+  (e: 'close'): void
+  (e: 'updateItem'): void
+}>()
+
+const { details, selectedOwnerName, count, owner, returnItem } =
+  useReturn(props)
+const close = () => {
+  emit('close')
+}
+const returnItemAndClose = async () => {
+  const log = await returnItem()
+  if (log) {
+    emit('updateItem')
   }
-})
+  close()
+}
 </script>
 
 <style lang="scss" module>

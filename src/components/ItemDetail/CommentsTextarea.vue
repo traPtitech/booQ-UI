@@ -14,41 +14,28 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import useMe from '/@/composables/useMe'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import AIcon from '/@/components/UI/AIcon.vue'
-import useMe from '/@/use/me'
 
-export default defineComponent({
-  name: 'CommentsTextarea',
-  components: {
-    UserIcon,
-    AIcon
-  },
-  props: {
-    modelValue: {
-      type: String,
-      required: true
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (val: string) => true,
-    submit: () => true
-  },
-  setup(_, context) {
-    const { name } = useMe()
-    const onInput = (e: Event) => {
-      const target = e.target as HTMLInputElement
-      context.emit('update:modelValue', target.value)
-    }
-    const submit = async () => {
-      context.emit('submit')
-    }
-    return { name, onInput, submit }
-  }
-})
+defineProps<{
+  modelValue: string
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', val: string): void
+  (e: 'submit'): void
+}>()
+
+const { name } = useMe()
+const onInput = (e: Event) => {
+  const target = e.target as HTMLInputElement
+  emit('update:modelValue', target.value)
+}
+const submit = async () => {
+  emit('submit')
+}
 </script>
 
 <style lang="scss" module>

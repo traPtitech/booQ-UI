@@ -25,66 +25,40 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
+import { ItemDetail, ItemSummary, ItemType } from '/@/lib/apis'
+import useAddCart from './composables/useAddCart'
+import { useRouter } from 'vue-router'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
-import { ItemDetail, ItemSummary, ItemType } from '/@/lib/apis'
-import useAddCart from './use/addCart'
-import { useRouter } from 'vue-router'
 import SubmitButtonWithContinue from './SubmitButtonWithContinue.vue'
 
-export default defineComponent({
-  name: 'CartAddDialogWithContinue',
-  components: {
-    DialogTemplate,
-    InputNumber,
-    OwnerSelector,
-    SubmitButtonWithContinue
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemSummary | ItemDetail>,
-      required: true
-    }
-  },
-  emits: {
-    close: () => true
-  },
-  setup(props, { emit }) {
-    const { title, count, isEdit, submit, ownerName, ownerDetails, maxCount } =
-      useAddCart(props)
+const props = defineProps<{
+  item: ItemSummary | ItemDetail
+}>()
 
-    const router = useRouter()
-    const goCart = () => {
-      submit()
-      emit('close')
-      router.push('/cart')
-    }
-    const goBack = () => {
-      submit()
-      emit('close')
-    }
+const emit = defineEmits<{
+  (e: 'close'): void
+}>()
 
-    const close = () => {
-      emit('close')
-    }
+const { title, count, isEdit, submit, ownerName, ownerDetails, maxCount } =
+  useAddCart(props)
 
-    return {
-      title,
-      count,
-      isEdit,
-      ownerName,
-      ownerDetails,
-      maxCount,
-      ItemType,
-      goBack,
-      goCart,
-      close
-    }
-  }
-})
+const router = useRouter()
+const goCart = () => {
+  submit()
+  emit('close')
+  router.push('/cart')
+}
+const goBack = () => {
+  submit()
+  emit('close')
+}
+
+const close = () => {
+  emit('close')
+}
 </script>
 
 <style lang="scss" module>

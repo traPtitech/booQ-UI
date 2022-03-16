@@ -5,26 +5,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import AIcon from '/@/components/UI/AIcon.vue'
 
-export default defineComponent({
-  name: 'CartTip',
-  components: {
-    AIcon
-  },
-  props: {
-    cartCount: {
-      type: Number,
-      required: true
-    },
-    isCartMode: {
-      type: Boolean,
-      default: false
-    }
+withDefaults(
+  defineProps<{
+    cartCount: number
+    isCartMode?: boolean
+  }>(),
+  {
+    isCartMode: false
   }
-})
+)
 </script>
 
 <style lang="scss" module>

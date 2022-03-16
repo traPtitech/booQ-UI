@@ -49,74 +49,46 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
 import { ItemDetail } from '/@/lib/apis'
+import useOpener from '/@/composables/useOpener'
+import useOtherControl from './composables/useOtherControl'
+import useDeleteItem from './composables/useDeleteItem'
+import { useRouter } from 'vue-router'
 import AIcon from '/@/components/UI/AIcon.vue'
-import useOpener from '/@/use/opener'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
 import EditDialog from './EditDialog.vue'
 import AddOwnerDialog from './AddOwnerDialog.vue'
-import useOtherControl from './use/otherControl'
-import useDeleteItem from './use/deleteItem'
 import MiniPopup from '/@/components/UI/MiniPopup.vue'
-import { useRouter } from 'vue-router'
 
-export default defineComponent({
-  name: 'OtherControls',
-  components: {
-    AIcon,
-    NormalIconButton,
-    EditDialog,
-    AddOwnerDialog,
-    MiniPopup
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemDetail>,
-      required: true
-    }
-  },
-  emits: {
-    updateItem: () => true
-  },
-  setup(props, { emit }) {
-    const { isOpen: isPopupOpen, toggle: togglePopup } = useOpener()
+const props = defineProps<{
+  item: ItemDetail
+}>()
 
-    const { isOpen: isOpenEditDialog, toggle: toggleEditDialog } = useOpener()
-    const { isOpen: isOpenAddOwnerDialog, toggle: toggleAddOwnerDialog } =
-      useOpener()
+const emit = defineEmits<{
+  (e: 'updateItem'): void
+}>()
 
-    const { isMeOwner, isAdmin, isDisabledAddOwnerButton } =
-      useOtherControl(props)
+const { isOpen: isPopupOpen, toggle: togglePopup } = useOpener()
 
-    const router = useRouter()
-    const { deleteItem } = useDeleteItem()
-    const onDeleteClick = async () => {
-      const deleted = await deleteItem({
-        itemID: props.item.id,
-        itemName: props.item.name
-      })
-      togglePopup()
-      if (deleted) {
-        router.push('/')
-      }
-    }
+const { isOpen: isOpenEditDialog, toggle: toggleEditDialog } = useOpener()
+const { isOpen: isOpenAddOwnerDialog, toggle: toggleAddOwnerDialog } =
+  useOpener()
 
-    return {
-      isPopupOpen,
-      isOpenEditDialog,
-      toggleEditDialog,
-      isOpenAddOwnerDialog,
-      toggleAddOwnerDialog,
-      isMeOwner,
-      isDisabledAddOwnerButton,
-      isAdmin,
-      onDeleteClick,
-      emit
-    }
+const { isMeOwner, isAdmin, isDisabledAddOwnerButton } = useOtherControl(props)
+
+const router = useRouter()
+const { deleteItem } = useDeleteItem()
+const onDeleteClick = async () => {
+  const deleted = await deleteItem({
+    itemID: props.item.id,
+    itemName: props.item.name
+  })
+  togglePopup()
+  if (deleted) {
+    router.push('/')
   }
-})
+}
 </script>
 
 <style lang="scss" module>

@@ -6,21 +6,11 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import { useCart } from '/@/store/cart'
 import CartItem from './CartItem.vue'
 
-export default defineComponent({
-  name: 'CartItems',
-  components: {
-    CartItem
-  },
-  setup() {
-    const cartStore = useCart()
-    return { cartStore }
-  }
-})
+const cartStore = useCart()
 </script>
 
 <style lang="scss" module>

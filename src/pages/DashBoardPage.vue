@@ -13,40 +13,28 @@
   <div v-else>借りてるアイテムはありません</div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, ref, computed } from 'vue'
+<script lang="ts" setup>
+import { onMounted, ref, computed } from 'vue'
 import apis, { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
-import useTitle from './use/title'
+import useTitle from './composables/useTitle'
+import useMe from '/@/composables/useMe'
 import BorrowedItem from '/@/components/BorrowedItem.vue'
-import useMe from '/@/use/me'
 
-export default defineComponent({
-  name: 'DashBoardPage',
-  components: {
-    BorrowedItem
-  },
-  setup() {
-    useTitle(computed(() => 'ダッシュボード'))
+useTitle(computed(() => 'ダッシュボード'))
 
-    const items = ref<ItemSummary[]>([])
-    const { name: myName } = useMe()
+const items = ref<ItemSummary[]>([])
+const { name: myName } = useMe()
 
-    const getSortedItemsByDue = (items: readonly ItemSummary[]) => {
-      const sortItems = [...items]
-      sortItems.sort(
-        (a, b) => getDue(a, myName.value) - getDue(b, myName.value)
-      )
-      return sortItems
-    }
+const getSortedItemsByDue = (items: readonly ItemSummary[]) => {
+  const sortItems = [...items]
+  sortItems.sort((a, b) => getDue(a, myName.value) - getDue(b, myName.value))
+  return sortItems
+}
 
-    onMounted(async () => {
-      const { data } = await apis.getItems(undefined, undefined, myName.value)
-      items.value = getSortedItemsByDue(data)
-    })
-
-    return { items, myName }
-  }
+onMounted(async () => {
+  const { data } = await apis.getItems(undefined, undefined, myName.value)
+  items.value = getSortedItemsByDue(data)
 })
 </script>
 

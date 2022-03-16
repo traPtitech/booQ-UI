@@ -13,39 +13,30 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script lang="ts" setup>
+import { ref } from 'vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
 import InputText from '/@/components/UI/InputText.vue'
 
-export default defineComponent({
-  name: 'UrlInputDialog',
-  components: {
-    DialogTemplate,
-    InputText,
-    WideIconButton
-  },
-  props: {
-    initUrl: {
-      type: String,
-      default: ''
-    }
-  },
-  emits: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    close: (_url: string) => true
-  },
-  setup(props, context) {
-    const url = ref(props.initUrl)
-
-    const close = () => {
-      context.emit('close', url.value)
-    }
-
-    return { url, close }
+const props = withDefaults(
+  defineProps<{
+    initUrl?: string
+  }>(),
+  {
+    initUrl: ''
   }
-})
+)
+
+const emit = defineEmits<{
+  (e: 'close', _url: string): void
+}>()
+
+const url = ref(props.initUrl)
+
+const close = () => {
+  emit('close', url.value)
+}
 </script>
 
 <style lang="scss" module>

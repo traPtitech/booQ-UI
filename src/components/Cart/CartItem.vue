@@ -16,37 +16,25 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed, PropType } from 'vue'
+<script lang="ts" setup>
+import { computed } from 'vue'
 import { CartItem } from '/@/store/cart'
 import NoImg from '/@/assets/img/no-image.svg'
-import useOpener from '/@/use/opener'
+import useOpener from '/@/composables/useOpener'
 import CartAddDialog from './CartAddDialog.vue'
 
-export default defineComponent({
-  name: 'CartItem',
-  components: {
-    CartAddDialog
-  },
-  props: {
-    cartItem: {
-      type: Object as PropType<CartItem>,
-      required: true
-    }
-  },
-  setup(props) {
-    const { isOpen: isDialogOpen, toggle: toggleDialog } = useOpener()
+const props = defineProps<{
+  cartItem: CartItem
+}>()
 
-    const imgUrl = computed(() => props.cartItem.item.imgUrl || NoImg)
-    const owner = computed(() =>
-      props.cartItem.item.owners.find(
-        owner => props.cartItem.ownerId === owner.ownerId
-      )
-    )
+const { isOpen: isDialogOpen, toggle: toggleDialog } = useOpener()
 
-    return { isDialogOpen, toggleDialog, imgUrl, owner }
-  }
-})
+const imgUrl = computed(() => props.cartItem.item.imgUrl || NoImg)
+const owner = computed(() =>
+  props.cartItem.item.owners.find(
+    owner => props.cartItem.ownerId === owner.ownerId
+  )
+)
 </script>
 
 <style lang="scss" module>

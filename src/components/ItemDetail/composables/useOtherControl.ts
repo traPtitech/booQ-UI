@@ -1,7 +1,7 @@
 import { Ref, computed, ComputedRef } from 'vue'
 import { ItemDetail, ItemType } from '/@/lib/apis'
-import useMe from '/@/use/me'
-import useNonOwnerTypes from './nonOwnerTypes'
+import useMe from '/@/composables/useMe'
+import useNonOwnerTypes from './useNonOwnerTypes'
 import { isOwner } from '/@/lib/item'
 
 const useOtherControl = (props: {

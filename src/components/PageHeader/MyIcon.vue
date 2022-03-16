@@ -2,19 +2,9 @@
   <user-icon :user-name="myName" />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import useMe from '/@/composables/useMe'
 import UserIcon from '/@/components/UI/UserIcon.vue'
-import useMe from '/@/use/me'
 
-export default defineComponent({
-  name: 'MyIcon',
-  components: {
-    UserIcon
-  },
-  setup() {
-    const { name: myName } = useMe()
-    return { myName }
-  }
-})
+const { name: myName } = useMe()
 </script>

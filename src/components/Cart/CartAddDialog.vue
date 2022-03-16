@@ -26,57 +26,32 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
+import { ItemDetail, ItemSummary, ItemType } from '/@/lib/apis'
+import useAddCart from './composables/useAddCart'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from '/@/components/ItemDetail/OwnerSelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
-import { ItemDetail, ItemSummary, ItemType } from '/@/lib/apis'
-import useAddCart from './use/addCart'
 import SubmitButton from './SubmitButton.vue'
 
-export default defineComponent({
-  name: 'CartAddDialog',
-  components: {
-    DialogTemplate,
-    InputNumber,
-    OwnerSelector,
-    SubmitButton
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemSummary | ItemDetail>,
-      required: true
-    }
-  },
-  emits: {
-    close: () => true
-  },
-  setup(props, { emit }) {
-    const { title, count, isEdit, submit, ownerName, ownerDetails, maxCount } =
-      useAddCart(props)
+const props = defineProps<{
+  item: ItemSummary | ItemDetail
+}>()
 
-    const doSubmit = () => {
-      submit()
-      emit('close')
-    }
-    const close = () => {
-      emit('close')
-    }
+const emit = defineEmits<{
+  (e: 'close'): void
+}>()
 
-    return {
-      title,
-      count,
-      isEdit,
-      ownerName,
-      ownerDetails,
-      maxCount,
-      doSubmit,
-      ItemType,
-      close
-    }
-  }
-})
+const { title, count, isEdit, submit, ownerName, ownerDetails, maxCount } =
+  useAddCart(props)
+
+const doSubmit = () => {
+  submit()
+  emit('close')
+}
+const close = () => {
+  emit('close')
+}
 </script>
 
 <style lang="scss" module>

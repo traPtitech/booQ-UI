@@ -5,22 +5,13 @@
   </router-link>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
-import AIcon from '/@/components/UI/AIcon.vue'
+<script lang="ts" setup>
+import { computed } from 'vue'
 import { useCart } from '/@/store/cart'
+import AIcon from '/@/components/UI/AIcon.vue'
 
-export default defineComponent({
-  name: 'CartIcon',
-  components: {
-    AIcon
-  },
-  setup() {
-    const cartStore = useCart()
-    const cartLength = computed(() => cartStore.cart.length)
-    return { cartLength }
-  }
-})
+const cartStore = useCart()
+const cartLength = computed(() => cartStore.cart.length)
 </script>
 
 <style lang="scss" module>

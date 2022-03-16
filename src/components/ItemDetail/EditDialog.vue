@@ -30,100 +30,68 @@
   </dialog-template>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType, ref, computed, watchEffect } from 'vue'
+<script lang="ts" setup>
+import { ref, computed, watchEffect } from 'vue'
 import { ItemDetail } from '/@/lib/apis'
+import useOwners, { getInitialOwner } from './composables/useOwners'
+import useMe from '/@/composables/useMe'
+import useEditItem from './composables/useEditItem'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'
 import WideIconButton from '/@/components/UI/WideIconButton.vue'
-import useOwners, { OwnerWithCount } from './use/owners'
-import useMe from '/@/use/me'
-import useEditItem from './use/editItem'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 
-const getInitialOwner = (ownerDetails: OwnerWithCount[], name: string) => {
-  const initialOwner =
-    ownerDetails.find(v => v.userName === name) ?? ownerDetails[0]
-  return initialOwner?.userName ?? ''
-}
+const props = defineProps<{
+  item: ItemDetail
+}>()
 
-export default defineComponent({
-  name: 'EditDialog',
-  components: {
-    DialogTemplate,
-    OwnerSelector,
-    InputCheckbox,
-    InputNumber,
-    WideIconButton
-  },
-  props: {
-    item: {
-      type: Object as PropType<ItemDetail>,
-      required: true
-    }
-  },
-  emits: {
-    close: () => true,
-    updateItem: () => true
-  },
-  setup(props, context) {
-    const { editItem } = useEditItem()
-    const { name: meName, admin: isAdmin } = useMe()
-    const { ownerDetails } = useOwners(props)
+const emit = defineEmits<{
+  (e: 'close'): void
+  (e: 'updateItem'): void
+}>()
 
-    const ownerName = ref(getInitialOwner(ownerDetails.value, meName.value))
-    const ownInfo = computed(() =>
-      props.item.owners.find(v => v.user.name === ownerName.value)
-    )
-    const initCount = computed(() => ownInfo.value?.count ?? 0)
+const { editItem } = useEditItem()
+const { name: meName, admin: isAdmin } = useMe()
+const { ownerDetails } = useOwners(props)
 
-    const rentalable = ref(!!ownInfo.value?.rentalable)
-    const count = ref(initCount.value)
-    watchEffect(() => {
-      rentalable.value = !!ownInfo.value?.rentalable
-      count.value = initCount.value
-    })
+const ownerName = ref(getInitialOwner(ownerDetails.value, meName.value))
+const ownInfo = computed(() =>
+  props.item.owners.find(v => v.user.name === ownerName.value)
+)
+const initCount = computed(() => ownInfo.value?.count ?? 0)
 
-    const isDisabled = computed(
-      () =>
-        ownInfo.value?.rentalable === rentalable.value &&
-        ownInfo.value?.count === count.value
-    )
-    const remain = computed(
-      () =>
-        ownerDetails.value.find(v => v.userName === ownerName.value)?.count ?? 0
-    )
-
-    const close = () => {
-      context.emit('close')
-    }
-    const submit = async () => {
-      if (!ownInfo.value) return
-      await editItem({
-        userID: ownInfo.value?.ownerId ?? 0,
-        rentalable: rentalable.value,
-        count: count.value,
-        itemID: props.item.id,
-        ownInfo: ownInfo.value
-      })
-      context.emit('updateItem')
-      close()
-    }
-    return {
-      close,
-      ownerName,
-      rentalable,
-      count,
-      isDisabled,
-      isAdmin,
-      submit,
-      initCount,
-      remain,
-      ownerDetails
-    }
-  }
+const rentalable = ref(!!ownInfo.value?.rentalable)
+const count = ref(initCount.value)
+watchEffect(() => {
+  rentalable.value = !!ownInfo.value?.rentalable
+  count.value = initCount.value
 })
+
+const isDisabled = computed(
+  () =>
+    ownInfo.value?.rentalable === rentalable.value &&
+    ownInfo.value?.count === count.value
+)
+const remain = computed(
+  () => ownerDetails.value.find(v => v.userName === ownerName.value)?.count ?? 0
+)
+
+const close = () => {
+  emit('close')
+}
+const submit = async () => {
+  if (!ownInfo.value) return
+  await editItem({
+    userID: ownInfo.value?.ownerId ?? 0,
+    rentalable: rentalable.value,
+    count: count.value,
+    itemID: props.item.id,
+    ownInfo: ownInfo.value
+  })
+  emit('updateItem')
+  close()
+}
 </script>
 
 <style lang="scss" module>

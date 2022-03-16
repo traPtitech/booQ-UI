@@ -37,51 +37,27 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { useFormState } from './use/formState'
+<script lang="ts" setup>
+import { useFormState } from './composables/useFormState'
+import useOpener from '/@/composables/useOpener'
+import useCompleteFromCode from './composables/useCompleteFromCode'
 import InputText from '/@/components/UI/InputText.vue'
 import BarCodeScanner from './BarCodeScanner.vue'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
-import useOpener from '/@/use/opener'
 import AIcon from '/@/components/UI/AIcon.vue'
 import RegisterFormImage from './RegisterFormImage.vue'
 import NormalIconButton from '/@/components/UI/NormalIconButton.vue'
-import useCompleteFromCode from './use/completeFromCode'
 
-export default defineComponent({
-  name: 'RegisterFormDescription',
-  components: {
-    InputText,
-    AIcon,
-    DialogTemplate,
-    BarCodeScanner,
-    RegisterFormImage,
-    NormalIconButton
-  },
-  setup() {
-    const { formState } = useFormState()
-    const { isOpen: isDialogShown, toggle: toggleDialog } = useOpener()
-    const { isCompleting, isValidCode, completeFromCode } =
-      useCompleteFromCode(formState)
+const { formState } = useFormState()
+const { isOpen: isDialogShown, toggle: toggleDialog } = useOpener()
+const { isCompleting, isValidCode, completeFromCode } =
+  useCompleteFromCode(formState)
 
-    const changeCode = (code: string) => {
-      formState.code = code
-      toggleDialog()
-      completeFromCode()
-    }
-
-    return {
-      formState,
-      isDialogShown,
-      toggleDialog,
-      isCompleting,
-      isValidCode,
-      completeFromCode,
-      changeCode
-    }
-  }
-})
+const changeCode = (code: string) => {
+  formState.code = code
+  toggleDialog()
+  completeFromCode()
+}
 </script>
 
 <style lang="scss" module>

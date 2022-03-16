@@ -13,37 +13,29 @@
   </header>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue'
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useMeStore } from '/@/store/me'
 import LogoAndTitle from './LogoAndTitle.vue'
 import AdminPageLink from './AdminPageLink.vue'
 import MyIcon from './MyIcon.vue'
 import CartIcon from './CartIcon.vue'
-import { useMeStore } from '/@/store/me'
 
-export default defineComponent({
-  name: 'PageHeader',
-  components: {
-    LogoAndTitle,
-    AdminPageLink,
-    MyIcon,
-    CartIcon
-  },
-  props: {
-    canToggleNavigationShown: {
-      type: Boolean,
-      default: false
-    }
-  },
-  emits: {
-    toggleNavigation: () => true
-  },
-  setup(_, { emit }) {
-    const meStore = useMeStore()
-    const fetchedMe = computed(() => meStore.me !== null)
-    return { fetchedMe, emit }
+withDefaults(
+  defineProps<{
+    canToggleNavigationShown?: boolean
+  }>(),
+  {
+    canToggleNavigationShown: false
   }
-})
+)
+
+const emit = defineEmits<{
+  (e: 'toggleNavigation'): void
+}>()
+
+const meStore = useMeStore()
+const fetchedMe = computed(() => meStore.me !== null)
 </script>
 
 <style lang="scss" module>

@@ -11,8 +11,7 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import NavigationLinksItem from './NavigationLinksItem.vue'
 
 interface Item {
@@ -21,30 +20,21 @@ interface Item {
   path: string
 }
 
-export default defineComponent({
-  name: 'NavigationLinks',
-  components: {
-    NavigationLinksItem
+const items: Item[] = [
+  { name: 'Dashboard', icon: 'mdi:view-dashboard', path: '/' },
+  {
+    name: 'Equipment List',
+    icon: 'mdi:home-city',
+    path: '/items/equipment'
   },
-  setup() {
-    const items: Item[] = [
-      { name: 'Dashboard', icon: 'mdi:view-dashboard', path: '/' },
-      {
-        name: 'Equipment List',
-        icon: 'mdi:home-city',
-        path: '/items/equipment'
-      },
-      {
-        name: 'Personal Property List',
-        icon: 'mdi:book-open-page-variant',
-        path: '/items/property'
-      },
-      { name: 'Register Item', icon: 'mdi:plus-box', path: '/items/new' },
-      { name: 'About', icon: 'mdi:help-box', path: '/about' }
-    ]
-    return { items }
-  }
-})
+  {
+    name: 'Personal Property List',
+    icon: 'mdi:book-open-page-variant',
+    path: '/items/property'
+  },
+  { name: 'Register Item', icon: 'mdi:plus-box', path: '/items/new' },
+  { name: 'About', icon: 'mdi:help-box', path: '/about' }
+]
 </script>
 
 <style lang="scss" module>

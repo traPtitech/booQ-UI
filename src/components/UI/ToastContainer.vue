@@ -10,21 +10,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import { useToast } from '/@/store/toast'
 import AToast from './AToast.vue'
 
-export default defineComponent({
-  name: 'ToastContainer',
-  components: {
-    AToast
-  },
-  setup() {
-    const toastStore = useToast()
-    return { toastStore }
-  }
-})
+const toastStore = useToast()
 </script>
 
 <style lang="scss" module>

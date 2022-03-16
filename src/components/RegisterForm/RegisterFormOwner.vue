@@ -13,9 +13,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watchEffect } from 'vue'
-import { useFormState } from './use/formState'
+<script lang="ts" setup>
+import { ref, watchEffect } from 'vue'
+import { useFormState } from './composables/useFormState'
 import {
   itemTypeMap,
   itemTypeToName,
@@ -25,25 +25,13 @@ import ASelector from '/@/components/UI/ASelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 
-export default defineComponent({
-  name: 'RegisterFormOwner',
-  components: {
-    ASelector,
-    InputNumber,
-    InputCheckbox
-  },
-  setup() {
-    const { formState } = useFormState()
+const { formState } = useFormState()
 
-    const type = ref(itemTypeToName(formState.type))
-    watchEffect(() => {
-      formState.type = itemTypeNameToType(type.value)
-    })
-    const typeOptions = itemTypeMap.map(([, typeName]) => ({ key: typeName }))
-
-    return { formState, type, typeOptions }
-  }
+const type = ref(itemTypeToName(formState.type))
+watchEffect(() => {
+  formState.type = itemTypeNameToType(type.value)
 })
+const typeOptions = itemTypeMap.map(([, typeName]) => ({ key: typeName }))
 </script>
 
 <style lang="scss" module>

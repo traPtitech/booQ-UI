@@ -6,23 +6,13 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
 import { ItemSummary } from '/@/lib/apis'
 import ItemPanel from './ItemPanel.vue'
 
-export default defineComponent({
-  name: 'ItemFlexList',
-  components: {
-    ItemPanel
-  },
-  props: {
-    items: {
-      type: Array as PropType<ItemSummary[]>,
-      required: true
-    }
-  }
-})
+defineProps<{
+  items: ItemSummary[]
+}>()
 </script>
 
 <style lang="scss" module>

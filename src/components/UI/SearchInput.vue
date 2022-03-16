@@ -13,44 +13,32 @@
   </with-focus-underline>
 </template>
 
-<script lang="ts">
-import { defineComponent, shallowRef } from 'vue'
+<script lang="ts" setup>
+import { shallowRef } from 'vue'
 import AIcon from '/@/components/UI/AIcon.vue'
 import WithFocusUnderline from './WithFocusUnderline.vue'
 
-export default defineComponent({
-  name: 'SearchInput',
-  components: {
-    AIcon,
-    WithFocusUnderline
-  },
-  props: {
-    modelValue: {
-      type: String,
-      required: true
-    }
-  },
-  emits: {
-    search: () => true,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    'update:modelValue': (value: string) => true
-  },
-  setup(props, context) {
-    const inputEle = shallowRef<HTMLInputElement>()
-    const focus = () => {
-      inputEle.value?.focus()
-    }
+defineProps<{
+  modelValue: string
+}>()
 
-    const onInput = (e: Event) => {
-      const v = (e.target as HTMLInputElement).value
-      context.emit('update:modelValue', v)
-    }
-    const onEnter = () => {
-      context.emit('search')
-    }
-    return { inputEle, focus, onInput, onEnter }
-  }
-})
+const emit = defineEmits<{
+  (e: 'search'): void
+  (e: 'update:modelValue', value: string): void
+}>()
+
+const inputEle = shallowRef<HTMLInputElement>()
+const focus = () => {
+  inputEle.value?.focus()
+}
+
+const onInput = (e: Event) => {
+  const v = (e.target as HTMLInputElement).value
+  emit('update:modelValue', v)
+}
+const onEnter = () => {
+  emit('search')
+}
 </script>
 
 <style lang="scss" module>

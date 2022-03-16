@@ -1,7 +1,7 @@
 import { ref, Ref, ComputedRef, computed } from 'vue'
 import { ItemDetail, ItemSummary } from '/@/lib/apis'
 import { useCart } from '/@/store/cart'
-import useOwners from '/@/components/ItemDetail/use/owners'
+import useOwners from '/@/components/ItemDetail/composables/useOwners'
 
 const useAddCart = (props: {
   item: ItemSummary | ItemDetail

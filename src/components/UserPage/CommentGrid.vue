@@ -6,23 +6,13 @@
   </ul>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
 import { Comment } from '/@/lib/apis'
 import CommentPanel from './CommentPanel.vue'
 
-export default defineComponent({
-  name: 'CommentGrid',
-  components: {
-    CommentPanel
-  },
-  props: {
-    comments: {
-      type: Array as PropType<Comment[]>,
-      required: true
-    }
-  }
-})
+defineProps<{
+  comments: Comment[]
+}>()
 </script>
 
 <style lang="scss" module>

@@ -5,16 +5,17 @@
   </div>
 </template>
 
-<script lang="ts">
-import {
-  defineComponent,
-  PropType,
-  computed,
-  onMounted,
-  onUnmounted
-} from 'vue'
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { Toast } from '/@/store/toast'
 import AIcon from './AIcon.vue'
-import { useToast, Toast } from '/@/store/toast'
+import useAutoHide from './composables/useAutohide'
+
+const props = defineProps<{
+  toast: Toast
+}>()
+
+const { remove } = useAutoHide(props)
 
 const iconNameMap: Record<Toast['type'], string> = {
   success: 'mdi:information',
@@ -22,44 +23,7 @@ const iconNameMap: Record<Toast['type'], string> = {
   info: 'mdi:information'
 }
 
-const useAutoHide = (props: { toast: Toast }) => {
-  const toastStore = useToast()
-  let timer: number | undefined
-
-  const remove = () => {
-    toastStore.removeToast(props.toast.id)
-  }
-
-  onMounted(() => {
-    timer = window.setTimeout(() => {
-      remove()
-    }, props.toast.timeout)
-  })
-  onUnmounted(() => {
-    window.clearTimeout(timer)
-  })
-
-  return { remove }
-}
-
-export default defineComponent({
-  name: 'AToast',
-  components: {
-    AIcon
-  },
-  props: {
-    toast: {
-      type: Object as PropType<Toast>,
-      required: true
-    }
-  },
-  setup(props) {
-    const { remove } = useAutoHide(props)
-
-    const iconName = computed(() => iconNameMap[props.toast.type])
-    return { remove, iconName }
-  }
-})
+const iconName = computed(() => iconNameMap[props.toast.type])
 </script>
 
 <style lang="scss" module>

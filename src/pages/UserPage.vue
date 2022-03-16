@@ -15,44 +15,30 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, watchEffect, toRef, ref } from 'vue'
+<script lang="ts" setup>
+import { watchEffect, toRef, ref } from 'vue'
 import apis, { ItemSummary, Comment } from '/@/lib/apis'
-import useTitle from './use/title'
+import useTitle from './composables/useTitle'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import ItemFlexList from '/@/components/Item/ItemFlexList.vue'
 import CommentGrid from '/@/components/UserPage/CommentGrid.vue'
 
-export default defineComponent({
-  name: 'UserPage',
-  components: {
-    UserIcon,
-    ItemFlexList,
-    CommentGrid
-  },
-  props: {
-    name: {
-      type: String,
-      required: true
-    }
-  },
-  setup(props) {
-    useTitle(toRef(props, 'name'))
+const props = defineProps<{
+  name: string
+}>()
 
-    const items = ref<ItemSummary[]>([])
-    watchEffect(async () => {
-      const { data } = await apis.getItems(props.name)
-      items.value = data
-    })
+useTitle(toRef(props, 'name'))
 
-    const comments = ref<Comment[]>([])
-    watchEffect(async () => {
-      const { data } = await apis.getComments(props.name)
-      comments.value = data
-    })
+const items = ref<ItemSummary[]>([])
+watchEffect(async () => {
+  const { data } = await apis.getItems(props.name)
+  items.value = data
+})
 
-    return { items, comments }
-  }
+const comments = ref<Comment[]>([])
+watchEffect(async () => {
+  const { data } = await apis.getComments(props.name)
+  comments.value = data
 })
 </script>
 
