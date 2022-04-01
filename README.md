@@ -1,5 +1,5 @@
 # booQ-UI
-![CI](https://github.com/traPtitech/booQ-UI/workflows/CI/badge.svg)
+![main](https://github.com/traPtitech/booQ-UI/workflows/main/badge.svg)
 
 booQ Frontend
 
