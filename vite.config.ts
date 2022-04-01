@@ -28,7 +28,8 @@ export default defineConfig({
           @import "/@/styles/common.scss";
         `
       }
-    }
+    },
+    devSourcemap: true
   },
   define: {
     __VERSION__: `"${packageJson.version}"`
