@@ -2,6 +2,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import { execa } from 'execa'
 import { addApis } from './add-apis'
+import { addTsIgnoreToImports } from './add-ts-ignore-to-imports'
 
 const SWAGGER_PATH =
   'https://raw.githubusercontent.com/traPtitech/booQ/master/docs/swagger.yml'
@@ -29,4 +30,7 @@ const generateCmd = [
 
   // generate Apis class
   await addApis(GENERATED_DIR)
+
+  // importsNotUsedAsValuesでエラーが起きるのですべてのimportに@ts-ignoreを付与する
+  await addTsIgnoreToImports(GENERATED_DIR)
 })()
