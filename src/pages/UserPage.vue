@@ -17,7 +17,8 @@
 
 <script lang="ts" setup>
 import { watchEffect, toRef, ref } from 'vue'
-import apis, { ItemSummary, Comment } from '/@/lib/apis'
+import type { ItemSummary, Comment } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 import useTitle from './composables/useTitle'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import ItemFlexList from '/@/components/Item/ItemFlexList.vue'

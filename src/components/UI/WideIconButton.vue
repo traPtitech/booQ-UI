@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Variant } from './IconButton.vue'
+import type { Variant } from './IconButton.vue'
 import IconButton from './IconButton.vue'
 
 withDefaults(

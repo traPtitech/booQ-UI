@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import type { ItemSummary } from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
 import { stringifyDateFromNumber, toNow } from '/@/lib/date'
 import ItemWide from '/@/components/ItemWide/ItemWide.vue'

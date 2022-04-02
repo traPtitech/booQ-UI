@@ -1,5 +1,7 @@
-import { computed, ComputedRef } from 'vue'
-import { Log, LogType, traP_ID } from '/@/lib/apis'
+import type { ComputedRef } from 'vue'
+import { computed } from 'vue'
+import type { Log } from '/@/lib/apis'
+import { LogType, traP_ID } from '/@/lib/apis'
 import { stringifyDateTime } from '/@/lib/date'
 
 export interface LogSummary {

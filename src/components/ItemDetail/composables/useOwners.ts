@@ -1,5 +1,6 @@
-import { computed, ComputedRef } from 'vue'
-import { ItemDetail, ItemSummary } from '/@/lib/apis'
+import type { ComputedRef } from 'vue'
+import { computed } from 'vue'
+import type { ItemDetail, ItemSummary } from '/@/lib/apis'
 import { getRemainByOwnerID } from '/@/lib/item'
 
 export interface OwnerMayWithCount {

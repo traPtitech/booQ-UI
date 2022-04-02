@@ -1,4 +1,5 @@
-import { customRef, Ref } from 'vue'
+import type { Ref } from 'vue'
+import { customRef } from 'vue'
 
 const useDebouncedRef = <T>(value: T, delay = 200): Ref<T> => {
   let timeout: number | undefined

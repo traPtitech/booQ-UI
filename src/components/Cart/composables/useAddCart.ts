@@ -1,5 +1,6 @@
-import { ref, Ref, ComputedRef, computed } from 'vue'
-import { ItemDetail, ItemSummary } from '/@/lib/apis'
+import type { Ref, ComputedRef } from 'vue'
+import { ref, computed } from 'vue'
+import type { ItemDetail, ItemSummary } from '/@/lib/apis'
 import { useCart } from '/@/store/cart'
 import useOwners from '/@/components/ItemDetail/composables/useOwners'
 

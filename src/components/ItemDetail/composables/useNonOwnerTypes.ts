@@ -1,5 +1,7 @@
-import { computed, ComputedRef } from 'vue'
-import { ItemDetail, ItemType } from '/@/lib/apis'
+import type { ComputedRef } from 'vue'
+import { computed } from 'vue'
+import type { ItemDetail } from '/@/lib/apis'
+import { ItemType } from '/@/lib/apis'
 import useMe from '/@/composables/useMe'
 
 const getFirstNotOwn = (nonOwnerTypes: Set<ItemType>): ItemType | -1 => {

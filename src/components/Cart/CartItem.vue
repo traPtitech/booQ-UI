@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { CartItem } from '/@/store/cart'
+import type { CartItem } from '/@/store/cart'
 import NoImg from '/@/assets/img/no-image.svg'
 import useOpener from '/@/composables/useOpener'
 import CartAddDialog from './CartAddDialog.vue'

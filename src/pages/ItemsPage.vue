@@ -11,7 +11,8 @@
 
 <script lang="ts" setup>
 import { ref, computed, watch } from 'vue'
-import apis, { ItemSummary, ItemType } from '/@/lib/apis'
+import type { ItemSummary } from '/@/lib/apis'
+import apis, { ItemType } from '/@/lib/apis'
 import useTitle from './composables/useTitle'
 import useDebouncedRef from '/@/composables/useDebouncedRef'
 import { useRoute } from 'vue-router'

@@ -17,7 +17,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { provideFormState } from './composables/useFormState'
-import apis, { ItemPosted } from '/@/lib/apis'
+import type { ItemPosted } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 import useAddOwner from '/@/components/ItemDetail/composables/useAddOwner'
 import { useRouter } from 'vue-router'
 import RegisterFormDescription from './RegisterFormDescription.vue'

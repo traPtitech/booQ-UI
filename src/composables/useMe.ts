@@ -1,6 +1,7 @@
-import { computed, ToRefs } from 'vue'
+import type { ToRefs } from 'vue'
+import { computed } from 'vue'
 import { useMeStore } from '../store/me'
-import { User } from '/@/lib/apis'
+import type { User } from '/@/lib/apis'
 
 const keysOfUser = [
   'id',

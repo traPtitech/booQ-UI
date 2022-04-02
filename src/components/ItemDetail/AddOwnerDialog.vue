@@ -32,7 +32,8 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import { itemTypeToName, itemTypeNameToType } from '/@/lib/itemType'
-import { ItemDetail } from '/@/lib/apis'
+import type { ItemDetail } from '/@/lib/apis'
+import { ItemType } from '/@/lib/apis'
 import useMe from '/@/composables/useMe'
 import useAddOwner from './composables/useAddOwner'
 import useNonOwnerTypes from './composables/useNonOwnerTypes'
@@ -62,7 +63,11 @@ const details = computed(() =>
 
 const rentalable = ref(true)
 const count = ref(1)
-const ownerName = ref(itemTypeToName(firstNonOwnType.value))
+const ownerName = ref(
+  itemTypeToName(
+    firstNonOwnType.value !== -1 ? firstNonOwnType.value : ItemType.individual
+  )
+)
 
 const close = () => {
   emit('close')

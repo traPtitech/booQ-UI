@@ -15,7 +15,8 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, computed } from 'vue'
-import apis, { ItemSummary } from '/@/lib/apis'
+import type { ItemSummary } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 import { getDue } from '/@/lib/item'
 import useTitle from './composables/useTitle'
 import useMe from '/@/composables/useMe'

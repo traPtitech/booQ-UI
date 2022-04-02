@@ -14,7 +14,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { Comment } from '/@/lib/apis'
+import type { Comment } from '/@/lib/apis'
 import apis from '/@/lib/apis'
 import { useToast } from '/@/store/toast'
 import DetailSummary from './DetailSummary.vue'

@@ -15,7 +15,8 @@
 
 <script lang="ts" setup>
 import { reactive, computed, watchEffect, toRef } from 'vue'
-import apis, { ItemDetail } from '/@/lib/apis'
+import type { ItemDetail } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 import useTitle from './composables/useTitle'
 import ControlPanel from '/@/components/ItemDetail/ControlPanel.vue'
 import InformationPanel from '/@/components/ItemDetail/InformationPanel.vue'

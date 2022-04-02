@@ -1,20 +1,14 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable no-undef */
-const fs = require('fs').promises
-const path = require('path')
-const { exec } = require('child_process')
-const { promisify } = require('util')
-const execPromise = promisify(exec)
-const addApis = require('./add-apis')
+import fs from 'fs/promises'
+import path from 'path'
+import { execa } from 'execa'
+import { addApis } from './add-apis'
+import { addTsIgnoreToImports } from './add-ts-ignore-to-imports'
 
 const SWAGGER_PATH =
   'https://raw.githubusercontent.com/traPtitech/booQ/master/docs/swagger.yml'
 const GENERATED_DIR = 'src/lib/apis/generated'
 
-const npx = process.platform === 'win32' ? 'npx.cmd' : 'npx'
-
 const generateCmd = [
-  npx,
   'openapi-generator-cli',
   'generate',
   '-g',
@@ -30,8 +24,13 @@ const generateCmd = [
     recursive: true
   })
 
-  await execPromise(generateCmd.join(' '))
+  const p = execa('npx', generateCmd)
+  p.stdout?.pipe(process.stdout)
+  await p
 
   // generate Apis class
   await addApis(GENERATED_DIR)
+
+  // importsNotUsedAsValuesでエラーが起きるのですべてのimportに@ts-ignoreを付与する
+  await addTsIgnoreToImports(GENERATED_DIR)
 })()

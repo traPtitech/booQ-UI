@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Comment } from '/@/lib/apis'
+import type { Comment } from '/@/lib/apis'
 import CommentPanel from './CommentPanel.vue'
 
 defineProps<{

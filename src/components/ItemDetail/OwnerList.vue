@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ItemDetail, ItemSummary } from '/@/lib/apis'
+import type { ItemDetail, ItemSummary } from '/@/lib/apis'
 import useOwners from './composables/useOwners'
 import DetailSummary from './DetailSummary.vue'
 import OwnersDetail from './OwnersDetail.vue'

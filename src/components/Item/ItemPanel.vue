@@ -27,7 +27,7 @@
 
 <script lang="ts" setup>
 import { computed, shallowRef } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import type { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
 import useTitleTransition from './composables/useTitleTransition'
 import useHover from '/@/composables/useHover'

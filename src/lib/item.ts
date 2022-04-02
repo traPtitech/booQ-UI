@@ -1,11 +1,11 @@
-import {
+import type {
   ItemSummary,
   Owner,
   Log,
   RentalUser,
-  ItemDetail,
-  LogType
+  ItemDetail
 } from '/@/lib/apis'
+import { LogType } from '/@/lib/apis'
 
 export const getDue = (item: ItemSummary, borrower: string): number => {
   if (!item.latestLogs) return Infinity

@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
 import apis from '/@/lib/apis'
 import { useToast } from '/@/store/toast'
 

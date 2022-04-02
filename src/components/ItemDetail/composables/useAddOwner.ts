@@ -1,8 +1,9 @@
-import apis, { ItemType } from '/@/lib/apis'
+import type { ItemType } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 import useMe from '/@/composables/useMe'
 import { useToast } from '/@/store/toast'
 import { itemTypeToOwnerId, itemTypeToOwnerName } from '/@/lib/itemType'
-import { AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
 
 const useAddOwner = (
   showSuccessToast = true
@@ -19,7 +20,7 @@ const useAddOwner = (
 
   const addOwner = async (payload: {
     itemID: number
-    ownerType: number
+    ownerType: ItemType
     rentalable: boolean
     count: number
   }): Promise<void> => {

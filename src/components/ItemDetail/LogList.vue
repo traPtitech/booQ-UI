@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Log } from '/@/lib/apis'
+import type { Log } from '/@/lib/apis'
 import useLogs from './composables/useLogs'
 import DetailSummary from './DetailSummary.vue'
 import UserIcon from '/@/components/UI/UserIcon.vue'

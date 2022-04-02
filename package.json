@@ -6,7 +6,7 @@
     "build": "vite build",
     "lint": "eslint --cache .",
     "type-check": "vue-tsc --noEmit",
-    "gen-api": "node ./scripts/generate-apis.js",
+    "gen-api": "esno ./scripts/generate-apis.ts",
     "clean": "rimraf ./src/lib/apis/generated"
   },
   "dependencies": {
@@ -32,6 +32,8 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.5.0",
+    "esno": "^0.14.1",
+    "execa": "^6.1.0",
     "postcss": "^8.4.12",
     "postcss-normalize": "^10.0.1",
     "prettier": "^2.6.1",
