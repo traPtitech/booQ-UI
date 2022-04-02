@@ -1,5 +1,7 @@
-import { Ref, ref, onUnmounted } from 'vue'
-import apis, { ModelFile } from '/@/lib/apis'
+import type { Ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
+import type { ModelFile } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 
 const acceptImageType = ['image/jpeg', 'image/png'].join()
 

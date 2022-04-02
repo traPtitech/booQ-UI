@@ -1,5 +1,6 @@
-import { AxiosError } from 'axios'
-import apis, { Owner } from '/@/lib/apis'
+import type { AxiosError } from 'axios'
+import type { Owner } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 import { useToast } from '/@/store/toast'
 
 const useEditItem = (): {

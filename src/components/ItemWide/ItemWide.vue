@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { ItemSummary } from '/@/lib/apis'
+import type { ItemSummary } from '/@/lib/apis'
 import NoImg from '/@/assets/img/no-image.svg'
 
 const props = defineProps<{

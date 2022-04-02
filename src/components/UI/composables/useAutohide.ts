@@ -1,5 +1,6 @@
 import { onMounted, onUnmounted } from 'vue'
-import { useToast, Toast } from '/@/store/toast'
+import type { Toast } from '/@/store/toast'
+import { useToast } from '/@/store/toast'
 
 const useAutoHide = (props: { toast: Toast }) => {
   const toastStore = useToast()

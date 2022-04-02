@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ItemDetail, ItemSummary } from '/@/lib/apis'
+import type { ItemDetail, ItemSummary } from '/@/lib/apis'
 import useReturn from './composables/useReturn'
 import DialogTemplate from '/@/components/UI/DialogTemplate.vue'
 import OwnerSelector from './OwnerSelector.vue'

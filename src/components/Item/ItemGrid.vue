@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ItemSummary } from '/@/lib/apis'
+import type { ItemSummary } from '/@/lib/apis'
 import ItemWithCartMode from './ItemWithCartMode.vue'
 
 withDefaults(

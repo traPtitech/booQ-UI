@@ -14,11 +14,8 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, watchEffect, shallowRef, onUnmounted } from 'vue'
-import {
-  BrowserBarcodeReader,
-  VideoInputDevice,
-  NotFoundException
-} from '@zxing/library'
+import type { VideoInputDevice } from '@zxing/library'
+import { BrowserBarcodeReader, NotFoundException } from '@zxing/library'
 import { useToast } from '/@/store/toast'
 import { checkDigit, checkISBN } from '/@/lib/barCode'
 

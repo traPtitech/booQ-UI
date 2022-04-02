@@ -1,6 +1,6 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { computed, ref } from 'vue'
-import { ItemDetail, ItemSummary } from '/@/lib/apis'
+import type { ItemDetail, ItemSummary } from '/@/lib/apis'
 
 export interface CartItem {
   item: ItemSummary | ItemDetail

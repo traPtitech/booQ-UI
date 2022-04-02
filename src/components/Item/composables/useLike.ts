@@ -1,5 +1,6 @@
 import { computed, ref } from 'vue'
-import apis, { ItemSummary } from '/@/lib/apis'
+import type { ItemSummary } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 
 const useLike = (props: { item: ItemSummary }) => {
   const isLiked = ref(props.item.isLiked)

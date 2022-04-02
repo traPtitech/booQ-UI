@@ -32,7 +32,7 @@
 
 <script lang="ts" setup>
 import { ref, computed, watchEffect } from 'vue'
-import { ItemDetail } from '/@/lib/apis'
+import type { ItemDetail } from '/@/lib/apis'
 import useOwners, { getInitialOwner } from './composables/useOwners'
 import useMe from '/@/composables/useMe'
 import useEditItem from './composables/useEditItem'

@@ -1,4 +1,5 @@
-import { onUnmounted, Ref, ref } from 'vue'
+import type { Ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 
 const MOBILE_BREAKPOINT = '768'
 

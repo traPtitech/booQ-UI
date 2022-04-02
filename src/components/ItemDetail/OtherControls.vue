@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ItemDetail } from '/@/lib/apis'
+import type { ItemDetail } from '/@/lib/apis'
 import useOpener from '/@/composables/useOpener'
 import useOtherControl from './composables/useOtherControl'
 import useDeleteItem from './composables/useDeleteItem'

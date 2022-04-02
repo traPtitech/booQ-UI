@@ -35,7 +35,8 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import apis, { ItemDetail } from '/@/lib/apis'
+import type { ItemDetail } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 import { getOwnersCanLend, getOwnerBorrowedFrom } from '/@/lib/item'
 import useOpener from '/@/composables/useOpener'
 import useMe from '/@/composables/useMe'

@@ -1,11 +1,13 @@
-import { ref, Ref, ComputedRef, computed } from 'vue'
-import apis, { ItemSummary, Owner, LogType, Log, ItemDetail } from '/@/lib/apis'
-import { OwnerWithCount } from './useOwners'
+import type { Ref, ComputedRef } from 'vue'
+import { ref, computed } from 'vue'
+import type { ItemSummary, Owner, Log, ItemDetail } from '/@/lib/apis'
+import apis, { LogType } from '/@/lib/apis'
+import type { OwnerWithCount } from './useOwners'
 import { stringifyDate } from '/@/lib/date'
 import useMe from '/@/composables/useMe'
 import { useToast } from '/@/store/toast'
 import { getRentalUserBorrowedFrom } from '/@/lib/item'
-import { AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
 
 const useReturn = (props: {
   item: ItemSummary | ItemDetail

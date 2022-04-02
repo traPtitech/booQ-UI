@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { OwnerDetail } from './composables/useOwners'
+import type { OwnerDetail } from './composables/useOwners'
 import UserIcon from '/@/components/UI/UserIcon.vue'
 import AIcon from '/@/components/UI/AIcon.vue'
 

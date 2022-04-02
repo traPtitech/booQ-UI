@@ -1,4 +1,5 @@
-import { Ref, computed, watch } from 'vue'
+import type { Ref } from 'vue'
+import { computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { getFirstParam } from '/@/lib/params'
 

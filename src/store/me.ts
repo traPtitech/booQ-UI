@@ -1,6 +1,7 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import { ref } from 'vue'
-import apis, { User } from '/@/lib/apis'
+import type { User } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 
 export const useMeStore = defineStore('me', () => {
   const me = ref<User | null>(null)

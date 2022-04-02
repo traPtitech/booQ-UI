@@ -16,7 +16,8 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import apis, { User } from '/@/lib/apis'
+import type { User } from '/@/lib/apis'
+import apis from '/@/lib/apis'
 import { useToast } from '/@/store/toast'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
 

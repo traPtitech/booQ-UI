@@ -1,5 +1,6 @@
-import { computed, Ref, ref } from 'vue'
-import { FormState } from './useFormState'
+import type { Ref } from 'vue'
+import { computed, ref } from 'vue'
+import type { FormState } from './useFormState'
 import axios from 'axios'
 
 interface BookData {
