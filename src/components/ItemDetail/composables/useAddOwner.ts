@@ -20,7 +20,7 @@ const useAddOwner = (
 
   const addOwner = async (payload: {
     itemID: number
-    ownerType: number
+    ownerType: ItemType
     rentalable: boolean
     count: number
   }): Promise<void> => {
