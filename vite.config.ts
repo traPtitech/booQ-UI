@@ -5,8 +5,10 @@ import VuePlugin from '@vitejs/plugin-vue'
 import PurgeIcons from 'vite-plugin-purge-icons'
 import brotli from 'rollup-plugin-brotli'
 import { PluginTrapAuth } from '@traptitech/vite-plugin-trap-auth'
+import autoprefixer from 'autoprefixer'
+import postcssNormalize from 'postcss-normalize'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       '/@': path.resolve(__dirname, 'src')
@@ -29,6 +31,12 @@ export default defineConfig({
         `
       }
     },
+    postcss: {
+      plugins: [
+        postcssNormalize(),
+        ...(mode === 'production' ? [autoprefixer()] : [])
+      ]
+    },
     devSourcemap: true
   },
   define: {
@@ -38,4 +46,4 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@iconify/iconify']
   }
-})
+}))
