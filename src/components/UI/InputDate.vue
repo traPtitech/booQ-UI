@@ -56,9 +56,11 @@ const value = computed<Date>({
 })
 </script>
 
-<style lang="scss" module>
+<style lang="scss">
 @import 'v-calendar/dist/style.css';
+</style>
 
+<style lang="scss" module>
 .toggleCalender {
   flex-shrink: 0;
   cursor: pointer;
