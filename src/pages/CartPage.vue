@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container">
-    <h1 :class="$style.header">まとめて借りる</h1>
+    <h1 :class="$style.header">{{ title }}</h1>
     <div>
       <div :class="$style.item">
         <h3 :class="$style.subtitle">カートに入れたもの ({{ itemCount }})</h3>
@@ -24,10 +24,12 @@ import CartConfirm from '/@/components/Cart/CartConfirm.vue'
 
 const cartStore = useCart()
 const router = useRouter()
-useTitle(ref('まとめて借りる'))
 
 const itemCount = computed(() => cartStore.cart.length)
 
+ const title = itemCount.value -1 ? itemCount.value ? 'まとめて借りる' : '何も選択されていません' : '借りる'
+
+useTitle(ref(title))
 const onBorrowed = () => {
   router.push('/')
 }
