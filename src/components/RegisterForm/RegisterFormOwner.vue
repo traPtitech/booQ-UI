@@ -1,6 +1,7 @@
 <template>
   <div>
     <a-selector
+      v-if="isAdmin"
       v-model="type"
       :class="$style.item"
       :options="typeOptions"
@@ -24,6 +25,7 @@ import {
 import ASelector from '/@/components/UI/ASelector.vue'
 import InputNumber from '/@/components/UI/InputNumber.vue'
 import InputCheckbox from '/@/components/UI/InputCheckbox.vue'
+import useMe from '/@/composables/useMe'
 
 const { formState } = useFormState()
 
@@ -32,6 +34,7 @@ watchEffect(() => {
   formState.type = itemTypeNameToType(type.value)
 })
 const typeOptions = itemTypeMap.map(([, typeName]) => ({ key: typeName }))
+const { admin: isAdmin } = useMe()
 </script>
 
 <style lang="scss" module>
