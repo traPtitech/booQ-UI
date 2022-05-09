@@ -1,6 +1,14 @@
 <template>
   <div :class="$style.container">
-    <h1 :class="$style.header">{{ title }}</h1>
+    <h1 :class="$style.header">
+      {{
+        itemCount - 1
+          ? itemCount
+            ? 'まとめて借りる'
+            : '何も選択されていません'
+          : '借りる'
+      }}
+    </h1>
     <div>
       <div :class="$style.item">
         <h3 :class="$style.subtitle">カートに入れたもの ({{ itemCount }})</h3>
@@ -27,7 +35,12 @@ const router = useRouter()
 
 const itemCount = computed(() => cartStore.cart.length)
 
- const title = itemCount.value -1 ? itemCount.value ? 'まとめて借りる' : '何も選択されていません' : '借りる'
+const title =
+  itemCount.value - 1
+    ? itemCount.value
+      ? 'まとめて借りる'
+      : '何も選択されていません'
+    : '借りる'
 
 useTitle(ref(title))
 const onBorrowed = () => {
