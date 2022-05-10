@@ -2,6 +2,7 @@
   <div :class="$style.container">
     <div :class="$style.header">
       <h3 :class="$style.title">{{ title }}</h3>
+      <a-selector :class="$style.item" :options="typeOptions" label="ソート" />
       <search-input v-model="searchQuery" :class="$style.search" />
     </div>
     <cart-toggle v-model="isCartMode" :class="$style.cartToggle" />
@@ -20,6 +21,8 @@ import { getFirstParam } from '/@/lib/params'
 import useSyncParam from './composables/useSyncParam'
 import ItemGrid from '/@/components/Item/ItemGrid.vue'
 import CartToggle from '/@/components/Item/CartToggle.vue'
+import ASelector from '/@/components/UI/ASelector.vue'
+import { itemTypeMap } from '/@/lib/itemType'
 import SearchInput from '/@/components/UI/SearchInput.vue'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
@@ -65,6 +68,19 @@ const filteredItems = computed(() => {
   }
   return items.value
 })
+const sortTypeMap: ReadonlyArray<[number, string]> = [
+  [0, '日付:昇順'],
+  [1, '日付:降順']
+]
+const typeOptions = sortTypeMap.map(([, typeName]) => ({ key: typeName }))
+// const sortedItems = computed(() => {
+//   if (type === 1) return filteredItems
+//   else {
+//     const sortItems = [...filteredItems]
+//     sortItems.sort((a, b) => getDue(a, myName.value) - getDue(b, myName.value))
+//     return sortItems
+//   }
+// })
 
 const isCartMode = ref(false)
 </script>
