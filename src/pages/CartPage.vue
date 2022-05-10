@@ -29,12 +29,12 @@ const router = useRouter()
 
 const itemCount = computed(() => cartStore.cart.length)
 
+const title = '貸し出し手続き'
 const classification = (number: number): string => {
   if (number > 1) return 'まとめて借りる'
   else if (number === 1) return '借りる'
   else return '何も選択されていません'
 }
-const title = classification(itemCount.value)
 
 useTitle(ref(title))
 const onBorrowed = () => {
