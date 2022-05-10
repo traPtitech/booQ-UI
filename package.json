@@ -14,7 +14,7 @@
     "@popperjs/core": "^2.11.4",
     "@zxing/library": "^0.19.1",
     "axios": "^0.26.1",
-    "pinia": "^2.0.13",
+    "pinia": "^2.0.14",
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14"
