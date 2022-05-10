@@ -25,7 +25,7 @@ const defaultValue = {
   description: '',
   imgUrl: '',
   count: 1,
-  rentalable: false
+  rentalable: true
 }
 
 export const createFormState = (): Store => {
