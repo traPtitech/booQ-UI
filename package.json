@@ -24,7 +24,7 @@
     "@openapitools/openapi-generator-cli": "^2.4.26",
     "@traptitech/vite-plugin-trap-auth": "^0.2.7",
     "@types/node": "^16.11.33",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
     "@vitejs/plugin-vue": "^2.3.2",
     "autoprefixer": "^10.4.7",
