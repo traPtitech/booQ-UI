@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
     <h1 :class="$style.header">
-      {{ classification(itemCount) }}
+      {{ title }}
     </h1>
     <div>
       <div :class="$style.item">
@@ -29,7 +29,7 @@ const router = useRouter()
 
 const itemCount = computed(() => cartStore.cart.length)
 
-const title = '貸し出し手続き'
+const title = computed(() => classification(itemCount.value))
 const classification = (number: number): string => {
   if (number > 1) return 'まとめて借りる'
   else if (number === 1) return '借りる'
