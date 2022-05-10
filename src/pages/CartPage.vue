@@ -1,13 +1,7 @@
 <template>
   <div :class="$style.container">
     <h1 :class="$style.header">
-      {{
-        itemCount - 1
-          ? itemCount
-            ? 'まとめて借りる'
-            : '何も選択されていません'
-          : '借りる'
-      }}
+      {{ classification(itemCount) }}
     </h1>
     <div>
       <div :class="$style.item">
@@ -35,12 +29,12 @@ const router = useRouter()
 
 const itemCount = computed(() => cartStore.cart.length)
 
-const title =
-  itemCount.value - 1
-    ? itemCount.value
-      ? 'まとめて借りる'
-      : '何も選択されていません'
-    : '借りる'
+const classification = (number: number): string => {
+  if (number > 1) return 'まとめて借りる'
+  else if (number === 1) return '借りる'
+  else return '何も選択されていません'
+}
+const title = classification(itemCount.value)
 
 useTitle(ref(title))
 const onBorrowed = () => {
