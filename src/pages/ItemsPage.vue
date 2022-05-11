@@ -86,7 +86,9 @@ const typeOptions = sortTypeMap.map(([typeKey, typeName]) => ({
   key: typeKey,
   label: typeName
 }))
-const sortType = useDebouncedRef('0')
+const sortType = useDebouncedRef(
+  getFirstParam(route.query?.['sortType']) ?? '0'
+)
 
 const sortedItems = computed(() => {
   const sortItems = [...filteredItems.value]
@@ -122,6 +124,7 @@ const sortedItems = computed(() => {
   }
   return sortItems
 })
+useSyncParam('sortType', sortType)
 
 const isCartMode = ref(false)
 </script>
