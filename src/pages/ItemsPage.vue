@@ -2,7 +2,12 @@
   <div :class="$style.container">
     <div :class="$style.header">
       <h3 :class="$style.title">{{ title }}</h3>
-      <a-selector v-model="sortType" :class="$style.item" :options="typeOptions" label="ソート" />
+      <a-selector
+        v-model="sortType"
+        :class="$style.item"
+        :options="typeOptions"
+        label="ソート"
+      />
       <search-input v-model="searchQuery" :class="$style.search" />
     </div>
     <cart-toggle v-model="isCartMode" :class="$style.cartToggle" />
@@ -129,22 +134,18 @@ const isCartMode = ref(false)
     padding: 2rem;
   }
 }
-
 .header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
-
 .title {
   word-break: keep-all;
 }
-
 .search {
   width: 12em;
 }
-
 .cartToggle {
   margin-bottom: 1.5rem;
 }
