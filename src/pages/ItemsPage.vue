@@ -2,13 +2,7 @@
   <div :class="$style.container">
     <div :class="$style.header">
       <h3 :class="$style.title">{{ title }}</h3>
-      <a-selector
-        v-model="sort"
-        :class="$style.item"
-        :options="typeOptions"
-        label="ソート"
-      />
-      {{ sort }}
+      <a-selector v-model="sortType" :class="$style.item" :options="typeOptions" label="ソート" />
       <search-input v-model="searchQuery" :class="$style.search" />
     </div>
     <cart-toggle v-model="isCartMode" :class="$style.cartToggle" />
@@ -17,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch, watchEffect } from 'vue'
+import { ref, computed, watch } from 'vue'
 import type { ItemSummary } from '/@/lib/apis'
 import apis, { ItemType } from '/@/lib/apis'
 import useTitle from './composables/useTitle'
@@ -28,8 +22,6 @@ import useSyncParam from './composables/useSyncParam'
 import ItemGrid from '/@/components/Item/ItemGrid.vue'
 import CartToggle from '/@/components/Item/CartToggle.vue'
 import ASelector from '/@/components/UI/ASelector.vue'
-//import { itemTypeMap } from '/@/lib/itemType'
-import { useFormState } from '/@/components/RegisterForm/composables/useFormState'
 import SearchInput from '/@/components/UI/SearchInput.vue'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
@@ -78,29 +70,50 @@ const filteredItems = computed(() => {
   }
   return items.value
 })
-const sortTypeMap: ReadonlyArray<[number, string]> = [
-  [0, '日付:昇順'],
-  [1, '日付:降順']
+
+const sortTypeMap: ReadonlyArray<[string, string]> = [
+  ['0', '登録日時:古い順'],
+  ['1', '登録日時:新しい順'],
+  ['2', '名前順:昇順'],
+  ['3', '名前順:降順']
 ]
-const typeOptions = sortTypeMap.map(([, typeName]) => ({ key: typeName }))
+const typeOptions = sortTypeMap.map(([typeKey, typeName]) => ({
+  key: typeKey,
+  label: typeName
+}))
+const sortType = useDebouncedRef('0')
+
 const sortedItems = computed(() => {
   const sortItems = [...filteredItems.value]
-  if (true) {
+  if (sortType.value === '0') {
     sortItems.sort((a, b) => {
-      const nameA = a.createdAt.toUpperCase()
-      const nameB = b.createdAt.toUpperCase()
-      if (nameA < nameB) return -1
-      if (nameA > nameB) return 1
+      if (a.createdAt > b.createdAt) return 1
+      if (a.createdAt < b.createdAt) return -1
       return 0
     })
-  } else {
+  }
+  if (sortType.value === '1') {
     sortItems.sort((a, b) => {
-      const nameA = a.createdAt.toUpperCase()
-      const nameB = b.createdAt.toUpperCase()
-      if (nameA > nameB) return -1
-      if (nameA < nameB) return 1
+      if (a.createdAt < b.createdAt) return 1
+      if (a.createdAt > b.createdAt) return -1
       return 0
     })
+  }
+  if (sortType.value === '2') {
+    sortItems.sort((a, b) =>
+      a.name.localeCompare(b.name, 'ja', {
+        numeric: true,
+        ignorePunctuation: true
+      })
+    )
+  }
+  if (sortType.value === '3') {
+    sortItems.sort((a, b) =>
+      b.name.localeCompare(a.name, 'ja', {
+        numeric: true,
+        ignorePunctuation: true
+      })
+    )
   }
   return sortItems
 })
