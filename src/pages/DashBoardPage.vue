@@ -10,9 +10,7 @@
       />
     </ul>
   </div>
-  <div v-else>
-    <h3>借りてるアイテムはありません</h3>
-  </div>
+  <div v-else :class="$style.noitem">借りてるアイテムはありません</div>
 </template>
 
 <script lang="ts" setup>
@@ -47,5 +45,8 @@ onMounted(async () => {
   grid-template-columns: repeat(auto-fill, minmax(min(25rem, 100%), 1fr));
   gap: 1rem;
   margin: 1rem;
+}
+.noitem {
+  padding: 3rem;
 }
 </style>
