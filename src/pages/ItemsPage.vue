@@ -31,8 +31,6 @@ import ASelector from '/@/components/UI/ASelector.vue'
 import SearchInput from '/@/components/UI/SearchInput.vue'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
-
-//const { formState } = useFormState()
 const props = defineProps<{
   type: ItemsPageType
 }>()
@@ -46,8 +44,6 @@ useTitle(title)
 
 const route = useRoute()
 const items = ref<ItemSummary[]>([])
-
-//const type = ref(formState.type)
 
 const searchQuery = useDebouncedRef(
   getFirstParam(route.query?.['search']) ?? ''
@@ -87,10 +83,10 @@ const typeOptions = sortTypeMap.map(([typeKey, typeName]) => ({
   key: typeKey,
   label: typeName
 }))
+
 const sortType = useDebouncedRef(
   getFirstParam(route.query?.['sortType']) ?? '0'
 )
-
 const sortedItems = computed(() => {
   const sortItems = [...filteredItems.value]
   if (sortType.value === '0') {
@@ -152,8 +148,5 @@ const isCartMode = ref(false)
 }
 .cartToggle {
   margin-bottom: 1.5rem;
-}
-.control {
-  display: inline-block;
 }
 </style>
