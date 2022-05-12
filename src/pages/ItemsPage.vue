@@ -135,7 +135,7 @@ const isCartMode = ref(false)
   word-break: keep-all;
 }
 .search {
-  width: 12em;
+  width: 12rem;
 }
 .cartToggle {
   margin-bottom: 1.5rem;
@@ -144,7 +144,7 @@ const isCartMode = ref(false)
   display: flex;
   column-gap: 2rem;
   flex-wrap: wrap;
-  max-width: 26em;
-  padding-bottom: 0.25em;
+  width: 26rem;
+  margin-bottom: 0.5rem;
 }
 </style>
