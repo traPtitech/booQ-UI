@@ -2,13 +2,14 @@
   <div :class="$style.container">
     <div :class="$style.header">
       <h3 :class="$style.title">{{ title }}</h3>
-      <a-selector
-        v-model="sortType"
-        :class="$style.item"
-        :options="typeOptions"
-        label="ソート"
-      />
-      <search-input v-model="searchQuery" :class="$style.search" />
+      <div>
+        <search-input v-model="searchQuery" :class="$style.search" />
+        <a-selector
+          v-model="sortType"
+          :class="$style.search"
+          :options="typeOptions"
+        />
+      </div>
     </div>
     <cart-toggle v-model="isCartMode" :class="$style.cartToggle" />
     <item-grid :items="sortedItems" :is-cart-mode="isCartMode" />
@@ -151,5 +152,8 @@ const isCartMode = ref(false)
 }
 .cartToggle {
   margin-bottom: 1.5rem;
+}
+.control {
+  display: inline-block;
 }
 </style>
