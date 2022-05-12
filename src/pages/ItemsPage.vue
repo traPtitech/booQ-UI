@@ -2,12 +2,12 @@
   <div :class="$style.container">
     <div :class="$style.header">
       <h3 :class="$style.title">{{ title }}</h3>
-      <div>
+      <div :class="$style.control">
         <search-input v-model="searchQuery" :class="$style.search" />
         <a-selector
           v-model="sortType"
           :class="$style.search"
-          :options="typeOptions"
+          :options="sortTypeOptions"
         />
       </div>
     </div>
@@ -73,55 +73,46 @@ const filteredItems = computed(() => {
   return items.value
 })
 
-const sortTypeMap: ReadonlyArray<[string, string]> = [
-  ['0', '登録日時:古い順'],
-  ['1', '登録日時:新しい順'],
-  ['2', '名前順:昇順'],
-  ['3', '名前順:降順']
-]
-const typeOptions = sortTypeMap.map(([typeKey, typeName]) => ({
-  key: typeKey,
-  label: typeName
-}))
+const sortTypeOptions = [
+  { key: 'CreatedAtAsc', label: '登録日時:古い順' },
+  { key: 'CreatedAtDesc', label: '登録日時:新しい順' },
+  { key: 'NameAsc', label: '名前順:昇順' },
+  { key: 'NameDesc', label: '名前順:降順' }
+] as const
+type SortType = typeof sortTypeOptions[number]['key']
 
-const sortType = useDebouncedRef(
-  getFirstParam(route.query?.['sortType']) ?? '0'
+const sortType = useDebouncedRef<SortType>(
+  getFirstParam(route.query?.['sort'] as SortType) ?? 'CreatedAtAsc'
 )
+
+const compareStringAsc = (a: string, b: string) => {
+  if (a > b) return 1
+  if (a < b) return -1
+  return 0
+}
+const compareNameAsc = (a: string, b: string) => {
+  return a.localeCompare(b, 'ja', {
+    numeric: true,
+    ignorePunctuation: true
+  })
+}
 const sortedItems = computed(() => {
   const sortItems = [...filteredItems.value]
-  if (sortType.value === '0') {
-    sortItems.sort((a, b) => {
-      if (a.createdAt > b.createdAt) return 1
-      if (a.createdAt < b.createdAt) return -1
-      return 0
-    })
+  if (sortType.value === 'CreatedAtAsc') {
+    sortItems.sort((a, b) => compareStringAsc(a.createdAt, b.createdAt))
   }
-  if (sortType.value === '1') {
-    sortItems.sort((a, b) => {
-      if (a.createdAt < b.createdAt) return 1
-      if (a.createdAt > b.createdAt) return -1
-      return 0
-    })
+  if (sortType.value === 'CreatedAtDesc') {
+    sortItems.sort((a, b) => compareStringAsc(a.createdAt, b.createdAt) * -1)
   }
-  if (sortType.value === '2') {
-    sortItems.sort((a, b) =>
-      a.name.localeCompare(b.name, 'ja', {
-        numeric: true,
-        ignorePunctuation: true
-      })
-    )
+  if (sortType.value === 'NameAsc') {
+    sortItems.sort((a, b) => compareNameAsc(a.name, b.name))
   }
-  if (sortType.value === '3') {
-    sortItems.sort((a, b) =>
-      b.name.localeCompare(a.name, 'ja', {
-        numeric: true,
-        ignorePunctuation: true
-      })
-    )
+  if (sortType.value === 'NameDesc') {
+    sortItems.sort((a, b) => compareNameAsc(a.name, b.name) * -1)
   }
   return sortItems
 })
-useSyncParam('sortType', sortType)
+useSyncParam('sort', sortType)
 
 const isCartMode = ref(false)
 </script>
@@ -148,5 +139,12 @@ const isCartMode = ref(false)
 }
 .cartToggle {
   margin-bottom: 1.5rem;
+}
+.control {
+  display: flex;
+  column-gap: 2rem;
+  flex-wrap: wrap;
+  max-width: 26em;
+  padding-bottom: 0.25em;
 }
 </style>
