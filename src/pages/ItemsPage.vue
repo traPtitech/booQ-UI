@@ -144,7 +144,6 @@ const isCartMode = ref(false)
   display: flex;
   column-gap: 2rem;
   flex-wrap: wrap;
-  width: 26rem;
   margin-bottom: 0.5rem;
 }
 </style>
