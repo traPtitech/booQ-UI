@@ -5,7 +5,7 @@
     @mouseleave="onMouseLeave"
   >
     <div :class="$style.btnContainer">
-      <button :class="$style.button" @click="toggleLike">
+      <button :class="$style.button" :disabled="isDisabled" @click="toggleLike">
         <a-icon v-show="!isLiked" name="mdi:heart-outline" :size="32" />
         <a-icon
           v-show="isLiked"
@@ -59,7 +59,7 @@ const HEART_CONTAINER_SIZE = 32 + 8 * 2
 // ユーザーアイコンのサイズの半分 + padding、いいねが一人だったとき丁度真ん中になるように
 const HAMIDASHI_RIGHT = 36 / 2 + 20
 
-const { isLiked, toggleLike, balloonWidth } = useLike(props, emit)
+const { isLiked, toggleLike, balloonWidth, isDisabled } = useLike(props, emit)
 const { isHovered, onMouseEnter, onMouseLeave } = useHover()
 </script>
 

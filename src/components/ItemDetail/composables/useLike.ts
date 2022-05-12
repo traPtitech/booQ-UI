@@ -17,6 +17,7 @@ const useLike = (
   isLiked: Ref<boolean>
   toggleLike: () => Promise<void>
   balloonWidth: ComputedRef<number>
+  isDisabled: Ref<boolean>
 } => {
   const { id: meID } = useMe()
   const meStore = useMeStore()
@@ -24,8 +25,10 @@ const useLike = (
   const { measureText, measureGrid } = useMeasure()
 
   const isLiked = ref(props.likes.some(v => meID.value === v.id))
+  const isDisabled = ref(false)
 
   const toggleLike = async () => {
+    isDisabled.value = !isDisabled.value
     try {
       if (isLiked.value) {
         await apis.removeLike(props.itemId)
@@ -48,6 +51,7 @@ const useLike = (
         text: '「いいね」に失敗しました'
       })
     }
+    isDisabled.value = !isDisabled.value
   }
 
   const balloonWidth = computed(() =>
@@ -55,7 +59,7 @@ const useLike = (
       ? measureGrid(props.likes.length, { width: 36, height: 36 }, 4, 8).width
       : measureText('誰もいいねしていません').width
   )
-  return { isLiked, toggleLike, balloonWidth }
+  return { isLiked, toggleLike, balloonWidth, isDisabled }
 }
 
 export default useLike
