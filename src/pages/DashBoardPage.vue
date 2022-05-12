@@ -10,7 +10,9 @@
       />
     </ul>
   </div>
-  <div v-else>借りてるアイテムはありません</div>
+  <div v-else>
+    <h3>借りてるアイテムはありません</h3>
+  </div>
 </template>
 
 <script lang="ts" setup>
