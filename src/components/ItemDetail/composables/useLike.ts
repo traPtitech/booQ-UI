@@ -28,7 +28,7 @@ const useLike = (
   const isDisabled = ref(false)
 
   const toggleLike = async () => {
-    isDisabled.value = !isDisabled.value
+    isDisabled.value = true
     try {
       if (isLiked.value) {
         await apis.removeLike(props.itemId)
@@ -51,7 +51,7 @@ const useLike = (
         text: '「いいね」に失敗しました'
       })
     }
-    isDisabled.value = !isDisabled.value
+    isDisabled.value = false
   }
 
   const balloonWidth = computed(() =>
