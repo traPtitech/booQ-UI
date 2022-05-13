@@ -1,6 +1,6 @@
 <template>
   <div v-if="items.length > 0">
-    <h2>あなたが借りている備品</h2>
+    <h2 class="text-left">あなたが借りている備品</h2>
     <ul :class="$style.list">
       <borrowed-item
         v-for="item in items"
