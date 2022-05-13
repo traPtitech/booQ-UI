@@ -1,6 +1,6 @@
 <template>
   <div v-if="items.length > 0">
-    <h2 :class="$style.text-left">あなたが借りている備品</h2>
+    <h2 :class="$style.textleft">あなたが借りている備品</h2>
     <ul :class="$style.list">
       <borrowed-item
         v-for="item in items"
@@ -47,7 +47,7 @@ onMounted(async () => {
   margin: 1rem;
 }
 
-.text-left {
+.textleft {
   text-align: left;
 }
 
