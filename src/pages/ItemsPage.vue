@@ -135,7 +135,7 @@ const isCartMode = ref(false)
   word-break: keep-all;
 }
 .search {
-  width: 12rem;
+  width: 12em;
 }
 .cartToggle {
   margin-bottom: 1.5rem;
