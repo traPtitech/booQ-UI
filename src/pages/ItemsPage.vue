@@ -2,10 +2,17 @@
   <div :class="$style.container">
     <div :class="$style.header">
       <h3 :class="$style.title">{{ title }}</h3>
-      <search-input v-model="searchQuery" :class="$style.search" />
+      <div :class="$style.control">
+        <search-input v-model="searchQuery" :class="$style.search" />
+        <a-selector
+          v-model="sortType"
+          :class="$style.search"
+          :options="sortTypeOptions"
+        />
+      </div>
     </div>
     <cart-toggle v-model="isCartMode" :class="$style.cartToggle" />
-    <item-grid :items="filteredItems" :is-cart-mode="isCartMode" />
+    <item-grid :items="sortedItems" :is-cart-mode="isCartMode" />
   </div>
 </template>
 
@@ -20,10 +27,10 @@ import { getFirstParam } from '/@/lib/params'
 import useSyncParam from './composables/useSyncParam'
 import ItemGrid from '/@/components/Item/ItemGrid.vue'
 import CartToggle from '/@/components/Item/CartToggle.vue'
+import ASelector from '/@/components/UI/ASelector.vue'
 import SearchInput from '/@/components/UI/SearchInput.vue'
 
 type ItemsPageType = 'all' | 'equipment' | 'property'
-
 const props = defineProps<{
   type: ItemsPageType
 }>()
@@ -66,6 +73,47 @@ const filteredItems = computed(() => {
   return items.value
 })
 
+const sortTypeOptions = [
+  { key: 'CreatedAtAsc', label: '登録日時:古い順' },
+  { key: 'CreatedAtDesc', label: '登録日時:新しい順' },
+  { key: 'NameAsc', label: '名前順:昇順' },
+  { key: 'NameDesc', label: '名前順:降順' }
+] as const
+type SortType = typeof sortTypeOptions[number]['key']
+
+const sortType = useDebouncedRef<SortType>(
+  getFirstParam(route.query?.['sort'] as SortType) ?? 'CreatedAtAsc'
+)
+
+const compareStringAsc = (a: string, b: string) => {
+  if (a > b) return 1
+  if (a < b) return -1
+  return 0
+}
+const compareNameAsc = (a: string, b: string) => {
+  return a.localeCompare(b, 'ja', {
+    numeric: true,
+    ignorePunctuation: true
+  })
+}
+const sortedItems = computed(() => {
+  const sortItems = [...filteredItems.value]
+  if (sortType.value === 'CreatedAtAsc') {
+    sortItems.sort((a, b) => compareStringAsc(a.createdAt, b.createdAt))
+  }
+  if (sortType.value === 'CreatedAtDesc') {
+    sortItems.sort((a, b) => compareStringAsc(a.createdAt, b.createdAt) * -1)
+  }
+  if (sortType.value === 'NameAsc') {
+    sortItems.sort((a, b) => compareNameAsc(a.name, b.name))
+  }
+  if (sortType.value === 'NameDesc') {
+    sortItems.sort((a, b) => compareNameAsc(a.name, b.name) * -1)
+  }
+  return sortItems
+})
+useSyncParam('sort', sortType)
+
 const isCartMode = ref(false)
 </script>
 
@@ -91,5 +139,11 @@ const isCartMode = ref(false)
 }
 .cartToggle {
   margin-bottom: 1.5rem;
+}
+.control {
+  display: flex;
+  column-gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
 }
 </style>

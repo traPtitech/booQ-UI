@@ -10,7 +10,7 @@
       />
     </ul>
   </div>
-  <div v-else>借りてるアイテムはありません</div>
+  <div v-else :class="$style.container">借りてるアイテムはありません</div>
 </template>
 
 <script lang="ts" setup>
@@ -46,7 +46,12 @@ onMounted(async () => {
   gap: 1rem;
   margin: 1rem;
 }
+
 .text-left {
   text-align: left;
+}
+
+.container {
+  padding: 3rem;
 }
 </style>
