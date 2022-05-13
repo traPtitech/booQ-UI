@@ -1,6 +1,6 @@
 <template>
   <div v-if="items.length > 0">
-    <h2 class="text-left">あなたが借りている備品</h2>
+    <h2 :class="$style.text-left">あなたが借りている備品</h2>
     <ul :class="$style.list">
       <borrowed-item
         v-for="item in items"
@@ -45,5 +45,8 @@ onMounted(async () => {
   grid-template-columns: repeat(auto-fill, minmax(min(25rem, 100%), 1fr));
   gap: 1rem;
   margin: 1rem;
+}
+.text-left {
+  text-align: left;
 }
 </style>
