@@ -10,7 +10,7 @@
       />
     </ul>
   </div>
-  <div v-else>借りてるアイテムはありません</div>
+  <div v-else :class="$style.container">借りてるアイテムはありません</div>
 </template>
 
 <script lang="ts" setup>
@@ -45,5 +45,8 @@ onMounted(async () => {
   grid-template-columns: repeat(auto-fill, minmax(min(25rem, 100%), 1fr));
   gap: 1rem;
   margin: 1rem;
+}
+.container {
+  padding: 3rem;
 }
 </style>
