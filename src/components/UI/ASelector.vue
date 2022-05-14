@@ -4,12 +4,7 @@
       <div :class="$style.labelText">{{ label }}</div>
       <div :class="$style.selectWrapper">
         <select v-model="val" :class="$style.select">
-          <option
-            v-for="option in options"
-            :key="option.key"
-            :value="option.key"
-            :disabled="option.disabled"
-          >
+          <option v-for="option in options" :key="option.key" :value="option.key" :disabled="option.disabled">
             {{ option.label ?? option.key }}
           </option>
         </select>
