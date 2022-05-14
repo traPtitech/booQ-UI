@@ -7,6 +7,7 @@
           {{ input.label }}
         </option>
       </select>
+      <a-selector v-model="deviceTest" :options="deviceOptions" />
     </div>
     <p v-else>使用できるカメラが存在しません</p>
   </div>
@@ -18,6 +19,8 @@ import type { VideoInputDevice } from '@zxing/library'
 import { BrowserBarcodeReader, NotFoundException } from '@zxing/library'
 import { useToast } from '/@/store/toast'
 import { checkDigit, checkISBN } from '/@/lib/barCode'
+import ASelector from '../UI/ASelector.vue'
+import useDebouncedRef from '/@/composables/useDebouncedRef'
 
 const emit = defineEmits<{
   (e: 'changeCode', _code: string): void
@@ -29,6 +32,12 @@ const codeReader = new BrowserBarcodeReader()
 const inputs = ref<VideoInputDevice[]>([])
 const selectInput = ref<VideoInputDevice>()
 const videoEle = shallowRef<HTMLVideoElement>()
+const deviceOptions = ref<Device[]>([])
+type Device = {
+  key: number
+  label: string
+}
+const deviceTest = ref<Device>()
 
 const initialize = async () => {
   try {
@@ -36,6 +45,13 @@ const initialize = async () => {
     inputs.value = videoInputDevices
     if (videoInputDevices.length > 0) {
       selectInput.value = videoInputDevices[0]
+      for (let i = 0; i < videoInputDevices.length; i++) {
+        deviceOptions.value[i] = {
+          key: i,
+          label: videoInputDevices[i]?.label ?? 'no device name'
+        }
+      }
+      deviceTest.value = deviceOptions.value[0]
     }
   } catch (e) {
     // eslint-disable-next-line no-console
