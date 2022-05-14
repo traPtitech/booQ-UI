@@ -1,6 +1,6 @@
 <template>
   <div v-if="items.length > 0">
-    <h2>あなたが借りている備品</h2>
+    <h2 :class="$style.title">あなたが借りている備品</h2>
     <ul :class="$style.list">
       <borrowed-item
         v-for="item in items"
@@ -46,6 +46,11 @@ onMounted(async () => {
   gap: 1rem;
   margin: 1rem;
 }
+
+.title {
+  text-align: left;
+}
+
 .container {
   padding: 3rem;
 }
