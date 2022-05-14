@@ -33,9 +33,7 @@ const serectedDevice = ref(deviceOptions.value[0]) ?? { key: '', label: '' }
 const initialize = async () => {
   try {
     const videoInputDevices = await codeReader.getVideoInputDevices()
-    //inputs.value = videoInputDevices
     if (videoInputDevices.length > 0) {
-      //selectInput.value = videoInputDevices[0]
       for (let i = 0; i < videoInputDevices.length; i++) {
         deviceOptions.value[i] = {
           key: videoInputDevices[i]?.deviceId ?? '',
@@ -57,7 +55,6 @@ const initialize = async () => {
 }
 
 const start = async () => {
-  //const device = selectInput.value
   if (
     !serectedDevice.value ||
     serectedDevice.value.key === '' ||
