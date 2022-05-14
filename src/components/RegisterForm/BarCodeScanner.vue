@@ -14,6 +14,7 @@ import { BrowserBarcodeReader, NotFoundException } from '@zxing/library'
 import { useToast } from '/@/store/toast'
 import { checkDigit, checkISBN } from '/@/lib/barCode'
 import ASelector from '../UI/ASelector.vue'
+import useDebouncedRef from '/@/composables/useDebouncedRef'
 
 const emit = defineEmits<{
   (e: 'changeCode', _code: string): void
@@ -23,12 +24,14 @@ const toastStore = useToast()
 
 const codeReader = new BrowserBarcodeReader()
 const videoEle = shallowRef<HTMLVideoElement>()
-const deviceOptions = ref<Device[]>([])
-type Device = {
+const deviceOptions = ref<DeviceOption[]>([])
+type DeviceOption = {
   key: string
   label: string
 }
-const serectedDevice = ref(deviceOptions.value[0]) ?? { key: '', label: '' }
+const serectedDevice = useDebouncedRef<string>(
+  deviceOptions.value[0]?.key ?? ''
+)
 
 const initialize = async () => {
   try {
@@ -40,7 +43,7 @@ const initialize = async () => {
           label: videoInputDevices[i]?.label ?? 'no device name'
         }
       }
-      serectedDevice.value = deviceOptions.value[0]
+      serectedDevice.value = deviceOptions.value[0]?.key ?? ''
     }
   } catch (e) {
     // eslint-disable-next-line no-console
@@ -54,15 +57,11 @@ const initialize = async () => {
 }
 
 const start = async () => {
-  if (
-    !serectedDevice.value ||
-    serectedDevice.value.key === '' ||
-    !videoEle.value
-  )
+  if (!serectedDevice.value || serectedDevice.value === '' || !videoEle.value)
     return
   try {
     await codeReader.decodeFromVideoDevice(
-      serectedDevice.value.key,
+      serectedDevice.value,
       videoEle.value,
       (result, err) => {
         if (!result) {
