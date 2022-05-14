@@ -42,7 +42,6 @@ const initialize = async () => {
       }
       serectedDevice.value = deviceOptions.value[0]
     }
-    serectedDevice.value = deviceOptions.value[0]
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e)
