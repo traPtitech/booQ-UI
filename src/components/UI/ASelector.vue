@@ -25,7 +25,7 @@ type Option = { key: string; label?: string; disabled?: boolean }
 
 const props = defineProps<{
   label?: string
-  options: Option[]
+  options: readonly Option[]
   modelValue: string
 }>()
 
@@ -50,9 +50,11 @@ $padding: 0.25em;
 .container {
   color: $color-text-secondary;
 }
+
 .labelText {
   margin-bottom: 0.5em;
 }
+
 .selectWrapper {
   position: relative;
   width: 100%;
@@ -61,6 +63,7 @@ $padding: 0.25em;
   background-color: $color-background;
   border: solid $border $color-text-secondary;
   border-radius: 0.1em;
+
   &::before {
     content: '';
     position: absolute;
@@ -72,6 +75,7 @@ $padding: 0.25em;
     background-color: $color-text-secondary;
     pointer-events: none;
   }
+
   &::after {
     content: '';
     position: absolute;
@@ -80,23 +84,28 @@ $padding: 0.25em;
     bottom: -$border;
     display: block;
     width: 0.5em;
+
     margin: {
       top: 0.6em;
       bottom: 0.4em;
       left: 0.5em;
       right: 0.5em;
     }
+
     border: {
       left: 0.25em solid transparent;
       right: 0.25em solid transparent;
       top: 0.3em solid $color-text-white;
     }
+
     pointer-events: none;
   }
+
   &:focus-within {
     border-color: $color-primary;
   }
 }
+
 .select {
   width: 100%;
   height: 100%;
