@@ -4,6 +4,7 @@ dist
 *.local
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 
 /src/lib/apis/generated
 
