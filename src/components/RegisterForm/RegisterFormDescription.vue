@@ -14,14 +14,6 @@
         @close="toggleDialog"
       >
         <bar-code-scanner @change-code="changeCode" />
-        <normal-icon-button
-          :class="$style.completeButton"
-          label="閉じる"
-          icon="mdi:close"
-          variant="secondary"
-          custom-width
-          @click="toggleDialog"
-        />
       </dialog-template>
     </div>
     <normal-icon-button

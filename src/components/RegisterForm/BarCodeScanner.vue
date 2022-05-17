@@ -2,7 +2,7 @@
   <div :class="$style.container">
     <video ref="videoEle" @play="onResume" />
     <div v-if="deviceOptions.length > 0">
-      <a-selector v-model="serectedDevice" :options="deviceOptions" />
+      <a-selector v-model="selectedDevice" :options="deviceOptions" />
     </div>
     <p v-else>使用できるカメラが存在しません</p>
   </div>
@@ -29,9 +29,7 @@ type DeviceOption = {
   key: string
   label: string
 }
-const serectedDevice = useDebouncedRef<string>(
-  deviceOptions.value[0]?.key ?? ''
-)
+const selectedDevice = useDebouncedRef<string>('')
 
 const initialize = async () => {
   try {
@@ -43,7 +41,7 @@ const initialize = async () => {
           label: videoInputDevices[i]?.label ?? 'no device name'
         }
       }
-      serectedDevice.value = deviceOptions.value[0]?.key ?? ''
+      selectedDevice.value = deviceOptions.value[0]?.key ?? ''
     }
   } catch (e) {
     // eslint-disable-next-line no-console
@@ -57,11 +55,12 @@ const initialize = async () => {
 }
 
 const start = async () => {
-  if (!serectedDevice.value || serectedDevice.value === '' || !videoEle.value)
+  if (!selectedDevice.value || !videoEle.value) {
     return
+  }
   try {
     await codeReader.decodeFromVideoDevice(
-      serectedDevice.value,
+      selectedDevice.value,
       videoEle.value,
       (result, err) => {
         if (!result) {
@@ -91,10 +90,7 @@ const stop = () => {
 }
 
 const onResume = (e: Event) => {
-  if (
-    !(e.target as HTMLVideoElement).paused &&
-    serectedDevice.value !== undefined
-  ) {
+  if (!(e.target as HTMLVideoElement).paused && !selectedDevice.value) {
     // https://github.com/zxing-js/library/issues/336
     // initialize()
   }
