@@ -20,7 +20,7 @@
     "vue-router": "^4.0.15"
   },
   "devDependencies": {
-    "@iconify/json": "^2.1.40",
+    "@iconify/json": "^2.1.116",
     "@openapitools/openapi-generator-cli": "^2.5.1",
     "@traptitech/vite-plugin-trap-auth": "^0.2.7",
     "@types/node": "^16.11.38",
