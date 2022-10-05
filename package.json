@@ -11,7 +11,7 @@
     "clean": "rimraf ./src/lib/apis/generated"
   },
   "dependencies": {
-    "@iconify/iconify": "^2.2.1",
+    "@iconify/iconify": "^3.0.0",
     "@popperjs/core": "^2.11.6",
     "@zxing/library": "^0.19.1",
     "axios": "^0.27.2",
