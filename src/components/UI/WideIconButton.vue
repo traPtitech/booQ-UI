@@ -1,8 +1,10 @@
 <template>
   <icon-button
+    :type="type"
     :icon="icon"
     :label="label"
     :variant="variant"
+    :disabled="disabled"
     :class="$style.button"
   />
 </template>
@@ -13,12 +15,15 @@ import IconButton from './IconButton.vue'
 
 withDefaults(
   defineProps<{
+    type?: 'button' | 'submit' | 'reset'
     icon: string
     label: string
     variant?: Variant
+    disabled?: boolean
   }>(),
   {
-    variant: 'primary' as const
+    variant: 'primary' as const,
+    disabled: false
   }
 )
 </script>

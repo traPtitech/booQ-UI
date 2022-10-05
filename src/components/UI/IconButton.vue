@@ -1,5 +1,10 @@
 <template>
-  <button :class="$style.container" :data-variant="variant">
+  <button
+    :type="type"
+    :class="$style.container"
+    :data-variant="variant"
+    :disabled="disabled"
+  >
     <a-icon :class="$style.icon" :name="icon" />
     <div>{{ label }}</div>
   </button>
@@ -12,12 +17,15 @@ export type Variant = 'primary' | 'secondary' | 'caution'
 
 withDefaults(
   defineProps<{
+    type?: 'button' | 'submit' | 'reset'
     icon: string
     label: string
     variant?: Variant
+    disabled?: boolean
   }>(),
   {
-    variant: 'primary' as const
+    variant: 'primary' as const,
+    disabled: false
   }
 )
 </script>

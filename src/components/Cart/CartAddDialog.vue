@@ -19,7 +19,6 @@
           :is-edit="isEdit"
           :count="count"
           :max-count="maxCount"
-          type="submit"
         />
       </form>
     </div>

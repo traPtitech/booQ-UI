@@ -31,7 +31,8 @@ import { DatePicker as _DatePicker } from 'v-calendar'
 import AIcon from '/@/components/UI/AIcon.vue'
 import InputText from '/@/components/UI/InputText.vue'
 
-const DatePicker = _DatePicker as DefineComponent<{}, {}, unknown>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const DatePicker = _DatePicker as DefineComponent<any, any, any>
 
 const props = withDefaults(
   defineProps<{
