@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { StyleValue } from 'vue'
 import { computed } from 'vue'
 import useHideOnClickOutside from './composables/useHideOnClickOutside'
 
@@ -53,17 +54,9 @@ const popupId = 'mini-popup'
 
 useHideOnClickOutside(popupId, localIsOpen, toggle)
 
-interface Style {
-  top?: '0'
-  left?: '0'
-  bottom?: '0'
-  right?: '0'
-  transformOrigin: string
-}
-
 const style = computed(() => {
   const origin = props.transitionTransformOrigin
-  const s: Style = { transformOrigin: props.transitionTransformOrigin }
+  const s: StyleValue = { transformOrigin: props.transitionTransformOrigin }
   if (origin.includes('top')) {
     s.top = '0'
   }

@@ -25,10 +25,13 @@
 </template>
 
 <script lang="ts" setup>
+import type { DefineComponent } from 'vue'
 import { computed } from 'vue'
-import { DatePicker } from 'v-calendar'
+import { DatePicker as _DatePicker } from 'v-calendar'
 import AIcon from '/@/components/UI/AIcon.vue'
 import InputText from '/@/components/UI/InputText.vue'
+
+const DatePicker = _DatePicker as DefineComponent<{}, {}, unknown>
 
 const props = withDefaults(
   defineProps<{

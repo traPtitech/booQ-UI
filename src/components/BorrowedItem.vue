@@ -31,9 +31,11 @@ const isExpired = computed(() => Date.now() > due.value)
 </script>
 
 <style lang="scss" module>
-.due {
-  .container[data-is-expired='true'] & {
-    color: $color-error;
+.container {
+  &[data-is-expired='true'] {
+    .due {
+      color: $color-error;
+    }
   }
 }
 </style>
