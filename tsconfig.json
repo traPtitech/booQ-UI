@@ -13,17 +13,11 @@
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "skipLibCheck": true,
     "noEmit": true,
     "paths": {
-      "/@/*": [
-        "src/*"
-      ]
+      "/@/*": ["src/*"]
     },
     "jsx": "preserve"
   }
