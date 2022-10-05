@@ -15,11 +15,7 @@
           :max="maxCount"
           :min="isEdit ? 0 : 1"
         />
-        <submit-button
-          :is-edit="isEdit"
-          :count="count"
-          :max-count="maxCount"
-        />
+        <submit-button :is-edit="isEdit" :count="count" :max-count="maxCount" />
       </form>
     </div>
   </dialog-template>
