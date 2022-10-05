@@ -20,5 +20,8 @@
       "/@/*": ["src/*"]
     },
     "jsx": "preserve"
+  },
+  "vueCompilerOptions": {
+    "strictTemplates": true
   }
 }

@@ -7,6 +7,7 @@
   />
   <wide-icon-button
     v-else
+    type="submit"
     icon="mdi:cart"
     label="カートに入れる"
     :class="$style.button"

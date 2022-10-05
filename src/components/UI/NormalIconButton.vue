@@ -3,6 +3,7 @@
     :icon="icon"
     :label="label"
     :variant="variant"
+    :disabled="disabled"
     :class="$style.button"
     :data-custom-width="customWidth"
   />
@@ -18,10 +19,12 @@ withDefaults(
     label: string
     variant?: Variant
     customWidth?: boolean
+    disabled?: boolean
   }>(),
   {
     variant: 'primary' as const,
-    customWidth: false
+    customWidth: false,
+    disabled: false
   }
 )
 </script>
