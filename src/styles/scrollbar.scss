@@ -1,4 +1,4 @@
-@import "./common";
+@import './common';
 
 $scrollbar-color: $color-text-secondary-pale;
 $scrollbar-hover-color: $color-text-secondary;
@@ -6,8 +6,9 @@ $scrollbar-width: 10px;
 
 * {
   scrollbar-color: $scrollbar-color transparent;
-  transition: scrollbar-color .3s;
-  &:hover, &:active {
+  transition: scrollbar-color 0.3s;
+  &:hover,
+  &:active {
     scrollbar-color: $scrollbar-hover-color transparent;
   }
 
@@ -19,13 +20,13 @@ $scrollbar-width: 10px;
 
   &::-webkit-scrollbar-track {
     &:hover {
-      background: transparent
+      background: transparent;
     }
   }
 
   &::-webkit-scrollbar-thumb {
     background: $scrollbar-color;
-    transition: background .3s;
+    transition: background 0.3s;
     border-radius: $scrollbar-width;
     &:hover {
       background: $scrollbar-hover-color;
