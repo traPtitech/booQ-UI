@@ -34,7 +34,7 @@
     "eslint-plugin-vue": "^9.6.0",
     "esno": "^0.16.3",
     "execa": "^6.1.0",
-    "postcss": "^8.4.12",
+    "postcss": "^8.4.19",
     "postcss-normalize": "^10.0.1",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
