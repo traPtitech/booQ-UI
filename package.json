@@ -14,7 +14,7 @@
   "dependencies": {
     "@iconify/iconify": "^3.0.1",
     "@popperjs/core": "^2.11.6",
-    "@zxing/library": "^0.19.1",
+    "@zxing/library": "^0.19.2",
     "axios": "^1.2.2",
     "pinia": "^2.0.28",
     "v-calendar": "^3.0.0-alpha.8",
