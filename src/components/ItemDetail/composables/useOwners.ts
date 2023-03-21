@@ -30,20 +30,22 @@ const useOwners = (props: {
   item: ItemSummary | ItemDetail
 }): { ownerDetails: ComputedRef<OwnerDetail[]> } => {
   const ownerDetails = computed(() =>
-    props.item.owners.map(owner => {
-      const count = getRemainByOwnerID(
-        owner.ownerId,
-        owner.count,
-        props.item.latestLogs ?? []
-      )
-      const all = owner.count
-      return {
-        userName: owner.user.name,
-        count: count,
-        all: all,
-        rentalable: owner.rentalable
-      }
-    })
+    props.item.owners
+      .filter(owner => owner.count > 0)
+      .map(owner => {
+        const count = getRemainByOwnerID(
+          owner.ownerId,
+          owner.count,
+          props.item.latestLogs ?? []
+        )
+        const all = owner.count
+        return {
+          userName: owner.user.name,
+          count: count,
+          all: all,
+          rentalable: owner.rentalable
+        }
+      })
   )
   return { ownerDetails }
 }
