@@ -7,6 +7,9 @@ import brotli from 'rollup-plugin-brotli'
 import { PluginTrapAuth } from '@traptitech/vite-plugin-trap-auth'
 import autoprefixer from 'autoprefixer'
 import postcssNormalize from 'postcss-normalize'
+import dns from 'node:dns'
+
+dns.setDefaultResultOrder('ipv4first')
 
 export default defineConfig(({ mode }) => ({
   resolve: {
