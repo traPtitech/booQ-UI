@@ -12,7 +12,12 @@
       </div>
       <div :class="$style.main">
         <div :class="$style.owners">
-          {{ item.owners.filter(owner => owner.count > 0).map(owner => `@${owner.user.name}`).join() }}
+          {{
+            item.owners
+              .filter(owner => owner.count > 0)
+              .map(owner => `@${owner.user.name}`)
+              .join()
+          }}
         </div>
         <div :class="$style.like" @click.prevent="toggleLike">
           <a-icon v-if="!isLiked" name="mdi:heart-outline" :size="20" />
