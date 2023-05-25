@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container">
-    <video ref="videoEle" @play="onResume" />
+    <video :class="$style.camera" ref="videoEle" @play="onResume" />
     <div v-if="inputs.length > 0">
       <select v-model="selectInput">
         <option v-for="input in inputs" :key="input.deviceId" :value="input">
@@ -105,6 +105,10 @@ watchEffect(() => {
 </script>
 
 <style lang="scss" module>
+.camera {
+  max-width: 100%;
+  max-height: 100%;
+}
 .container {
 }
 </style>
