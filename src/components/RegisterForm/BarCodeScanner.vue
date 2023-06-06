@@ -107,7 +107,7 @@ watchEffect(() => {
 <style lang="scss" module>
 .camera {
   max-width: 100%;
-  max-height: 100%;
+  max-height: calc(100vh - 14rem);
 }
 .container {
 }
