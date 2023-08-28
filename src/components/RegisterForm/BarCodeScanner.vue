@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container">
-    <video :class="$style.camera" ref="videoEle" @play="onResume" />
+    <video ref="videoEle" :class="$style.camera" @play="onResume" />
     <div v-if="inputs.length > 0">
       <select v-model="selectInput">
         <option v-for="input in inputs" :key="input.deviceId" :value="input">
