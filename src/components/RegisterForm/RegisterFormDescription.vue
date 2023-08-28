@@ -14,7 +14,6 @@
         @close="toggleDialog"
       >
         <bar-code-scanner @change-code="changeCode" />
-        <button @click="toggleDialog">閉じる</button>
       </dialog-template>
     </div>
     <normal-icon-button
