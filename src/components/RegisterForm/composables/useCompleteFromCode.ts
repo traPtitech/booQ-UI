@@ -67,6 +67,17 @@ const useCompleteFromCode = (
     () => formState.code.length === 10 || formState.code.length === 13
   )
 
+  const setNDLImgUrlIfExist = async () => {
+    const res = await axios.get(
+      'https://iss.ndl.go.jp/thumbnail/' + formState.code
+    )
+    if (res.status === 200) {
+      return 'https://iss.ndl.go.jp/thumbnail/' + formState.code
+    } else {
+      return ''
+    }
+  }
+
   const completeFromCode = async () => {
     if (!isValidCode.value) return
     if (isCompleting.value) return
@@ -80,8 +91,7 @@ const useCompleteFromCode = (
 
     formState.name = res.name ?? ''
     formState.description = res.description ?? ''
-    formState.imgUrl = res.imgUrl ?? ''
-
+    formState.imgUrl = res.imgUrl ?? (await setNDLImgUrlIfExist())
     isCompleting.value = false
   }
 
