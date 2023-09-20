@@ -27,7 +27,7 @@ const close = () => {
 .container {
   animation: fadeIn 0.2s;
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   width: 100%;
   height: 100%;
   padding: 1rem;
