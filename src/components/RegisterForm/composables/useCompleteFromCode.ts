@@ -2,7 +2,6 @@ import type { Ref } from 'vue'
 import { computed, ref } from 'vue'
 import type { FormState } from './useFormState'
 import axios from 'axios'
-import apis from '/@/lib/apis'
 
 interface BookData {
   name: string
