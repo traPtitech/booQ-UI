@@ -80,8 +80,8 @@ const useCompleteFromCode = (
 
     formState.name = res.name ?? ''
     formState.description = res.description ?? ''
-    formState.imgUrl = res.imgUrl ?? ''
-
+    formState.imgUrl =
+      res.imgUrl ?? 'https://iss.ndl.go.jp/thumbnail/' + formState.code
     isCompleting.value = false
   }
 
