@@ -1,5 +1,5 @@
 FROM node:18-alpine as build
-RUN apk add --update --no-cache openjdk8-jre-base
+RUN apk add --update --no-cache openjdk11-jre-headless
 WORKDIR /app
 
 COPY package*.json ./
